@@ -1,0 +1,24 @@
+Firstmate no-mistakes evidence-storage configuration verification
+=================================================================
+
+Parsed effective setting: test.evidence.store_in_repo = true
+Normalized semantic delta: test.evidence.store_in_repo: false -> true
+Changed-file scope: .no-mistakes.yaml (1 file)
+Adjacent comment contract: exact wording, directly above test:, one physical line, plain punctuation
+RESULT: PASS - repository evidence storage is enabled and no other semantic config or file changed.
+
+Exact committed patch:
+diff --git a/.no-mistakes.yaml b/.no-mistakes.yaml
+index 02e6128..62bb9e7 100644
+--- a/.no-mistakes.yaml
++++ b/.no-mistakes.yaml
+@@ -36,7 +36,7 @@ document:
+ commands:
+   lint: 'bin/fm-lint.sh'
+ 
+-# Keep test evidence out of this repo; it stays in a temp dir instead.
++# Store test evidence in this repo so it is committed alongside the change instead of kept in a temp dir.
+ test:
+   evidence:
+-    store_in_repo: false
++    store_in_repo: true
