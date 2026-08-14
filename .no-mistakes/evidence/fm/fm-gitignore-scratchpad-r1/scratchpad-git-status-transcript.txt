@@ -1,0 +1,10 @@
+$ git status --porcelain --untracked-files=all  # before creating scratchpad/probe.txt
+<no output: clean>
+
+$ mkdir scratchpad && printf "temporary agent note\n" > scratchpad/probe.txt
+
+$ git check-ignore -v scratchpad/probe.txt
+.gitignore:4:scratchpad/	scratchpad/probe.txt
+
+$ git status --porcelain --untracked-files=all  # after creating scratchpad/probe.txt
+<no output: still clean>
