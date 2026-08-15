@@ -1,0 +1,22 @@
+{
+  "schema": "https://json.schemastore.org/github-workflow.json",
+  "file": ".github/workflows/ci.yml",
+  "schemaValid": true,
+  "errors": [],
+  "herdr": {
+    "jobTimeout": 75,
+    "familyStepTimeout": 20,
+    "familyTimeoutType": "number",
+    "familyTimeoutIsPositiveInteger": true,
+    "familyTimeoutBelowJob": true,
+    "cleanupIf": "always()",
+    "uploadIf": "always()",
+    "cleanupAfterFamily": true,
+    "uploadAfterCleanup": true
+  },
+  "portableTimeouts": {
+    "tests-portable-parallel-1": 10,
+    "tests-portable-parallel-2": 10,
+    "tests-portable-serial": 15
+  }
+}

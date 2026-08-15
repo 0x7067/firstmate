@@ -1,0 +1,24 @@
+{
+  "consumer": "Psych/Ruby YAML parser + GitHub workflow schema (ajv against json.schemastore.org/github-workflow.json)",
+  "workflow": "CI",
+  "tests_herdr": {
+    "job_timeout_minutes": 75,
+    "family_run_step": {
+      "name": "Run real-Herdr family (serial, required)",
+      "timeout_minutes": 20
+    },
+    "cleanup_step": {
+      "name": "Cleanup job-owned Herdr lab sessions",
+      "if": "always()"
+    },
+    "upload_step": {
+      "name": "Upload Herdr timing and diagnostics",
+      "if": "always()"
+    }
+  },
+  "portable_job_timeouts_unchanged": {
+    "tests-portable-parallel-1": 10,
+    "tests-portable-parallel-2": 10,
+    "tests-portable-serial": 15
+  }
+}
