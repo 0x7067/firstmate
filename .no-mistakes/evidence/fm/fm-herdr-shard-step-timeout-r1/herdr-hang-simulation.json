@@ -1,0 +1,61 @@
+{
+  "scale": "1 CI minute = 0.08s wall",
+  "base": {
+    "label": "BASE (job cap only)",
+    "job_timeout_minutes": 75,
+    "step_timeout_minutes": null,
+    "runner_held_ci_minutes": 75,
+    "fail_fast": false,
+    "evidence_uploaded": false,
+    "wall_seconds": 6.106,
+    "events": [
+      {
+        "t_ci_min": 0,
+        "event": "BASE (job cap only): family-run starts and wedges (suite never returns)"
+      },
+      {
+        "t_ci_min": 75,
+        "event": "job timeout-minutes=75 cancels the whole job (only stop)",
+        "conclusion": "cancelled"
+      },
+      {
+        "t_ci_min": 75,
+        "event": "job cancelled at cap; cleanup/upload not a reliable evidence path"
+      }
+    ]
+  },
+  "target": {
+    "label": "TARGET (step tripwire + job backstop)",
+    "job_timeout_minutes": 75,
+    "step_timeout_minutes": 20,
+    "runner_held_ci_minutes": 20,
+    "fail_fast": true,
+    "evidence_uploaded": true,
+    "wall_seconds": 2.085,
+    "events": [
+      {
+        "t_ci_min": 0,
+        "event": "TARGET (step tripwire + job backstop): family-run starts and wedges (suite never returns)"
+      },
+      {
+        "t_ci_min": 20,
+        "event": "step timeout-minutes=20 fires; hung family-run is killed",
+        "conclusion": "failure"
+      },
+      {
+        "t_ci_min": 20.5,
+        "event": "Cleanup job-owned Herdr lab sessions ran (if: always())"
+      },
+      {
+        "t_ci_min": 21.0,
+        "event": "Upload Herdr timing and diagnostics ran (if: always())"
+      }
+    ]
+  },
+  "delta": {
+    "runner_minutes_saved_on_hang": 55,
+    "evidence_only_on_target": true,
+    "target_step_above_healthy_7min": true,
+    "target_step_far_below_75": true
+  }
+}

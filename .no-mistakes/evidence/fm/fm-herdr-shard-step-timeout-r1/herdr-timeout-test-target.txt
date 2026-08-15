@@ -1,0 +1,4 @@
+repo=/Users/kunchen/.no-mistakes/worktrees/016d88035d58/01M01T1AM9F508XFJAHTK1GN6S
+2026-08-15T04:28:24Z
+ok - Herdr CI family-run step times out at 20 min under a 75 min job backstop
+exit=0

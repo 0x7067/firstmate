@@ -1,0 +1,28 @@
+{
+  "job": "tests-herdr",
+  "job_timeout_minutes": 75,
+  "family_run_step": {
+    "name": "Run real-Herdr family (serial, required)",
+    "timeout_minutes": 20,
+    "has_timeout": true
+  },
+  "cleanup_step": {
+    "name": "Cleanup job-owned Herdr lab sessions",
+    "if": "always()",
+    "runs_after_step_failure_or_cancel": true
+  },
+  "upload_step": {
+    "name": "Upload Herdr timing and diagnostics",
+    "if": "always()",
+    "runs_after_step_failure_or_cancel": true
+  },
+  "contract": {
+    "job_backstop_minutes": 75,
+    "step_tripwire_minutes": 20,
+    "step_is_tighter_than_job": true,
+    "healthy_runs_about_minutes": 7,
+    "step_above_healthy_runtime": true,
+    "step_far_below_job_cap": true,
+    "cleanup_and_upload_survive_step_timeout": true
+  }
+}

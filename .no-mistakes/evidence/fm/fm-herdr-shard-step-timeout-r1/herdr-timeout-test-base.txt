@@ -1,0 +1,5 @@
+repo=/var/folders/0k/bf8mwt2n5qddzk24r20gfk0c0000gn/T/no-mistakes-evidence/01M01T1AM9F508XFJAHTK1GN6S/base-tree
+2026-08-15T04:28:24Z
+-e:8:in `<main>': family-run step has no timeout-minutes (RuntimeError)
+not ok - could not parse tests-herdr timeouts from ci.yml
+exit=1

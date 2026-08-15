@@ -1,0 +1,23 @@
+Herdr hang tripwire — compressed end-user simulation
+Time scale: 1 CI minute = 0.08s wall (so a 75-min occupation is observable)
+
+BASE (before the change): tests-herdr has only timeout-minutes: 75 on the job.
+A wedged family-run holds the runner until that job cap. Cleanup/upload are
+not a reliable evidence path once the job itself is cancelled.
+
+  t=    0 min  BASE (job cap only): family-run starts and wedges (suite never returns)
+  t=   75 min  job timeout-minutes=75 cancels the whole job (only stop)
+  t=   75 min  job cancelled at cap; cleanup/upload not a reliable evidence path
+  => runner occupied 75 CI minutes; evidence_uploaded=False
+
+TARGET (this change): family-run step timeout-minutes: 20; job stays 75.
+A wedged family-run is killed at 20 minutes. The job is still running, so
+if: always() cleanup and artifact upload still execute.
+
+  t=    0 min  TARGET (step tripwire + job backstop): family-run starts and wedges (suite never returns)
+  t=   20 min  step timeout-minutes=20 fires; hung family-run is killed
+  t= 20.5 min  Cleanup job-owned Herdr lab sessions ran (if: always())
+  t= 21.0 min  Upload Herdr timing and diagnostics ran (if: always())
+  => runner occupied 20 CI minutes; evidence_uploaded=True
+
+Saved ~55 runner-minutes on a hang. Job cap remains the last-resort backstop.
