@@ -1,0 +1,56 @@
+==================================================================
+STEP 1  Two captain decisions are held durably on disk (open holds).
+==================================================================
+  headline hold :   state: queued   held: yes 
+  routed  hold :   state: queued   held: yes 
+
+==================================================================
+STEP 2  A channel (ANY channel) turns what it captured into keyed
+        <decision-key>TAB<answer>TAB<label> lines and pipes them
+        into the ONE general intake. --source is provenance only.
+==================================================================
+A captured channel emits these keyed answer lines:
+  precision-headline\t f1-when-fp-gold \t Headline F1 policy
+  routed-phase       \t phase-a        \t Routed phase
+
+$ intake exit code: 1   (nonzero because one hold was skipped, not forced)
+  closed: eval-system-review-decision-precision-headline
+  skipped: eval-system-review-decision-routed-phase (captain hold eval-system-review-decision-routed-phase still blocks routed work (ship-routed-phase); use resolve to record that work)
+  answers: closed=1 skipped=1 origin=eval-system-review
+
+==================================================================
+STEP 3  The answered hold is CLOSED at answer time, recording the
+        captain's real answer under 'Resolution mode: answered'.
+        The routed hold is SKIPPED and left open for resolve.
+==================================================================
+--- eval-system-review-decision-precision-headline (answered) ---
+    state: done
+    held: no
+  durable decision record recorded in the hold body:
+    | Resolution recorded by fm-decision-hold.
+    | Decision digest: f39a469b33a24934420ca5e12865ad7891dd8f4870c7c991faeea66634259a21
+    | Routed identities: (none)
+    | Resolution mode: answered
+    | 
+    | Captain decision:
+    | Captain answered this decision through captured review response, sequence 1.
+    | Decision key: precision-headline
+    | Answer: f1-when-fp-gold
+    | Answer as shown to the captain: Headline F1 policy
+    | 
+    | Routed work:
+    | (none)
+--- eval-system-review-decision-routed-phase (still blocks routed work) ---
+    state: queued
+    held: yes
+  routed work:   state: queued
+  routed work:   blocked: yes
+
+==================================================================
+STEP 4  Replaying the identical capture is an idempotent no-op,
+        not a rejected 'different captain decision'.
+==================================================================
+  closed: eval-system-review-decision-precision-headline
+  answers: closed=1 skipped=0 origin=eval-system-review
+
+DONE.
