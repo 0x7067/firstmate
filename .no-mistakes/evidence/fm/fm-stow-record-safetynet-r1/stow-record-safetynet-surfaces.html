@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>/stow record safety-net — changed captain-facing surfaces</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 15px/1.6 -apple-system, "Segoe UI", system-ui, sans-serif; max-width: 900px; margin: 0 auto; padding: 32px 24px 64px; background: #0d1117; color: #e6edf3; }
+  h1 { font-size: 22px; border-bottom: 1px solid #30363d; padding-bottom: 12px; }
+  h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: #7d8590; margin: 32px 0 8px; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px 20px; margin: 8px 0 4px; }
+  .src { font: 12px/1.4 ui-monospace, "SF Mono", Menlo, monospace; color: #58a6ff; margin-bottom: 10px; }
+  .card p { margin: 0 0 8px; }
+  .card p:last-child { margin-bottom: 0; }
+  code { background: #21262d; padding: 1px 5px; border-radius: 4px; font: 12.5px ui-monospace, Menlo, monospace; }
+  .new { border-left: 3px solid #3fb950; }
+  .fix { border-left: 3px solid #d29922; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 20px; vertical-align: middle; margin-left: 8px; }
+  .tag.n { background: rgba(63,185,80,.15); color: #3fb950; }
+  .tag.f { background: rgba(210,153,34,.15); color: #d29922; }
+  .note { color: #7d8590; font-size: 13px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<h1>/stow record safety-net — captain-facing copy that changed</h1>
+<p class="note">The change is agent-behavioral guidance and command-catalog copy; there is no app UI. These are the owned text surfaces the captain reads and the agent follows. Rendered verbatim from the target commit.</p>
+
+<h2>New section — <code>.agents/skills/stow/SKILL.md</code><span class="tag n">added</span></h2>
+<div class="card new">
+  <div class="src">.agents/skills/stow/SKILL.md › ## Open-record persistence</div>
+  <p>The sweep above preserves knowledge; this one preserves the state of work.</p>
+  <p>A reset destroys whatever exists only in this session, and that includes what you have learned about work already under way, not just facts worth remembering.</p>
+  <p>So before the reset, make sure the important open work you are holding in context is durably recorded: file what was never filed, and correct what you now know is stale.</p>
+  <p>Judge for yourself what is important and which record each thing belongs to, and write it through the owner that already governs that record.</p>
+  <p>One bound holds: this covers the open work you are actually holding in context, not the records at large.</p>
+  <p>It is not a reconciliation of durable records against repository or forge reality, cannot become one on input this volatile, and must never be reported as one.</p>
+  <p>Where the right correction is a judgment you cannot make, leave the record alone and raise the question instead of guessing.</p>
+</div>
+<p class="note">Principles only — no enumerated triggers, no command names, no numbered steps (the captain's accepted design).</p>
+
+<h2>Completion receipt bound — <code>.agents/skills/stow/SKILL.md</code><span class="tag f">reworded</span></h2>
+<div class="card fix">
+  <div class="src">stow completion receipt</div>
+  <p>• each open record this pass filed or corrected, and each one it deliberately left alone with the judgment it is waiting on;</p>
+  <p>• whether the session is <strong>safe to reset</strong>, only when all durable findings are captured, <strong>every open record this session held is filed or explicitly left with its reason</strong>, and the post-pass result is within budget…</p>
+  <p>State what reset-safe means in the same breath as the claim: <strong>nothing this session knew has been lost</strong>. It is never a claim that the home's durable records are correct, because this pass checks no record the session did not name.</p>
+</div>
+
+<h2>Expectation-fixing wording — <code>AGENTS.md:250</code><span class="tag f">reworded</span></h2>
+<div class="card fix">
+  <div class="src">AGENTS.md § 6</div>
+  <p>When the captain invokes <code>/stow</code>, load the <code>stow</code> skill for its memory curation, knowledge routing, and persistence of the open work records this session is holding; it files and corrects only the open work that session is holding, and <strong>never reconciles the backlog against repository or PR reality</strong>.</p>
+  <p class="note">The old "unfinished-work sweep" phrase that implied a correctness guarantee is removed.</p>
+</div>
+
+<h2>Command catalog — <code>README.md</code><span class="tag f">reworded</span></h2>
+<div class="card fix">
+  <div class="src">README.md › command table › /stow</div>
+  <p>Sweep the session for uncaptured durable knowledge, <strong>persist the open work records this session knows are unfiled or now wrong</strong>, curate tiered startup memory with decay and cold archival, enforce each home's budget or surface the required decision, cascade to registered second mates, and report what is safe to reset.</p>
+</div>
+
+<h2>Maintainer bound — <code>docs/architecture.md</code><span class="tag n">added</span></h2>
+<div class="card new">
+  <div class="src">docs/architecture.md § ownership</div>
+  <p>The same pass also persists open-work record state the session is holding — filing a thread that was never recorded and correcting one the session knows went stale — bounded to the open work that session is actually holding.</p>
+  <p>It is deliberately not a reconciliation of durable records against repository or PR reality: its input is the volatile context, so it can only preserve what the session still knows, and <strong>no reconciliation that outlives a session exists today</strong>.</p>
+</div>
+
+<h2>Consumer verification</h2>
+<div class="card">
+  <p><code>tests/fm-documentation-audiences.test.sh</code> — real consumer of the doc-audience contract (classification + link validity across the changed README, AGENTS.md, docs/architecture.md, skill): <strong style="color:#3fb950">PASS</strong></p>
+  <p><code>tests/fm-stow-cascade.test.sh</code> — /stow cascade behavior unchanged: <strong style="color:#3fb950">PASS</strong></p>
+  <p><code>tests/fm-supervision-instructions.test.sh</code> — changed skill registered as a watched instruction surface: <strong style="color:#3fb950">PASS</strong></p>
+</div>
+
+</body>
+</html>
