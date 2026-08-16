@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset=utf-8><title>Remote-secondmate recovery hint - evidence</title>
+<style>
+body{font:14px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;background:#0d1117;color:#c9d1d9;margin:0;padding:32px;}
+h1{font-size:19px;color:#e6edf3} h2{font-size:15px;color:#58a6ff;margin-top:28px;border-bottom:1px solid #21262d;padding-bottom:6px}
+.file{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#8b949e;margin:4px 0 8px}
+.code{background:#161b22;border:1px solid #30363d;border-radius:8px;overflow:hidden;font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+.ln{display:flex;white-space:pre-wrap}
+.ln .num{width:44px;text-align:right;padding:2px 12px 2px 0;color:#484f58;user-select:none;flex:none;border-right:1px solid #21262d}
+.ln .txt{padding:2px 0 2px 14px;flex:1}
+.ln.add{background:#12261e} .ln.add .txt{color:#7ee787} .ln.add .num{background:#1a3326;color:#3fb950}
+.legend{margin:10px 0 20px;font-size:12px;color:#8b949e}
+.chip{display:inline-block;background:#12261e;color:#7ee787;border-radius:4px;padding:1px 8px;margin-right:6px}
+.note{color:#8b949e;font-size:12.5px;margin:6px 0 0}
+</style></head><body>
+<h1>Recovery hint for a seemingly-dead REMOTE second mate</h1>
+<div class="legend"><span class="chip">green</span>lines added by this change (rest is surrounding context, unchanged)</div>
+<h2>1 &middot; stuck-crewmate-recovery (owner of the note)</h2>
+<div class="file">.agents/skills/stuck-crewmate-recovery/SKILL.md</div>
+<div class="code"><div class="ln "><span class="num">21</span><span class="txt">## Session-start reconciliation for a dead ordinary direct report</span></div>
+<div class="ln "><span class="num">22</span><span class="txt">&nbsp;</span></div>
+<div class="ln "><span class="num">23</span><span class="txt">This procedure covers ordinary `kind=ship` and `kind=scout` direct reports.</span></div>
+<div class="ln "><span class="num">24</span><span class="txt">Load `secondmate-provisioning` instead for `kind=secondmate` recovery.</span></div>
+<div class="ln "><span class="num">25</span><span class="txt">&nbsp;</span></div>
+<div class="ln add"><span class="num">26</span><span class="txt">For a REMOTE secondmate, `fm-crew-state`&#x27;s `unknown`/`worktree gone` and `fm-send`&#x27;s `remote send failed`/`delivery unconfirmed` verdicts are unreliable and routinely false-negative; do not conclude the mate is dead or the send failed from those alone, confirm against the actual remote pane first.</span></div>
+<div class="ln add"><span class="num">27</span><span class="txt">Recover a genuinely stuck remote mate only through `bin/fm-spawn.sh &lt;id&gt; --secondmate`, never raw herdr pane close/kill surgery, which strands the endpoint binding.</span></div>
+<div class="ln "><span class="num">28</span><span class="txt">&nbsp;</span></div>
+<div class="ln "><span class="num">29</span><span class="txt">Treat the digest&#x27;s endpoint result as a presence signal, not proof that the task&#x27;s work or validation run is gone.</span></div>
+<div class="ln "><span class="num">30</span><span class="txt">Read the targeted current state with `bin/fm-crew-state.sh &lt;id&gt;` before deciding to relaunch.</span></div>
+<div class="ln "><span class="num">31</span><span class="txt">A no-mistakes run matched to the crew&#x27;s branch and current code remains authoritative when the endpoint is dead: handle a terminal or parked run through the normal lifecycle, and keep supervising an active run instead of creating a duplicate worker.</span></div></div>
+<p class="note">Point (1): pane is source of truth - fm-crew-state / fm-send verdicts are unreliable and routinely false-negative; confirm against the actual remote pane first.<br>
+Point (2): recover only via <code>bin/fm-spawn.sh &lt;id&gt; --secondmate</code>, never raw herdr pane close/kill surgery, which strands the endpoint binding.<br>
+Placed under the existing "kind=secondmate" pointer - no new section heading, two terse lines matching the one-sentence-per-line style.</p>
+<h2>2 &middot; secondmate-provisioning (one-line back-pointer)</h2>
+<div class="file">.agents/skills/secondmate-provisioning/SKILL.md &mdash; under "## Recovery"</div>
+<div class="code"><div class="ln "><span class="num">211</span><span class="txt">&nbsp;</span></div>
+<div class="ln "><span class="num">212</span><span class="txt">Use the recorded `home=` in meta.</span></div>
+<div class="ln "><span class="num">213</span><span class="txt">If meta is missing but `data/secondmates.md` still registers the secondmate, respawn from the registry entry and its persistent home.</span></div>
+<div class="ln "><span class="num">214</span><span class="txt">For a remote route, the same command probes and relaunches only on the configured host.</span></div>
+<div class="ln "><span class="num">215</span><span class="txt">An SSH transport failure or unreadable remote endpoint remains unknown and must be reconciled on that host; never launch a local replacement.</span></div>
+<div class="ln add"><span class="num">216</span><span class="txt">`stuck-crewmate-recovery`&#x27;s remote-secondmate note owns why the endpoint-dead and send-failed verdicts that seem to justify this are themselves unreliable.</span></div>
+<div class="ln "><span class="num">217</span><span class="txt">Respawn re-resolves the secondmate harness from current config, uses the same guarded pre-launch sync, and re-propagates inherited local material, so recovered secondmates converge inherited config items and shared captain preferences whenever their home validates; tracked-file sync remains guarded separately.</span></div></div>
+<p class="note">One inline pointer (line 216) back to the owning note - no duplicated content (one-owner rule).</p>
+</body></html>
