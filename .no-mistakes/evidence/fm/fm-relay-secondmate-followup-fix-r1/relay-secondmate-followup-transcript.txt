@@ -1,0 +1,36 @@
+Relay public follow-up: second-mate routing fix - end-to-end CLI transcript
+branch: fm/fm-relay-secondmate-followup-fix-r1
+generated: 2026-08-16T04:46:15Z
+
+====================================================================
+SCENARIO A: Relay mention's work routed to second mate 'sm-axi'.
+The lightweight link (fm-x-link) can only bind a task whose meta
+lives in THIS home, so on the routed task it now refuses LOUD and
+names the exact promised-final command to use instead.
+$ bin/fm-x-link.sh routed-k1 req-routed
+--------------------------------------------------------------------
+fm-x-link: no such task: state/routed-k1.meta
+fm-x-link: routed-k1 is a second mate task (found in: sm-axi), so this home cannot link it - a link only binds work whose record lives here.
+fm-x-link: bind the public promise through the promised-final path instead: tasks-axi public-followup add + bind-work, then bin/fm-public-followup.sh register <obligation-id> --relation <relation-id> --work-home secondmate:sm-axi --work-id routed-k1 --generation <n>, and put the bin/fm-public-followup.sh brief <obligation-id> command into the routed worker instructions.
+[exit code: 1]
+====================================================================
+
+====================================================================
+SCENARIO B: A task THIS home owns still links normally, even with
+second mates registered (the local-link path is untouched).
+$ bin/fm-x-link.sh local-k1 req-local
+--------------------------------------------------------------------
+fm-x-link: WARNING: incomplete authoritative reply context for request req-local; every completion follow-up will be HELD until both platform and explicit budget can be resolved. Ensure the relay request-context lookup supplies both values.
+linked local-k1 to X request req-local
+[exit code: 0 -> linked]
+resulting local meta link line: x_request=req-local
+====================================================================
+
+====================================================================
+SCENARIO C: No second mates registered -> plain error preserved,
+no promised-final noise (ordinary typo in a single-home fleet).
+$ bin/fm-x-link.sh no-such req-1
+--------------------------------------------------------------------
+fm-x-link: no such task: state/no-such.meta
+[exit code: 1]
+====================================================================

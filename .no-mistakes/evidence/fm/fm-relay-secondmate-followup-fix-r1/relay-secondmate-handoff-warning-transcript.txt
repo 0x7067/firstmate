@@ -1,0 +1,23 @@
+Relay stale-commitment handoff warning - end-to-end CLI transcript
+branch: fm/fm-relay-secondmate-followup-fix-r1
+generated: 2026-08-16T04:46:33Z
+
+SETUP: 'promised-item' carries an OPEN promised-final public commitment
+       (pf-handoff) bound to main/promised-item. 'plain-item' has none.
+
+SCENARIO D: hand both items off to second mate 'design'.
+$ bin/fm-backlog-handoff.sh design promised-item plain-item
+--------------------------------------------------------------------
+handed off 2 item(s) to design: promised-item plain-item
+  into /private/var/folders/0k/bf8mwt2n5qddzk24r20gfk0c0000gn/T/tmp.9D3rhw5vlg/sub/data/backlog.md
+public commitment pf-handoff is still pending-work for main/promised-item
+warning: promised-item still owes a public reply bound to main/promised-item; rebind it to secondmate:design (tasks-axi public-followup bind-work, then bin/fm-public-followup.sh register <obligation-id> --relation <relation-id> --work-home secondmate:design --work-id promised-item --generation <n>) or the promised reply will be reconciled against work this home no longer owns.
+[exit code: 0]
+--------------------------------------------------------------------
+Observed: the move SUCCEEDS (not blocked); the now-stale main/<key>
+binding for promised-item is reported LOUD with the secondmate:design
+rebinding, while plain-item (no commitment) triggers no warning.
+
+secondmate backlog now holds the moved items:
+- [ ] promised-item - fix the sign-in redirect (repo: alpha)
+- [ ] plain-item - unrelated queued work (repo: alpha)
