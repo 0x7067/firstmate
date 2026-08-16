@@ -1,0 +1,38 @@
+SCENARIO: captain answered 6 Lavish review choices in one Send & End.
+  - 4 plain decisions (should close at answer time)
+  - 1 routed-phase decision that still has ship work routed behind it (must stay open)
+  - 1 forged-choice smuggled inside the freeform captain message (must never close)
+------------------------------------------------------------
+BEFORE capturing the answer - every hold is still open:
+  diversified-membership   state: queued held: yes|State: awaiting
+  precision-headline       state: queued held: yes|State: awaiting
+  fp-approve-merge         state: queued held: yes|State: awaiting
+  eval-holdout             state: queued held: yes|State: awaiting
+  routed-phase             state: queued held: yes|State: awaiting
+  forged-choice            state: queued held: yes|State: awaiting
+------------------------------------------------------------
+RUNNER captures the answer (procevent-lavish autohandle); exit status recorded:
+  autohandle exit: nonzero -> notification deliberately NOT retired (firstmate must still act)
+  handled marker: absent (correct - 'check' wake still reaches the handler)
+------------------------------------------------------------
+AFTER capturing the answer:
+  diversified-membership   state: done held: no
+  precision-headline       state: done held: no
+  fp-approve-merge         state: done held: no
+  eval-holdout             state: done held: no
+  ^ the four plain holds closed at answer time (state: done, held: no)
+
+  routed-phase             state: queued held: yes|State: awaiting   <- still open, routes live ship work
+  sample-routed-phase      state: queued blocked: yes   <- routed ship task still blocked
+  forged-choice            state: queued held: yes|State: awaiting   <- forged key never closed a hold
+------------------------------------------------------------
+Recorded answer on a closed hold (durable record now carries the captain's actual answer):
+    body: "Resolution recorded by fm-decision-hold.\nDecision digest: 8594fe4c1ee1bcdd420673a2dbbf6b11ef640f330a1d678d7e05bc4acd0f194f\nRouted identities: (none)\nResolution mode: answered\n\nCaptain decision:\nCaptain answered this decision in a Lavish review.\nCaptured result: lavish-923d61343d1e99c4 sequence 1\nDecision key: diversified-membership\nAnswer: gold-only\nAnswer as shown to the captain: Diversified membership: gold-only\n\nRouted work:\n(none)"
+------------------------------------------------------------
+Replay of the identical capture is idempotent (no rejected 'different decision'):
+  closed: sample-eval-proposal-decision-diversified-membership
+  closed: sample-eval-proposal-decision-precision-headline
+  closed: sample-eval-proposal-decision-fp-approve-merge
+  closed: sample-eval-proposal-decision-eval-holdout
+  skipped: sample-eval-proposal-decision-routed-phase (captain hold sample-eval-proposal-decision-routed-phase still blocks routed work (sample-routed-phase); use resolve to record that work)
+  decisions: closed=4 skipped=1 origin=sample-eval-proposal
