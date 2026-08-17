@@ -1,0 +1,18 @@
+$ bin/fm-lint-workflows.sh
+fm-lint-workflows.sh: actionlint 1.7.12 (pinned 1.7.12)
+fm-lint-workflows.sh: 3 workflow files valid
+
+Discovered workflow files:
+.github/workflows/ci.yml
+.github/workflows/no-mistakes-required.yml
+.github/workflows/windows-herdr-spike.yml
+
+$ bin/fm-lint.sh  # local/no-mistakes default lane against self-broken ci.yml
+fm-lint.sh: ShellCheck 0.11.0 (pinned 0.11.0)
+fm-lint.sh: no changed lint targets
+fm-lint-workflows.sh: actionlint 1.7.12 (pinned 1.7.12)
+.github/workflows/ci.yml:10:0: could not parse as YAML: could not find expected ':' [syntax-check]
+   |
+10 | EOF
+   | 
+exit status: 1

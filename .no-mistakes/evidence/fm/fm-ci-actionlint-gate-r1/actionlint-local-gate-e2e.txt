@@ -1,0 +1,15 @@
+# End-to-end local lint lane evidence
+## Validating every workflow through bin/fm-lint.sh (no explicit paths)
+fm-lint.sh: ShellCheck 0.11.0 (pinned 0.11.0)
+fm-lint-workflows.sh: actionlint 1.7.12 (pinned 1.7.12)
+fm-lint-workflows.sh: 2 workflow files valid
+exit=0
+
+## Re-running the same local lane with a #2512-class self-broken ci.yml
+fm-lint.sh: ShellCheck 0.11.0 (pinned 0.11.0)
+fm-lint-workflows.sh: actionlint 1.7.12 (pinned 1.7.12)
+.github/workflows/ci.yml:10:0: could not parse as YAML: could not find expected ':' [syntax-check]
+   |
+10 | column-zero-breaks-the-workflow
+   | 
+exit=1 (expected nonzero)
