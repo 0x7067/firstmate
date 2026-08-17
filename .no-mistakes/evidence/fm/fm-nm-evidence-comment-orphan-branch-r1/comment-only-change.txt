@@ -1,0 +1,24 @@
+Reviewer evidence: requested comment-only configuration clarification
+
+Changed-path and patch:
+M	.no-mistakes.yaml
+diff --git a/.no-mistakes.yaml b/.no-mistakes.yaml
+index 219c39b..bf5663d 100644
+--- a/.no-mistakes.yaml
++++ b/.no-mistakes.yaml
+@@ -37,7 +37,8 @@ document:
+ commands:
+   lint: 'bin/fm-lint.sh'
+ 
+-# Store test evidence in this repo so it is committed alongside the change instead of kept in a temp dir.
++# Publish each run's test evidence to the orphan `no-mistakes/evidence` branch, linked from the PR, instead of leaving it in a temp dir.
++# That branch shares no history with code branches, so no evidence is committed onto the change's own branch.
+ test:
+   evidence:
+     store_in_repo: true
+
+Parsed configuration comparison (comments excluded by YAML parser):
+{
+  "semantic_configuration_unchanged": true,
+  "store_in_repo": true
+}
