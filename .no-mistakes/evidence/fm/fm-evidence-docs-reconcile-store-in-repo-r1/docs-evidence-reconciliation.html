@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Firstmate evidence documentation reconciliation</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:1050px;margin:40px auto;padding:0 24px;color:#18202a}h1{margin-bottom:.2em}.ok{color:#176b38;font-weight:700}.card{border:1px solid #ccd4dd;border-radius:10px;padding:18px;margin:18px 0;background:#f8fafc}code,pre{font-family:ui-monospace,SFMono-Regular,monospace}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#111827;color:#eef2ff;padding:16px;border-radius:8px}li{margin:.35em 0}</style></head>
+<body><h1>Test-evidence documentation reconciliation</h1>
+<p class="ok">Focused validation passed.</p>
+<div class="card"><h2>Observable repository contract</h2><ul>
+<li>Parsed <code>.no-mistakes.yaml</code> value: <code>test.evidence.store_in_repo = true</code>.</li>
+<li>The updated public docs consistently explain publication to the orphan <code>no-mistakes/evidence</code> branch, PR linking, and separation from feature/default branch history.</li>
+<li><code>git ls-tree</code> found no tracked <code>.no-mistakes/</code> path on the code branch.</li>
+<li>The changed-path set is documentation only.</li>
+<li>The executable documentation audience/link checker reported <code>ok surfaces=68 local_links=252</code>.</li>
+</ul></div>
+<div class="card"><h2>Changed paths</h2><pre>CONTRIBUTING.md
+docs/architecture.md
+docs/configuration.md
+</pre></div>
+<div class="card"><h2>Reviewer-visible documentation patch</h2><pre>diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 97442a4..cef1f11 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -70 +70 @@ Firstmate&#x27;s wrapper still matters: crewmates route every `ask-user` finding to f
+-Local `.no-mistakes/` state and test evidence stay out of this repo; `.no-mistakes.yaml` keeps evidence in a temp directory and pins the gate&#x27;s lint command to `bin/fm-lint.sh`, matching the Linux CI lint job.
++`.no-mistakes.yaml` publishes test evidence to the orphan `no-mistakes/evidence` branch, which shares no history with code branches, and pins the gate&#x27;s lint command to `bin/fm-lint.sh`, matching the Linux CI lint job.
+@@ -72 +72 @@ Local no-mistakes Test is intent-targeted and must not re-run every `tests/*.tes
+-That is firstmate-specific; do not commit `.no-mistakes/evidence/` here even when another no-mistakes-managed target project keeps committed PR evidence.
++The pipeline publishes that evidence itself, so never hand-commit `.no-mistakes/` paths onto a feature branch; CI rejects them as tracked personal fleet paths.
+diff --git a/docs/architecture.md b/docs/architecture.md
+index b735685..b07da27 100644
+--- a/docs/architecture.md
++++ b/docs/architecture.md
+@@ -247,2 +247,2 @@ When a selected delivery path calls for a diff, `bin/fm-review-diff.sh` refreshe
+-For target project repos shipped through their own no-mistakes pipeline, commits under `.no-mistakes/evidence/` are the pipeline&#x27;s PR-viewable validation evidence and are expected to stay in the crew branch until the evidence-hosting design changes.
+-The firstmate repo itself is the exception: its `.no-mistakes/` directory is local state, stays gitignored, and is rejected by CI if tracked.
++Where a no-mistakes pipeline stores evidence in the repo, it publishes that PR-viewable validation evidence to an orphan evidence branch that shares no history with code branches, so it never enters the crew branch or the default branch.
++This repo uses that setting, and its own `.no-mistakes/` directory remains local state that stays gitignored and is rejected by CI if tracked; [`configuration.md`](configuration.md) owns the setting.
+diff --git a/docs/configuration.md b/docs/configuration.md
+index e4aef1a..415c113 100644
+--- a/docs/configuration.md
++++ b/docs/configuration.md
+@@ -132,2 +132,3 @@ See [`trace-context.md`](trace-context.md) for carrier semantics, supported rout
+-The tracked `.no-mistakes.yaml` keeps test evidence outside the repo and pins `commands.lint` to `bin/fm-lint.sh` so local lint matches CI.
+-That evidence policy is specific to the firstmate repo: target projects may legitimately commit `.no-mistakes/evidence/` from their own no-mistakes pipeline, but firstmate keeps `.no-mistakes/` local and CI rejects tracked entries under that path.
++The tracked `.no-mistakes.yaml` sets `test.evidence.store_in_repo: true` and pins `commands.lint` to `bin/fm-lint.sh` so local lint matches CI.
++Storing evidence in the repo publishes each run&#x27;s test artifacts to the orphan `no-mistakes/evidence` branch and links them from the PR body, instead of keeping them on local disk under the no-mistakes home.
++That branch shares no history with code branches, so evidence never enters a pushed feature branch or the default branch; the worktree&#x27;s `.no-mistakes/` stays local and CI rejects tracked entries under that path.
+</pre></div>
+<div class="card"><h2>Tracked .no-mistakes paths on HEAD</h2><pre>(none)</pre></div>
+</body></html>
