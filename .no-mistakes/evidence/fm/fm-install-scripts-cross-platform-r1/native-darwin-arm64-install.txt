@@ -1,0 +1,17 @@
+Native cross-platform installer verification
+Host: Darwin arm64
+
+$ bin/fm-install-shellcheck.sh <destination>
+ShellCheck - shell script analysis tool
+version: 0.11.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+Installed ShellCheck version: 0.11.0
+Gate-required ShellCheck version: 0.11.0
+
+$ bin/fm-install-actionlint.sh <destination>
+1.7.12
+installed by downloading from release page
+built with go1.26.1 compiler for darwin/arm64
+Installed actionlint version: 1.7.12
+Gate-required actionlint version: 1.7.12
