@@ -1,0 +1,25 @@
+# Workflow-YAML validation gate - E2E evidence
+
+## 1. All current workflows pass (no false positives)
+fm-lint-workflows.sh: 3 workflow files valid
+  exit=0
+
+## 2. Reproduce #2512 gap on the REAL ci.yml: inject a column-0 heredoc body inside a run: block
+(injected the #2512-class col-0 heredoc into a copy of the real ci.yml)
+fm-lint-workflows.sh: invalid YAML in /var/folders/0k/bf8mwt2n5qddzk24r20gfk0c0000gn/T/tmp.TOg5JXQTfe/.github/workflows/ci.yml: found character that cannot start any token at line 22 column 1
+  exit=1  <-- self-broken ci.yml is CAUGHT with a clear line/column error
+
+## 3. Focused test suites
+ok - current .github/workflows YAML files parse
+ok - column-0 heredoc workflow fails validation with a clear error
+ok - valid fixture workflow passes
+ok - empty workflows directory fails closed
+ok - explicit malformed workflow path fails validation
+ok - non-mapping workflow YAML root fails
+ok - missing ruby fails closed
+ok - fm-lint.sh default path catches a self-broken ci.yml
+  (fm-lint-workflows.test.sh rc=0)
+
+## 4. no-mistakes/local default path integration (bin/fm-lint.sh) still validates workflows
+ok - fm-lint.sh exits 0 with a note when the local branch has no changed lint targets
+  (fm-lint.test.sh full rc=0)
