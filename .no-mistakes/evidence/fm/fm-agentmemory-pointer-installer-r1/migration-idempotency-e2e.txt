@@ -1,0 +1,10 @@
+===== Migration: existing correct CLAUDE.md->AGENTS.md symlink -> real pointer =====
+-- before: lrwxr-xr-x@ <repo>/CLAUDE.md -> AGENTS.md
+-- run 1:  updated: added ## Maintaining this file to AGENTS.md and wrote CLAUDE.md @AGENTS.md pointer in /private<repo>
+-- after:  REGULAR FILE ; payload preserved: YES
+-- run 2:  unchanged: AGENTS.md with CLAUDE.md @AGENTS.md pointer in /private<repo>   <- clean no-op
+
+===== Idempotency: three consecutive runs on a fresh repo =====
+-- run 1: created: AGENTS.md and CLAUDE.md @AGENTS.md pointer in /private<repo>
+-- run 2: unchanged: AGENTS.md with CLAUDE.md @AGENTS.md pointer in /private<repo>
+-- run 3: unchanged: AGENTS.md with CLAUDE.md @AGENTS.md pointer in /private<repo>

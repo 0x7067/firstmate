@@ -1,0 +1,34 @@
+############################################################
+# E2E: agent-memory installer footgun fix
+# A stray agent Write aimed at CLAUDE.md must NOT destroy AGENTS.md
+############################################################
+
+===== SCENARIO A: OLD installer (base commit) - the footgun =====
+-- After OLD installer, CLAUDE.md is:
+lrwxr-xr-x@ 1 kunchen  staff  9 Aug 16 20:30 <repo>/CLAUDE.md -> AGENTS.md
+   => SYMLINK (dangerous)
+-- An agent now does: echo 'stray note' > CLAUDE.md
+-- AGENTS.md contents afterward:
+stray note
+   RESULT: *** AGENTS.md DESTROYED - knowledge clobbered via symlink ***
+
+===== SCENARIO B: NEW installer (target commit) - the fix =====
+-- After NEW installer, CLAUDE.md is:
+-rw-r--r--@ 1 kunchen  staff  90 Aug 16 20:30 <repo>/CLAUDE.md
+   => REGULAR FILE (safe pointer)
+-- CLAUDE.md contents (the canonical @AGENTS.md import pointer):
+<!-- Points Claude at AGENTS.md via import; edit AGENTS.md, not this file. -->
+@AGENTS.md
+-- An agent now does the same stray: echo 'stray note' > CLAUDE.md
+-- AGENTS.md contents afterward:
+# Project memory
+
+CRITICAL: 1488 lines of hard-won knowledge live here.
+
+## Maintaining this file
+
+Keep this file for knowledge useful to almost every future agent session in this project.
+Do not repeat what the codebase already shows; point to the authoritative file or command instead.
+Prefer rewriting or pruning existing entries over appending new ones.
+When updating this file, preserve this bar for all agents and keep entries concise.
+   RESULT: AGENTS.md INTACT - stray write only clobbered the recoverable one-liner
