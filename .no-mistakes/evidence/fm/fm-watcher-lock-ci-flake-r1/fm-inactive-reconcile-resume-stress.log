@@ -1,0 +1,13 @@
+iteration=01 ok - stalled state reads are bounded without starving later children
+iteration=02 ok - stalled state reads are bounded without starving later children
+iteration=03 ok - stalled state reads are bounded without starving later children
+iteration=04 ok - stalled state reads are bounded without starving later children
+iteration=05 ok - stalled state reads are bounded without starving later children
+iteration=06 ok - stalled state reads are bounded without starving later children
+iteration=07 ok - stalled state reads are bounded without starving later children
+iteration=08 ok - stalled state reads are bounded without starving later children
+iteration=09 ok - stalled state reads are bounded without starving later children
+iteration=10 ok - stalled state reads are bounded without starving later children
+iteration=11 ok - stalled state reads are bounded without starving later children
+iteration=12 ok - stalled state reads are bounded without starving later children
+result=12/12 bounded scans resumed at child b and persisted its wake

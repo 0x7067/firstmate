@@ -1,0 +1,9 @@
+aligned_iteration=01 ok - stalled state reads are bounded without starving later children
+aligned_iteration=02 ok - stalled state reads are bounded without starving later children
+aligned_iteration=03 ok - stalled state reads are bounded without starving later children
+aligned_iteration=04 ok - stalled state reads are bounded without starving later children
+aligned_iteration=05 ok - stalled state reads are bounded without starving later children
+aligned_iteration=06 ok - stalled state reads are bounded without starving later children
+aligned_iteration=07 ok - stalled state reads are bounded without starving later children
+aligned_iteration=08 ok - stalled state reads are bounded without starving later children
+result=8/8 follow-up scans started at the 940ms boundary hot spot and persisted child b wake
