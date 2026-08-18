@@ -1,0 +1,26 @@
+Remote secondmate end-user behavior (real executables, stubbed FM_SSH_BIN)
+
+$ fm-send.sh rsm "please rename the metric"  # remote leg returns delivered-unconfirmed (3)
+fm-send: delivered to remote secondmate rsm; the remote pane accepted the text and Enter, and only the synchronous submit confirmation is still pending. This is not a failure - do not resend; the pending-reply expectation stays armed.
+exit=0
+pending-reply phase=awaiting_report delivered_epoch_set=yes
+
+$ fm-send.sh rsm "please rename the metric"  # genuine remote failure
+error: remote endpoint metadata invalid
+error: text not sent to remote:rsm (remote send failed; tried meta=/var/folders/0k/bf8mwt2n5qddzk24r20gfk0c0000gn/T//fm-remote-evidence.8zRjuw/home/state/rsm.meta; placement=remote)
+exit=1
+
+$ fm-send.sh rsm "please rename the metric"  # SSH transport exit 255
+error: text delivery to remote secondmate rsm is unknown; do not resend - same-host reconciliation is required
+exit=1
+pending-reply phase=delivery_unknown
+
+$ fm-crew-state.sh rsm  # remote endpoint says alive; worktree does not exist locally
+state: unknown · source: remote-endpoint · alive on remote-mac (an idle secondmate is healthy)
+
+$ fm-crew-state.sh rsm  # remote transport unreachable
+state: unknown · source: remote-endpoint · unknown-remote: remote-mac unreachable or endpoint unreadable (not proof of death)
+
+$ fm-peek.sh rsm 20
+● remote mate is applying the requested refactor
+local-adapter-check=PASS (poisoned local tmux was never consulted)
