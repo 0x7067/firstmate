@@ -1,0 +1,9 @@
+run=1 status=PASS crashed-leader=1 duplicate-start=1 publish-recovery=1 self-announcing=1
+run=2 status=PASS crashed-leader=1 duplicate-start=1 publish-recovery=1 self-announcing=1
+run=3 status=PASS crashed-leader=1 duplicate-start=1 publish-recovery=1 self-announcing=1
+run=4 status=PASS crashed-leader=1 duplicate-start=1 publish-recovery=1 self-announcing=1
+run=5 status=PASS crashed-leader=1 duplicate-start=1 publish-recovery=1 self-announcing=1
+run=6 status=PASS crashed-leader=1 duplicate-start=1 publish-recovery=1 self-announcing=1
+run=7 status=PASS crashed-leader=1 duplicate-start=1 publish-recovery=1 self-announcing=1
+run=8 status=PASS crashed-leader=1 duplicate-start=1 publish-recovery=1 self-announcing=1
+concurrent_runs=8 failed=0 elapsed_seconds=173
