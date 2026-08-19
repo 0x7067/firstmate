@@ -1,0 +1,3 @@
+not ok - a declared pause on a busy review pane was escalated: stale: test:fm-review-scout (idle 503s, possible wedge, escalation 1)
+
+expected regression-test exit code against base: 1

@@ -1,0 +1,15 @@
+PHASE A — live busy pane with declared pause
+watcher stdout: 
+paused cadence marker: present
+wedge timer: absent
+escalation counter: absent
+
+PHASE B — same declared pause beyond long cadence
+watcher stdout: stale: test:fm-review-scout (paused 503s, awaiting external - declared pause, rechecked on a long cadence not a wedge; confirm the wait still holds)
+resurface throttle: present
+wedge timer: absent
+
+PHASE C — declaration lifted on same live busy pane
+watcher stdout: stale: test:fm-review-scout (idle 501s, possible wedge, escalation 1)
+escalation counter: 1
+ok - a busy pane under a declared pause is rechecked on the long cadence, and lifting the pause restores the wedge escalation
