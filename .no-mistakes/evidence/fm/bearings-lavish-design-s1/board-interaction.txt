@@ -1,0 +1,2 @@
+Before queue: Choose the release course (card 1 of 3)
+After queue: Merge: responsive chart renderer (card 2 of 3 · 1 answered)

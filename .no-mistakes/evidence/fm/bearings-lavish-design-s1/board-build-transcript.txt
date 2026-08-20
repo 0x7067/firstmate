@@ -1,0 +1,4 @@
+board: /tmp/fm-board-evidence.h0dZZF/.lavish/bearings-board.html
+served: /tmp/fm-board-evidence.h0dZZF/.lavish/bearings-board.html
+bound: lavish-dfb77f484347927e (any-origin)
+armed: lavish-dfb77f484347927e
