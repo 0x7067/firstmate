@@ -1,0 +1,5 @@
+board: /Users/kunchen/.no-mistakes/evidence/01M0H24VCCRR13PY9GPFMV7RPD/board-home/.lavish/bearings-board.html
+session: local-evidence
+served: /Users/kunchen/.no-mistakes/evidence/01M0H24VCCRR13PY9GPFMV7RPD/board-home/.lavish/bearings-board.html
+bound: lavish-ca2ffd182913997a
+armed: lavish-ca2ffd182913997a

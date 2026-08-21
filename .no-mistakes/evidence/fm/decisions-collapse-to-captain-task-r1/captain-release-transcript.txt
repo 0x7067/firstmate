@@ -1,0 +1,45 @@
+$ fm-captain-hold.sh hold sample-deploy-gate --reason "captain must choose deployment window"
+sample-deploy-gate
+
+$ tasks-axi show sample-deploy-gate  # before answer
+task:
+  id: sample-deploy-gate
+  title: Deploy the release
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: yes
+  hold_reason: captain must choose deployment window
+  hold_kind: captain
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-08-21
+  closed: "-"
+  deps: none
+  links: none
+  body: Preserve this deployment plan after the captain answers.
+
+$ fm-captain-hold.sh answer sample-deploy-gate --decision-file answer.txt --release
+released: sample-deploy-gate
+
+$ tasks-axi show sample-deploy-gate  # after answer
+task:
+  id: sample-deploy-gate
+  title: Deploy the release
+  state: queued
+  blocked: no
+  blocked_by: none
+  held: no
+  hold_reason: "-"
+  hold_kind: "-"
+  hold_until: "-"
+  kind: ship
+  repo: sample
+  priority: "-"
+  created: 2026-08-21
+  closed: "-"
+  deps: none
+  links: none
+  body: "Resolution recorded by fm-captain-hold.\nDecision digest: 155ae96a8a19c32db07d2c5a2dec5c23cd50b26727b431110182f51dd186e487\nResolution mode: released\n\nCaptain decision:\nMorning tide. Proceed with the deployment plan.\n\nPreserve this deployment plan after the captain answers."

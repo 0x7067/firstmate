@@ -1,0 +1,33 @@
+{
+  "schema": "fm-bearings-board.v1",
+  "home": "firstmate",
+  "generated": "2026-08-21T00:58Z",
+  "prs_live": false,
+  "captains_call": [
+    {
+      "key": "sample-deploy-gate",
+      "type": "decision",
+      "repo": "sample",
+      "title": "Choose the deployment window",
+      "about": "This ordinary work task is held for the captain until he chooses. Answering releases the work item instead of completing it.",
+      "decide": "When should the crew deploy?",
+      "options": [
+        {"value": "morning", "label": "Morning tide", "hint": "recommended"},
+        {"value": "evening", "label": "Evening tide"}
+      ],
+      "allow_freeform": true,
+      "recommend_value": "morning",
+      "close": "release"
+    }
+  ],
+  "underway": [
+    {"id": "sample-build", "repo": "sample", "state": "working", "doing": "Preparing release candidate", "kind": "ship"}
+  ],
+  "landed": [
+    {"id": "sample-fix", "repo": "sample", "what": "Fixed route validation", "owner": "firstmate"}
+  ],
+  "charted": [
+    {"id": "sample-later-gate", "repo": "sample", "title": "Review launch wording", "reason": "until 2026-08-25: captain asked to revisit later", "dispatchable": false}
+  ],
+  "charted_more": 0
+}
