@@ -1,0 +1,25 @@
+{
+  "schema": "fm-bearings-board.v1",
+  "home": "captain@firstmate",
+  "generated": "2026-08-20T12:00:00Z",
+  "prs_live": true,
+  "captains_call": [
+    {
+      "key": "fm-board-ui-decision-review",
+      "type": "decision",
+      "repo": "firstmate",
+      "title": "Choose the board wake treatment",
+      "about": "The stale decision should leave Captain's Call without affecting routed work.",
+      "decide": "Which handling should First Mate use?",
+      "options": [
+        {"value": "close-only", "label": "Close the hold only", "hint": "Keep dependent tasks queued independently"},
+        {"value": "keep-open", "label": "Keep asking", "hint": "Leave the hold in Captain's Call"}
+      ],
+      "recommend_value": "close-only"
+    }
+  ],
+  "underway": [],
+  "landed": [],
+  "charted": [],
+  "charted_more": 0
+}

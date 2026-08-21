@@ -1,0 +1,15 @@
+{
+  "cardClass": "fm-card fm-card--poster bb-decision is-queued",
+  "queuedText": "queued",
+  "captured": [
+    {
+      "prompt": "Captain's Call answer - Choose the board wake treatment: __drop__",
+      "tag": "choice",
+      "text": "Choose the board wake treatment -> __drop__",
+      "data": {
+        "question": "fm-board-ui-decision-review",
+        "answer": "__drop__"
+      }
+    }
+  ]
+}
