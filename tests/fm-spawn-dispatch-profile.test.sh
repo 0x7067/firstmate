@@ -76,6 +76,7 @@ SH
   chmod +x "$fakebin/timeout" "$fakebin/cursor-agent"
   make_spawn_pi_probe "$fakebin" pi
   make_spawn_pi_probe "$fakebin" pi-signed
+  make_spawn_pi_probe "$fakebin" prime-agent
   printf '%s\n' "$fakebin"
 }
 
@@ -665,6 +666,45 @@ test_pi_signed_threads_shared_pi_profile_and_preserves_identity() {
   pass "pi-signed shares Pi launch semantics while preserving its configured and recorded identity"
 }
 
+test_prime_agent_threads_model_thinking_and_semantic_extension() {
+  local rec id out status launch ext gen
+  id=profile-prime-agent-z8c
+  rec=$(make_spawn_case profile-prime-agent prime-agent "$id")
+  read_case_record "$rec"
+
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" \
+    --model deepseek-v4-flash --effort max)
+  status=$?
+  expect_code 0 "$status" "prime-agent spawn with model and max effort should succeed"
+  assert_contains "$out" "spawned $id harness=prime-agent" \
+    "prime-agent spawn did not preserve its adapter identity"
+  assert_meta_profile "$HOME_DIR/state/$id.meta" prime-agent deepseek-v4-flash max
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" "'$FAKEBIN_DIR/prime-agent' --model 'deepseek-v4-flash' --thinking 'max' -e '$HOME_DIR/state/$id.prime-ext.ts'" \
+    "prime-agent launch dropped its model, thinking, or explicit extension flag"
+  assert_contains "$launch" "fm-operational-input.sh' encode launch-brief" \
+    "prime-agent launch lost the canonical typed launch-brief envelope"
+  assert_present "$HOME_DIR/state/$id.prime-ext.ts" \
+    "prime-agent launch did not install its semantic lifecycle extension"
+  assert_present "$HOME_DIR/state/$id.busy-gen" \
+    "prime-agent spawn did not arm the busy-state contract"
+  ext=$(cat "$HOME_DIR/state/$id.prime-ext.ts")
+  gen=$(cat "$HOME_DIR/state/$id.busy-gen")
+  assert_contains "$ext" 'prime.on("agent_start"' \
+    "Prime extension lost its verified agent_start busy edge"
+  assert_contains "$ext" 'prime.on("agent_end"' \
+    "Prime extension lost its verified agent_end idle edge"
+  assert_not_contains "$ext" 'agent_settled' \
+    "Prime extension trusts Pi's unobserved agent_settled event"
+  assert_contains "$ext" 'prime.on("turn_end"' \
+    "Prime extension lost its turn-end notification touch"
+  assert_contains "$ext" '"--source", "prime-ext"' \
+    "Prime extension does not attribute its own semantic source"
+  assert_contains "$ext" "\"--gen\", \"$gen\"" \
+    "Prime extension does not carry the armed incarnation gen"
+  pass "prime-agent receives --model, --thinking, and its verified semantic extension"
+}
+
 test_pi_tui_mode_probe_is_safe_for_old_and_new_pi() {
   local harness version rec id out status launch
   for harness in pi pi-signed; do
@@ -850,6 +890,7 @@ test_opencode_threads_model_and_ignores_effort_axis
 test_pi_threads_model_and_max_effort
 test_pi_tui_mode_probe_is_safe_for_old_and_new_pi
 test_pi_signed_threads_shared_pi_profile_and_preserves_identity
+test_prime_agent_threads_model_thinking_and_semantic_extension
 test_pi_signed_missing_binary_refuses_before_endpoint_or_metadata
 test_pi_signed_persistent_secondmate_uses_pi_extensions_and_identity
 test_batch_forwards_shared_profile_flags
