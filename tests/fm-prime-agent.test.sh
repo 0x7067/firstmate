@@ -39,7 +39,7 @@ chmod +x "$FAKEBIN/ps"
 
 detect() {
   env -u CLAUDECODE -u GROK_AGENT PATH="$FAKEBIN:$BASE_PATH" \
-    PI_CODING_AGENT=true FM_TEST_PRIME_SHAPE=$1 "$ROOT/bin/fm-harness.sh"
+    PI_CODING_AGENT=true FM_TEST_PRIME_SHAPE="$1" "$ROOT/bin/fm-harness.sh"
 }
 
 got=$(detect exact)
