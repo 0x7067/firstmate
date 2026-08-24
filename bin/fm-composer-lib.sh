@@ -311,11 +311,12 @@ fm_composer_strip_ghost() {
 # part of that union for the same reason the others are: without it a cursor
 # submit could never be acknowledged, because cursor parks its terminal cursor
 # outside its composer and the composer verdict is therefore always `unknown`.
-FM_DELIVERY_BUSY_REGEX_DEFAULT='esc (to )?interrupt|Working\.\.\.|Ctrl\+c:cancel|ctrl\+c to stop'
+FM_DELIVERY_BUSY_REGEX_DEFAULT='esc (to )?interrupt|Working\.\.\.|Ctrl\+c:cancel|ctrl\+c to stop|(Thinking|Waiting|Executing)[[:space:]]+·[[:space:]]+[0-9]+[smh]'
 FM_DELIVERY_CLAUDE_BUSY_REGEX_DEFAULT='esc to interrupt|…[[:space:]]+\([0-9]+[smh]'
 FM_DELIVERY_CODEX_BUSY_REGEX_DEFAULT='esc to interrupt'
 FM_DELIVERY_OPENCODE_BUSY_REGEX_DEFAULT='esc interrupt'
 FM_DELIVERY_PI_BUSY_REGEX_DEFAULT='Working\.\.\.'
+FM_DELIVERY_PRIME_BUSY_REGEX_DEFAULT='(Thinking|Waiting|Executing)[[:space:]]+·[[:space:]]+[0-9]+[smh]'
 FM_DELIVERY_GROK_BUSY_REGEX_DEFAULT='Ctrl\+c:cancel'
 # cursor-agent's busy footer. The TOKEN is matched, not the spinner verb: the
 # same version rendered both `Working` and `Running` beside its braille spinner
@@ -338,6 +339,7 @@ fm_busy_lines_match() {  # [harness]
       codex) regex=$FM_DELIVERY_CODEX_BUSY_REGEX_DEFAULT ;;
       opencode) regex=$FM_DELIVERY_OPENCODE_BUSY_REGEX_DEFAULT ;;
       pi|pi-signed) regex=$FM_DELIVERY_PI_BUSY_REGEX_DEFAULT ;;
+      prime-agent) regex=$FM_DELIVERY_PRIME_BUSY_REGEX_DEFAULT ;;
       grok) regex=$FM_DELIVERY_GROK_BUSY_REGEX_DEFAULT ;;
       kimi) regex=$FM_DELIVERY_KIMI_BUSY_REGEX_DEFAULT ;;
       cursor) regex=$FM_DELIVERY_CURSOR_BUSY_REGEX_DEFAULT ;;

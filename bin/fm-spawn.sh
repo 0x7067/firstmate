@@ -104,7 +104,7 @@
 #   profile consultation. A --secondmate spawn is exempt and resolves the SECONDMATE
 #   harness (config/secondmate-harness -> config/crew-harness -> own), so the
 #   secondmate-vs-crewmate split is DURABLE across every respawn (recovery,
-#   /updatefirstmate, restart). A bare adapter name (claude|codex|opencode|pi|pi-signed|grok|kimi|cursor|muse)
+#   /updatefirstmate, restart). A bare adapter name (claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|cursor|muse)
 #   overrides it for this spawn (either kind). A non-flag string containing
 #   whitespace is treated as a RAW launch command - the escape hatch for verifying
 #   new adapters. For pi and pi-signed, fm-spawn resolves the selected executable
@@ -113,6 +113,8 @@
 #   a failed or inconclusive probe omits it so older Pi versions remain launchable.
 #   A missing selected executable refuses before endpoint creation, and pi-signed
 #   never falls back to pi.
+#   For prime-agent, fm-spawn likewise resolves and launches one concrete PATH
+#   executable, without Pi's version-dependent --tui-mode probe.
 #   config/secondmate-harness may also carry an optional model and effort as extra
 #   whitespace-separated tokens ("<harness> [<model>] [<effort>]"). For a
 #   --secondmate spawn, those tokens apply only when this spawn also resolves its
@@ -168,7 +170,7 @@
 # plus a gitignored .fm-grok-turnend worktree pointer and a state token.
 # muse installs no hook at all - its plugin engine is off in the default build - so
 # it writes state/<id>.muse-session to bind the pane to muse's own session event
-# log; muse is crewmate/scout only and is refused for --secondmate.
+# log; prime-agent and muse are crewmate/scout only and are refused for --secondmate.
 # cursor installs no per-task hook either: it writes state/<id>.cursor-session to
 # bind the pane to cursor's own conversation transcript (projects root, the exact
 # workspace path cursor records in .workspace-trusted, and the conversations that
@@ -1046,7 +1048,7 @@ if [ "$RELAUNCH" -eq 1 ]; then
   }
 elif [ "$KIND" = secondmate ]; then
   case "${POS[1]:-}" in
-    ''|claude|codex|opencode|pi|pi-signed|grok|kimi|cursor|muse)
+    ''|claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|cursor|muse)
       ARG3=${POS[1]:-}
       ;;
     *' '*)
@@ -1074,7 +1076,7 @@ shell_quote() {
   printf "'"
 }
 
-resolve_pi_executable() {
+resolve_pi_family_executable() {
   local candidate dir
   candidate=$(type -P -- "$1" 2>/dev/null) || return 1
   [ -x "$candidate" ] || return 1
@@ -1127,6 +1129,9 @@ launch_template() {
       else
         printf '%s' ' __MODELFLAG____EFFORTFLAG__-e __PIEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"'
       fi
+      ;;
+    prime-agent)
+      printf '%s' '__PRIMEBIN__ __MODELFLAG____EFFORTFLAG__-e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"'
       ;;
     # grok (Grok Build TUI): a positional prompt starts the supervised interactive
     # session. --always-approve auto-approves every tool execution (verified: the
@@ -1216,20 +1221,20 @@ case "$ARG3" in
     ;;
 esac
 
-# muse is verified as a CREWMATE/SCOUT adapter only. A secondmate is a firstmate
+# muse and prime-agent are verified as CREWMATE/SCOUT adapters only. A secondmate is a firstmate
 # instance, so it needs a primary supervision protocol; muse has none, and its
 # Claude-compatible hook dialect explicitly rejects the model-reawakening and
 # asyncRewake handlers that firstmate's primary turn-end supervision is built on
 # (muse 0.1.0-R708.1). Refusing here keeps that gap loud instead of standing up a
 # secondmate whose supervision cycle could never be armed.
-if [ "$KIND" = secondmate ] && [ "$HARNESS" = muse ]; then
-  echo "error: muse is a verified crewmate/scout adapter only and cannot run a secondmate; it has no primary supervision protocol. Select a harness verified for secondmates." >&2
+if [ "$KIND" = secondmate ] && { [ "$HARNESS" = muse ] || [ "$HARNESS" = prime-agent ]; }; then
+  echo "error: $HARNESS is a verified crewmate/scout adapter only and cannot run a secondmate; it has no verified primary supervision protocol. Select a harness verified for secondmates." >&2
   exit 1
 fi
 
 case "$HARNESS" in
   pi|pi-signed)
-    PI_BIN=$(resolve_pi_executable "$HARNESS") || {
+    PI_BIN=$(resolve_pi_family_executable "$HARNESS") || {
       echo "error: $HARNESS executable not found on PATH; install it or select a different verified harness" >&2
       exit 1
     }
@@ -1239,6 +1244,12 @@ case "$HARNESS" in
     fi
     LAUNCH=${LAUNCH//__PITUIMODE__/$PI_TUI_MODE}
     LAUNCH="FM_PI_HARNESS=$HARNESS $LAUNCH"
+    ;;
+  prime-agent)
+    PRIME_BIN=$(resolve_pi_family_executable prime-agent) || {
+      echo "error: prime-agent executable not found on PATH; install it or select a different verified harness" >&2
+      exit 1
+    }
     ;;
   cursor)
     # `cursor` is not the CLI name, and the legacy alias `agent` is far too
@@ -1361,7 +1372,7 @@ model_flag_for_harness() {
   local harness=$1 model=$2
   [ -n "$model" ] && [ "$model" != default ] || return 0
   case "$harness" in
-    claude|codex|opencode|pi|pi-signed|grok|kimi|cursor|muse)
+    claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|cursor|muse)
       printf -- '--model %s ' "$(shell_quote "$model")"
       ;;
   esac
@@ -1393,9 +1404,10 @@ effort_flag_for_harness() {
         low|medium|high) printf -- '--reasoning-effort %s ' "$(shell_quote "$effort")" ;;
       esac
       ;;
-    pi|pi-signed)
-      # Pi 0.80.6 accepts the full shared effort vocabulary, including max, through
-      # its --thinking flag.
+    pi|pi-signed|prime-agent)
+      # Pi 0.80.6 and Prime Agent 0.8.0 accept the full shared effort vocabulary,
+      # including max, through --thinking. Prime also accepts off and minimal,
+      # which sit outside Firstmate's shared dispatch axis and are not remapped.
       case "$effort" in
         low|medium|high|xhigh|max) printf -- '--thinking %s ' "$(shell_quote "$effort")" ;;
       esac
@@ -2319,7 +2331,7 @@ if [ "$KIND" != secondmate ]; then
       ;;
   esac
   case "$HARNESS" in
-    claude*|opencode*|pi|pi-signed)
+    claude*|opencode*|pi|pi-signed|prime-agent)
       BUSY_GEN=$("$FM_ROOT/bin/fm-busy-event.sh" arm "$STATE_REAL" "$ID") || {
         echo "error: failed to arm the busy-state contract for $ID" >&2
         exit 1
@@ -2443,6 +2455,28 @@ export default function (pi: any) {
     return busyEvent("idle", "agent-settled");
   });
   pi.on("turn_end", () => execFile("touch", ["$TURNEND"]));
+}
+EOF
+      ;;
+    prime-agent)
+      # Prime accepts Pi-style explicit -e extensions outside the project
+      # without a trust dialog. Prime 0.8.0 emits agent_end rather than Pi's
+      # agent_settled, so that verified lifecycle edge closes the busy record.
+      cat > "$STATE/$ID.prime-ext.ts" <<EOF
+// Firstmate semantic busy-state events + turn-end notification for Prime Agent;
+// written by fm-spawn under the contract owned by bin/fm-busy-lib.sh.
+import { execFile } from "node:child_process";
+const busyEvent = (state: string, event: string) =>
+  new Promise<void>((resolve) => {
+    execFile("$FM_ROOT/bin/fm-busy-event.sh", [
+      "apply", "$STATE_REAL", "$ID", state,
+      "--gen", "$BUSY_GEN", "--source", "prime-ext", "--event", event,
+    ], () => resolve());
+  });
+export default function (prime: any) {
+  prime.on("agent_start", () => busyEvent("busy", "agent-start"));
+  prime.on("agent_end", () => busyEvent("idle", "agent-end"));
+  prime.on("turn_end", () => execFile("touch", ["$TURNEND"]));
 }
 EOF
       ;;
@@ -2708,6 +2742,7 @@ fi
 sq_brief=$(shell_quote "$BRIEF")
 sq_turnend=$(shell_quote "$TURNEND")
 sq_piext=$(shell_quote "$STATE/$ID.pi-ext.ts")
+sq_primeext=$(shell_quote "$STATE/$ID.prime-ext.ts")
 sq_piturnend=$(shell_quote "$PROJ_ABS/.pi/extensions/fm-primary-turnend-guard.ts")
 sq_piwatch=$(shell_quote "$PROJ_ABS/.pi/extensions/fm-primary-pi-watch.ts")
 sq_opinput=$(shell_quote "$FM_ROOT/bin/fm-operational-input.sh")
@@ -2719,16 +2754,18 @@ LAUNCH=${LAUNCH//__EFFORTFLAG__/$EFFORTFLAG}
 LAUNCH=${LAUNCH//__BRIEF__/$sq_brief}
 LAUNCH=${LAUNCH//__TURNEND__/$sq_turnend}
 LAUNCH=${LAUNCH//__PIEXT__/$sq_piext}
+LAUNCH=${LAUNCH//__PRIMEEXT__/$sq_primeext}
 LAUNCH=${LAUNCH//__PITURNEND__/$sq_piturnend}
 LAUNCH=${LAUNCH//__PIWATCH__/$sq_piwatch}
 LAUNCH=${LAUNCH//__OPINPUT__/$sq_opinput}
 case "$HARNESS" in
   pi|pi-signed) LAUNCH=${LAUNCH//__PIBIN__/"$(shell_quote "$PI_BIN")"} ;;
+  prime-agent) LAUNCH=${LAUNCH//__PRIMEBIN__/"$(shell_quote "$PRIME_BIN")"} ;;
   cursor) LAUNCH=${LAUNCH//__CURSORBIN__/"$(shell_quote "$CURSOR_BIN")"} ;;
 esac
 LAUNCH=${LAUNCH//__WORKTREE__/$sq_worktree}
 case "$HARNESS" in
-  claude|codex|opencode|pi|pi-signed|grok|kimi|muse)
+  claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|muse)
     LAUNCH="env -u CURSOR_AGENT -u CURSOR_INVOKED_AS $LAUNCH"
     ;;
 esac

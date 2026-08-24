@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Detect the agent harness this process tree runs on.
-# Usage: fm-harness.sh                  print own harness: claude|codex|opencode|pi|pi-signed|grok|kimi|cursor|muse|unknown
+# Usage: fm-harness.sh                  print own harness: claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|cursor|muse|unknown
 #        fm-harness.sh crew             print the effective CREWMATE harness
 #                                        (config/crew-harness; "default" resolves to own)
 #        fm-harness.sh secondmate       print the harness the PRIMARY uses to launch
@@ -18,8 +18,9 @@
 # harness only, no model/effort. Only the first non-empty, non-comment line is parsed.
 # Model/effort come ONLY from this file - config/crew-harness stays a bare adapter
 # name and is never parsed for a model.
-# Detection layers: verified environment markers first, then process ancestry.
-# Record each newly verified env marker here.
+# Detection layers: unambiguous environment markers first, narrow ancestry
+# disambiguation for shared markers, then the remaining markers and ancestry.
+# Record each newly verified identity signal here.
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -31,8 +32,8 @@ CONFIG="${FM_CONFIG_OVERRIDE:-$FM_HOME/config}"
 . "$SCRIPT_DIR/fm-cursor-lib.sh"
 
 detect_own() {
-  # Layer 1: environment markers for verified harnesses.
-  # Keep marker detection before ancestry detection as an explicit precedence rule.
+  # Layer 1: unambiguous environment markers for verified harnesses, followed
+  # by narrow ancestry disambiguation before any shared marker fallback.
   # Claude, Pi, Grok, and Cursor set verified markers of their own; codex,
   # opencode, Kimi, and Muse are markerless, so a foreign marker retained in a terminal
   # multiplexer's stored environment can silently misidentify one of them before
@@ -50,6 +51,33 @@ detect_own() {
   # CURSOR_AGENT=1 is set for the child/tool processes this script runs as.
   [ "${CURSOR_AGENT:-}" = "1" ] && { echo cursor; return; }
   [ "${CURSOR_INVOKED_AS:-}" = "cursor-agent" ] && { echo cursor; return; }
+  # Prime Agent deliberately shares Pi's PI_CODING_AGENT=true marker and also
+  # reports AI_AGENT=pi, so neither variable can identify it. Its executable
+  # identity is the exact prime-agent name (or that package path under a bare
+  # node interpreter). Check that narrow ancestry fact BEFORE Pi's shared
+  # marker fallback or every Prime child/tool process is misreported as pi.
+  local prime_pid=$$ prime_comm prime_base prime_args
+  for _ in 1 2 3 4 5 6 7 8; do
+    prime_comm=$(ps -o comm= -p "$prime_pid" 2>/dev/null) || break
+    prime_base=${prime_comm##*/}
+    prime_base=${prime_base#-}
+    if [ "$prime_base" = prime-agent ]; then
+      echo prime-agent
+      return
+    fi
+    case "$prime_base" in
+      node*)
+        prime_args=$(ps -o args= -p "$prime_pid" 2>/dev/null)
+        case "$prime_args" in
+          *'/prime-agent/'*) echo prime-agent; return ;;
+        esac
+        ;;
+    esac
+    prime_pid=$(ps -o ppid= -p "$prime_pid" 2>/dev/null | tr -d ' ')
+    if [ -z "$prime_pid" ] || [ "$prime_pid" -le 1 ]; then
+      break
+    fi
+  done
   [ "${CLAUDECODE:-}" = "1" ] && { echo claude; return; }
   if [ "${PI_CODING_AGENT:-}" = "true" ]; then
     if [ "${FM_PI_HARNESS:-}" = pi-signed ]; then echo pi-signed; else echo pi; fi
@@ -85,6 +113,7 @@ detect_own() {
       *claude*) echo claude; return ;;
       *codex*) echo codex; return ;;
       *opencode*) echo opencode; return ;;
+      prime-agent) echo prime-agent; return ;;
       *grok*) echo grok; return ;;
       kimi) echo kimi; return ;;
       # muse's installed launcher ~/.local/bin/muse execs ~/.local/bin/muse-bin-<version>
@@ -102,6 +131,7 @@ detect_own() {
           *claude*) echo claude; return ;;
           *codex*) echo codex; return ;;
           *opencode*) echo opencode; return ;;
+          *'/prime-agent/'*) echo prime-agent; return ;;
           *grok*) echo grok; return ;;
           *" pi "*|*/pi) echo pi; return ;;
         esac ;;

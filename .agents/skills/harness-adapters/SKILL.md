@@ -3,7 +3,7 @@ name: harness-adapters
 description: >-
   Agent-only reference for firstmate harness operations.
   Use before spawning or recovering a crewmate or secondmate, handling a trust dialog, sending a harness-specific skill invocation, interrupting or exiting an agent, resuming an exited agent, or verifying a new harness adapter.
-  Contains verified facts for claude, codex, opencode, pi, pi-signed, grok, kimi, cursor, and muse.
+  Contains verified facts for claude, codex, opencode, pi, pi-signed, prime-agent, grok, kimi, cursor, and muse.
 user-invocable: false
 metadata:
   internal: true
@@ -45,8 +45,9 @@ If the captain asks for a new harness, propose verifying it first: spawn a trivi
 
 ## Detection
 
-`bin/fm-harness.sh` prints firstmate's own harness, using verified env markers first and then process ancestry.
+`bin/fm-harness.sh` prints firstmate's own harness, using unambiguous env markers first, narrow ancestry disambiguation for shared markers, and then the remaining markers and ancestry.
 Within the Pi family, only the exact launch-boundary marker `FM_PI_HARNESS=pi-signed` alongside `PI_CODING_AGENT=true` selects the signed identity; unmarked shared launcher ancestry remains `pi`.
+Prime Agent also sets `PI_CODING_AGENT=true` and reports `AI_AGENT=pi`, so `bin/fm-harness.sh` checks exact `prime-agent` executable ancestry before falling back to Pi's shared marker.
 `bin/fm-harness.sh crew` resolves the effective crewmate harness from `config/crew-harness` (absent or `default` -> own).
 `bin/fm-harness.sh secondmate` resolves the secondmate-launch harness through the chain `config/secondmate-harness` -> `config/crew-harness` -> own, so an unset `config/secondmate-harness` matches the crew harness.
 `bin/fm-spawn.sh` uses `crew` mode for a crewmate/scout launch and `secondmate` mode for a `--secondmate` launch, re-resolving on every spawn so the split is durable across respawns; an explicit per-spawn harness arg overrides either.
@@ -129,6 +130,7 @@ The supported launch-profile flags below are verified locally; each row records 
 | codex | `--model <model>` | `-c 'model_reasoning_effort="<low\|medium\|high\|xhigh>"'` | Verified on codex-cli 0.142.1. The installed binary schema contains `model_reasoning_effort`, the active config uses it, and the bundled model catalog advertises only low/medium/high/xhigh. `max` is omitted. |
 | grok | `--model <model>` | `--reasoning-effort <low\|medium\|high>` | Verified on grok 0.2.99 (2026-07-13). `--effort` is an alias, but firstmate's profile axis is reasoning effort. As of 0.2.99 the ceiling is `high`; both `xhigh` and `max` are rejected with `use one of: high, medium, low`, so firstmate omits them. |
 | pi / pi-signed | `--model <model>` | `--thinking <low\|medium\|high\|xhigh\|max>` | Verified 2026-07-27 on Pi and pi-signed 0.82.0. Both expose the same accepted thinking levels and completed the same model-qualified max-thinking smoke. |
+| prime-agent | `--model <model>` | `--thinking <low\|medium\|high\|xhigh\|max>` | Verified 2026-08-23 on Prime Agent 0.8.0; `off` and `minimal` stay outside Firstmate's shared vocabulary, and the Prime section records the effective-level caveat. |
 | opencode | `--model <provider/model>` | none for firstmate's interactive launch | Verified on opencode 1.17.6. `opencode run` has `--variant`, but firstmate launches the interactive `opencode --prompt` path, which has no verified effort flag. |
 | kimi | `--model <model>` | none | Verified 2026-07-25 on Kimi Code CLI 0.29.1. |
 | cursor | `--model <model>` | none | Verified 2026-08-11 on Cursor Agent CLI 2026.08.11-e8db854. No effort flag exists, so firstmate records the requested effort in task metadata and omits it from the launch. Validate ids against `cursor-agent --list-models` rather than assuming a low/medium/high family: the live catalog carries only `-high` Grok ids. |
@@ -149,6 +151,7 @@ Use the discovery surface in the current authenticated environment because suppo
 | codex | Open the current interactive session's `/model` picker. |
 | opencode | Run `opencode models [provider]`, which lists available provider/model identifiers. |
 | pi / pi-signed | Run the selected executable as `<executable> --list-models [search]`; Pi's installed `docs/models.md` owns how built-in, extension-registered, and custom provider/model entries reach that list. |
+| prime-agent | Run `prime-agent model list`; `prime-agent --help` owns the accepted `--model <id>` input shape. |
 | grok | Run `grok models`, which lists the models available to the current Grok installation and account. |
 | kimi | Run `kimi provider list --json`, which lists the current provider and model configuration. |
 | cursor | Run `cursor-agent --list-models` (or the legacy `agent --list-models`), which lists the ids available to the current Cursor account. `cursor` is not the CLI name. |
@@ -170,6 +173,7 @@ Natural language is acceptable if uncertain.
 - codex: `$<skill>`, for example `$no-mistakes`; `/<skill>` is claude-only and codex rejects it as "Unrecognized command".
 - opencode: no separate verified skill invocation beyond normal slash-command behavior; use natural language if the exact skill command is uncertain.
 - pi and pi-signed: no separate verified skill invocation beyond normal command behavior; use natural language if the exact skill command is uncertain.
+- prime-agent: `/skill:<name>`, for example `/skill:no-mistakes`; it discovers Agent Skills from `~/.agents/skills` and project `.agents/skills` roots.
 - grok: `/<skill>`, for example `/no-mistakes` (same form as claude). Verified end to end: grok discovers the user-level `no-mistakes` skill, `/no-mistakes` invokes it, and grok drives a real `no-mistakes axi run`. Like codex's `$`/`/` popups, typing `/<skill>` opens grok's slash-autocomplete, so a too-fast Enter selects the popup entry instead of sending, and for an argument-taking command (like `/no-mistakes`'s optional task-first argument) that first Enter only expands the popup selection into an argument-hint placeholder rather than submitting - a genuine second Enter is required (see the grok section below for the 2026-07-03 incident and fix). `fm_tmux_submit_core`'s retried Enter (used by `fm-send` on the tmux backend) handles this through the shared structural composer classifier; the herdr backend needed a dedicated fix (`fm_backend_herdr_composer_state`, docs/herdr-backend.md) because its prior delta-based verification false-positived on that same popup-close content change.
 - kimi: `/<skill>`, for example `/no-mistakes`.
 - cursor: `/<skill>`, for example `/no-mistakes`. Cursor discovers firstmate's user-level skills. Its slash popup swallows the first Enter, so a genuine second Enter submits; the shared submit retry handles it.
@@ -302,6 +306,27 @@ Pi's primary watcher protocol also requires the tracked `.pi/extensions/fm-prima
 The model arms through `fm_watch_arm_pi`, never a foreground bash arm; the watcher tool result and clean-exit fallback are owned by `docs/supervision-protocols/pi.md`.
 `bin/fm-session-start.sh` reports when the live Pi-family session has not loaded both the turn-end guard and watcher extensions, and points at the selected executable after project trust as the fix, with `-e` as a trust-free fallback.
 When a secondmate is launched on Pi or pi-signed, `fm-spawn.sh --secondmate` launches the selected executable with both `-e .pi/extensions/fm-primary-turnend-guard.ts` and `-e .pi/extensions/fm-primary-pi-watch.ts`, both already present in the secondmate home's git worktree.
+
+## prime-agent (VERIFIED CREWMATE/SCOUT 2026-08-23, Prime Agent 0.8.0)
+
+Prime Agent is a Pi-family CLI with its own executable identity and lifecycle surface.
+Firstmate keeps it crewmate/scout-only because Prime 0.8.0 does not emit Pi's `agent_settled` event and its primary watcher extensions have not been verified against Prime's `agent_end` boundary.
+`bin/fm-spawn.sh` refuses `--secondmate` rather than assuming Pi's primary supervision contract.
+
+| Fact | Value |
+|---|---|
+| Busy state | The Firstmate-owned `prime-ext` extension records `agent_start` as busy and Prime's `agent_end` as idle, while `turn_end` remains the watcher notification touch; Prime 0.8.0 loaded the absolute `-e` extension from outside the project without a trust dialog and did not emit `agent_settled`. |
+| Exit command | `/quit`; a session-enabled exit prints `Resume this session with: prime-agent --resume <id>`. |
+| Interrupt | Single Escape; a live Python tool call stopped and the extension emitted `turn_end` followed by `agent_end`. |
+| Skill invocation | `/skill:<name>`, for example `/skill:no-mistakes`. |
+| Composer | A bordered shell-glyph composer with `>` and a dark truecolor idle suggestion such as `Try "refactor @<filepath>"` is already covered by the shared bordered-placeholder classifier, while elapsed `Thinking · Ns`, `Waiting · Ns`, and `Executing · Ns` spinners are delivery acknowledgements rather than worker state. |
+| Detection | Exact `prime-agent` executable or package ancestry precedes the shared `PI_CODING_AGENT=true` fallback because `AI_AGENT=pi` is not an identity signal. |
+
+Keep the brief as one positional argument through the canonical `fm-operational-input.sh encode launch-brief` envelope.
+Prime accepts `--model <id>`, repeatable `-e`, and `--thinking off|minimal|low|medium|high|xhigh|max`; Firstmate routes only its shared low-through-max effort axis.
+A live `--thinking low` launch rendered `high` in Prime's footer, so treat the 0.8.0 effective-level behavior as unconfirmed even though the CLI accepts and Firstmate preserves the flag.
+The 2026-08-23 supervised Symphony trial inherited six Jurisfera-specific continual-harness memories, which is cross-project global-memory leakage inside Prime rather than Firstmate task context.
+Treat Prime memory as potentially cross-project until Prime scopes or filters that store, and rely on the task brief plus repository evidence for project facts.
 
 ## grok (VERIFIED 2026-06-29, grok 0.2.73; slash-submit re-verified 2026-07-03 on 0.2.82; reasoning-effort ceiling re-verified 2026-07-13 on 0.2.99; exit paths re-verified 2026-07-19 on grok 0.2.103)
 
