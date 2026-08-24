@@ -323,6 +323,7 @@ Firstmate keeps it crewmate/scout-only because Prime 0.8.0 does not emit Pi's `a
 | Detection | Exact `prime-agent` executable or package ancestry precedes the shared `PI_CODING_AGENT=true` fallback because `AI_AGENT=pi` is not an identity signal. |
 
 Keep the brief as one positional argument through the canonical `fm-operational-input.sh encode launch-brief` envelope.
+The launch clears stale foreign markers (`PI_MODEL`, `PI_CODING_AGENT`, `AI_AGENT`, `FM_PI_HARNESS`) that a Pi-family primary leaks into the spawn environment, because a worker inherited the primary's `PI_MODEL` and self-reported the wrong model (verified live 2026-08-24); Prime sets its own `PI_CODING_AGENT=true` for children, so clearing the inherited value cannot blind ancestry-based detection.
 Prime accepts `--model <id>`, repeatable `-e`, and `--thinking off|minimal|low|medium|high|xhigh|max`; Firstmate routes only its shared low-through-max effort axis.
 A live `--thinking low` launch rendered `high` in Prime's footer, so treat the 0.8.0 effective-level behavior as unconfirmed even though the CLI accepts and Firstmate preserves the flag.
 The 2026-08-23 supervised Symphony trial inherited six Jurisfera-specific continual-harness memories, which is cross-project global-memory leakage inside Prime rather than Firstmate task context.
