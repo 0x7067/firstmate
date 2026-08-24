@@ -1156,7 +1156,12 @@ launch_template() {
       fi
       ;;
     prime-agent)
-      printf '%s' '__PRIMEBIN__ __MODELFLAG____EFFORTFLAG__-e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"'
+      # Clear foreign PI-family markers a Pi-family primary leaks into the spawn
+      # environment: a worker inherited PI_MODEL from the primary session and
+      # self-reported the wrong model (verified live 2026-08-24). Prime sets its
+      # own PI_CODING_AGENT=true for its children, so clearing the inherited
+      # value here cannot blind ancestry-based harness detection.
+      printf '%s' 'env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__-e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"'
       ;;
     # grok (Grok Build TUI): a positional prompt starts the supervised interactive
     # session. --always-approve auto-approves every tool execution (verified: the

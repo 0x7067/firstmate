@@ -680,7 +680,7 @@ test_prime_agent_threads_model_thinking_and_semantic_extension() {
     "prime-agent spawn did not preserve its adapter identity"
   assert_meta_profile "$HOME_DIR/state/$id.meta" prime-agent deepseek-v4-flash max
   launch=$(cat "$LAUNCH_LOG")
-  assert_contains "$launch" "'$FAKEBIN_DIR/prime-agent' --model 'deepseek-v4-flash' --thinking 'max' -e '$HOME_DIR/state/$id.prime-ext.ts'" \
+  assert_contains "$launch" "env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS '$FAKEBIN_DIR/prime-agent' --model 'deepseek-v4-flash' --thinking 'max' -e '$HOME_DIR/state/$id.prime-ext.ts'" \
     "prime-agent launch dropped its model, thinking, or explicit extension flag"
   assert_contains "$launch" "fm-operational-input.sh' encode launch-brief" \
     "prime-agent launch lost the canonical typed launch-brief envelope"
