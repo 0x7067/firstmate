@@ -72,3 +72,4 @@ before=$(git -C "$PROJ" rev-parse --short "$DEFAULT")
 git -C "$PROJ" merge --ff-only "$BRANCH" >/dev/null
 after=$(git -C "$PROJ" rev-parse --short "$DEFAULT")
 echo "merged $BRANCH into local $DEFAULT ($before -> $after) in $PROJ"
+echo "local-only task $ID landed; its worker/window is still live - run bin/fm-teardown.sh $ID to clean it up"
