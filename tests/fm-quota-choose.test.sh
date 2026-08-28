@@ -119,11 +119,11 @@ JSON
 
 cat > "$FAKEBIN/quota-axi" <<'SH'
 #!/usr/bin/env bash
+printf 'called\n' >> "${QUOTA_AXI_CALLS:?}"
 if [ "${1:-}" = "--version" ]; then
   echo "quota-axi 0.1.29"
   exit 0
 fi
-printf 'called\n' >> "${QUOTA_AXI_CALLS:?}"
 cat "${QUOTA_AXI_FIXTURE:?}"
 SH
 chmod +x "$FAKEBIN/quota-axi"

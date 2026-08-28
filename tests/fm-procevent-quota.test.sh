@@ -92,6 +92,11 @@ fi
 [ "$err" = "error: --provider needs a value" ] || fail "missing provider value returned: $err"
 ok "arm rejects a missing provider value"
 
+out=$(FM_HOME="$LAB/retire-home" FM_STATE_OVERRIDE="$LAB/retire-state" \
+  "$BIN/fm-procevent-quota.sh" retire --provider codex)
+[ "$out" = "retired: quota-codex" ] || fail "provider retire targeted the wrong source: $out"
+ok "provider retire resolves the armed source id"
+
 if err=$(QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" poll --interval 1 --threshold 100.5 --provider codex --timeout 1 2>&1); then
   fail "threshold above 100 unexpectedly started polling"
 fi

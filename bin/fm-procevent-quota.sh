@@ -7,7 +7,7 @@
 #   fm-procevent-quota.sh classify <result-file>
 #   fm-procevent-quota.sh terminal <result-file>
 #   fm-procevent-quota.sh source-id
-#   fm-procevent-quota.sh retire
+#   fm-procevent-quota.sh retire [--provider <provider>]
 #
 # arm        Register a recurring quota-axi --json poll that wakes firstmate
 #            when the tracked provider's effectivePercentRemaining reaches
@@ -21,7 +21,8 @@
 # classify   Print the captured outcome class: low, exhausted, error, or unknown.
 # terminal   Every quota poll is terminal because the source fires at most once.
 # source-id  Print the canonical source id.
-# retire     Stop the watch and retire the registration.
+# retire     Stop the aggregate watch, or the matching provider watch when
+#            --provider is supplied, and retire the registration.
 #
 # The canonical source id is `quota` for the aggregate tracked provider.
 # A provider named with --provider sets the tracked provider and the source id
@@ -255,8 +256,15 @@ cmd_terminal() {
 }
 
 cmd_retire() {
-  local id
-  resolve_provider "${1-}"
+  local id provider=
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --provider) [ -n "${2-}" ] || die "--provider needs a value"; provider=$2; shift 2 ;;
+      -*) usage ;;
+      *) [ -z "$provider" ] || usage; provider=$1; shift ;;
+    esac
+  done
+  resolve_provider "$provider"
   id=$CANONICAL_SOURCE_ID
   "$SCRIPT_DIR/fm-procevent.sh" retire "$id"
 }
@@ -267,7 +275,7 @@ case "${1-}" in
   classify)  shift; cmd_classify "$@" ;;
   terminal)  shift; cmd_terminal "$@" ;;
   source-id) shift; cmd_source_id "${1-}" ;;
-  retire)    shift; cmd_retire "${1-}" ;;
+  retire)    shift; cmd_retire "$@" ;;
   ''|-h|--help|help) usage ;;
   *) die "unknown command: $1" ;;
 esac
