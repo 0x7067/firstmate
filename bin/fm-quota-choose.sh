@@ -113,7 +113,12 @@ else
       {schemaVersion: 5, providers: []}
     else
       capture("(?m)^quota\\[(?<count>[0-9]+)\\]\\{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt\\}:\\n(?<rows>(?:  [^\\n]*\\n?)*)") as $section |
-      ($section.rows | split("\n") | map(select(length > 0) | sub("^  "; "") | split(","))) as $rows |
+      ($section.rows | split("\n") | map(
+        select(length > 0) |
+        sub("^  "; "") |
+        split(",") |
+        map(if startswith("\"") and endswith("\"") then .[1:-1] else . end)
+      )) as $rows |
       if ($rows | length) != ($section.count | tonumber) or any($rows[]; length != 8) then error("invalid quota rows")
       else
         {

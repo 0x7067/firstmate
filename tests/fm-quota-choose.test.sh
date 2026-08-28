@@ -22,6 +22,7 @@ APPLICABLE_VETO="$LAB/applicable-veto.json"
 MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
+QUOTED_TOON="$LAB/quoted-quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
 
@@ -276,6 +277,21 @@ TOON
 out=$(call_choose --snapshot "$EMPTY_TOON" --candidate claude:default)
 [ "$out" = "claude default" ] || fail "zero-row TOON did not preserve unknown quota: $out"
 ok "zero-row TOON preserves unknown quota"
+
+cat > "$QUOTED_TOON" <<'TOON'
+bin: quota-axi
+generatedAt: "2030-01-01T00:00:00Z"
+quota[2]{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt}:
+  claude,all_models,50,-1,through_reset,high,weekly,"2030-01-02T00:00:00Z"
+  claude,"model:fable",0,-1,exhausted_now,high,weekly,"2030-01-02T00:00:00Z"
+exhaustion[0]:
+attention[0]:
+TOON
+if out=$(call_choose --snapshot "$QUOTED_TOON" --candidate claude:fable 2>/dev/null); then
+  fail "quoted exhausted model scope unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "quoted exhausted model scope returned: $out"
+ok "quoted TOON scope vetoes dispatch"
 
 out=$(call_choose --snapshot "$LAB/captured.json" --candidate cursor:default)
 [ "$out" = "cursor default" ] || fail "provider-level unknown quota was not eligible: $out"
