@@ -53,6 +53,10 @@ if [ "${QUOTA_AXI_UNKNOWN_FIRST:-0}" = 1 ] && [ "$count" -eq 1 ]; then
   printf '{"schemaVersion":5,"providers":[{"provider":"codex","quotaSemantics":{"status":"unknown","effectiveAvailability":[]}}]}\n'
   exit 0
 fi
+if [ "${QUOTA_AXI_AT_THRESHOLD:-0}" = 1 ]; then
+  printf '{"schemaVersion":5,"providers":[{"provider":"codex","quotaSemantics":{"status":"known","effectiveAvailability":[{"scope":"all_models","status":"known","effectivePercentRemaining":10,"runway":{"status":"through_reset"}}]}}]}\n'
+  exit 0
+fi
 if [ "$count" -eq 1 ]; then
   model_remaining=20
   runway=through_reset
@@ -95,6 +99,12 @@ out=$(QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh
 printf '%s\n' "$out" | grep -qx 'status: exhausted' || fail "leading-zero threshold did not evaluate quota"
 printf '%s\n' "$out" | grep -qx 'condition_polls: 2' || fail "leading-zero threshold stopped before exhaustion"
 ok "poll accepts a leading-zero threshold"
+
+rm -f "$COUNT"
+out=$(QUOTA_AXI_AT_THRESHOLD=1 QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" poll --interval 1 --threshold 10 --provider codex --timeout 1)
+printf '%s\n' "$out" | grep -qx 'status: low' || fail "quota at the threshold did not report low"
+printf '%s\n' "$out" | grep -qx 'condition_polls: 1' || fail "quota at the threshold did not stop immediately"
+ok "poll fires when quota reaches the threshold"
 
 if err=$(QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" poll --provider 2>&1); then
   fail "missing poll provider value unexpectedly succeeded"
