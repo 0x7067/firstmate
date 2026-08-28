@@ -15,6 +15,7 @@ OUT_OF_RANGE="$LAB/out-of-range.json"
 INVALID_RUNWAY="$LAB/invalid-runway.json"
 INVALID_AVAILABILITY="$LAB/invalid-availability.json"
 KNOWN_EMPTY="$LAB/known-empty.json"
+NO_APPLICABLE="$LAB/no-applicable.json"
 MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
 FAKEBIN="$LAB/fakebin"
@@ -130,7 +131,14 @@ chmod +x "$FAKEBIN/quota-axi"
 QUOTA_AXI_CALLS="$CALLS" QUOTA_AXI_FIXTURE="$FIXTURE" "$FAKEBIN/quota-axi" --json > "$LAB/captured.json"
 
 call_choose() {
-  "$BIN/fm-quota-choose.sh" "$@"
+  local output rc call_count
+  output=$(QUOTA_AXI_CALLS="$CALLS" QUOTA_AXI_FIXTURE="$FIXTURE" \
+    PATH="$FAKEBIN:$PATH" "$BIN/fm-quota-choose.sh" "$@")
+  rc=$?
+  call_count=$(wc -l < "$CALLS" | tr -d '[:space:]')
+  [ "$call_count" = 1 ] || fail "helper took an additional quota snapshot"
+  printf '%s\n' "$output"
+  return "$rc"
 }
 
 fail() {
@@ -228,9 +236,6 @@ out=$(call_choose --snapshot "$TOON" --candidate claude:default)
 [ "$out" = "claude default" ] || fail "default TOON snapshot returned '$out'"
 ok "default TOON snapshot is accepted"
 
-[ "$(wc -l < "$CALLS" | tr -d '[:space:]')" = 1 ] || fail "helper took an additional quota snapshot"
-ok "helper reuses the captured quota snapshot"
-
 out=$(call_choose --snapshot "$LAB/captured.json" --candidate cursor:default)
 [ "$out" = "cursor default" ] || fail "provider-level unknown quota was not eligible: $out"
 ok "provider-level unknown quota remains eligible"
@@ -274,6 +279,12 @@ fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "invalid runway status returned: $err"
 ok "invalid runway status fails closed"
 
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) = [{"scope":"model:other","status":"known","effectivePercentRemaining":0,"runway":{"status":"exhausted_now"}}]' \
+  "$LAB/captured.json" > "$NO_APPLICABLE"
+out=$(call_choose --snapshot "$NO_APPLICABLE" --candidate claude:fable)
+[ "$out" = "claude fable" ] || fail "unmeasured candidate quota was skipped: $out"
+ok "missing applicable quota remains eligible"
+
 if out=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:fable 2>/dev/null); then
   fail "exact named model exhaustion unexpectedly dispatched"
 fi
@@ -290,5 +301,8 @@ if err=$(call_choose --snapshot "$INVALID_AVAILABILITY" --candidate claude:defau
 fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "invalid availability status returned: $err"
 ok "invalid availability status fails closed"
+
+[ "$(wc -l < "$CALLS" | tr -d '[:space:]')" = 1 ] || fail "helper took an additional quota snapshot"
+ok "helper reuses the captured quota snapshot"
 
 printf '# all fm-quota-choose tests passed\n'

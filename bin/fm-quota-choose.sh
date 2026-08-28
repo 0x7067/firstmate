@@ -172,9 +172,7 @@ effective_for_provider_model() {
        ($model_token == ($scope | sub("^(model|product):"; ""))))
     )) as $applicable |
     ($applicable | map(select(.status == "known"))) as $known |
-    if ($applicable | length) == 0 and
-       ($p.quotaSemantics.status == "unknown" or $p.quotaSemantics.status == "partial") then {status: "unknown"}
-    elif ($applicable | length) == 0 then null
+    if ($applicable | length) == 0 then {status: "unknown"}
     elif ($known | length) == 0 then {status: "unknown"}
     else ($known | sort_by(
         .effectivePercentRemaining,
