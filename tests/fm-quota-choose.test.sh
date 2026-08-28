@@ -63,6 +63,36 @@ cat > "$FIXTURE" <<'JSON'
       }
     },
     {
+      "provider": "pi",
+      "windows": [],
+      "quotaSemantics": {
+        "status": "known",
+        "effectiveAvailability": [
+          {
+            "scope": "all_models",
+            "status": "known",
+            "effectivePercentRemaining": 50,
+            "runway": { "status": "through_reset" }
+          }
+        ]
+      }
+    },
+    {
+      "provider": "xai",
+      "windows": [],
+      "quotaSemantics": {
+        "status": "known",
+        "effectiveAvailability": [
+          {
+            "scope": "all_models",
+            "status": "known",
+            "effectivePercentRemaining": 0,
+            "runway": { "status": "exhausted_now" }
+          }
+        ]
+      }
+    },
+    {
       "provider": "claude",
       "windows": [],
       "quotaSemantics": {
@@ -108,65 +138,65 @@ ok() {
 }
 
 # 1. First candidate with positive effective quota.
-out=$(call_choose --snapshot "$LAB/captured.json" --candidate kimi:default --candidate codex:model:codex_bengalfox --candidate claude:claude-3-5-sonnet)
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate kimi:kimi:default --candidate codex:codex:model:codex_bengalfox --candidate claude:claude:claude-3-5-sonnet)
 [ "$out" = "claude claude-3-5-sonnet" ] || fail "first positive: expected 'claude claude-3-5-sonnet', got '$out'"
 ok "first positive candidate wins"
 
 # 2. Exhausted provider is skipped.
-out=$(call_choose --snapshot "$LAB/captured.json" --candidate kimi:default --candidate claude:claude-3-5-sonnet)
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate kimi:kimi:default --candidate claude:claude:claude-3-5-sonnet)
 [ "$out" = "claude claude-3-5-sonnet" ] || fail "exhausted skip: expected 'claude claude-3-5-sonnet', got '$out'"
 ok "exhausted provider is skipped"
 
 # 3. No candidates have positive quota.
-if out=$(call_choose --snapshot "$LAB/captured.json" --candidate kimi:default 2>/dev/null); then
+if out=$(call_choose --snapshot "$LAB/captured.json" --candidate kimi:kimi:default 2>/dev/null); then
   fail "no positive: expected exit 1, got exit 0 with '$out'"
 fi
 [ "$out" = "none" ] || fail "no positive: expected 'none', got '$out'"
 ok "no positive candidate returns none and exit 1"
 
 # 4. Positional arguments work.
-out=$(call_choose --snapshot "$LAB/captured.json" claude:claude-3-5-sonnet)
+out=$(call_choose --snapshot "$LAB/captured.json" claude:claude:claude-3-5-sonnet)
 [ "$out" = "claude claude-3-5-sonnet" ] || fail "positional: expected 'claude claude-3-5-sonnet', got '$out'"
 ok "positional candidates work"
 
 # 5. A model-specific exhausted scope bounds a healthy all-models scope.
-if out=$(call_choose --snapshot "$LAB/captured.json" --candidate codex:model:codex_bengalfox 2>/dev/null); then
+if out=$(call_choose --snapshot "$LAB/captured.json" --candidate codex:codex:model:codex_bengalfox 2>/dev/null); then
   fail "specific scope: expected exit 1, got exit 0 with '$out'"
 fi
 [ "$out" = "none" ] || fail "specific scope: expected 'none', got '$out'"
 ok "specific model scope bounds generic quota"
 
-if out=$(call_choose --snapshot "$LAB/captured.json" --candidate codex:default 2>/dev/null); then
+if out=$(call_choose --snapshot "$LAB/captured.json" --candidate codex:codex:default 2>/dev/null); then
   fail "default scope: expected exit 1, got exit 0 with '$out'"
 fi
 [ "$out" = "none" ] || fail "default scope: expected 'none', got '$out'"
 ok "default model observes provider model scopes"
 
-out=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:claude-3-5-sonnet)
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:claude:claude-3-5-sonnet)
 [ "$out" = "claude claude-3-5-sonnet" ] || fail "fractional quota: expected positive candidate, got '$out'"
 ok "fractional positive quota is eligible"
 
-if err=$(call_choose --snapshot "$LAB/captured.json" --candidate bogus:model --candidate claude:claude-3-5-sonnet 2>&1); then
+if err=$(call_choose --snapshot "$LAB/captured.json" --candidate bogus:claude:model --candidate claude:claude:claude-3-5-sonnet 2>&1); then
   fail "unknown harness unexpectedly selected a later candidate"
 fi
 [ "$err" = "error: unknown harness: bogus" ] || fail "unknown harness returned: $err"
 ok "unknown harness fails closed"
 
 printf '{"schemaVersion":5,"providers":{"provider":"claude","quotaSemantics":{"effectiveAvailability":[{"scope":"all_models","status":"known","effectivePercentRemaining":50,"runway":{"status":"through_reset"}}]}}}\n' > "$MALFORMED"
-if err=$(call_choose --snapshot "$MALFORMED" --candidate claude:default 2>&1); then
+if err=$(call_choose --snapshot "$MALFORMED" --candidate claude:claude:default 2>&1); then
   fail "malformed provider collection unexpectedly dispatched"
 fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "malformed provider data returned: $err"
 ok "malformed provider data fails closed"
 
-out=$(call_choose --candidate claude:default < "$LAB/captured.json")
+out=$(call_choose --candidate claude:claude:default < "$LAB/captured.json")
 [ "$out" = "claude default" ] || fail "stdin snapshot returned '$out'"
 ok "stdin snapshot is accepted"
 
-if err=$(call_choose --snapshot "$LAB/captured.json" --candidate claude: 2>&1); then
+if err=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:claude: 2>&1); then
   fail "empty model candidate unexpectedly dispatched"
 fi
-[ "$err" = "error: invalid candidate: claude:" ] || fail "empty model candidate returned: $err"
+[ "$err" = "error: invalid candidate: claude:claude:" ] || fail "empty model candidate returned: $err"
 ok "empty model candidate fails closed"
 
 if err=$(call_choose --snapshot "$LAB/captured.json" --candidate claude 2>&1); then
@@ -184,11 +214,17 @@ quota[2]{provider,scope,effectivePercentRemaining,spendPriority,runway,confidenc
 exhaustion[0]:
 attention[0]:
 TOON
-out=$(call_choose --snapshot "$TOON" --candidate claude:default)
+out=$(call_choose --snapshot "$TOON" --candidate claude:claude:default)
 [ "$out" = "claude default" ] || fail "default TOON snapshot returned '$out'"
 ok "default TOON snapshot is accepted"
 
 [ "$(wc -l < "$CALLS" | tr -d '[:space:]')" = 1 ] || fail "helper took an additional quota snapshot"
 ok "helper reuses the captured quota snapshot"
+
+if out=$(call_choose --snapshot "$LAB/captured.json" --candidate pi:xai:grok-4 2>/dev/null); then
+  fail "multi-provider harness used Pi quota instead of explicit xAI quota"
+fi
+[ "$out" = "none" ] || fail "explicit exhausted provider returned '$out'"
+ok "explicit provider controls quota matching"
 
 printf '# all fm-quota-choose tests passed\n'

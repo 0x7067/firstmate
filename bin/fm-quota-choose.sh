@@ -2,18 +2,18 @@
 # Choose the first candidate with positive effective quota from a ranked list.
 #
 # Usage:
-#   fm-quota-choose.sh [--snapshot <path>] [--candidate <harness:model>]...
+#   fm-quota-choose.sh [--snapshot <path>] [--candidate <harness:provider:model>]...
 #
 # Reads one already-captured quota-axi default TOON or JSON snapshot from the
 # provided file, or from stdin when --snapshot is omitted. For each --candidate
-# in order, it looks up the provider family for <harness>, then the best matching
-# quota scope for <model>. The first candidate whose effective percent remaining
+# in order, it matches the explicit <provider>, then the best matching quota
+# scope for <model>. The first candidate whose effective percent remaining
 # is > 0 and whose runway status is not `exhausted_now` is printed as
 # "<harness> <model>" and the script exits 0. If no candidate has positive
 # effective quota, prints "none" and exits 1.
 #
-# Candidates are accepted as `--candidate <harness:model>` or as positional
-# colon-separated arguments, with earlier candidates preferred.
+# Candidates are accepted as `--candidate <harness:provider:model>` or as
+# positional colon-separated arguments, with earlier candidates preferred.
 # This script is deterministic and safe: it performs no side effects and exits
 # nonzero when the environment would lead to an unsafe dispatch.
 #
@@ -59,10 +59,12 @@ for c in "${CANDIDATES[@]}"; do
   case "$c" in
     ''|:*|*:|*[!A-Za-z0-9._/:-]*) die "invalid candidate: $c" ;;
   esac
-  case "$c" in
-    *:*) : ;;
-    *) die "invalid candidate: $c" ;;
-  esac
+  candidate_rest=${c#*:}
+  candidate_provider=${candidate_rest%%:*}
+  candidate_model=${candidate_rest#*:}
+  [ "$candidate_rest" != "$c" ] && [ "$candidate_model" != "$candidate_rest" ] \
+    && [ -n "$candidate_provider" ] && [ -n "$candidate_model" ] \
+    || die "invalid candidate: $c"
 done
 
 if [ -n "$SNAPSHOT_SOURCE" ]; then
@@ -134,20 +136,9 @@ printf '%s\n' "$QUOTA_JSON" | jq -e '
   )
 ' >/dev/null 2>&1 || die "invalid quota-axi provider data"
 
-# provider_for_harness <harness>
-# Map a firstmate harness name to the quota-axi provider family it consumes.
-provider_for_harness() {
+harness_known() {
   case "$1" in
-    claude)     printf 'claude\n' ;;
-    codex)      printf 'codex\n' ;;
-    opencode)   printf 'codex\n' ;;
-    pi|pi-signed) printf 'pi\n' ;;
-    prime-agent) printf 'pi\n' ;;
-    grok)       printf 'grok\n' ;;
-    kimi)       printf 'kimi\n' ;;
-    cursor)     printf 'cursor\n' ;;
-    agy)        printf 'agy\n' ;;
-    copilot)    printf 'copilot\n' ;;
+    claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|cursor|agy|copilot) return 0 ;;
     *)          return 1 ;;
   esac
 }
@@ -181,8 +172,10 @@ effective_for_provider_model() {
 chosen="none"
 for c in "${CANDIDATES[@]}"; do
   harness=${c%%:*}
-  model=${c#*:}
-  provider=$(provider_for_harness "$harness") || die "unknown harness: $harness"
+  candidate_rest=${c#*:}
+  provider=${candidate_rest%%:*}
+  model=${candidate_rest#*:}
+  harness_known "$harness" || die "unknown harness: $harness"
   effective=$(effective_for_provider_model "$provider" "$model")
   if [ -z "$effective" ] || [ "$effective" = "null" ]; then
     continue
