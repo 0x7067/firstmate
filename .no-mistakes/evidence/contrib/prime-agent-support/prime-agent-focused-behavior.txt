@@ -1,0 +1,85 @@
+FM_TEST_BEGIN 2026-08-28T10:58:36Z tests/fm-prime-agent.test.sh family=pure-contract-unit expected_gate_skip=none
+ok - Prime ancestry outranks its shared Pi marker without widening to similar names
+FM_TEST_END 2026-08-28T10:58:38Z tests/fm-prime-agent.test.sh exit=0 duration_ms=1503 gate_skip=false
+FM_TEST_BEGIN 2026-08-28T10:58:38Z tests/fm-spawn-dispatch-profile.test.sh family=backend-dispatch expected_gate_skip=none
+ok - no --model/--effort records defaults and types the claude launch instructions
+ok - non-cursor launches clear inherited Cursor identity markers
+ok - relative home overrides ignore CDPATH and become absolute before spawn launch construction
+ok - FM_HOME defaults resolve relative paths and preserve absolute spellings
+ok - absolute override spellings are preserved in spawn launch paths
+ok - unresolvable relative spawn overrides fail with named diagnostics
+ok - active crew-dispatch profile requires an explicit harness for ship spawns
+ok - active crew-dispatch profile requires an explicit harness for scout spawns
+ok - active crew-dispatch profile allows an explicit resolved harness
+ok - active crew-dispatch profile allows the legacy positional harness form
+ok - active dispatch profiles require a verified harness
+ok - raw prime-agent launches fail closed before endpoint creation
+ok - verified non-Prime provenance preserves raw launch commands
+ok - raw launches reject multi-command shell programs
+ok - prime-agent extension serializes generated string values
+ok - claude receives --model and --effort profile flags
+ok - codex receives --model and model_reasoning_effort profile flags
+ok - codex omits unsupported max effort instead of passing a bad config value
+ok - grok receives --model and --reasoning-effort profile flags
+ok - grok omits unsupported max reasoning effort
+ok - grok omits unsupported xhigh reasoning effort
+ok - cursor receives its model-qualified reasoning class and exact task workspace
+ok - cursor refuses model ids absent from its resolved binary's live catalog
+ok - cursor preserves the requested model when its live catalog is unreachable
+ok - opencode receives --model and omits the unsupported effort axis
+ok - pi receives --model and --thinking max profile flags
+ok - Pi launch probing omits --tui-mode on older Pi and preserves it on supporting Pi
+ok - pi-signed shares Pi launch semantics while preserving its configured and recorded identity
+ok - prime-agent receives isolated project state, model, thinking, and its semantic extension
+ok - prime-agent atomically removes stale Git author identity
+ok - prime-agent serializes shared project setup across relaunches
+ok - prime-agent project keys require a validated SHA-256 digest
+ok - prime-agent refuses when scoped daemon support is unavailable
+ok - pi-signed refuses safely and actionably when the selected executable is unavailable
+ok - pi-signed is a distinct persistent secondmate runtime with shared Pi supervision semantics
+ok - batch dispatch forwards shared --harness, --model, and --effort to every pair
+ok - claude forwards firstmate's CLAUDE_CONFIG_DIR so the crewmate uses the same credential store
+ok - claude omits the config-dir prefix when firstmate runs with the single-store default
+ok - non-claude harnesses do not receive the claude CLAUDE_CONFIG_DIR prefix
+ok - active crew-dispatch profile does not block secondmate launches
+# all fm-spawn-dispatch-profile tests passed
+FM_TEST_END 2026-08-28T11:00:36Z tests/fm-spawn-dispatch-profile.test.sh exit=0 duration_ms=118724 gate_skip=false
+FM_TEST_BEGIN 2026-08-28T11:00:36Z tests/fm-busy-adapter-wiring.test.sh family=unclassified expected_gate_skip=none
+ok - pi extension reports agent_start busy, settles idle only via ctx.isIdle(), and keeps turn_end a notification
+ok - pi extension awaits agent_settled before the next agent_start without a test delay
+ok - pi extension events from a superseded incarnation are rejected as stale
+ok - Prime extension tracks compaction and per-session retries without inventing idle
+ok - kimi and grok install no unverified semantic wiring and classify through their own gates
+ok - opencode plugin classifies from session.status, scoped to the latched worker session
+ok - claude hooks open on UserPromptSubmit and close on Stop, StopFailure, and SessionEnd
+ok - claude hook events from a superseded incarnation are rejected without breaking the hook
+ok - codex classifies unknown until a semantic source is verified, never idle or footer-matched
+all fm-busy-adapter-wiring tests passed
+FM_TEST_END 2026-08-28T11:01:13Z tests/fm-busy-adapter-wiring.test.sh exit=0 duration_ms=37025 gate_skip=false
+FM_TEST_BEGIN 2026-08-28T11:01:13Z tests/fm-tmux-agent-liveness.test.sh family=backend-dispatch expected_gate_skip=none
+ok - tmux liveness: a harness-named foreground process classifies alive
+ok - tmux liveness: prime-agent's exact executable identity classifies alive
+ok - tmux liveness: Prime's Node script operand classifies without widening to later arguments
+ok - tmux liveness: muse's version-suffixed muse-bin-<version> classifies alive
+ok - tmux liveness: unrelated muse-containing command names stay ambiguous
+ok - tmux liveness: a version-named executable under a harness install path classifies alive
+ok - tmux liveness: a version-named executable under a decoy path stays ambiguous
+ok - tmux liveness: a process neither name source attributes stays ambiguous rather than inventing an agent
+ok - tmux liveness: a launcher whose own identity reads as a bare shell classifies alive from its harness child
+ok - tmux liveness: an idle shell pane classifies dead
+ok - tmux liveness: a harness-named background process in an idle pane still classifies dead
+ok - tmux liveness: an absent window classifies missing rather than inheriting tmux's active-window fallback
+ok - cursor composer: an idle Cursor pane reads empty even though the cursor row is blind
+ok - cursor composer: real typed text still reads pending, so the injection guard holds
+ok - cursor composer: an identical screen stays unknown when the pane is not Cursor
+ok - cursor composer: a stale Cursor screen over a dead shell never reads empty
+ok - tmux liveness limits Prime argv probes to Node processes
+FM_TEST_END 2026-08-28T11:01:18Z tests/fm-tmux-agent-liveness.test.sh exit=0 duration_ms=4947 gate_skip=false
+FM_TEST_SUMMARY total=4 failed=0 skipped_gate=0 duration_ms=162407
+FM_TEST_SUMMARY_FAMILY family=backend-dispatch count=2 duration_ms=123671 failed=0
+FM_TEST_SUMMARY_FAMILY family=pure-contract-unit count=1 duration_ms=1503 failed=0
+FM_TEST_SUMMARY_FAMILY family=unclassified count=1 duration_ms=37025 failed=0
+FM_TEST_SLOWEST rank=1 script=tests/fm-spawn-dispatch-profile.test.sh duration_ms=118724
+FM_TEST_SLOWEST rank=2 script=tests/fm-busy-adapter-wiring.test.sh duration_ms=37025
+FM_TEST_SLOWEST rank=3 script=tests/fm-tmux-agent-liveness.test.sh duration_ms=4947
+FM_TEST_SLOWEST rank=4 script=tests/fm-prime-agent.test.sh duration_ms=1503
