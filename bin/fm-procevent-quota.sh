@@ -10,7 +10,7 @@
 #   fm-procevent-quota.sh retire
 #
 # arm        Register a recurring quota-axi --json poll that wakes firstmate
-#            when the tracked provider's effectivePercentRemaining drops below
+#            when the tracked provider's effectivePercentRemaining reaches
 #            <threshold> (default 10%) or when its runway.status becomes
 #            exhausted_now. The condition is deterministic, the action is only
 #            the durable `check: procevent:quota:<seq>` wake, and the watch is
