@@ -57,6 +57,8 @@ fm_quota_json_valid() {
         (.status | type) == "string" and
         (.status != "known" or
           ((.effectivePercentRemaining | type) == "number" and
+           .effectivePercentRemaining >= 0 and
+           .effectivePercentRemaining <= 100 and
            (.runway | type) == "object" and
            (.runway.status | type) == "string"))
       )

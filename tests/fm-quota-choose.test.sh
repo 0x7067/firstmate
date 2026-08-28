@@ -11,6 +11,7 @@ LAB=$(mktemp -d "${TMPDIR:-/tmp}/fm-quota-choose.XXXXXX")
 FIXTURE="$LAB/quota.json"
 MALFORMED="$LAB/malformed.json"
 DUPLICATE="$LAB/duplicate.json"
+OUT_OF_RANGE="$LAB/out-of-range.json"
 TOON="$LAB/quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -234,5 +235,12 @@ if err=$(call_choose --snapshot "$DUPLICATE" --candidate claude:claude:default 2
 fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "duplicate provider returned: $err"
 ok "duplicate providers fail closed"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability[0].effectivePercentRemaining) = 150' "$LAB/captured.json" > "$OUT_OF_RANGE"
+if err=$(call_choose --snapshot "$OUT_OF_RANGE" --candidate claude:claude:default 2>&1); then
+  fail "out-of-range quota unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "out-of-range quota returned: $err"
+ok "out-of-range quota fails closed"
 
 printf '# all fm-quota-choose tests passed\n'
