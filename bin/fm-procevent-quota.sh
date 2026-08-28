@@ -117,10 +117,15 @@ condition_status() {
       end;
     if (.providers | type) != "array" then "error"
     elif $provider == "" then
-      classify([.providers[]?.quotaSemantics.effectiveAvailability[]?])
+      if (.providers | length) == 0 then "error"
+      elif ([.providers[]?.quotaSemantics.effectiveAvailability[]?] | length) == 0 then "healthy"
+      else classify([.providers[]?.quotaSemantics.effectiveAvailability[]?])
+      end
     else
       ([.providers[]? | select(.provider == $provider)] | first) as $p |
       if ($p // null) == null then "error"
+      elif ($p.quotaSemantics.effectiveAvailability | length) == 0 and
+           ($p.quotaSemantics.status == "unknown" or $p.quotaSemantics.status == "partial") then "healthy"
       else classify($p.quotaSemantics.effectiveAvailability // [])
       end
     end

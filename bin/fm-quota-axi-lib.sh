@@ -50,6 +50,8 @@ fm_quota_json_valid() {
       (.provider | type) == "string" and
       (.provider | length) > 0 and
       (.quotaSemantics | type) == "object" and
+      (.quotaSemantics.status as $semantics_status |
+        (["known", "partial", "unknown"] | index($semantics_status)) != null) and
       (.quotaSemantics.effectiveAvailability | type) == "array" and
       all(.quotaSemantics.effectiveAvailability[];
         type == "object" and

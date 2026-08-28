@@ -108,6 +108,7 @@ else
           map({
             provider: .[0].provider,
             quotaSemantics: {
+              status: "known",
               effectiveAvailability: map({
                 scope,
                 status: "known",
@@ -138,8 +139,9 @@ effective_for_provider_model() {
   local provider=$1 model=${2:-default}
   printf '%s\n' "$QUOTA_JSON" | jq -c --arg provider "$provider" --arg model "$model" '
     ($model | sub("^model:"; "")) as $model_token |
-    .providers[]? | select(.provider == $provider) |
-    (.quotaSemantics.effectiveAvailability // []) |
+    ([.providers[]? | select(.provider == $provider)] | first) as $p |
+    if ($p // null) == null then {status: "unknown"}
+    else ($p.quotaSemantics.effectiveAvailability // []) |
     map(select(.scope as $scope |
       $scope == "all_models" or $scope == "all_products" or
       ($model_token != "" and $model_token != "default" and
@@ -147,12 +149,15 @@ effective_for_provider_model() {
        ($model_token == ($scope | sub("^(model|product):"; ""))))
     )) as $applicable |
     ($applicable | map(select(.status == "known"))) as $known |
-    if ($applicable | length) == 0 then null
+    if ($applicable | length) == 0 and
+       ($p.quotaSemantics.status == "unknown" or $p.quotaSemantics.status == "partial") then {status: "unknown"}
+    elif ($applicable | length) == 0 then null
     elif ($known | length) == 0 then {status: "unknown"}
     else ($known | sort_by(
         .effectivePercentRemaining,
         if (.runway.status // "") == "exhausted_now" then 0 else 1 end
       )[0])
+    end
     end
   ' 2>/dev/null
 }
