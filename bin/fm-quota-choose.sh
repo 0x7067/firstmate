@@ -65,12 +65,11 @@ for c in "${CANDIDATES[@]}"; do
   esac
 done
 
-fm_quota_axi_compatible 5 >/dev/null 2>&1 || die "quota-axi is missing or below the compatibility floor"
-
 if [ -n "$JSON_SOURCE" ]; then
   [ -f "$JSON_SOURCE" ] && [ ! -L "$JSON_SOURCE" ] || die "json source is not a regular file: $JSON_SOURCE"
   QUOTA_JSON=$(cat -- "$JSON_SOURCE") || die "cannot read json source: $JSON_SOURCE"
 else
+  fm_quota_axi_compatible 5 >/dev/null 2>&1 || die "quota-axi is missing or below the compatibility floor"
   QUOTA_JSON=$(quota-axi --json 2>/dev/null) || die "quota-axi --json failed"
 fi
 [ -n "$QUOTA_JSON" ] || die "empty quota-axi json output"
@@ -82,6 +81,25 @@ case "$schema" in
   '') die "quota-axi json missing schemaVersion" ;;
   *) die "unsupported quota-axi schema version: $schema" ;;
 esac
+
+printf '%s\n' "$QUOTA_JSON" | jq -e '
+  (.providers | type) == "array" and
+  all(.providers[];
+    (.provider | type) == "string" and
+    (.provider | length) > 0 and
+    (.quotaSemantics | type) == "object" and
+    (.quotaSemantics.effectiveAvailability | type) == "array" and
+    all(.quotaSemantics.effectiveAvailability[];
+      type == "object" and
+      (.scope | type) == "string" and
+      (.status | type) == "string" and
+      (.status != "known" or
+        ((.effectivePercentRemaining | type) == "number" and
+         (.runway | type) == "object" and
+         (.runway.status | type) == "string"))
+    )
+  )
+' >/dev/null 2>&1 || die "invalid quota-axi provider data"
 
 # provider_for_harness <harness>
 # Map a firstmate harness name to the quota-axi provider family it consumes.
@@ -163,7 +181,7 @@ for c in "${CANDIDATES[@]}"; do
   harness=${c%%:*}
   model=${c#*:}
   [ "$model" = "$c" ] && model="default"
-  provider=$(provider_for_harness "$harness") || { printf 'error: unknown harness: %s\n' "$harness" >&2; continue; }
+  provider=$(provider_for_harness "$harness") || die "unknown harness: $harness"
   effective=$(effective_for_provider_model "$provider" "$model")
   if [ -z "$effective" ] || [ "$effective" = "null" ]; then
     continue

@@ -113,12 +113,12 @@ quota_json() {
 # quota scope.
 condition_status() {
   local json=$1 provider=${2:-} threshold=${3:-$DEFAULT_THRESHOLD}
-  printf '%s\n' "$json" | jq -r --arg provider "$provider" --argjson threshold "$threshold" '
+  printf '%s\n' "$json" | jq -r --arg provider "$provider" --arg threshold "$threshold" '
     def classify($availability):
       ($availability | map(select(.status == "known"))) as $known |
       if ($known | length) == 0 then "error"
       elif any($known[]; (.runway.status // "") == "exhausted_now") then "exhausted"
-      elif any($known[]; .effectivePercentRemaining <= $threshold) then "low"
+      elif any($known[]; .effectivePercentRemaining <= ($threshold | tonumber)) then "low"
       else "healthy"
       end;
     if (.providers | type) != "array" then "error"

@@ -9,6 +9,7 @@ BIN="$FM_ROOT/bin"
 
 LAB=$(mktemp -d "${TMPDIR:-/tmp}/fm-quota-choose.XXXXXX")
 FIXTURE="$LAB/quota.json"
+MALFORMED="$LAB/malformed.json"
 FAKEBIN="$LAB/fakebin"
 
 cleanup() {
@@ -81,6 +82,7 @@ JSON
 cat > "$FAKEBIN/quota-axi" <<'SH'
 #!/usr/bin/env bash
 if [ "${1:-}" = "--version" ]; then
+  [ "${QUOTA_AXI_INCOMPATIBLE:-0}" != 1 ] || exit 1
   echo "quota-axi 0.1.29"
   exit 0
 fi
@@ -102,17 +104,17 @@ ok() {
 }
 
 # 1. First candidate with positive effective quota.
-out=$(call_choose --json-source "$FIXTURE" --candidate kim:default --candidate codex:model:codex_bengalfox --candidate claude:claude-3-5-sonnet)
+out=$(call_choose --json-source "$FIXTURE" --candidate kimi:default --candidate codex:model:codex_bengalfox --candidate claude:claude-3-5-sonnet)
 [ "$out" = "claude claude-3-5-sonnet" ] || fail "first positive: expected 'claude claude-3-5-sonnet', got '$out'"
 ok "first positive candidate wins"
 
 # 2. Exhausted provider is skipped.
-out=$(call_choose --json-source "$FIXTURE" --candidate kim:default --candidate claude:claude-3-5-sonnet)
+out=$(call_choose --json-source "$FIXTURE" --candidate kimi:default --candidate claude:claude-3-5-sonnet)
 [ "$out" = "claude claude-3-5-sonnet" ] || fail "exhausted skip: expected 'claude claude-3-5-sonnet', got '$out'"
 ok "exhausted provider is skipped"
 
 # 3. No candidates have positive quota.
-if out=$(call_choose --json-source "$FIXTURE" --candidate kim:default 2>/dev/null); then
+if out=$(call_choose --json-source "$FIXTURE" --candidate kimi:default 2>/dev/null); then
   fail "no positive: expected exit 1, got exit 0 with '$out'"
 fi
 [ "$out" = "none" ] || fail "no positive: expected 'none', got '$out'"
@@ -139,5 +141,22 @@ ok "default model observes provider model scopes"
 out=$(call_choose --json-source "$FIXTURE" --candidate claude:claude-3-5-sonnet)
 [ "$out" = "claude claude-3-5-sonnet" ] || fail "fractional quota: expected positive candidate, got '$out'"
 ok "fractional positive quota is eligible"
+
+if err=$(call_choose --json-source "$FIXTURE" --candidate bogus:model --candidate claude:claude-3-5-sonnet 2>&1); then
+  fail "unknown harness unexpectedly selected a later candidate"
+fi
+[ "$err" = "error: unknown harness: bogus" ] || fail "unknown harness returned: $err"
+ok "unknown harness fails closed"
+
+printf '{"schemaVersion":5,"providers":{"provider":"claude","quotaSemantics":{"effectiveAvailability":[{"scope":"all_models","status":"known","effectivePercentRemaining":50,"runway":{"status":"through_reset"}}]}}}\n' > "$MALFORMED"
+if err=$(call_choose --json-source "$MALFORMED" --candidate claude:default 2>&1); then
+  fail "malformed provider collection unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "malformed provider data returned: $err"
+ok "malformed provider data fails closed"
+
+out=$(QUOTA_AXI_INCOMPATIBLE=1 call_choose --json-source "$FIXTURE" --candidate claude:default)
+[ "$out" = "claude default" ] || fail "json source required live quota-axi compatibility"
+ok "json source does not require quota-axi"
 
 printf '# all fm-quota-choose tests passed\n'

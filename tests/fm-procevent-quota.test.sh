@@ -60,4 +60,10 @@ fi
 [ "$err" = "error: --threshold needs a percent 0-100" ] || fail "invalid threshold returned: $err"
 ok "poll rejects a decimal threshold above 100"
 
+rm -f "$COUNT"
+out=$(QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" poll --interval 0.01 --threshold 010 --provider codex --timeout 1)
+printf '%s\n' "$out" | grep -qx 'status: exhausted' || fail "leading-zero threshold did not evaluate quota"
+printf '%s\n' "$out" | grep -qx 'condition_polls: 2' || fail "leading-zero threshold stopped before exhaustion"
+ok "poll accepts a leading-zero threshold"
+
 printf '# all fm-procevent-quota tests passed\n'
