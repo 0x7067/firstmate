@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Choose the first candidate with positive effective quota from a ranked list.
+# Choose the first quota-eligible candidate from a ranked list.
 #
 # Usage:
 #   fm-quota-choose.sh [--snapshot <path>] [--candidate <harness:provider:model>]...
@@ -7,10 +7,10 @@
 # Reads one already-captured quota-axi default TOON or JSON snapshot from the
 # provided file, or from stdin when --snapshot is omitted. For each --candidate
 # in order, it matches the explicit <provider>, then the best matching quota
-# scope for <model>. The first candidate whose effective percent remaining
-# is > 0 and whose runway status is not `exhausted_now` is printed as
-# "<harness> <model>" and the script exits 0. If no candidate has positive
-# effective quota, prints "none" and exits 1.
+# scope for <model>. The first candidate with disclosed unknown quota, or with
+# effective percent remaining > 0 and runway status other than `exhausted_now`,
+# is printed as "<harness> <model>" and the script exits 0. If no candidate is
+# quota-eligible, it prints "none" and exits 1.
 #
 # Candidates are accepted as `--candidate <harness:provider:model>` or as
 # positional colon-separated arguments, with earlier candidates preferred.
@@ -19,8 +19,8 @@
 #
 # The helper is the canonical worker-side selection used after the agent has
 # already run `quota-axi` for its model selection. It never replaces the agent's
-# reasoning-class or runway-feasibility gates; it only answers the narrow
-# question "which of these candidates has positive effective quota right now".
+# reasoning-class or runway-feasibility gates; it only answers which ordered
+# candidate remains eligible under the captured quota evidence.
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

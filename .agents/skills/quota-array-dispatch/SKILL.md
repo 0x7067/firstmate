@@ -13,7 +13,7 @@ metadata:
 # quota-array-dispatch
 
 This skill is the single owner of the completion-aware profile-array selection procedure.
-`AGENTS.md` section 4 owns the always-loaded intake boundary, load trigger, malformed-config refusal, every-candidate accounting, and strongest-reasoning/tie safety rules.
+`AGENTS.md` section 13 owns the load trigger.
 `harness-adapters` owns harness verification, model/provider discovery, and effort fallback.
 `quota-axi` remains data-only: it publishes `spendPriority` as a comparable scalar and never recommends, selects, ranks, or infers a route.
 Do not add a daemon, opaque composite score, routing wrapper, hard-coded model-specific policy, or producer-side route recommendation.
@@ -24,16 +24,16 @@ Deterministic shell owns only schema, configuration, and version validation plus
 The canonical shell helper for a worker that has already performed its model-selection reasoning and now needs to pick the first viable candidate is `bin/fm-quota-choose.sh`.
 Pass it the intake's already-captured default TOON or permitted JSON fallback through stdin or `--snapshot`; it never takes another quota snapshot.
 Pass each candidate as `harness:provider:model`, using the provider already established from the authoritative catalog intake.
-The helper matches quota by that explicit provider and best matching scope, then prints the first candidate with `effectivePercentRemaining` greater than zero and a runway status other than `exhausted_now`.
+The helper matches quota by that explicit provider and best matching scope, then prints the first candidate with positive effective quota or disclosed unknown quota.
+Known quota is viable only when `effectivePercentRemaining` is greater than zero and runway status is not `exhausted_now`.
 Harness alone is never a provider proxy.
-Use it when the brief already fixed the candidate order and the worker only needs to know which one has positive effective quota.
-It does not replace the reasoning-class, runway-feasibility, or authentication gates above; it only answers the narrow question of which ordered candidate has positive effective quota right now.
+Use it when the brief already fixed the candidate order and the worker only needs to know which candidate remains quota-eligible.
+It does not replace the reasoning-class, runway-feasibility, or authentication gates above.
 
 ## Read the default TOON
 
 Start each intake by running `quota-axi` once with no `--json`, and reuse that TOON for every candidate.
 Post-consolidation quota-axi (the floor owned by `bin/fm-quota-axi-lib.sh`) puts `spendPriority` in the default `quota[]` block beside `effectivePercentRemaining`, `runway`, `confidence`, `limitedBy`, and `resetsAt`.
-Firstmate can arm a recurring mid-task quota check through `bin/fm-procevent-quota.sh`, which registers a generic process-event source that wakes firstmate when the tracked provider drops below a threshold or its runway becomes `exhausted_now`.
 Sparse `exhaustion[]` carries finite-runway seconds only for `projected_exhaustion` and `exhausted_now`.
 Sparse `attention[]` names auth, stale, and unmeasurable facts.
 `spendPriority` is THE quota-perspective ranker.
