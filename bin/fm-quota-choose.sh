@@ -109,26 +109,39 @@ if printf '%s\n' "$QUOTA_SNAPSHOT" | jq -e 'type == "object"' >/dev/null 2>&1; t
   esac
 else
   QUOTA_JSON=$(printf '%s\n' "$QUOTA_SNAPSHOT" | jq -Rse '
+    def valid_zero_head:
+      (length == 0) or
+      ((length == 2) and
+       (.[0] | test("^bin: .+$")) and
+       (.[1] | test("^generatedAt: .+$"))) or
+      ((length == 3) and
+       (.[0] | test("^bin: .+$")) and
+       (.[1] | test("^description: .+$")) and
+       (.[2] | test("^generatedAt: .+$")));
     (split("\n") | map(select(length > 0))) as $lines |
     ($lines | index("quota[0]:")) as $zero_index |
     if $zero_index != null then
-      ($lines[($zero_index + 1):]) as $tail |
-      if ($tail | length) == 0 then
-        {schemaVersion: 5, providers: []}
-      elif ($tail | length) == 2 and
-           $tail[0] == "exhaustion[0]:" and
-           $tail[1] == "attention[0]:" then
-        {schemaVersion: 5, providers: []}
-      elif ($tail | length) >= 3 and
-           $tail[0] == "exhaustion[0]:" and
-           $tail[1] == "attention[0]:" then
-        ($tail[2] | capture("^help\\[(?<count>[0-9]+)\\]:$").count | tonumber) as $help_count |
-        if ($tail[3:] | length) == $help_count and
-           all($tail[3:][]; startswith("  ")) then
+      ($lines[:$zero_index]) as $head |
+      if ($head | valid_zero_head) then
+        ($lines[($zero_index + 1):]) as $tail |
+        if ($tail | length) == 0 then
           {schemaVersion: 5, providers: []}
+        elif ($tail | length) == 2 and
+             $tail[0] == "exhaustion[0]:" and
+             $tail[1] == "attention[0]:" then
+          {schemaVersion: 5, providers: []}
+        elif ($tail | length) >= 3 and
+             $tail[0] == "exhaustion[0]:" and
+             $tail[1] == "attention[0]:" then
+          ($tail[2] | capture("^help\\[(?<count>[0-9]+)\\]:$").count | tonumber) as $help_count |
+          if ($tail[3:] | length) == $help_count and
+             all($tail[3:][]; startswith("  ")) then
+            {schemaVersion: 5, providers: []}
+          else error("invalid zero-row quota sections")
+          end
         else error("invalid zero-row quota sections")
         end
-      else error("invalid zero-row quota sections")
+      else error("invalid zero-row quota header")
       end
     else
       capture("(?m)^quota\\[(?<count>[0-9]+)\\]\\{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt\\}:\\n(?<rows>(?:  [^\\n]*\\n?)*)") as $section |

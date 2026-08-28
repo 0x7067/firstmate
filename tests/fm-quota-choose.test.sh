@@ -10,6 +10,7 @@ BIN="$FM_ROOT/bin"
 LAB=$(mktemp -d "${TMPDIR:-/tmp}/fm-quota-choose.XXXXXX")
 FIXTURE="$LAB/quota.json"
 MALFORMED="$LAB/malformed.json"
+MULTI_JSON="$LAB/multi-json.json"
 DUPLICATE="$LAB/duplicate.json"
 OUT_OF_RANGE="$LAB/out-of-range.json"
 INVALID_RUNWAY="$LAB/invalid-runway.json"
@@ -23,6 +24,7 @@ MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
 MALFORMED_ZERO_TOON="$LAB/malformed-zero-quota.toon"
+LEADING_GARBAGE_TOON="$LAB/leading-garbage-quota.toon"
 QUOTED_TOON="$LAB/quoted-quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -217,6 +219,14 @@ fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "malformed provider data returned: $err"
 ok "malformed provider data fails closed"
 
+printf '{"providers":[{"provider":"claude","quotaSemantics":{"status":"known","effectiveAvailability":[{"scope":"all_models","status":"known","effectivePercentRemaining":0,"runway":{"status":"exhausted_now"}}]}}]}\n' > "$MULTI_JSON"
+cat "$LAB/captured.json" >> "$MULTI_JSON"
+if err=$(call_choose --snapshot "$MULTI_JSON" --candidate claude:default 2>&1); then
+  fail "multiple JSON values unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "multiple JSON values returned: $err"
+ok "multiple JSON values fail closed"
+
 jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) = []' \
   "$LAB/captured.json" > "$KNOWN_EMPTY"
 if err=$(call_choose --snapshot "$KNOWN_EMPTY" --candidate claude:default 2>&1); then
@@ -290,6 +300,20 @@ if err=$(call_choose --snapshot "$MALFORMED_ZERO_TOON" --candidate claude:defaul
 fi
 [ "$err" = "error: invalid quota-axi snapshot" ] || fail "malformed zero-row TOON returned: $err"
 ok "malformed zero-row TOON fails closed"
+
+cat > "$LEADING_GARBAGE_TOON" <<'TOON'
+garbage
+bin: quota-axi
+generatedAt: "2030-01-01T00:00:00Z"
+quota[0]:
+exhaustion[0]:
+attention[0]:
+TOON
+if err=$(call_choose --snapshot "$LEADING_GARBAGE_TOON" --candidate claude:default 2>&1); then
+  fail "zero-row TOON with leading garbage unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi snapshot" ] || fail "leading garbage TOON returned: $err"
+ok "zero-row TOON rejects leading garbage"
 
 cat > "$QUOTED_TOON" <<'TOON'
 bin: quota-axi
