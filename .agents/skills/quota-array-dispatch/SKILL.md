@@ -22,12 +22,13 @@ Deterministic shell owns only schema, configuration, and version validation plus
 ## Worker-side quota helper
 
 The canonical shell helper for a worker that has already performed its model-selection reasoning and now needs to pick the first viable candidate is `bin/fm-quota-choose.sh`.
-Pass it the intake's already-captured default TOON or permitted JSON fallback through stdin or `--snapshot`; it never takes another quota snapshot.
-Pass each candidate as `harness:provider:model`, using the provider already established from the authoritative catalog intake.
-The helper matches quota by that explicit provider and best matching scope, then prints the first candidate with positive effective quota or disclosed unknown quota.
+Pass it the intake's already-captured default TOON or permitted JSON fallback through stdin or `--snapshot`; it never takes another quota snapshot, so it selects from the same quota state as the intake.
+Pass each candidate as `harness:model`, with earlier candidates preferred.
+The helper maps each harness to its primary provider family, matches the best quota scope for the model, then prints the first candidate with positive effective quota or disclosed unknown quota.
 Known quota is viable only when `effectivePercentRemaining` is greater than zero and runway status is not `exhausted_now`.
-Harness alone is never a provider proxy.
-Use it when the brief already fixed the candidate order and the worker only needs to know which candidate remains quota-eligible.
+This is an optional narrow helper with a known limitation: it maps each harness to one primary provider family only, so a candidate whose established provider differs from that primary family is checked against the wrong quota row.
+Authoritative multi-provider routing - including provider discovery from the harness catalog and quota matching by that explicit provider - stays owned by this skill's intake procedure above and AGENTS.md section 4, not by the helper.
+Use it only when the brief already fixed the candidate order and every candidate's provider is the harness's primary family.
 It does not replace the reasoning-class, runway-feasibility, or authentication gates above.
 
 ## Read the default TOON

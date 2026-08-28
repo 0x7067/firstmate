@@ -2,18 +2,18 @@
 # Choose the first quota-eligible candidate from a ranked list.
 #
 # Usage:
-#   fm-quota-choose.sh [--snapshot <path>] [--candidate <harness:provider:model>]...
+#   fm-quota-choose.sh [--snapshot <path>] [--candidate <harness:model>]...
 #
 # Reads one already-captured quota-axi default TOON or JSON snapshot from the
 # provided file, or from stdin when --snapshot is omitted. For each --candidate
-# in order, it matches the explicit <provider>, then the best matching quota
-# scope for <model>. The first candidate with disclosed unknown quota, or with
-# effective percent remaining > 0 and runway status other than `exhausted_now`,
-# is printed as "<harness> <model>" and the script exits 0. If no candidate is
-# quota-eligible, it prints "none" and exits 1.
+# in order, it maps <harness> to its primary provider family, then matches the
+# best quota scope for <model>. The first candidate with disclosed unknown
+# quota, or with effective percent remaining > 0 and runway status other than
+# `exhausted_now`, is printed as "<harness> <model>" and the script exits 0.
+# If no candidate is quota-eligible, it prints "none" and exits 1.
 #
-# Candidates are accepted as `--candidate <harness:provider:model>` or as
-# positional colon-separated arguments, with earlier candidates preferred.
+# Candidates are accepted as `--candidate <harness:model>` or as positional
+# colon-separated arguments, with earlier candidates preferred.
 # This script is deterministic and safe: it performs no side effects and exits
 # nonzero when the environment would lead to an unsafe dispatch.
 #
@@ -21,6 +21,18 @@
 # already run `quota-axi` for its model selection. It never replaces the agent's
 # reasoning-class or runway-feasibility gates; it only answers which ordered
 # candidate remains eligible under the captured quota evidence.
+#
+# Multi-provider limitation: this helper maps each harness to ONE primary
+# provider family (see provider_for_harness below) and checks quota for that
+# family only. Some harnesses can run models from several providers - for
+# example, Pi and OpenCode may dispatch xAI, Anthropic, or other models - so a
+# candidate whose established provider differs from the harness's primary family
+# is checked against the wrong quota row. This is an accepted limitation of the
+# optional helper. Authoritative multi-provider routing - including provider
+# discovery from the harness catalog and quota matching by that explicit
+# provider - is owned by AGENTS.md section 4 and the quota-array-dispatch skill,
+# not by this helper. Use this helper only when the brief already fixed the
+# candidate order and every candidate's provider is the harness's primary family.
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -31,7 +43,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$SCRIPT_DIR/fm-control-lib.sh"
 
 die() { printf 'error: %s\n' "$1" >&2; exit 2; }
-usage() { sed -n '2,24p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 2; }
+usage() { sed -n '2,30p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 2; }
 
 CANDIDATES=()
 SNAPSHOT_SOURCE=
@@ -62,16 +74,13 @@ done
 
 [ "${#CANDIDATES[@]}" -gt 0 ] || die "no candidates supplied"
 
+# A candidate is <harness>:<model>. A bare harness with no colon means the
+# default model. Reject empty harnesses and characters that cannot form a safe
+# token. A colon-separated model is legal (e.g. model:codex_bengalfox).
 for c in "${CANDIDATES[@]}"; do
   case "$c" in
-    ''|:*|*:|*[!A-Za-z0-9._/:-]*) die "invalid candidate: $c" ;;
+    ''|:*|*[!A-Za-z0-9._/:-]*) die "invalid candidate: $c" ;;
   esac
-  candidate_rest=${c#*:}
-  candidate_provider=${candidate_rest%%:*}
-  candidate_model=${candidate_rest#*:}
-  [ "$candidate_rest" != "$c" ] && [ "$candidate_model" != "$candidate_rest" ] \
-    && [ -n "$candidate_provider" ] && [ -n "$candidate_model" ] \
-    || die "invalid candidate: $c"
 done
 
 if [ -n "$SNAPSHOT_SOURCE" ]; then
@@ -127,6 +136,25 @@ fi
 
 printf '%s\n' "$QUOTA_JSON" | fm_quota_json_valid || die "invalid quota-axi provider data"
 
+# provider_for_harness <harness>
+# Map a firstmate harness name to its primary quota-axi provider family.
+# Multi-provider harnesses (Pi, OpenCode) map to their primary family only; see
+# the header limitation note. Authoritative multi-provider routing is owned by
+# AGENTS.md section 4 and the quota-array-dispatch skill, not this helper.
+provider_for_harness() {
+  case "$1" in
+    claude)       printf 'claude\n' ;;
+    codex)        printf 'codex\n' ;;
+    opencode)     printf 'codex\n' ;;
+    pi|pi-signed) printf 'pi\n' ;;
+    grok)         printf 'grok\n' ;;
+    kimi)         printf 'kimi\n' ;;
+    cursor)       printf 'cursor\n' ;;
+    muse)         printf 'claude\n' ;;
+    *)            return 1 ;;
+  esac
+}
+
 # effective_for_provider_model <provider> <model>
 # Print a JSON object with effectivePercentRemaining and runway.status for the
 # provider/model tuple, preferring the most specific known scope.
@@ -160,10 +188,11 @@ effective_for_provider_model() {
 chosen="none"
 for c in "${CANDIDATES[@]}"; do
   harness=${c%%:*}
-  candidate_rest=${c#*:}
-  provider=${candidate_rest%%:*}
-  model=${candidate_rest#*:}
+  model=${c#*:}
+  [ "$model" = "$c" ] && model="default"
+  [ -n "$model" ] || die "invalid candidate: $c"
   fm_control_harness_supported "$harness" || die "unknown harness: $harness"
+  provider=$(provider_for_harness "$harness") || die "unknown harness: $harness"
   effective=$(effective_for_provider_model "$provider" "$model")
   if [ -z "$effective" ] || [ "$effective" = "null" ]; then
     continue
