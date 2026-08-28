@@ -130,4 +130,10 @@ fi
 [ "$out" = "none" ] || fail "specific scope: expected 'none', got '$out'"
 ok "specific model scope bounds generic quota"
 
+if out=$(call_choose --json-source "$FIXTURE" --candidate codex:default 2>/dev/null); then
+  fail "default scope: expected exit 1, got exit 0 with '$out'"
+fi
+[ "$out" = "none" ] || fail "default scope: expected 'none', got '$out'"
+ok "default model observes provider model scopes"
+
 printf '# all fm-quota-choose tests passed\n'

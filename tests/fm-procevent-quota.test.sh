@@ -48,4 +48,10 @@ printf '%s\n' "$out" | grep -qx 'status: exhausted' || fail "aggregate watch did
 printf '%s\n' "$out" | grep -qx 'condition_polls: 2' || fail "aggregate watch did not evaluate all providers"
 ok "aggregate watch blocks until any scope is exhausted"
 
+if err=$(QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" arm --provider 2>&1); then
+  fail "missing provider value unexpectedly armed a watch"
+fi
+[ "$err" = "error: --provider needs a value" ] || fail "missing provider value returned: $err"
+ok "arm rejects a missing provider value"
+
 printf '# all fm-procevent-quota tests passed\n'

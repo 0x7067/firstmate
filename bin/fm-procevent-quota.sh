@@ -174,7 +174,7 @@ cmd_arm() {
     case "$1" in
       --interval)  positive_number "${2-}" || die "--interval needs a positive number"; interval=$2; shift 2 ;;
       --threshold) valid_percent "${2-}" || die "--threshold needs a percent 0-100"; threshold=$2; shift 2 ;;
-      --provider)  resolve_provider "${2-}"; shift 2 ;;
+      --provider)  [ -n "${2-}" ] || die "--provider needs a value"; resolve_provider "$2"; shift 2 ;;
       *) usage ;;
     esac
   done
