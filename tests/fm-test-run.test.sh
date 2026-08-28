@@ -124,6 +124,7 @@ init_changed_fixture_repo() {
   : >"$repo/tests/lib.sh"
   : >"$repo/tests/fm-backend-herdr-eventwait.test.py"
   : >"$repo/bin/fm-supervisor-target-lib.sh"
+  : >"$repo/bin/fm-control-lib.sh"
   : >"$repo/bin/fm-procevent-quota.sh"
   : >"$repo/bin/fm-quota-axi-lib.sh"
   : >"$repo/bin/fm-quota-choose.sh"
@@ -275,6 +276,17 @@ test_changed_dependency_selection_and_unmapped_failure() {
     "shared quota validator selects chooser coverage"
   git -C "$repo" add bin/fm-quota-axi-lib.sh
   git -C "$repo" -c user.name=test -c user.email=test@example.invalid commit -qm quota-validator-change
+
+  printf '\n' >>"$repo/bin/fm-control-lib.sh"
+  listed=$(cd "$repo" && bin/fm-test-run.sh --list --changed --base HEAD)
+  assert_contains "$listed" "tests/fm-backend.test.sh" \
+    "control library keeps backend coverage"
+  assert_contains "$listed" "tests/fm-session-start.test.sh" \
+    "control library keeps session coverage"
+  assert_contains "$listed" "tests/fm-quota-choose.test.sh" \
+    "control library selects chooser coverage"
+  git -C "$repo" add bin/fm-control-lib.sh
+  git -C "$repo" -c user.name=test -c user.email=test@example.invalid commit -qm control-lib-change
 
   printf '\n' >>"$repo/src/unmapped.ts"
   set +e

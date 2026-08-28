@@ -53,7 +53,14 @@ SOURCE_ID_BASE=quota
 CANONICAL_SOURCE_ID=
 PROVIDER=
 
-usage() { sed -n '2,37p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 2; }
+usage() {
+  awk '
+    NR == 1 { next }
+    /^#/ { sub(/^# ?/, ""); print; next }
+    { exit }
+  ' "${BASH_SOURCE[0]}"
+  exit 2
+}
 die() { printf 'error: %s\n' "$1" >&2; exit 1; }
 
 resolve_provider() {
