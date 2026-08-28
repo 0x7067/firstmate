@@ -22,7 +22,8 @@ Deterministic shell owns only schema, configuration, and version validation plus
 ## Worker-side quota helper
 
 The canonical shell helper for a worker that has already performed its model-selection reasoning and now needs to pick the first viable candidate is `bin/fm-quota-choose.sh`.
-It runs `quota-axi --json`, maps each colon-separated `harness:model` candidate to its provider family and best matching scope, and prints the first candidate with `effectivePercentRemaining` greater than zero and a runway status other than `exhausted_now`.
+Pass it the intake's already-captured default TOON or permitted JSON fallback through stdin or `--snapshot`; it never takes another quota snapshot.
+It maps each colon-separated `harness:model` candidate to its provider family and best matching scope, then prints the first candidate with `effectivePercentRemaining` greater than zero and a runway status other than `exhausted_now`.
 Use it when the brief already fixed the candidate order and the worker only needs to know which one has positive effective quota.
 It does not replace the reasoning-class, runway-feasibility, or authentication gates above; it only answers the narrow question of which ordered candidate has positive effective quota right now.
 

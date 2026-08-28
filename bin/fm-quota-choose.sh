@@ -2,14 +2,15 @@
 # Choose the first candidate with positive effective quota from a ranked list.
 #
 # Usage:
-#   fm-quota-choose.sh [--json-source <path>] [--candidate <harness:model>]...
+#   fm-quota-choose.sh [--snapshot <path>] [--candidate <harness:model>]...
 #
-# Reads `quota-axi --json` (or the provided JSON snapshot) and, for each
-# --candidate in order, looks up the provider family for <harness>, then the
-# best matching quota scope for <model>. The first candidate whose effective
-# percent remaining is > 0 and whose runway.status is not `exhausted_now` is
-# printed as "<harness> <model>" and the script exits 0. If no candidate has
-# positive effective quota, prints "none" and exits 1.
+# Reads one already-captured quota-axi default TOON or JSON snapshot from the
+# provided file, or from stdin when --snapshot is omitted. For each --candidate
+# in order, it looks up the provider family for <harness>, then the best matching
+# quota scope for <model>. The first candidate whose effective percent remaining
+# is > 0 and whose runway status is not `exhausted_now` is printed as
+# "<harness> <model>" and the script exits 0. If no candidate has positive
+# effective quota, prints "none" and exits 1.
 #
 # Candidates are accepted as `--candidate <harness:model>` or as positional
 # colon-separated arguments, with earlier candidates preferred.
@@ -22,24 +23,17 @@
 # question "which of these candidates has positive effective quota right now".
 set -u
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# shellcheck source=bin/fm-quota-axi-lib.sh
-. "$SCRIPT_DIR/fm-quota-axi-lib.sh"
-# shellcheck source=bin/fm-timeout-lib.sh
-. "$SCRIPT_DIR/fm-timeout-lib.sh"
-
 die() { printf 'error: %s\n' "$1" >&2; exit 2; }
-usage() { sed -n '2,23p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 2; }
+usage() { sed -n '2,24p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 2; }
 
 CANDIDATES=()
-JSON_SOURCE=
+SNAPSHOT_SOURCE=
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
-    --json-source)
-      [ -n "${2-}" ] || die "--json-source needs a path"
-      JSON_SOURCE=$2
+    --snapshot)
+      [ -n "${2-}" ] || die "--snapshot needs a path"
+      SNAPSHOT_SOURCE=$2
       shift 2
       ;;
     --candidate)
@@ -71,22 +65,55 @@ for c in "${CANDIDATES[@]}"; do
   esac
 done
 
-if [ -n "$JSON_SOURCE" ]; then
-  [ -f "$JSON_SOURCE" ] && [ ! -L "$JSON_SOURCE" ] || die "json source is not a regular file: $JSON_SOURCE"
-  QUOTA_JSON=$(cat -- "$JSON_SOURCE") || die "cannot read json source: $JSON_SOURCE"
+if [ -n "$SNAPSHOT_SOURCE" ]; then
+  [ -f "$SNAPSHOT_SOURCE" ] && [ ! -L "$SNAPSHOT_SOURCE" ] || die "snapshot is not a regular file: $SNAPSHOT_SOURCE"
+  QUOTA_SNAPSHOT=$(cat -- "$SNAPSHOT_SOURCE") || die "cannot read snapshot: $SNAPSHOT_SOURCE"
 else
-  fm_quota_axi_compatible 5 >/dev/null 2>&1 || die "quota-axi is missing or below the compatibility floor"
-  QUOTA_JSON=$(quota-axi --json 2>/dev/null) || die "quota-axi --json failed"
+  [ ! -t 0 ] || die "quota snapshot is required on stdin or with --snapshot"
+  QUOTA_SNAPSHOT=$(cat) || die "cannot read quota snapshot from stdin"
 fi
-[ -n "$QUOTA_JSON" ] || die "empty quota-axi json output"
+[ -n "$QUOTA_SNAPSHOT" ] || die "empty quota snapshot"
 
-# Verify the JSON is the schema version we understand.
-schema=$(printf '%s\n' "$QUOTA_JSON" | jq -r '.schemaVersion // empty' 2>/dev/null) || schema=
-case "$schema" in
-  5) ;;
-  '') die "quota-axi json missing schemaVersion" ;;
-  *) die "unsupported quota-axi schema version: $schema" ;;
-esac
+if printf '%s\n' "$QUOTA_SNAPSHOT" | jq -e 'type == "object"' >/dev/null 2>&1; then
+  QUOTA_JSON=$QUOTA_SNAPSHOT
+  schema=$(printf '%s\n' "$QUOTA_JSON" | jq -r '.schemaVersion // empty' 2>/dev/null) || schema=
+  case "$schema" in
+    5) ;;
+    '') die "quota-axi json missing schemaVersion" ;;
+    *) die "unsupported quota-axi schema version: $schema" ;;
+  esac
+else
+  QUOTA_JSON=$(printf '%s\n' "$QUOTA_SNAPSHOT" | jq -Rse '
+    capture("(?m)^quota\\[(?<count>[0-9]+)\\]\\{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt\\}:\\n(?<rows>(?:  [^\\n]*\\n?)*)") as $section |
+    ($section.rows | split("\n") | map(select(length > 0) | sub("^  "; "") | split(","))) as $rows |
+    if ($rows | length) != ($section.count | tonumber) or any($rows[]; length != 8) then error("invalid quota rows")
+    else
+      {
+        schemaVersion: 5,
+        providers: ($rows |
+          map({
+            provider: .[0],
+            scope: .[1],
+            effectivePercentRemaining: (.[2] | tonumber),
+            runway: .[4]
+          }) |
+          group_by(.provider) |
+          map({
+            provider: .[0].provider,
+            quotaSemantics: {
+              effectiveAvailability: map({
+                scope,
+                status: "known",
+                effectivePercentRemaining,
+                runway: {status: .runway}
+              })
+            }
+          })
+        )
+      }
+    end
+  ' 2>/dev/null) || die "invalid quota-axi snapshot"
+fi
 
 printf '%s\n' "$QUOTA_JSON" | jq -e '
   (.providers | type) == "array" and
