@@ -51,24 +51,27 @@ fm_quota_json_valid() {
       (.provider | length) > 0 and
       (.quotaSemantics | type) == "object" and
       (.quotaSemantics.status as $semantics_status |
-        (["known", "partial", "unknown"] | index($semantics_status)) != null) and
-      (.quotaSemantics.effectiveAvailability | type) == "array" and
-      all(.quotaSemantics.effectiveAvailability[];
-        type == "object" and
-        (.scope | type) == "string" and
-        ((.status == "known" and
-          (.runway.status as $runway_status |
-          ((.effectivePercentRemaining | type) == "number" and
-           .effectivePercentRemaining >= 0 and
-           .effectivePercentRemaining <= 100 and
-           (.runway | type) == "object" and
-           ($runway_status | type) == "string" and
-           (["through_reset", "projected_exhaustion", "exhausted_now", "unknown"] |
-             index($runway_status)) != null))) or
-         (.status == "unknown" and
-          (has("effectivePercentRemaining") | not) and
-          ((has("runway") | not) or
-           ((.runway | type) == "object" and .runway.status == "unknown"))))
+        (["known", "partial", "unknown"] | index($semantics_status)) != null and
+        (.quotaSemantics.effectiveAvailability | type) == "array" and
+        ($semantics_status != "known" or
+         (.quotaSemantics.effectiveAvailability | length) > 0) and
+        all(.quotaSemantics.effectiveAvailability[];
+          type == "object" and
+          (.scope | type) == "string" and
+          ((.status == "known" and
+            (.runway.status as $runway_status |
+            ((.effectivePercentRemaining | type) == "number" and
+             .effectivePercentRemaining >= 0 and
+             .effectivePercentRemaining <= 100 and
+             (.runway | type) == "object" and
+             ($runway_status | type) == "string" and
+             (["through_reset", "projected_exhaustion", "exhausted_now", "unknown"] |
+               index($runway_status)) != null))) or
+           (.status == "unknown" and
+            (has("effectivePercentRemaining") | not) and
+            ((has("runway") | not) or
+             ((.runway | type) == "object" and .runway.status == "unknown"))))
+        )
       )
     )
   ' >/dev/null 2>&1

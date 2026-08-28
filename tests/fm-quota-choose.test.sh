@@ -14,6 +14,7 @@ DUPLICATE="$LAB/duplicate.json"
 OUT_OF_RANGE="$LAB/out-of-range.json"
 INVALID_RUNWAY="$LAB/invalid-runway.json"
 INVALID_AVAILABILITY="$LAB/invalid-availability.json"
+KNOWN_EMPTY="$LAB/known-empty.json"
 MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
 FAKEBIN="$LAB/fakebin"
@@ -190,6 +191,14 @@ if err=$(call_choose --snapshot "$MALFORMED" --candidate claude:default 2>&1); t
 fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "malformed provider data returned: $err"
 ok "malformed provider data fails closed"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) = []' \
+  "$LAB/captured.json" > "$KNOWN_EMPTY"
+if err=$(call_choose --snapshot "$KNOWN_EMPTY" --candidate claude:default 2>&1); then
+  fail "known-empty quota unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "known-empty quota returned: $err"
+ok "known-empty quota fails closed"
 
 out=$(call_choose --candidate claude:default < "$LAB/captured.json")
 [ "$out" = "claude default" ] || fail "stdin snapshot returned '$out'"

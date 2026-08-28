@@ -1139,6 +1139,12 @@ families_for_changed_path() {
     bin/fm-gate-refuse*|bin/fm-lock*|bin/fm-quota-axi-lib.sh)
       printf '%s\n' session-bootstrap
       ;;
+    bin/fm-procevent-quota.sh)
+      printf '%s\n' "__script__:fm-procevent-quota.test.sh"
+      ;;
+    bin/fm-quota-choose.sh)
+      printf '%s\n' "__script__:fm-quota-choose.test.sh"
+      ;;
     bin/fm-sessionstart-run.sh|.claude/settings.json|.codex/hooks.json|\
     .pi/extensions/fm-primary-turnend-guard.ts)
       # The run tier's two harness-supplied facts (source vocabulary and

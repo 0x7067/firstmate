@@ -44,6 +44,10 @@ case "${QUOTA_AXI_MALFORMED:-}" in
     printf '{"schemaVersion":5,"providers":[{"provider":"codex","quotaSemantics":{"status":"known","effectiveAvailability":[{"scope":"all_models","status":"typo","effectivePercentRemaining":0,"runway":{"status":"exhausted_now"}},{"scope":"model:codex_bengalfox","status":"known","effectivePercentRemaining":50,"runway":{"status":"through_reset"}}]}}]}\n'
     exit 0
     ;;
+  known-empty)
+    printf '{"schemaVersion":5,"providers":[{"provider":"codex","quotaSemantics":{"status":"known","effectiveAvailability":[]}}]}\n'
+    exit 0
+    ;;
 esac
 count=0
 [ ! -f "$QUOTA_AXI_COUNT" ] || read -r count < "$QUOTA_AXI_COUNT"
@@ -118,7 +122,7 @@ printf '%s\n' "$out" | grep -qx 'status: exhausted' || fail "bash timeout fallba
 printf '%s\n' "$out" | grep -qx 'condition_polls: 2' || fail "bash timeout fallback stopped before exhaustion"
 ok "quota polling uses the shared bash timeout fallback"
 
-for malformed in schema duplicate types range runway availability; do
+for malformed in schema duplicate types range runway availability known-empty; do
   out=$(QUOTA_AXI_MALFORMED="$malformed" QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" poll --interval 1 --threshold 10 --provider codex --timeout 1)
   printf '%s\n' "$out" | grep -qx 'status: error' || fail "$malformed snapshot did not report an error"
   printf '%s\n' "$out" | grep -qx 'condition_polls: 1' || fail "$malformed snapshot did not stop immediately"
