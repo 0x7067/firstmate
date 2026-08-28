@@ -61,7 +61,7 @@ done
 
 for c in "${CANDIDATES[@]}"; do
   case "$c" in
-    ''|*[!A-Za-z0-9._/:-]*) die "invalid candidate: $c" ;;
+    ''|:*|*:|*[!A-Za-z0-9._/:-]*) die "invalid candidate: $c" ;;
   esac
 done
 

@@ -159,4 +159,10 @@ out=$(QUOTA_AXI_INCOMPATIBLE=1 call_choose --json-source "$FIXTURE" --candidate 
 [ "$out" = "claude default" ] || fail "json source required live quota-axi compatibility"
 ok "json source does not require quota-axi"
 
+if err=$(call_choose --json-source "$FIXTURE" --candidate claude: 2>&1); then
+  fail "empty model candidate unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid candidate: claude:" ] || fail "empty model candidate returned: $err"
+ok "empty model candidate fails closed"
+
 printf '# all fm-quota-choose tests passed\n'
