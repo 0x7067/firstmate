@@ -1,0 +1,14 @@
+CASE: launcher that can dispatch Prime
+COMMAND: fm-spawn evidence-arch <project> "/usr/bin/arch prime-agent --flag"
+EXIT: 1
+OUTPUT: error: raw launch commands cannot prove non-Prime executable identity under the Prime isolation boundary; use an explicit verified --harness
+METADATA_CREATED: no
+BACKEND_LAUNCH_SENT: no
+
+CASE: allowed protected system utility
+COMMAND: fm-spawn evidence-echo <project> "/bin/echo hello-from-firstmate"
+EXIT: 0
+OUTPUT: warning: /var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-spawn-dispatch-profile.rRev8K/evidence-prime-boundary/home/data/evidence-echo/brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+spawned evidence-echo harness=echo kind=ship mode=no-mistakes yolo=off window=firstmate:fm-evidence-echo worktree=/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-spawn-dispatch-profile.rRev8K/evidence-prime-boundary/wt
+METADATA_CREATED: yes
+BACKEND_LAUNCH: /bin/echo hello-from-firstmate
