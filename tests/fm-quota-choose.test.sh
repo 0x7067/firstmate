@@ -12,6 +12,7 @@ FIXTURE="$LAB/quota.json"
 MALFORMED="$LAB/malformed.json"
 DUPLICATE="$LAB/duplicate.json"
 OUT_OF_RANGE="$LAB/out-of-range.json"
+INVALID_RUNWAY="$LAB/invalid-runway.json"
 TOON="$LAB/quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -242,5 +243,12 @@ if err=$(call_choose --snapshot "$OUT_OF_RANGE" --candidate claude:claude:defaul
 fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "out-of-range quota returned: $err"
 ok "out-of-range quota fails closed"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability[0].runway.status) = "invalid"' "$LAB/captured.json" > "$INVALID_RUNWAY"
+if err=$(call_choose --snapshot "$INVALID_RUNWAY" --candidate claude:claude:default 2>&1); then
+  fail "invalid runway status unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "invalid runway status returned: $err"
+ok "invalid runway status fails closed"
 
 printf '# all fm-quota-choose tests passed\n'

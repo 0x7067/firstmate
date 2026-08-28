@@ -56,11 +56,14 @@ fm_quota_json_valid() {
         (.scope | type) == "string" and
         (.status | type) == "string" and
         (.status != "known" or
+          (.runway.status as $runway_status |
           ((.effectivePercentRemaining | type) == "number" and
            .effectivePercentRemaining >= 0 and
            .effectivePercentRemaining <= 100 and
            (.runway | type) == "object" and
-           (.runway.status | type) == "string"))
+           ($runway_status | type) == "string" and
+           (["through_reset", "projected_exhaustion", "exhausted_now", "unknown"] |
+             index($runway_status)) != null)))
       )
     )
   ' >/dev/null 2>&1
