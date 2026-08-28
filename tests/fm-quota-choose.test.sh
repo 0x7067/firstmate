@@ -267,13 +267,23 @@ out=$(call_choose --snapshot "$LAB/captured.json" --candidate pi:xai:grok-4.1)
 [ "$out" = "pi grok-4.1" ] || fail "product scope overmatched grok-4.1: $out"
 ok "product quota matches exact identity only"
 
-out=$(call_choose --snapshot "$LAB/captured.json" --candidate agy:agy:default)
-[ "$out" = "agy default" ] || fail "unknown quota was not kept eligible: $out"
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate pi:agy:default)
+[ "$out" = "pi default" ] || fail "unknown quota was not kept eligible: $out"
 ok "unknown quota remains eligible"
 
 out=$(call_choose --snapshot "$LAB/captured.json" --candidate cursor:cursor:default)
 [ "$out" = "cursor default" ] || fail "provider-level unknown quota was not eligible: $out"
 ok "provider-level unknown quota remains eligible"
+
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate muse:claude:default)
+[ "$out" = "muse default" ] || fail "supported Muse candidate returned: $out"
+ok "Muse candidate is accepted"
+
+if err=$(call_choose --snapshot "$LAB/captured.json" --candidate agy:agy:default 2>&1); then
+  fail "unsupported harness unexpectedly dispatched"
+fi
+[ "$err" = "error: unknown harness: agy" ] || fail "unsupported harness returned: $err"
+ok "unsupported harness is rejected"
 
 jq '.providers += [.providers[] | select(.provider == "claude")]' "$LAB/captured.json" > "$DUPLICATE"
 if err=$(call_choose --snapshot "$DUPLICATE" --candidate claude:claude:default 2>&1); then

@@ -27,6 +27,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=bin/fm-quota-axi-lib.sh
 . "$SCRIPT_DIR/fm-quota-axi-lib.sh"
+# shellcheck source=bin/fm-control-lib.sh
+. "$SCRIPT_DIR/fm-control-lib.sh"
 
 die() { printf 'error: %s\n' "$1" >&2; exit 2; }
 usage() { sed -n '2,24p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 2; }
@@ -125,13 +127,6 @@ fi
 
 printf '%s\n' "$QUOTA_JSON" | fm_quota_json_valid || die "invalid quota-axi provider data"
 
-harness_known() {
-  case "$1" in
-    claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|cursor|agy|copilot) return 0 ;;
-    *)          return 1 ;;
-  esac
-}
-
 # effective_for_provider_model <provider> <model>
 # Print a JSON object with effectivePercentRemaining and runway.status for the
 # provider/model tuple, preferring the most specific known scope.
@@ -168,7 +163,7 @@ for c in "${CANDIDATES[@]}"; do
   candidate_rest=${c#*:}
   provider=${candidate_rest%%:*}
   model=${candidate_rest#*:}
-  harness_known "$harness" || die "unknown harness: $harness"
+  fm_control_harness_supported "$harness" || die "unknown harness: $harness"
   effective=$(effective_for_provider_model "$provider" "$model")
   if [ -z "$effective" ] || [ "$effective" = "null" ]; then
     continue
