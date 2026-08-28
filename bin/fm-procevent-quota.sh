@@ -109,7 +109,8 @@ condition_status() {
   printf '%s\n' "$json" | jq -r --arg provider "$provider" --arg threshold "$threshold" '
     def classify($availability):
       ($availability | map(select(.status == "known"))) as $known |
-      if ($known | length) == 0 then "error"
+      if ($availability | length) == 0 then "error"
+      elif ($known | length) == 0 then "healthy"
       elif any($known[]; (.runway.status // "") == "exhausted_now") then "exhausted"
       elif any($known[]; .effectivePercentRemaining <= ($threshold | tonumber)) then "low"
       else "healthy"

@@ -88,10 +88,30 @@ cat > "$FIXTURE" <<'JSON'
         "status": "known",
         "effectiveAvailability": [
           {
-            "scope": "all_models",
+            "scope": "all_products",
+            "status": "known",
+            "effectivePercentRemaining": 50,
+            "runway": { "status": "through_reset" }
+          },
+          {
+            "scope": "product:grok-4",
             "status": "known",
             "effectivePercentRemaining": 0,
             "runway": { "status": "exhausted_now" }
+          }
+        ]
+      }
+    },
+    {
+      "provider": "agy",
+      "windows": [],
+      "quotaSemantics": {
+        "status": "partial",
+        "effectiveAvailability": [
+          {
+            "scope": "all_models",
+            "status": "unknown",
+            "runway": { "status": "unknown" }
           }
         ]
       }
@@ -234,6 +254,14 @@ if out=$(call_choose --snapshot "$LAB/captured.json" --candidate pi:xai:grok-4 2
 fi
 [ "$out" = "none" ] || fail "explicit exhausted provider returned '$out'"
 ok "explicit provider controls quota matching"
+
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate pi:xai:grok-4.1)
+[ "$out" = "pi grok-4.1" ] || fail "product scope overmatched grok-4.1: $out"
+ok "product quota matches exact identity only"
+
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate agy:agy:default)
+[ "$out" = "agy default" ] || fail "unknown quota was not kept eligible: $out"
+ok "unknown quota remains eligible"
 
 jq '.providers += [.providers[] | select(.provider == "claude")]' "$LAB/captured.json" > "$DUPLICATE"
 if err=$(call_choose --snapshot "$DUPLICATE" --candidate claude:claude:default 2>&1); then

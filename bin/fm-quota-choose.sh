@@ -140,19 +140,19 @@ effective_for_provider_model() {
     ($model | sub("^model:"; "")) as $model_token |
     .providers[]? | select(.provider == $provider) |
     (.quotaSemantics.effectiveAvailability // []) |
-    map(select(.status == "known")) |
     map(select(.scope as $scope |
       $scope == "all_models" or $scope == "all_products" or
       ($model_token != "" and $model_token != "default" and
-       ($scope | startswith("model:")) and
-       $model_token == ($scope | ltrimstr("model:")))
-    )) |
-    if length == 0 then null
-    else
-      sort_by(
+       (($scope | startswith("model:")) or ($scope | startswith("product:"))) and
+       ($model_token == ($scope | sub("^(model|product):"; ""))))
+    )) as $applicable |
+    ($applicable | map(select(.status == "known"))) as $known |
+    if ($applicable | length) == 0 then null
+    elif ($known | length) == 0 then {status: "unknown"}
+    else ($known | sort_by(
         .effectivePercentRemaining,
         if (.runway.status // "") == "exhausted_now" then 0 else 1 end
-      )[0]
+      )[0])
     end
   ' 2>/dev/null
 }
@@ -169,10 +169,13 @@ for c in "${CANDIDATES[@]}"; do
     continue
   fi
   if printf '%s\n' "$effective" | jq -e '
-    .effectivePercentRemaining as $remaining |
-    (($remaining | type) == "number") and
-    ($remaining > 0) and
-    ((.runway.status // "") != "exhausted_now")
+    if .status == "unknown" then true
+    else
+      .effectivePercentRemaining as $remaining |
+      (($remaining | type) == "number") and
+      ($remaining > 0) and
+      ((.runway.status // "") != "exhausted_now")
+    end
   ' >/dev/null 2>&1; then
     chosen="$harness $model"
     break
