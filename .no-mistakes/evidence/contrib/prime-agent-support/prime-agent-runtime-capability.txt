@@ -1,0 +1,2 @@
+Installed Prime Agent capability probe
+version: daemon socket option:   --daemon-socket <path>             Use a specific daemon socket
