@@ -1,0 +1,7 @@
+$ quota-axi --version
+0.1.32
+
+$ quota-axi --json | fm-quota-choose.sh --candidate codex:codex:model:codex_bengalfox --candidate codex:codex:default
+codex default
+
+Interpretation: the exhausted first-ranked model scope was skipped; the healthy provider-wide fallback was selected from the one piped snapshot.
