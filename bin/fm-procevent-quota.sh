@@ -138,15 +138,20 @@ condition_status() {
 details() {
   local json=$1 provider=${2:-}
   printf '%s\n' "$json" | jq -c --arg provider "$provider" '
+    def best_detail($availability):
+      ($availability | map(select(.status == "known"))) as $known |
+      ($known | map(select((.runway.status // "") == "exhausted_now"))) as $exhausted |
+      if ($exhausted | length) > 0 then ($exhausted | min_by(.effectivePercentRemaining))
+      elif ($known | length) > 0 then ($known | min_by(.effectivePercentRemaining))
+      else null
+      end;
     if $provider == "" then
       {
         provider: "aggregate",
         summary: [
           (.providers[]? |
             { provider: .provider,
-              best: ((.quotaSemantics.effectiveAvailability // []) |
-                map(select(.status == "known")) |
-                min_by(.effectivePercentRemaining) // null)
+              best: best_detail(.quotaSemantics.effectiveAvailability // [])
             }
           )
         ]
@@ -155,9 +160,7 @@ details() {
       (.providers[]? | select(.provider == $provider)) as $p |
       {
         provider: $provider,
-        best: (($p.quotaSemantics.effectiveAvailability // []) |
-          map(select(.status == "known")) |
-          min_by(.effectivePercentRemaining) // null)
+        best: best_detail($p.quotaSemantics.effectiveAvailability // [])
       }
     end
   ' 2>/dev/null
