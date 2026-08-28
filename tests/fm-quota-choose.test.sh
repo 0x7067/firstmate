@@ -18,6 +18,7 @@ KNOWN_EMPTY="$LAB/known-empty.json"
 SEMANTICS_MISMATCH="$LAB/semantics-mismatch.json"
 PARTIAL="$LAB/partial.json"
 NO_APPLICABLE="$LAB/no-applicable.json"
+APPLICABLE_VETO="$LAB/applicable-veto.json"
 MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
@@ -313,6 +314,16 @@ jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvaila
 out=$(call_choose --snapshot "$NO_APPLICABLE" --candidate claude:fable)
 [ "$out" = "claude fable" ] || fail "unmeasured candidate quota was skipped: $out"
 ok "missing applicable quota remains eligible"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) = [
+      {"scope":"all_models","status":"known","effectivePercentRemaining":10,"runway":{"status":"exhausted_now"}},
+      {"scope":"model:foo","status":"known","effectivePercentRemaining":5,"runway":{"status":"through_reset"}}
+    ]' "$LAB/captured.json" > "$APPLICABLE_VETO"
+if out=$(call_choose --snapshot "$APPLICABLE_VETO" --candidate claude:foo 2>/dev/null); then
+  fail "provider-wide exhausted scope did not veto the candidate"
+fi
+[ "$out" = "none" ] || fail "applicable exhausted scope returned: $out"
+ok "any exhausted applicable scope vetoes dispatch"
 
 if out=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:fable 2>/dev/null); then
   fail "exact named model exhaustion unexpectedly dispatched"

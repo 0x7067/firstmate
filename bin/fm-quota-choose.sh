@@ -178,10 +178,14 @@ effective_for_provider_model() {
     ($applicable | map(select(.status == "known"))) as $known |
     if ($applicable | length) == 0 then {status: "unknown"}
     elif ($known | length) == 0 then {status: "unknown"}
-    else ($known | sort_by(
-        .effectivePercentRemaining,
-        if (.runway.status // "") == "exhausted_now" then 0 else 1 end
-      )[0])
+    elif any($known[];
+      .effectivePercentRemaining == 0 or
+      (.runway.status // "") == "exhausted_now"
+    ) then ($known | map(select(
+      .effectivePercentRemaining == 0 or
+      (.runway.status // "") == "exhausted_now"
+    )) | first)
+    else ($known | min_by(.effectivePercentRemaining))
     end
     end
   ' 2>/dev/null
