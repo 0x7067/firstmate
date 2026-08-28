@@ -165,4 +165,10 @@ fi
 [ "$err" = "error: invalid candidate: claude:" ] || fail "empty model candidate returned: $err"
 ok "empty model candidate fails closed"
 
+if err=$(call_choose --json-source "$FIXTURE" --candidate claude 2>&1); then
+  fail "candidate without separator unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid candidate: claude" ] || fail "candidate without separator returned: $err"
+ok "candidate requires a harness-model separator"
+
 printf '# all fm-quota-choose tests passed\n'

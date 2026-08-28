@@ -19,15 +19,8 @@ fm_quota_axi_compatible() {
     case "$timeout" in
       ''|*[!0-9]*|0) return 1 ;;
     esac
-    if command -v timeout >/dev/null 2>&1; then
-      output=$(timeout "$timeout" quota-axi --version 2>/dev/null </dev/null) || return 1
-    elif command -v gtimeout >/dev/null 2>&1; then
-      output=$(gtimeout "$timeout" quota-axi --version 2>/dev/null </dev/null) || return 1
-    elif command -v perl >/dev/null 2>&1; then
-      output=$(perl -e 'my $t = shift; my $pid = fork; die "fork failed" unless defined $pid; if (!$pid) { setpgrp(0, 0); exec @ARGV } local $SIG{ALRM} = sub { kill "TERM", -$pid; select undef, undef, undef, 0.2; kill "KILL", -$pid; exit 124 }; alarm $t; waitpid $pid, 0; exit($? >> 8)' "$timeout" quota-axi --version 2>/dev/null </dev/null) || return 1
-    else
-      return 1
-    fi
+    [ "$(type -t fm_run_timed)" = function ] || return 1
+    output=$(fm_run_timed "$timeout" quota-axi --version 2>/dev/null </dev/null) || return 1
   else
     output=$(quota-axi --version 2>/dev/null </dev/null) || return 1
   fi

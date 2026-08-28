@@ -66,4 +66,16 @@ printf '%s\n' "$out" | grep -qx 'status: exhausted' || fail "leading-zero thresh
 printf '%s\n' "$out" | grep -qx 'condition_polls: 2' || fail "leading-zero threshold stopped before exhaustion"
 ok "poll accepts a leading-zero threshold"
 
+if err=$(QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" poll --provider 2>&1); then
+  fail "missing poll provider value unexpectedly succeeded"
+fi
+[ "$err" = "error: --provider needs a value" ] || fail "missing poll provider returned: $err"
+ok "poll rejects a missing option value"
+
+rm -f "$COUNT"
+out=$(FM_TIMEOUT_MECHANISM_OVERRIDE=bash QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" poll --interval 0.01 --threshold 10 --provider codex --timeout 1)
+printf '%s\n' "$out" | grep -qx 'status: exhausted' || fail "bash timeout fallback did not poll quota"
+printf '%s\n' "$out" | grep -qx 'condition_polls: 2' || fail "bash timeout fallback stopped before exhaustion"
+ok "quota polling uses the shared bash timeout fallback"
+
 printf '# all fm-procevent-quota tests passed\n'

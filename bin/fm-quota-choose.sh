@@ -26,6 +26,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=bin/fm-quota-axi-lib.sh
 . "$SCRIPT_DIR/fm-quota-axi-lib.sh"
+# shellcheck source=bin/fm-timeout-lib.sh
+. "$SCRIPT_DIR/fm-timeout-lib.sh"
 
 die() { printf 'error: %s\n' "$1" >&2; exit 2; }
 usage() { sed -n '2,23p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 2; }
@@ -62,6 +64,10 @@ done
 for c in "${CANDIDATES[@]}"; do
   case "$c" in
     ''|:*|*:|*[!A-Za-z0-9._/:-]*) die "invalid candidate: $c" ;;
+  esac
+  case "$c" in
+    *:*) : ;;
+    *) die "invalid candidate: $c" ;;
   esac
 done
 
@@ -119,37 +125,6 @@ provider_for_harness() {
   esac
 }
 
-# scope_matches_model <scope> <model>
-# Return 0 when <scope> (a quota-axi scope string like "all_models" or
-# "model:codex_bengalfox") covers the candidate's model token.
-# The model token may be "default" (no explicit model), a model id that maps to
-# a provider model prefix, or empty.
-scope_matches_model() {
-  local scope=$1 model=${2:-default}
-  case "$scope" in
-    all_models|all_products)
-      return 0
-      ;;
-    model:*)
-      local prefix=${scope#model:}
-      case "$model" in
-        default|''|"$prefix"*)
-          return 0
-          ;;
-        *)
-          return 1
-          ;;
-      esac
-      ;;
-    tools)
-      case "$model" in *mcp*|*tool*) return 0 ;; *) return 1 ;; esac
-      ;;
-    *)
-      return 1
-      ;;
-  esac
-}
-
 # effective_for_provider_model <provider> <model>
 # Print a JSON object with effectivePercentRemaining and runway.status for the
 # provider/model tuple, preferring the most specific known scope.
@@ -180,7 +155,6 @@ chosen="none"
 for c in "${CANDIDATES[@]}"; do
   harness=${c%%:*}
   model=${c#*:}
-  [ "$model" = "$c" ] && model="default"
   provider=$(provider_for_harness "$harness") || die "unknown harness: $harness"
   effective=$(effective_for_provider_model "$provider" "$model")
   if [ -z "$effective" ] || [ "$effective" = "null" ]; then

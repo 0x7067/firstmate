@@ -92,15 +92,7 @@ quota_json() {
   local timeout=${1:-} output
   if [ -n "$timeout" ]; then
     fm_quota_axi_compatible "$timeout" >/dev/null 2>&1 || return 2
-    if command -v timeout >/dev/null 2>&1; then
-      output=$(timeout "$timeout" quota-axi --json 2>/dev/null </dev/null) || return 2
-    elif command -v gtimeout >/dev/null 2>&1; then
-      output=$(gtimeout "$timeout" quota-axi --json 2>/dev/null </dev/null) || return 2
-    elif command -v perl >/dev/null 2>&1; then
-      output=$(perl -e 'my $t = shift; my $pid = fork; die "fork failed" unless defined $pid; if (!$pid) { setpgrp(0, 0); exec @ARGV } local $SIG{ALRM} = sub { kill "TERM", -$pid; select undef, undef, undef, 0.2; kill "KILL", -$pid; exit 124 }; alarm $t; waitpid $pid, 0; exit($? >> 8)' "$timeout" quota-axi --json 2>/dev/null </dev/null) || return 2
-    else
-      return 2
-    fi
+    output=$(fm_run_timed "$timeout" quota-axi --json 2>/dev/null </dev/null) || return 2
   else
     fm_quota_axi_compatible >/dev/null 2>&1 || return 2
     output=$(quota-axi --json 2>/dev/null </dev/null) || return 2
@@ -198,10 +190,10 @@ cmd_poll() {
   local interval=$DEFAULT_INTERVAL threshold=$DEFAULT_THRESHOLD timeout=
   while [ "$#" -gt 0 ]; do
     case "$1" in
-      --interval)  interval=$2; shift 2 ;;
-      --threshold) threshold=$2; shift 2 ;;
-      --provider)  PROVIDER=$2; shift 2 ;;
-      --timeout)   timeout=$2; shift 2 ;;
+      --interval)  [ "$#" -ge 2 ] || die "--interval needs a positive number"; interval=$2; shift 2 ;;
+      --threshold) [ "$#" -ge 2 ] || die "--threshold needs a percent 0-100"; threshold=$2; shift 2 ;;
+      --provider)  [ "$#" -ge 2 ] || die "--provider needs a value"; PROVIDER=$2; shift 2 ;;
+      --timeout)   [ "$#" -ge 2 ] || die "--timeout needs a positive integer"; timeout=$2; shift 2 ;;
       *) usage ;;
     esac
   done
