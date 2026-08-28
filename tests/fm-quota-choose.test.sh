@@ -15,6 +15,8 @@ OUT_OF_RANGE="$LAB/out-of-range.json"
 INVALID_RUNWAY="$LAB/invalid-runway.json"
 INVALID_AVAILABILITY="$LAB/invalid-availability.json"
 KNOWN_EMPTY="$LAB/known-empty.json"
+SEMANTICS_MISMATCH="$LAB/semantics-mismatch.json"
+PARTIAL="$LAB/partial.json"
 NO_APPLICABLE="$LAB/no-applicable.json"
 MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
@@ -208,6 +210,21 @@ if err=$(call_choose --snapshot "$KNOWN_EMPTY" --candidate claude:default 2>&1);
 fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "known-empty quota returned: $err"
 ok "known-empty quota fails closed"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.status) = "unknown"' \
+  "$LAB/captured.json" > "$SEMANTICS_MISMATCH"
+if err=$(call_choose --snapshot "$SEMANTICS_MISMATCH" --candidate claude:default 2>&1); then
+  fail "unknown semantics with known entries unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "semantics mismatch returned: $err"
+ok "semantics and availability statuses must agree"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.status) = "partial" |
+    (.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) += [{"scope":"model:unmeasured","status":"unknown","runway":{"status":"unknown"}}]' \
+  "$LAB/captured.json" > "$PARTIAL"
+out=$(call_choose --snapshot "$PARTIAL" --candidate claude:default)
+[ "$out" = "claude default" ] || fail "valid partial semantics were rejected: $out"
+ok "partial semantics accept mixed availability"
 
 out=$(call_choose --candidate claude:default < "$LAB/captured.json")
 [ "$out" = "claude default" ] || fail "stdin snapshot returned '$out'"
