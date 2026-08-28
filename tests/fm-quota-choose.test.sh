@@ -18,6 +18,7 @@ KNOWN_EMPTY="$LAB/known-empty.json"
 NO_APPLICABLE="$LAB/no-applicable.json"
 MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
+EMPTY_TOON="$LAB/empty-quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
 
@@ -235,6 +236,17 @@ TOON
 out=$(call_choose --snapshot "$TOON" --candidate claude:default)
 [ "$out" = "claude default" ] || fail "default TOON snapshot returned '$out'"
 ok "default TOON snapshot is accepted"
+
+cat > "$EMPTY_TOON" <<'TOON'
+bin: quota-axi
+generatedAt: "2030-01-01T00:00:00Z"
+quota[0]:
+exhaustion[0]:
+attention[0]:
+TOON
+out=$(call_choose --snapshot "$EMPTY_TOON" --candidate claude:default)
+[ "$out" = "claude default" ] || fail "zero-row TOON did not preserve unknown quota: $out"
+ok "zero-row TOON preserves unknown quota"
 
 out=$(call_choose --snapshot "$LAB/captured.json" --candidate cursor:default)
 [ "$out" = "cursor default" ] || fail "provider-level unknown quota was not eligible: $out"

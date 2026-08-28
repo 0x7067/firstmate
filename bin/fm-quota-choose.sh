@@ -102,34 +102,38 @@ if printf '%s\n' "$QUOTA_SNAPSHOT" | jq -e 'type == "object"' >/dev/null 2>&1; t
   esac
 else
   QUOTA_JSON=$(printf '%s\n' "$QUOTA_SNAPSHOT" | jq -Rse '
-    capture("(?m)^quota\\[(?<count>[0-9]+)\\]\\{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt\\}:\\n(?<rows>(?:  [^\\n]*\\n?)*)") as $section |
-    ($section.rows | split("\n") | map(select(length > 0) | sub("^  "; "") | split(","))) as $rows |
-    if ($rows | length) != ($section.count | tonumber) or any($rows[]; length != 8) then error("invalid quota rows")
+    if test("(?m)^quota\\[0\\]:[ \\t]*$") then
+      {schemaVersion: 5, providers: []}
     else
-      {
-        schemaVersion: 5,
-        providers: ($rows |
-          map({
-            provider: .[0],
-            scope: .[1],
-            effectivePercentRemaining: (.[2] | tonumber),
-            runway: .[4]
-          }) |
-          group_by(.provider) |
-          map({
-            provider: .[0].provider,
-            quotaSemantics: {
-              status: "known",
-              effectiveAvailability: map({
-                scope,
+      capture("(?m)^quota\\[(?<count>[0-9]+)\\]\\{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt\\}:\\n(?<rows>(?:  [^\\n]*\\n?)*)") as $section |
+      ($section.rows | split("\n") | map(select(length > 0) | sub("^  "; "") | split(","))) as $rows |
+      if ($rows | length) != ($section.count | tonumber) or any($rows[]; length != 8) then error("invalid quota rows")
+      else
+        {
+          schemaVersion: 5,
+          providers: ($rows |
+            map({
+              provider: .[0],
+              scope: .[1],
+              effectivePercentRemaining: (.[2] | tonumber),
+              runway: .[4]
+            }) |
+            group_by(.provider) |
+            map({
+              provider: .[0].provider,
+              quotaSemantics: {
                 status: "known",
-                effectivePercentRemaining,
-                runway: {status: .runway}
-              })
-            }
-          })
-        )
-      }
+                effectiveAvailability: map({
+                  scope,
+                  status: "known",
+                  effectivePercentRemaining,
+                  runway: {status: .runway}
+                })
+              }
+            })
+          )
+        }
+      end
     end
   ' 2>/dev/null) || die "invalid quota-axi snapshot"
 fi
