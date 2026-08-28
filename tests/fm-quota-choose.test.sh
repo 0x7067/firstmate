@@ -14,6 +14,7 @@ DUPLICATE="$LAB/duplicate.json"
 OUT_OF_RANGE="$LAB/out-of-range.json"
 INVALID_RUNWAY="$LAB/invalid-runway.json"
 INVALID_AVAILABILITY="$LAB/invalid-availability.json"
+MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -228,6 +229,14 @@ ok "provider-level unknown quota remains eligible"
 out=$(call_choose --snapshot "$LAB/captured.json" --candidate muse:default)
 [ "$out" = "muse default" ] || fail "supported Muse candidate returned: $out"
 ok "Muse candidate is accepted"
+
+jq '.providers += [{"provider":"meta","windows":[],"quotaSemantics":{"status":"known","effectiveAvailability":[{"scope":"all_models","status":"known","effectivePercentRemaining":0,"runway":{"status":"exhausted_now"}}]}}]' \
+  "$LAB/captured.json" > "$MUSE_EXHAUSTED"
+if out=$(call_choose --snapshot "$MUSE_EXHAUSTED" --candidate muse:default 2>/dev/null); then
+  fail "Muse candidate dispatched with exhausted Meta quota"
+fi
+[ "$out" = "none" ] || fail "exhausted Meta quota returned: $out"
+ok "Muse uses Meta quota"
 
 if err=$(call_choose --snapshot "$LAB/captured.json" --candidate agy:default 2>&1); then
   fail "unsupported harness unexpectedly dispatched"
