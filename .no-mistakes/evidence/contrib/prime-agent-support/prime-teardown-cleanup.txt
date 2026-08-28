@@ -1,0 +1,1 @@
+ok - teardown completes and removes the Prime extension when an exact busy-state sidecar is already absent
