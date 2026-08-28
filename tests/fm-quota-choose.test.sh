@@ -13,6 +13,7 @@ MALFORMED="$LAB/malformed.json"
 DUPLICATE="$LAB/duplicate.json"
 OUT_OF_RANGE="$LAB/out-of-range.json"
 INVALID_RUNWAY="$LAB/invalid-runway.json"
+INVALID_AVAILABILITY="$LAB/invalid-availability.json"
 TOON="$LAB/quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -106,6 +107,12 @@ cat > "$FIXTURE" <<'JSON'
             "status": "known",
             "effectivePercentRemaining": 0.5,
             "runway": { "status": "through_reset" }
+          },
+          {
+            "scope": "model:fable",
+            "status": "known",
+            "effectivePercentRemaining": 0,
+            "runway": { "status": "exhausted_now" }
           }
         ]
       }
@@ -169,11 +176,9 @@ fi
 [ "$out" = "none" ] || fail "specific scope: expected 'none', got '$out'"
 ok "specific model scope bounds generic quota"
 
-if out=$(call_choose --snapshot "$LAB/captured.json" --candidate codex:codex:default 2>/dev/null); then
-  fail "default scope: expected exit 1, got exit 0 with '$out'"
-fi
-[ "$out" = "none" ] || fail "default scope: expected 'none', got '$out'"
-ok "default model observes provider model scopes"
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate codex:codex:default)
+[ "$out" = "codex default" ] || fail "default scope: expected provider-wide quota, got '$out'"
+ok "default model uses provider-wide quota"
 
 out=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:claude:claude-3-5-sonnet)
 [ "$out" = "claude claude-3-5-sonnet" ] || fail "fractional quota: expected positive candidate, got '$out'"
@@ -202,11 +207,11 @@ fi
 [ "$err" = "error: invalid candidate: claude:claude:" ] || fail "empty model candidate returned: $err"
 ok "empty model candidate fails closed"
 
-if err=$(call_choose --snapshot "$LAB/captured.json" --candidate claude 2>&1); then
+if err=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:default 2>&1); then
   fail "candidate without separator unexpectedly dispatched"
 fi
-[ "$err" = "error: invalid candidate: claude" ] || fail "candidate without separator returned: $err"
-ok "candidate requires a harness-model separator"
+[ "$err" = "error: invalid candidate: claude:default" ] || fail "candidate without provider returned: $err"
+ok "candidate requires harness-provider-model fields"
 
 cat > "$TOON" <<'TOON'
 bin: quota-axi
@@ -250,5 +255,22 @@ if err=$(call_choose --snapshot "$INVALID_RUNWAY" --candidate claude:claude:defa
 fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "invalid runway status returned: $err"
 ok "invalid runway status fails closed"
+
+if out=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:claude:fable 2>/dev/null); then
+  fail "exact named model exhaustion unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "exact named model returned '$out'"
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:claude:fable-2)
+[ "$out" = "claude fable-2" ] || fail "named model scope overmatched fable-2: $out"
+out=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:claude:default)
+[ "$out" = "claude default" ] || fail "named model scope overmatched default: $out"
+ok "named model quota matches exact identity only"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability[1].status) = "typo"' "$LAB/captured.json" > "$INVALID_AVAILABILITY"
+if err=$(call_choose --snapshot "$INVALID_AVAILABILITY" --candidate claude:claude:default 2>&1); then
+  fail "invalid availability status unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "invalid availability status returned: $err"
+ok "invalid availability status fails closed"
 
 printf '# all fm-quota-choose tests passed\n'

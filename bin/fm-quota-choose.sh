@@ -143,9 +143,9 @@ effective_for_provider_model() {
     map(select(.status == "known")) |
     map(select(.scope as $scope |
       $scope == "all_models" or $scope == "all_products" or
-      (($scope | startswith("model:")) and
-       (($model_token == "" or $model_token == "default") or
-        ($model_token | startswith($scope | ltrimstr("model:")))))
+      ($model_token != "" and $model_token != "default" and
+       ($scope | startswith("model:")) and
+       $model_token == ($scope | ltrimstr("model:")))
     )) |
     if length == 0 then null
     else
