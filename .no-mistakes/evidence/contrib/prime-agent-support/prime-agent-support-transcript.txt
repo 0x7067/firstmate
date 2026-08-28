@@ -1,0 +1,30 @@
+Prime Agent support - focused local validation
+Date: 2026-08-27
+Commit: 872959c7b1289956a57b733fd409fa4926d13a1a
+
+Live CLI capability
+$ prime-agent --version
+0.8.1
+
+$ prime-agent --help
+--daemon-socket <path>             Use a specific daemon socket
+--session-dir <dir>                Use a custom session directory
+--thinking <level>                 Set reasoning: off, minimal, low, medium, high, xhigh, max
+
+Executable end-to-end adapter checks
+$ bin/fm-test-run.sh tests/fm-prime-agent.test.sh tests/fm-spawn-dispatch-profile.test.sh tests/fm-busy-adapter-wiring.test.sh tests/fm-control-relaunch.test.sh
+ok - Prime ancestry outranks its shared Pi marker without widening to similar names
+ok - raw prime-agent launches fail closed before endpoint creation
+ok - prime-agent receives isolated project state, model, thinking, and its semantic extension
+ok - prime-agent atomically removes stale Git author identity
+ok - prime-agent serializes shared project setup across relaunches
+ok - prime-agent refuses when scoped daemon support is unavailable
+ok - Prime extension tracks compaction and per-session retries without inventing idle
+ok - fm-control relaunch: a same-harness relaunch keeps the profile axes it was running with
+FM_TEST_SUMMARY total=4 failed=0 skipped_gate=0
+
+The spawn integration executed the generated launch command through a fake Prime CLI,
+confirmed distinct project-and-home scoped HOME, agent, session, configuration, kernel,
+credential-file, and daemon paths for two projects, proved ambient credentials and Git
+credential helpers were absent, discovered the permitted no-mistakes skill, and created
+real Git commits with only the copied project author identity.
