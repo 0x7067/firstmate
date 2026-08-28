@@ -1,0 +1,32 @@
+codex:max reasoning effort — test evidence
+===========================================
+
+Test 1: fm-bootstrap.test.sh — crew_dispatch_validate accepts codex:max
+-----------------------------------------------------------------------
+Test row: "codex max effort is accepted" with config:
+  {"rules":[{"when":"big feature","use":{"harness":"codex","model":"gpt-5","effort":"max"}}]}
+Expectation: empty output (no error)
+Result: PASS — validation produced no error, codex:max is accepted
+
+Negative control: "array profile unsupported effort is flagged" with config:
+  {"rules":[{"when":"big feature","use":[{"harness":"codex","effort":"ultra"}]}]}
+Expectation: "CREW_DISPATCH: invalid config/crew-dispatch.json - invalid effort: codex:ultra"
+Result: PASS — codex:ultra is correctly rejected
+
+Full suite result:
+  ok - bootstrap validates crew-dispatch.json and reports malformed or unverified configs
+
+Test 2: fm-spawn-dispatch-profile.test.sh — effort_flag_for_harness threads codex max
+--------------------------------------------------------------------------------------
+Test: test_codex_threads_max_effort
+  Spawns codex with --model gpt-5 --effort max
+  Asserts launch command contains: codex --model 'gpt-5' -c 'model_reasoning_effort="max"' --dangerously-bypass-approvals-and-sandbox
+  Asserts meta profile records: codex gpt-5 max
+Result: PASS
+
+Also verified existing effort levels still work:
+  ok - codex receives --model and model_reasoning_effort profile flags
+  ok - codex passes max through as model_reasoning_effort
+
+Full suite result:
+  # all fm-spawn-dispatch-profile tests passed
