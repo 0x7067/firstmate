@@ -10,6 +10,7 @@ BIN="$FM_ROOT/bin"
 LAB=$(mktemp -d "${TMPDIR:-/tmp}/fm-quota-choose.XXXXXX")
 FIXTURE="$LAB/quota.json"
 MALFORMED="$LAB/malformed.json"
+DUPLICATE="$LAB/duplicate.json"
 TOON="$LAB/quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -226,5 +227,12 @@ if out=$(call_choose --snapshot "$LAB/captured.json" --candidate pi:xai:grok-4 2
 fi
 [ "$out" = "none" ] || fail "explicit exhausted provider returned '$out'"
 ok "explicit provider controls quota matching"
+
+jq '.providers += [.providers[] | select(.provider == "claude")]' "$LAB/captured.json" > "$DUPLICATE"
+if err=$(call_choose --snapshot "$DUPLICATE" --candidate claude:claude:default 2>&1); then
+  fail "duplicate provider snapshot unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "duplicate provider returned: $err"
+ok "duplicate providers fail closed"
 
 printf '# all fm-quota-choose tests passed\n'

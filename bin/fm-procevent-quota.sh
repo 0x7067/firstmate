@@ -105,6 +105,7 @@ quota_json() {
 # quota scope.
 condition_status() {
   local json=$1 provider=${2:-} threshold=${3:-$DEFAULT_THRESHOLD}
+  printf '%s\n' "$json" | fm_quota_json_valid || { printf 'error\n'; return; }
   printf '%s\n' "$json" | jq -r --arg provider "$provider" --arg threshold "$threshold" '
     def classify($availability):
       ($availability | map(select(.status == "known"))) as $known |

@@ -23,6 +23,11 @@
 # question "which of these candidates has positive effective quota right now".
 set -u
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# shellcheck source=bin/fm-quota-axi-lib.sh
+. "$SCRIPT_DIR/fm-quota-axi-lib.sh"
+
 die() { printf 'error: %s\n' "$1" >&2; exit 2; }
 usage() { sed -n '2,24p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 2; }
 
@@ -117,24 +122,7 @@ else
   ' 2>/dev/null) || die "invalid quota-axi snapshot"
 fi
 
-printf '%s\n' "$QUOTA_JSON" | jq -e '
-  (.providers | type) == "array" and
-  all(.providers[];
-    (.provider | type) == "string" and
-    (.provider | length) > 0 and
-    (.quotaSemantics | type) == "object" and
-    (.quotaSemantics.effectiveAvailability | type) == "array" and
-    all(.quotaSemantics.effectiveAvailability[];
-      type == "object" and
-      (.scope | type) == "string" and
-      (.status | type) == "string" and
-      (.status != "known" or
-        ((.effectivePercentRemaining | type) == "number" and
-         (.runway | type) == "object" and
-         (.runway.status | type) == "string"))
-    )
-  )
-' >/dev/null 2>&1 || die "invalid quota-axi provider data"
+printf '%s\n' "$QUOTA_JSON" | fm_quota_json_valid || die "invalid quota-axi provider data"
 
 harness_known() {
   case "$1" in

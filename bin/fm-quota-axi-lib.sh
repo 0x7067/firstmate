@@ -40,3 +40,26 @@ fm_quota_axi_compatible() {
   [ "$minor" -eq "$min_minor" ] || return 1
   [ "$patch" -ge "$min_patch" ]
 }
+
+fm_quota_json_valid() {
+  jq -e '
+    .schemaVersion == 5 and
+    (.providers | type) == "array" and
+    (([.providers[].provider] | length) == ([.providers[].provider] | unique | length)) and
+    all(.providers[];
+      (.provider | type) == "string" and
+      (.provider | length) > 0 and
+      (.quotaSemantics | type) == "object" and
+      (.quotaSemantics.effectiveAvailability | type) == "array" and
+      all(.quotaSemantics.effectiveAvailability[];
+        type == "object" and
+        (.scope | type) == "string" and
+        (.status | type) == "string" and
+        (.status != "known" or
+          ((.effectivePercentRemaining | type) == "number" and
+           (.runway | type) == "object" and
+           (.runway.status | type) == "string"))
+      )
+    )
+  ' >/dev/null 2>&1
+}
