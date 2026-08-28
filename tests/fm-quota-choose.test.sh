@@ -53,8 +53,8 @@ cat > "$FIXTURE" <<'JSON'
           {
             "scope": "model:codex_bengalfox",
             "status": "known",
-            "effectivePercentRemaining": 5,
-            "runway": { "status": "projected_exhaustion" }
+            "effectivePercentRemaining": 0,
+            "runway": { "status": "exhausted_now" }
           }
         ]
       }
@@ -103,7 +103,7 @@ ok() {
 
 # 1. First candidate with positive effective quota.
 out=$(call_choose --json-source "$FIXTURE" --candidate kim:default --candidate codex:model:codex_bengalfox --candidate claude:claude-3-5-sonnet)
-[ "$out" = "codex model:codex_bengalfox" ] || fail "first positive: expected 'codex model:codex_bengalfox', got '$out'"
+[ "$out" = "claude claude-3-5-sonnet" ] || fail "first positive: expected 'claude claude-3-5-sonnet', got '$out'"
 ok "first positive candidate wins"
 
 # 2. Exhausted provider is skipped.
@@ -123,9 +123,11 @@ out=$(call_choose --json-source "$FIXTURE" claude:claude-3-5-sonnet)
 [ "$out" = "claude claude-3-5-sonnet" ] || fail "positional: expected 'claude claude-3-5-sonnet', got '$out'"
 ok "positional candidates work"
 
-# 5. Prefer more specific model scope even when all_models has more headroom.
-out=$(call_choose --json-source "$FIXTURE" --candidate codex:model:codex_bengalfox)
-[ "$out" = "codex model:codex_bengalfox" ] || fail "specific scope: expected 'codex model:codex_bengalfox', got '$out'"
-ok "specific model scope is used"
+# 5. A model-specific exhausted scope bounds a healthy all-models scope.
+if out=$(call_choose --json-source "$FIXTURE" --candidate codex:model:codex_bengalfox 2>/dev/null); then
+  fail "specific scope: expected exit 1, got exit 0 with '$out'"
+fi
+[ "$out" = "none" ] || fail "specific scope: expected 'none', got '$out'"
+ok "specific model scope bounds generic quota"
 
 printf '# all fm-quota-choose tests passed\n'

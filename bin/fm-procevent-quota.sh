@@ -16,8 +16,8 @@
 #            the durable `check: procevent:quota:<seq>` wake, and the watch is
 #            registered through `bin/fm-procevent.sh register`.
 # poll       The blocking child the generic runner executes; never run this
-#            directly in a conversational turn. It runs `quota-axi --json` once,
-#            evaluates the condition, and prints a one-line result document.
+#            directly in a conversational turn. It polls `quota-axi --json`
+#            until quota reaches the threshold or an error stops the watch.
 # classify   Print the captured outcome class: low, exhausted, error, or unknown.
 # terminal   Every quota poll is terminal because the source fires at most once.
 # source-id  Print the canonical source id.
@@ -108,40 +108,29 @@ quota_json() {
   printf '%s\n' "$output"
 }
 
-# evaluate_condition <json> [provider] [threshold]
-# Read the JSON and return:
-#   0 if quota is exhausted_now or effectivePercentRemaining <= threshold
-#   1 if quota is healthy (above threshold and not exhausted_now)
-#   2 on error / unparseable / missing provider
-evaluate_condition() {
+# condition_status <json> [provider] [threshold]
+# Print healthy, low, exhausted, or error for the tightest known applicable
+# quota scope.
+condition_status() {
   local json=$1 provider=${2:-} threshold=${3:-$DEFAULT_THRESHOLD}
-  local status
-  status=$(printf '%s\n' "$json" | jq -r --arg provider "$provider" --argjson threshold "$threshold" '
-    if (.providers // null) == null then "error"
+  printf '%s\n' "$json" | jq -r --arg provider "$provider" --argjson threshold "$threshold" '
+    def classify($availability):
+      ($availability | map(select(.status == "known"))) as $known |
+      if ($known | length) == 0 then "error"
+      elif any($known[]; (.runway.status // "") == "exhausted_now") then "exhausted"
+      elif any($known[]; .effectivePercentRemaining <= $threshold) then "low"
+      else "healthy"
+      end;
+    if (.providers | type) != "array" then "error"
+    elif $provider == "" then
+      classify([.providers[]?.quotaSemantics.effectiveAvailability[]?])
     else
-      (.providers[]? | select(.provider == $provider)) as $p |
-      if $provider != "" and ($p // null) == null then "missing_provider"
-      else
-        (
-          ($p.quotaSemantics.effectiveAvailability // []) |
-          map(select(.status == "known" and
-            (.runway.status // "") != "exhausted_now" and
-            .effectivePercentRemaining > $threshold
-          )) |
-          if length == 0 then "trigger" else "ok" end
-        ) // (
-          ($p.quotaSemantics.effectiveAvailability // []) |
-          map(select(.status == "known")) |
-          if length == 0 then "error" else "trigger" end
-        )
+      ([.providers[]? | select(.provider == $provider)] | first) as $p |
+      if ($p // null) == null then "error"
+      else classify($p.quotaSemantics.effectiveAvailability // [])
       end
     end
-  ' 2>/dev/null) || { printf 'error\n'; return 2; }
-  case "$status" in
-    ok) return 1 ;;
-    trigger) return 0 ;;
-    *) return 2 ;;
-  esac
+  ' 2>/dev/null || printf 'error\n'
 }
 
 # details <json> [provider]
@@ -149,7 +138,6 @@ evaluate_condition() {
 details() {
   local json=$1 provider=${2:-}
   printf '%s\n' "$json" | jq -c --arg provider "$provider" '
-    (.providers[]? | select(.provider == $provider)) as $p |
     if $provider == "" then
       {
         provider: "aggregate",
@@ -164,6 +152,7 @@ details() {
         ]
       }
     else
+      (.providers[]? | select(.provider == $provider)) as $p |
       {
         provider: $provider,
         best: (($p.quotaSemantics.effectiveAvailability // []) |
@@ -216,32 +205,33 @@ cmd_poll() {
       *) usage ;;
     esac
   done
+  positive_number "$interval" || die "--interval needs a positive number"
+  valid_percent "$threshold" || die "--threshold needs a percent 0-100"
+  [ -z "$timeout" ] || positive_int "$timeout" || die "--timeout needs a positive integer"
   resolve_provider "$PROVIDER"
-  local json detail
-  json=$(quota_json "${timeout:-}")
-  case "$?" in
-    0) : ;;
-    *)
+  local json detail status polls=0
+  while :; do
+    polls=$((polls + 1))
+    if ! json=$(quota_json "${timeout:-}"); then
       printf 'quota: %s\n' "$CANONICAL_SOURCE_ID"
       printf 'status: error\n'
       printf 'detail: quota-axi --json failed or quota-axi is missing/incompatible\n'
-      printf 'condition_polls: 1\n'
+      printf 'condition_polls: %s\n' "$polls"
       exit 0
-      ;;
-  esac
-  detail=$(details "$json" "$PROVIDER")
-  if evaluate_condition "$json" "$PROVIDER" "$threshold"; then
+    fi
+    status=$(condition_status "$json" "$PROVIDER" "$threshold")
+    case "$status" in
+      healthy) sleep "$interval"; continue ;;
+      low|exhausted) : ;;
+      *) status=error ;;
+    esac
+    detail=$(details "$json" "$PROVIDER")
     printf 'quota: %s\n' "$CANONICAL_SOURCE_ID"
-    printf 'status: exhausted\n'
+    printf 'status: %s\n' "$status"
     printf 'detail: %s\n' "$detail"
-    printf 'condition_polls: 1\n'
-  else
-    printf 'quota: %s\n' "$CANONICAL_SOURCE_ID"
-    printf 'status: low\n'
-    printf 'detail: %s\n' "$detail"
-    printf 'condition_polls: 1\n'
-  fi
-  exit 0
+    printf 'condition_polls: %s\n' "$polls"
+    exit 0
+  done
 }
 
 cmd_classify() {

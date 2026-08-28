@@ -138,22 +138,21 @@ scope_matches_model() {
 effective_for_provider_model() {
   local provider=$1 model=${2:-default}
   printf '%s\n' "$QUOTA_JSON" | jq -c --arg provider "$provider" --arg model "$model" '
+    ($model | sub("^model:"; "")) as $model_token |
     .providers[]? | select(.provider == $provider) |
     (.quotaSemantics.effectiveAvailability // []) |
     map(select(.status == "known")) |
-    map(select(.scope as $s | $model == "" or $model == "default" or
-      ($s == "all_models" or $s == "all_products" or
-       ($s | startswith("model:")) as $is_model |
-       ($is_model and ($s | ltrimstr("model:") | startswith($model)))
-      )
+    map(select(.scope as $scope |
+      $scope == "all_models" or $scope == "all_products" or
+      ($model_token != "" and $model_token != "default" and
+       ($scope | startswith("model:")) and
+       ($model_token | startswith($scope | ltrimstr("model:"))))
     )) |
     if length == 0 then null
     else
       sort_by(
-        if .scope == "all_models" or .scope == "all_products" then 0
-        elif .scope | startswith("model:") then 2
-        else 1 end,
-        .effectivePercentRemaining
+        .effectivePercentRemaining,
+        if (.runway.status // "") == "exhausted_now" then 0 else 1 end
       )[0]
     end
   ' 2>/dev/null
