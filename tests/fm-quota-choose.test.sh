@@ -22,6 +22,7 @@ APPLICABLE_VETO="$LAB/applicable-veto.json"
 MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
+MALFORMED_ZERO_TOON="$LAB/malformed-zero-quota.toon"
 QUOTED_TOON="$LAB/quoted-quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -277,6 +278,18 @@ TOON
 out=$(call_choose --snapshot "$EMPTY_TOON" --candidate claude:default)
 [ "$out" = "claude default" ] || fail "zero-row TOON did not preserve unknown quota: $out"
 ok "zero-row TOON preserves unknown quota"
+
+cat > "$MALFORMED_ZERO_TOON" <<'TOON'
+bin: quota-axi
+generatedAt: "2030-01-01T00:00:00Z"
+quota[0]:
+garbage
+TOON
+if err=$(call_choose --snapshot "$MALFORMED_ZERO_TOON" --candidate claude:default 2>&1); then
+  fail "malformed zero-row TOON unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi snapshot" ] || fail "malformed zero-row TOON returned: $err"
+ok "malformed zero-row TOON fails closed"
 
 cat > "$QUOTED_TOON" <<'TOON'
 bin: quota-axi
