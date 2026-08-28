@@ -68,7 +68,7 @@ cat > "$FIXTURE" <<'JSON'
           {
             "scope": "all_models",
             "status": "known",
-            "effectivePercentRemaining": 50,
+            "effectivePercentRemaining": 0.5,
             "runway": { "status": "through_reset" }
           }
         ]
@@ -135,5 +135,9 @@ if out=$(call_choose --json-source "$FIXTURE" --candidate codex:default 2>/dev/n
 fi
 [ "$out" = "none" ] || fail "default scope: expected 'none', got '$out'"
 ok "default model observes provider model scopes"
+
+out=$(call_choose --json-source "$FIXTURE" --candidate claude:claude-3-5-sonnet)
+[ "$out" = "claude claude-3-5-sonnet" ] || fail "fractional quota: expected positive candidate, got '$out'"
+ok "fractional positive quota is eligible"
 
 printf '# all fm-quota-choose tests passed\n'

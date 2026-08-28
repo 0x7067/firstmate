@@ -82,7 +82,7 @@ valid_percent() {
   local n=${1-}
   local LC_ALL=C
   [[ "$n" =~ ^[0-9]+(\.[0-9]+)?$ ]] || return 1
-  [ "${n%.*}" -le 100 ] || return 1
+  jq -en --arg n "$n" '($n | tonumber) <= 100' >/dev/null 2>&1
 }
 
 # quota_json [timeout]

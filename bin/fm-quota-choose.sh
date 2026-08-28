@@ -168,12 +168,12 @@ for c in "${CANDIDATES[@]}"; do
   if [ -z "$effective" ] || [ "$effective" = "null" ]; then
     continue
   fi
-  remaining=$(printf '%s\n' "$effective" | jq -r '.effectivePercentRemaining // empty')
-  runway=$(printf '%s\n' "$effective" | jq -r '.runway.status // empty')
-  case "$remaining" in
-    ''|*[!0-9]*|null) continue ;;
-  esac
-  if [ "$remaining" -gt 0 ] && [ "$runway" != "exhausted_now" ]; then
+  if printf '%s\n' "$effective" | jq -e '
+    .effectivePercentRemaining as $remaining |
+    (($remaining | type) == "number") and
+    ($remaining > 0) and
+    ((.runway.status // "") != "exhausted_now")
+  ' >/dev/null 2>&1; then
     chosen="$harness $model"
     break
   fi
