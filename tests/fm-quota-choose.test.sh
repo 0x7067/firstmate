@@ -24,11 +24,14 @@ MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
 RENDERER_TOON="$LAB/renderer-quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
+EMPTY_ARRAY_TOON="$LAB/empty-array-quota.toon"
+INLINE_ATTENTION_TOON="$LAB/inline-attention-quota.toon"
 MALFORMED_ZERO_TOON="$LAB/malformed-zero-quota.toon"
 LEADING_GARBAGE_TOON="$LAB/leading-garbage-quota.toon"
 LEADING_GARBAGE_NONZERO_TOON="$LAB/leading-garbage-nonzero-quota.toon"
 TRAILING_GARBAGE_NONZERO_TOON="$LAB/trailing-garbage-nonzero-quota.toon"
 TRUNCATED_NONZERO_TOON="$LAB/truncated-nonzero-quota.toon"
+MALFORMED_COUNTED_TOON="$LAB/malformed-counted-quota.toon"
 QUOTED_TOON="$LAB/quoted-quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -325,6 +328,32 @@ out=$(call_choose --snapshot "$EMPTY_TOON" --candidate claude:default)
 [ "$out" = "claude default" ] || fail "zero-row TOON did not preserve unknown quota: $out"
 ok "zero-row TOON preserves unknown quota"
 
+cat > "$EMPTY_ARRAY_TOON" <<'TOON'
+bin: ~/.local/bin/quota-axi
+description: Report local agent-provider quota windows for routing-aware agents
+generatedAt: "2030-01-01T00:00:00Z"
+quota: []
+exhaustion: []
+attention[1]{provider,scope,kind,detail,remedy}:
+  claude,all_models,unmeasurable,unknown quota,none
+help[1]:
+  Run `quota-axi --full` for windows, pace, reserve, and account evidence
+TOON
+out=$(call_choose --snapshot "$EMPTY_ARRAY_TOON" --candidate claude:default)
+[ "$out" = "claude default" ] || fail "empty-array TOON rejected unknown candidate: $out"
+ok "empty-array TOON preserves counted unknown providers"
+
+cat > "$INLINE_ATTENTION_TOON" <<'TOON'
+bin: ~/.local/bin/quota-axi
+generatedAt: "2030-01-01T00:00:00Z"
+quota: []
+exhaustion: []
+attention: [{"provider":"claude","scope":"all_models","kind":"unmeasurable","detail":"unknown quota","remedy":"none"}]
+TOON
+out=$(call_choose --snapshot "$INLINE_ATTENTION_TOON" --candidate claude:default)
+[ "$out" = "claude default" ] || fail "inline attention TOON rejected unknown candidate: $out"
+ok "empty-array TOON accepts inline attention"
+
 cat > "$MALFORMED_ZERO_TOON" <<'TOON'
 bin: quota-axi
 generatedAt: "2030-01-01T00:00:00Z"
@@ -350,6 +379,21 @@ if err=$(call_choose --snapshot "$LEADING_GARBAGE_TOON" --candidate claude:defau
 fi
 [ "$err" = "error: invalid quota-axi snapshot" ] || fail "leading garbage TOON returned: $err"
 ok "zero-row TOON rejects leading garbage"
+
+cat > "$MALFORMED_COUNTED_TOON" <<'TOON'
+bin: quota-axi
+generatedAt: "2030-01-01T00:00:00Z"
+quota[1]{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt}:
+  claude,all_models,50,-1,through_reset,high,weekly,"2030-01-02T00:00:00Z"
+exhaustion[1]{provider,scope,usableRunwaySeconds,projectedExhaustedAt,limitingWindowId}:
+  garbage
+attention[0]:
+TOON
+if err=$(call_choose --snapshot "$MALFORMED_COUNTED_TOON" --candidate claude:default 2>&1); then
+  fail "malformed counted TOON unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi snapshot" ] || fail "malformed counted TOON returned: $err"
+ok "counted TOON rows require every declared field"
 
 cat > "$QUOTED_TOON" <<'TOON'
 bin: quota-axi

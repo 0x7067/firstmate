@@ -125,6 +125,34 @@ else
         (.[0] | capture("^help\\[(?<count>[0-9]+)\\]:$").count | tonumber) as $count |
         (.[1:] | length) == $count and all(.[1:][]; startswith("  "))
       end;
+    def decoded_row:
+      sub("^  "; "") |
+      split(",") |
+      map(if startswith("\"") and endswith("\"") then .[1:-1] else . end);
+    def valid_rows($field_count):
+      all(.[];
+        startswith("  ") and
+        ((decoded_row | length) == $field_count) and
+        all(decoded_row[]; length > 0)
+      );
+    def valid_attention_entries:
+      type == "array" and
+      all(.[];
+        type == "object" and
+        (.provider | type) == "string" and (.provider | length) > 0 and
+        (.scope | type) == "string" and (.scope | length) > 0 and
+        (.kind | type) == "string" and (.kind | length) > 0 and
+        (.detail | type) == "string" and (.detail | length) > 0 and
+        (.remedy | type) == "string" and (.remedy | length) > 0
+      );
+    def unknown_providers($entries):
+      $entries |
+      map(.provider) |
+      unique |
+      map({
+        provider: .,
+        quotaSemantics: {status: "unknown", effectiveAvailability: []}
+      });
     def exhaustion_count:
       if . == "exhaustion[0]:" or . == "exhaustion: []" then 0
       else
@@ -138,17 +166,39 @@ else
         tonumber
       end;
     (split("\n") | map(select(length > 0))) as $lines |
-    ($lines | index("quota[0]:")) as $zero_index |
+    ($lines | map(. == "quota[0]:" or . == "quota: []") | index(true)) as $zero_index |
     if $zero_index != null then
       ($lines[:$zero_index]) as $head |
       if ($head | valid_zero_head) then
         ($lines[($zero_index + 1):]) as $tail |
-        if ($tail | length) == 0 or
-           (($tail | length) >= 2 and
-            ($tail[0] == "exhaustion[0]:" or $tail[0] == "exhaustion: []") and
-            ($tail[1] == "attention[0]:" or $tail[1] == "attention: []") and
-            ($tail[2:] | valid_help_tail)) then
+        if ($tail | length) == 0 then
           {schemaVersion: 5, providers: []}
+        elif ($tail | length) >= 2 and
+             ($tail[0] == "exhaustion[0]:" or $tail[0] == "exhaustion: []") then
+          if ($tail[1] == "attention[0]:" or $tail[1] == "attention: []") and
+             ($tail[2:] | valid_help_tail) then
+            {schemaVersion: 5, providers: []}
+          elif ($tail[1] | test("^attention\\[[1-9][0-9]*\\]\\{provider,scope,kind,detail,remedy\\}:$")) then
+            ($tail[1] | attention_count) as $attention_count |
+            ($tail[2:(2 + $attention_count)]) as $attention_rows |
+            if ($attention_rows | length) == $attention_count and
+               ($attention_rows | valid_rows(5)) and
+               ($tail[(2 + $attention_count):] | valid_help_tail) then
+              ($attention_rows | map(decoded_row | {
+                provider: .[0], scope: .[1], kind: .[2], detail: .[3], remedy: .[4]
+              })) as $entries |
+              {schemaVersion: 5, providers: unknown_providers($entries)}
+            else error("invalid zero-row attention section")
+            end
+          elif ($tail[1] | startswith("attention: ")) then
+            ($tail[1] | sub("^attention: "; "") | fromjson) as $entries |
+            if ($entries | valid_attention_entries) and
+               ($tail[2:] | valid_help_tail) then
+              {schemaVersion: 5, providers: unknown_providers($entries)}
+            else error("invalid zero-row attention array")
+            end
+          else error("invalid zero-row attention section")
+          end
         else error("invalid zero-row quota sections")
         end
       else error("invalid zero-row quota header")
@@ -169,19 +219,15 @@ else
         ($lines[($attention_index + 1 + $attention_count):]) as $tail |
         if (($head | valid_preamble) | not) or
            ($quota_lines | length) != $quota_count or
-           (all($quota_lines[]; startswith("  ")) | not) or
+           (($quota_lines | valid_rows(8)) | not) or
            ($exhaustion_rows | length) != $exhaustion_count or
-           (all($exhaustion_rows[]; startswith("  ")) | not) or
+           (($exhaustion_rows | valid_rows(5)) | not) or
            ($attention_rows | length) != $attention_count or
-           (all($attention_rows[]; startswith("  ")) | not) or
+           (($attention_rows | valid_rows(5)) | not) or
            (($tail | valid_help_tail) | not) then
           error("invalid quota-axi TOON envelope")
         else
-          ($quota_lines | map(
-        sub("^  "; "") |
-        split(",") |
-        map(if startswith("\"") and endswith("\"") then .[1:-1] else . end)
-      )) as $rows |
+          ($quota_lines | map(decoded_row)) as $rows |
           if any($rows[]; length != 8) then error("invalid quota rows")
           else
             {
