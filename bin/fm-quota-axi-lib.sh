@@ -51,7 +51,7 @@ fm_quota_json_valid() {
       (([.providers[].provider] | length) == ([.providers[].provider] | unique | length)) and
       all(.providers[];
       (.provider | type) == "string" and
-      (.provider | length) > 0 and
+      (.provider | test("^[a-z0-9]+(-[a-z0-9]+)*$")) and
       (.quotaSemantics | type) == "object" and
       (.quotaSemantics.status as $semantics_status |
         (["known", "partial", "unknown"] | index($semantics_status)) != null and
@@ -69,6 +69,7 @@ fm_quota_json_valid() {
           type == "object" and
           (.scope | type) == "string" and
           (.scope | length) > 0 and
+          ((.scope | test("^\\s|\\s$")) | not) and
           ((.status == "known" and
             (.runway.status as $runway_status |
             ((.effectivePercentRemaining | type) == "number" and

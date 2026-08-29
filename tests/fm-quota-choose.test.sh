@@ -16,6 +16,8 @@ OUT_OF_RANGE="$LAB/out-of-range.json"
 INVALID_RUNWAY="$LAB/invalid-runway.json"
 INVALID_AVAILABILITY="$LAB/invalid-availability.json"
 EMPTY_SCOPE="$LAB/empty-scope.json"
+WHITESPACE_PROVIDER="$LAB/whitespace-provider.json"
+WHITESPACE_SCOPE="$LAB/whitespace-scope.json"
 UNKNOWN_EXHAUSTED="$LAB/unknown-exhausted.json"
 KNOWN_UNKNOWN="$LAB/known-unknown.json"
 KNOWN_EMPTY="$LAB/known-empty.json"
@@ -512,6 +514,23 @@ if err=$(call_choose --snapshot "$EMPTY_SCOPE" --candidate claude:default 2>&1);
 fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "empty quota scope returned: $err"
 ok "empty quota scopes fail closed"
+
+jq '(.providers[] | select(.provider == "claude").provider) = " claude" |
+    (.providers[] | select(.provider == " claude").quotaSemantics.effectiveAvailability[0].effectivePercentRemaining) = 0 |
+    (.providers[] | select(.provider == " claude").quotaSemantics.effectiveAvailability[0].runway.status) = "exhausted_now"' \
+  "$LAB/captured.json" > "$WHITESPACE_PROVIDER"
+if err=$(call_choose --snapshot "$WHITESPACE_PROVIDER" --candidate claude:default 2>&1); then
+  fail "whitespace provider identity unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "whitespace provider returned: $err"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability[0].scope) = "all_models "' \
+  "$LAB/captured.json" > "$WHITESPACE_SCOPE"
+if err=$(call_choose --snapshot "$WHITESPACE_SCOPE" --candidate claude:default 2>&1); then
+  fail "whitespace scope identity unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "whitespace scope returned: $err"
+ok "whitespace quota identities fail closed"
 
 jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability[0].effectivePercentRemaining) = 150' "$LAB/captured.json" > "$OUT_OF_RANGE"
 if err=$(call_choose --snapshot "$OUT_OF_RANGE" --candidate claude:default 2>&1); then
