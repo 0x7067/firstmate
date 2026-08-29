@@ -16,6 +16,7 @@ OUT_OF_RANGE="$LAB/out-of-range.json"
 INVALID_RUNWAY="$LAB/invalid-runway.json"
 INVALID_AVAILABILITY="$LAB/invalid-availability.json"
 EMPTY_SCOPE="$LAB/empty-scope.json"
+UNKNOWN_EXHAUSTED="$LAB/unknown-exhausted.json"
 KNOWN_EMPTY="$LAB/known-empty.json"
 SEMANTICS_MISMATCH="$LAB/semantics-mismatch.json"
 PARTIAL="$LAB/partial.json"
@@ -34,6 +35,8 @@ LEADING_GARBAGE_NONZERO_TOON="$LAB/leading-garbage-nonzero-quota.toon"
 TRAILING_GARBAGE_NONZERO_TOON="$LAB/trailing-garbage-nonzero-quota.toon"
 TRUNCATED_NONZERO_TOON="$LAB/truncated-nonzero-quota.toon"
 MALFORMED_COUNTED_TOON="$LAB/malformed-counted-quota.toon"
+UNKNOWN_EXHAUSTED_TOON="$LAB/unknown-exhausted-quota.toon"
+TRAILING_EMPTY_TOON="$LAB/trailing-empty-quota.toon"
 QUOTED_TOON="$LAB/quoted-quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -252,6 +255,14 @@ fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "semantics mismatch returned: $err"
 ok "semantics and availability statuses must agree"
 
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) = [{"scope":"all_models","status":"unknown","runway":{"status":"exhausted_now"}}]' \
+  "$LAB/captured.json" > "$UNKNOWN_EXHAUSTED"
+if out=$(call_choose --snapshot "$UNKNOWN_EXHAUSTED" --candidate claude:default 2>/dev/null); then
+  fail "unknown headroom with exhausted runway unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "unknown exhausted quota returned: $out"
+ok "exhausted runway vetoes unknown headroom"
+
 jq '(.providers[] | select(.provider == "claude").quotaSemantics.status) = "partial" |
     (.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) += [{"scope":"model:unmeasured","status":"unknown","runway":{"status":"unknown"}}]' \
   "$LAB/captured.json" > "$PARTIAL"
@@ -408,6 +419,37 @@ if err=$(call_choose --snapshot "$MALFORMED_COUNTED_TOON" --candidate claude:def
 fi
 [ "$err" = "error: invalid quota-axi snapshot" ] || fail "malformed counted TOON returned: $err"
 ok "counted TOON rows require every declared field"
+
+cat > "$UNKNOWN_EXHAUSTED_TOON" <<'TOON'
+bin: ~/.local/bin/quota-axi
+description: Report local agent-provider quota windows for routing-aware agents
+generatedAt: "2030-01-01T00:00:00Z"
+quota: []
+exhaustion: []
+attention[1]{provider,scope,kind,detail,remedy}:
+  claude,all_models,headroom_unknown,"weekly · exhausted_now limited by weekly",none
+help[1]:
+  Run `quota-axi --full` for windows, pace, reserve, and account evidence
+TOON
+if out=$(call_choose --snapshot "$UNKNOWN_EXHAUSTED_TOON" --candidate claude:default 2>/dev/null); then
+  fail "TOON unknown headroom exhaustion unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "TOON unknown headroom exhaustion returned: $out"
+ok "TOON conversion preserves unknown-headroom exhaustion"
+
+cat > "$TRAILING_EMPTY_TOON" <<'TOON'
+bin: quota-axi
+generatedAt: "2030-01-01T00:00:00Z"
+quota[1]{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt}:
+  claude,all_models,50,-1,through_reset,high,weekly,"2030-01-02T00:00:00Z",
+exhaustion[0]:
+attention[0]:
+TOON
+if err=$(call_choose --snapshot "$TRAILING_EMPTY_TOON" --candidate claude:default 2>&1); then
+  fail "TOON row with trailing empty field unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi snapshot" ] || fail "trailing empty TOON field returned: $err"
+ok "trailing empty TOON fields fail closed"
 
 cat > "$QUOTED_TOON" <<'TOON'
 bin: quota-axi

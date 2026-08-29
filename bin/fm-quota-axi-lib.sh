@@ -58,7 +58,10 @@ fm_quota_json_valid() {
         (.quotaSemantics.effectiveAvailability | type) == "array" and
         (if $semantics_status == "known" then
            ((.quotaSemantics.effectiveAvailability | length) > 0 and
-            all(.quotaSemantics.effectiveAvailability[]; .status == "known"))
+            all(.quotaSemantics.effectiveAvailability[];
+              .status == "known" or
+              (.status == "unknown" and .runway.status == "exhausted_now")
+            ))
          elif $semantics_status == "unknown" then
            all(.quotaSemantics.effectiveAvailability[]; .status == "unknown")
          else true
@@ -79,7 +82,9 @@ fm_quota_json_valid() {
            (.status == "unknown" and
             (has("effectivePercentRemaining") | not) and
             ((has("runway") | not) or
-             ((.runway | type) == "object" and .runway.status == "unknown"))))
+             ((.runway | type) == "object" and
+              (.runway.status as $unknown_runway_status |
+               (["unknown", "exhausted_now"] | index($unknown_runway_status)) != null)))))
         )
       )
     )

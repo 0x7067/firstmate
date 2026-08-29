@@ -118,8 +118,8 @@ condition_status() {
     def classify($availability):
       ($availability | map(select(.status == "known"))) as $known |
       if ($availability | length) == 0 then "error"
+      elif any($availability[]; (.runway.status // "") == "exhausted_now") then "exhausted"
       elif ($known | length) == 0 then "healthy"
-      elif any($known[]; (.runway.status // "") == "exhausted_now") then "exhausted"
       elif any($known[]; .effectivePercentRemaining <= ($threshold | tonumber)) then "low"
       else "healthy"
       end;
@@ -147,8 +147,8 @@ details() {
   printf '%s\n' "$json" | jq -c --arg provider "$provider" '
     def best_detail($availability):
       ($availability | map(select(.status == "known"))) as $known |
-      ($known | map(select((.runway.status // "") == "exhausted_now"))) as $exhausted |
-      if ($exhausted | length) > 0 then ($exhausted | min_by(.effectivePercentRemaining))
+      ($availability | map(select((.runway.status // "") == "exhausted_now"))) as $exhausted |
+      if ($exhausted | length) > 0 then ($exhausted | min_by(.effectivePercentRemaining // 101))
       elif ($known | length) > 0 then ($known | min_by(.effectivePercentRemaining))
       else null
       end;

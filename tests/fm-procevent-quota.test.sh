@@ -57,6 +57,10 @@ if [ "${QUOTA_AXI_EXHAUSTED_DETAIL:-0}" = 1 ]; then
   printf '{"schemaVersion":5,"providers":[{"provider":"codex","quotaSemantics":{"status":"known","effectiveAvailability":[{"scope":"all_models","status":"known","effectivePercentRemaining":10,"runway":{"status":"exhausted_now"}},{"scope":"model:foo","status":"known","effectivePercentRemaining":5,"runway":{"status":"through_reset"}}]}}]}\n'
   exit 0
 fi
+if [ "${QUOTA_AXI_UNKNOWN_EXHAUSTED:-0}" = 1 ]; then
+  printf '{"schemaVersion":5,"providers":[{"provider":"codex","quotaSemantics":{"status":"known","effectiveAvailability":[{"scope":"all_models","status":"unknown","runway":{"status":"exhausted_now"}}]}}]}\n'
+  exit 0
+fi
 count=0
 [ ! -f "$QUOTA_AXI_COUNT" ] || read -r count < "$QUOTA_AXI_COUNT"
 count=$((count + 1))
@@ -106,6 +110,12 @@ printf '%s\n' "$detail" | jq -e '
   .best.runway.status == "exhausted_now"
 ' >/dev/null || fail "exhausted poll recorded non-triggering detail: $detail"
 ok "exhausted poll records the triggering scope"
+
+out=$(QUOTA_AXI_UNKNOWN_EXHAUSTED=1 QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" \
+  "$BIN/fm-procevent-quota.sh" poll --interval 1 --threshold 10 --provider codex --timeout 1)
+printf '%s\n' "$out" | grep -qx 'status: exhausted' \
+  || fail "unknown headroom with exhausted runway did not wake as exhausted"
+ok "poll detects exhausted runway under unknown headroom"
 
 rm -f "$COUNT"
 out=$(QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" poll --interval 0.01 --threshold 10 --provider '' --timeout 1)

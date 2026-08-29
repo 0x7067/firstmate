@@ -130,10 +130,15 @@ else
         if $remaining == "" then $fields
         elif ($remaining | startswith("\"")) then
           ($remaining | capture("^(?<field>\"(?:\\\\.|[^\"])*\")(?<rest>,.*|)$")) as $match |
-          parse(($match.rest | sub("^,"; "")); $fields + [($match.field | fromjson)])
+          ($match.field | fromjson) as $field |
+          if $match.rest == "," then $fields + [$field, ""]
+          else parse(($match.rest | sub("^,"; "")); $fields + [$field])
+          end
         else
           ($remaining | capture("^(?<field>[^,\"]*)(?<rest>,.*|)$")) as $match |
-          parse(($match.rest | sub("^,"; "")); $fields + [$match.field])
+          if $match.rest == "," then $fields + [$match.field, ""]
+          else parse(($match.rest | sub("^,"; "")); $fields + [$match.field])
+          end
         end;
       parse(.; []);
     def decoded_row:
@@ -154,13 +159,23 @@ else
         (.detail | type) == "string" and (.detail | length) > 0 and
         (.remedy | type) == "string" and (.remedy | length) > 0
       );
+    def attention_availability:
+      if .kind == "headroom_unknown" and (.detail | contains("exhausted_now")) then
+        if (.detail | test("(^| · )exhausted_now limited by .+$")) then
+          {scope: .scope, status: "unknown", runway: {status: "exhausted_now"}}
+        else error("invalid exhausted headroom attention")
+        end
+      else empty
+      end;
     def unknown_providers($entries):
       $entries |
-      map(.provider) |
-      unique |
+      group_by(.provider) |
       map({
-        provider: .,
-        quotaSemantics: {status: "unknown", effectiveAvailability: []}
+        provider: .[0].provider,
+        quotaSemantics: {
+          status: "unknown",
+          effectiveAvailability: [.[] | attention_availability]
+        }
       });
     def exhaustion_count:
       if . == "exhaustion[0]:" or . == "exhaustion: []" then 0
@@ -235,28 +250,33 @@ else
           error("invalid quota-axi TOON envelope")
         else
           ($quota_lines | map(decoded_row)) as $rows |
+          ($attention_rows | map(decoded_row | {
+            provider: .[0], scope: .[1], kind: .[2], detail: .[3], remedy: .[4]
+          })) as $attention_entries |
           if any($rows[]; length != 8) then error("invalid quota rows")
           else
             {
               schemaVersion: 5,
-              providers: ($rows |
+              providers: (($rows |
                 map({
                   provider: .[0],
-                  scope: .[1],
-                  effectivePercentRemaining: (.[2] | tonumber),
-                  runway: .[4]
-                }) |
+                  availability: {
+                    scope: .[1],
+                    status: "known",
+                    effectivePercentRemaining: (.[2] | tonumber),
+                    runway: {status: .[4]}
+                  }
+                })) +
+                ($attention_entries | map(. as $entry | {
+                  provider: $entry.provider,
+                  availability: ([$entry | attention_availability] | first // null)
+                })) |
                 group_by(.provider) |
                 map({
                   provider: .[0].provider,
                   quotaSemantics: {
-                    status: "known",
-                    effectiveAvailability: map({
-                      scope,
-                      status: "known",
-                      effectivePercentRemaining,
-                      runway: {status: .runway}
-                    })
+                    status: (if any(.[]; .availability.status == "known") then "known" else "unknown" end),
+                    effectiveAvailability: [.[].availability | select(. != null)]
                   }
                 })
               )
@@ -307,14 +327,11 @@ effective_for_provider_model() {
     )) as $applicable |
     ($applicable | map(select(.status == "known"))) as $known |
     if ($applicable | length) == 0 then {status: "unknown"}
+    elif any($applicable[]; (.runway.status // "") == "exhausted_now") then
+      ($applicable | map(select((.runway.status // "") == "exhausted_now")) | first)
     elif ($known | length) == 0 then {status: "unknown"}
-    elif any($known[];
-      .effectivePercentRemaining == 0 or
-      (.runway.status // "") == "exhausted_now"
-    ) then ($known | map(select(
-      .effectivePercentRemaining == 0 or
-      (.runway.status // "") == "exhausted_now"
-    )) | first)
+    elif any($known[]; .effectivePercentRemaining == 0) then
+      ($known | map(select(.effectivePercentRemaining == 0)) | first)
     else ($known | min_by(.effectivePercentRemaining))
     end
     end
@@ -334,7 +351,8 @@ for c in "${CANDIDATES[@]}"; do
     continue
   fi
   if printf '%s\n' "$effective" | jq -e '
-    if .status == "unknown" then true
+    if (.runway.status // "") == "exhausted_now" then false
+    elif .status == "unknown" then true
     else
       .effectivePercentRemaining as $remaining |
       (($remaining | type) == "number") and
