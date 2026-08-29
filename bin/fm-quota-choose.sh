@@ -125,10 +125,19 @@ else
         (.[0] | capture("^help\\[(?<count>[0-9]+)\\]:$").count | tonumber) as $count |
         (.[1:] | length) == $count and all(.[1:][]; startswith("  "))
       end;
+    def decoded_fields:
+      def parse($remaining; $fields):
+        if $remaining == "" then $fields
+        elif ($remaining | startswith("\"")) then
+          ($remaining | capture("^(?<field>\"(?:\\\\.|[^\"])*\")(?<rest>,.*|)$")) as $match |
+          parse(($match.rest | sub("^,"; "")); $fields + [($match.field | fromjson)])
+        else
+          ($remaining | capture("^(?<field>[^,\"]*)(?<rest>,.*|)$")) as $match |
+          parse(($match.rest | sub("^,"; "")); $fields + [$match.field])
+        end;
+      parse(.; []);
     def decoded_row:
-      sub("^  "; "") |
-      split(",") |
-      map(if startswith("\"") and endswith("\"") then .[1:-1] else . end);
+      sub("^  "; "") | decoded_fields;
     def valid_rows($field_count):
       all(.[];
         startswith("  ") and
@@ -171,9 +180,7 @@ else
       ($lines[:$zero_index]) as $head |
       if ($head | valid_zero_head) then
         ($lines[($zero_index + 1):]) as $tail |
-        if ($tail | length) == 0 then
-          {schemaVersion: 5, providers: []}
-        elif ($tail | length) >= 2 and
+        if ($tail | length) >= 2 and
              ($tail[0] == "exhaustion[0]:" or $tail[0] == "exhaustion: []") then
           if ($tail[1] == "attention[0]:" or $tail[1] == "attention: []") and
              ($tail[2:] | valid_help_tail) then

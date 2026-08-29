@@ -66,6 +66,7 @@ fm_quota_json_valid() {
         all(.quotaSemantics.effectiveAvailability[];
           type == "object" and
           (.scope | type) == "string" and
+          (.scope | length) > 0 and
           ((.status == "known" and
             (.runway.status as $runway_status |
             ((.effectivePercentRemaining | type) == "number" and

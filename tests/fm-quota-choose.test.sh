@@ -15,6 +15,7 @@ DUPLICATE="$LAB/duplicate.json"
 OUT_OF_RANGE="$LAB/out-of-range.json"
 INVALID_RUNWAY="$LAB/invalid-runway.json"
 INVALID_AVAILABILITY="$LAB/invalid-availability.json"
+EMPTY_SCOPE="$LAB/empty-scope.json"
 KNOWN_EMPTY="$LAB/known-empty.json"
 SEMANTICS_MISMATCH="$LAB/semantics-mismatch.json"
 PARTIAL="$LAB/partial.json"
@@ -26,6 +27,7 @@ RENDERER_TOON="$LAB/renderer-quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
 EMPTY_ARRAY_TOON="$LAB/empty-array-quota.toon"
 INLINE_ATTENTION_TOON="$LAB/inline-attention-quota.toon"
+TRUNCATED_ZERO_TOON="$LAB/truncated-zero-quota.toon"
 MALFORMED_ZERO_TOON="$LAB/malformed-zero-quota.toon"
 LEADING_GARBAGE_TOON="$LAB/leading-garbage-quota.toon"
 LEADING_GARBAGE_NONZERO_TOON="$LAB/leading-garbage-nonzero-quota.toon"
@@ -335,7 +337,7 @@ generatedAt: "2030-01-01T00:00:00Z"
 quota: []
 exhaustion: []
 attention[1]{provider,scope,kind,detail,remedy}:
-  claude,all_models,unmeasurable,unknown quota,none
+  claude,all_models,error,"request failed, retry later",none
 help[1]:
   Run `quota-axi --full` for windows, pace, reserve, and account evidence
 TOON
@@ -353,6 +355,18 @@ TOON
 out=$(call_choose --snapshot "$INLINE_ATTENTION_TOON" --candidate claude:default)
 [ "$out" = "claude default" ] || fail "inline attention TOON rejected unknown candidate: $out"
 ok "empty-array TOON accepts inline attention"
+
+cat > "$TRUNCATED_ZERO_TOON" <<'TOON'
+bin: ~/.local/bin/quota-axi
+description: Report local agent-provider quota windows for routing-aware agents
+generatedAt: "2030-01-01T00:00:00Z"
+quota: []
+TOON
+if err=$(call_choose --snapshot "$TRUNCATED_ZERO_TOON" --candidate claude:default 2>&1); then
+  fail "truncated zero-row TOON unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi snapshot" ] || fail "truncated zero-row TOON returned: $err"
+ok "truncated zero-row TOON fails closed"
 
 cat > "$MALFORMED_ZERO_TOON" <<'TOON'
 bin: quota-axi
@@ -441,6 +455,14 @@ if err=$(call_choose --snapshot "$DUPLICATE" --candidate claude:default 2>&1); t
 fi
 [ "$err" = "error: invalid quota-axi provider data" ] || fail "duplicate provider returned: $err"
 ok "duplicate providers fail closed"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability[0].scope) = ""' \
+  "$LAB/captured.json" > "$EMPTY_SCOPE"
+if err=$(call_choose --snapshot "$EMPTY_SCOPE" --candidate claude:default 2>&1); then
+  fail "empty quota scope unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi provider data" ] || fail "empty quota scope returned: $err"
+ok "empty quota scopes fail closed"
 
 jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability[0].effectivePercentRemaining) = 150' "$LAB/captured.json" > "$OUT_OF_RANGE"
 if err=$(call_choose --snapshot "$OUT_OF_RANGE" --candidate claude:default 2>&1); then
