@@ -1,0 +1,29 @@
+CHOOSER
+$ fm-quota-choose.sh --snapshot captured.json --candidate claude:default --candidate codex:default
+codex default
+quota-axi calls during chooser: 0
+
+ARM AND WAKE
+$ fm-procevent-quota.sh arm --interval 0.05 --threshold 10 --provider codex
+registered: quota-codex (quota)
+armed: quota-codex
+provider: codex
+threshold: 10%
+interval: 0.05s
+$ fm-procevent.sh list
+SOURCE                       ADAPTER      OWNER      PENDING
+quota-codex                  quota        none       0
+$ fm-procevent.sh reconcile
+reconciled: published=0 started=1 stopped=0 uncertain=0
+$ cat durable-result
+quota: quota-codex
+status: exhausted
+detail: {"provider":"codex","best":{"scope":"all_models","status":"known","effectivePercentRemaining":0,"runway":{"status":"exhausted_now"}}}
+condition_polls: 2
+$ fm-procevent-quota.sh classify durable-result
+exhausted
+$ cat state/.wake-queue
+1787968013	1	check	procevent:quota-codex:1	check: procevent quota quota-codex 1
+$ fm-procevent.sh handled quota-codex 1
+handled: quota-codex 1
+quota-axi poll calls: 2
