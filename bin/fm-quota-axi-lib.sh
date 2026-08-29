@@ -59,8 +59,7 @@ fm_quota_json_valid() {
         (if $semantics_status == "known" then
            ((.quotaSemantics.effectiveAvailability | length) > 0 and
             all(.quotaSemantics.effectiveAvailability[];
-              .status == "known" or
-              (.status == "unknown" and .runway.status == "exhausted_now")
+              .status == "known" or .status == "unknown"
             ))
          elif $semantics_status == "unknown" then
            all(.quotaSemantics.effectiveAvailability[]; .status == "unknown")

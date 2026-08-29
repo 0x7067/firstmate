@@ -17,6 +17,7 @@ INVALID_RUNWAY="$LAB/invalid-runway.json"
 INVALID_AVAILABILITY="$LAB/invalid-availability.json"
 EMPTY_SCOPE="$LAB/empty-scope.json"
 UNKNOWN_EXHAUSTED="$LAB/unknown-exhausted.json"
+KNOWN_UNKNOWN="$LAB/known-unknown.json"
 KNOWN_EMPTY="$LAB/known-empty.json"
 SEMANTICS_MISMATCH="$LAB/semantics-mismatch.json"
 PARTIAL="$LAB/partial.json"
@@ -262,6 +263,12 @@ if out=$(call_choose --snapshot "$UNKNOWN_EXHAUSTED" --candidate claude:default 
 fi
 [ "$out" = "none" ] || fail "unknown exhausted quota returned: $out"
 ok "exhausted runway vetoes unknown headroom"
+
+jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) = [{"scope":"all_models","status":"unknown","runway":{"status":"unknown"}}]' \
+  "$LAB/captured.json" > "$KNOWN_UNKNOWN"
+out=$(call_choose --snapshot "$KNOWN_UNKNOWN" --candidate claude:default)
+[ "$out" = "claude default" ] || fail "known semantics with unknown headroom was rejected: $out"
+ok "known semantics preserve unknown headroom"
 
 jq '(.providers[] | select(.provider == "claude").quotaSemantics.status) = "partial" |
     (.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) += [{"scope":"model:unmeasured","status":"unknown","runway":{"status":"unknown"}}]' \
