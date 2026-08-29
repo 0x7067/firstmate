@@ -343,6 +343,28 @@ done
 [ "$MODE_SET" -eq 0 ] || [ -n "$MODE" ] || { echo "error: --mode requires a non-empty value" >&2; exit 1; }
 [ "$YOLO_SET" -eq 0 ] || [ -n "$YOLO" ] || { echo "error: --yolo requires a non-empty value" >&2; exit 1; }
 [ "$TRACEPARENT_SET" -eq 0 ] || [ -n "$TRACEPARENT_ARG" ] || { echo "error: --traceparent requires a non-empty value" >&2; exit 1; }
+
+# Captain directive 2026-08-27: avoid the first-party DeepSeek API during
+# Beijing peak hours. This applies only to provider 'deepseek/...'; the same
+# model reached through another provider (opencode-go/deepseek-*, zai/deepseek-*
+# if such a route exists, etc.) is not subject to DeepSeek's first-party peak
+# pricing and is allowed during peak.
+if [ "$MODEL_SET" -eq 1 ] && [ -n "$MODEL" ]; then
+  case "$MODEL" in
+    deepseek/*)
+      if "$SCRIPT_DIR/fm-deepseek-peak.sh" --quiet; then
+        echo "error: first-party deepseek model '$MODEL' is in peak hours; run 'bin/fm-deepseek-peak.sh' or choose a non-DeepSeek provider/model" >&2
+        exit 1
+      fi
+      ;;
+    home-vllm/*)
+      # Captain directive 2026-08-27: home vLLM is off-limits until further
+      # notice, regardless of peak/off-peak status.
+      echo "error: home-vllm model '$MODEL' is off-limits until further notice; choose a different provider/model" >&2
+      exit 1
+      ;;
+  esac
+fi
 # A parent-delivered carrier replaces this home's own resolution, so it is
 # refused unless it is a secondmate spawn carrying a strictly valid W3C value.
 # Nothing else may reach the pane's TRACEPARENT export.
@@ -1319,6 +1341,25 @@ if [ "$KIND" = secondmate ] && [ -z "$ARG3" ]; then
       esac
     fi
   fi
+fi
+
+# Re-apply the model guards when a model was resolved from secondmate-harness
+# config (not only from explicit --model).
+if [ -n "$MODEL" ]; then
+  case "$MODEL" in
+    deepseek/*)
+      if "$SCRIPT_DIR/fm-deepseek-peak.sh" --quiet; then
+        echo "error: first-party deepseek model '$MODEL' is in peak hours; run 'bin/fm-deepseek-peak.sh' or choose a non-DeepSeek provider/model" >&2
+        exit 1
+      fi
+      ;;
+    home-vllm/*)
+      # Captain directive 2026-08-27: home vLLM is off-limits until further
+      # notice, regardless of peak/off-peak status.
+      echo "error: home-vllm model '$MODEL' is off-limits until further notice; choose a different provider/model" >&2
+      exit 1
+      ;;
+  esac
 fi
 
 secondmate_registry_value() {
