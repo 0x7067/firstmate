@@ -114,6 +114,14 @@ if printf '%s\n' "$help" | grep -Fq 'set -u'; then
 fi
 ok "help renders only the complete header"
 
+out=$(QUOTA_AXI_EXHAUSTED_DETAIL=1 QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" \
+  "$BIN/fm-procevent-quota.sh" poll)
+printf '%s\n' "$out" | grep -qx 'status: exhausted' \
+  || fail "default aggregate poll did not report exhaustion"
+printf '%s\n' "$out" | grep -qx 'quota: quota' \
+  || fail "default aggregate poll did not use the aggregate source"
+ok "poll accepts its documented defaults"
+
 out=$(QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" poll --interval 0.01 --threshold 10 --provider codex --timeout 1)
 printf '%s\n' "$out" | grep -qx 'status: exhausted' || fail "provider watch did not report exhaustion"
 printf '%s\n' "$out" | grep -qx 'condition_polls: 2' || fail "provider watch did not wait through the healthy poll"

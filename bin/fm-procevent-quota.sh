@@ -280,7 +280,7 @@ cmd_retire() {
 
 case "${1-}" in
   arm)       shift; cmd_arm "$@" ;;
-  poll)      shift; [ "$#" -eq 0 ] && usage; cmd_poll "$@" ;;
+  poll)      shift; cmd_poll "$@" ;;
   classify)  shift; cmd_classify "$@" ;;
   terminal)  shift; cmd_terminal "$@" ;;
   source-id) shift; cmd_source_id "${1-}" ;;
