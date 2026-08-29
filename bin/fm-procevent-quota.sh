@@ -125,7 +125,7 @@ condition_status() {
       end;
     if (.providers | type) != "array" then "error"
     elif $provider == "" then
-      if (.providers | length) == 0 then "error"
+      if (.providers | length) == 0 then "healthy"
       elif ([.providers[]?.quotaSemantics.effectiveAvailability[]?] | length) == 0 then "healthy"
       else classify([.providers[]?.quotaSemantics.effectiveAvailability[]?])
       end

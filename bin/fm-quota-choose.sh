@@ -153,8 +153,11 @@ else
       type == "array" and
       all(.[];
         type == "object" and
-        (.provider | type) == "string" and (.provider | length) > 0 and
-        (.scope | type) == "string" and (.scope | length) > 0 and
+        (.provider | type) == "string" and
+        (.provider | test("^[a-z0-9]+(-[a-z0-9]+)*$")) and
+        (.scope | type) == "string" and
+        (.scope | length) > 0 and
+        ((.scope | test("^\\s|\\s$")) | not) and
         (.kind | type) == "string" and (.kind | length) > 0 and
         (.detail | type) == "string" and (.detail | length) > 0 and
         (.remedy | type) == "string" and (.remedy | length) > 0
@@ -209,7 +212,10 @@ else
               ($attention_rows | map(decoded_row | {
                 provider: .[0], scope: .[1], kind: .[2], detail: .[3], remedy: .[4]
               })) as $entries |
-              {schemaVersion: 5, providers: unknown_providers($entries)}
+              if ($entries | valid_attention_entries) then
+                {schemaVersion: 5, providers: unknown_providers($entries)}
+              else error("invalid zero-row attention identities")
+              end
             else error("invalid zero-row attention section")
             end
           elif ($tail[1] | startswith("attention: ")) then
@@ -253,7 +259,8 @@ else
           ($attention_rows | map(decoded_row | {
             provider: .[0], scope: .[1], kind: .[2], detail: .[3], remedy: .[4]
           })) as $attention_entries |
-          if any($rows[]; length != 8) then error("invalid quota rows")
+          if (($attention_entries | valid_attention_entries) | not) then error("invalid attention identities")
+          elif any($rows[]; length != 8) then error("invalid quota rows")
           else
             {
               schemaVersion: 5,

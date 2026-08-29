@@ -31,6 +31,7 @@ RENDERER_TOON="$LAB/renderer-quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
 EMPTY_ARRAY_TOON="$LAB/empty-array-quota.toon"
 INLINE_ATTENTION_TOON="$LAB/inline-attention-quota.toon"
+WHITESPACE_ATTENTION_TOON="$LAB/whitespace-attention-quota.toon"
 TRUNCATED_ZERO_TOON="$LAB/truncated-zero-quota.toon"
 MALFORMED_ZERO_TOON="$LAB/malformed-zero-quota.toon"
 LEADING_GARBAGE_TOON="$LAB/leading-garbage-quota.toon"
@@ -375,6 +376,20 @@ TOON
 out=$(call_choose --snapshot "$INLINE_ATTENTION_TOON" --candidate claude:default)
 [ "$out" = "claude default" ] || fail "inline attention TOON rejected unknown candidate: $out"
 ok "empty-array TOON accepts inline attention"
+
+cat > "$WHITESPACE_ATTENTION_TOON" <<'TOON'
+bin: ~/.local/bin/quota-axi
+generatedAt: "2030-01-01T00:00:00Z"
+quota: []
+exhaustion: []
+attention[1]{provider,scope,kind,detail,remedy}:
+  claude,all_models ,unmeasurable,unknown quota,none
+TOON
+if err=$(call_choose --snapshot "$WHITESPACE_ATTENTION_TOON" --candidate claude:default 2>&1); then
+  fail "whitespace attention scope unexpectedly dispatched"
+fi
+[ "$err" = "error: invalid quota-axi snapshot" ] || fail "whitespace attention scope returned: $err"
+ok "TOON attention identities fail closed"
 
 cat > "$TRUNCATED_ZERO_TOON" <<'TOON'
 bin: ~/.local/bin/quota-axi
