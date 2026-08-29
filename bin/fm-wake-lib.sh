@@ -66,7 +66,9 @@ fm_pid_identity() {
 
 fm_path_mtime() {
   if [ "$_FM_UNAME" = Darwin ]; then
-    stat -f %m "$1" 2>/dev/null
+    # Use explicit /usr/bin/stat on Darwin: PATH has .local/bin first (GNU stat)
+    # which does not support -f %m (that flag means something else in GNU stat).
+    /usr/bin/stat -f %m "$1" 2>/dev/null
   else
     stat -c %Y "$1" 2>/dev/null
   fi
@@ -635,7 +637,16 @@ _fm_recovery_marker_arm_check() {
     return 1
   fi
   if [ ! -e "$marker" ] && [ ! -L "$marker" ]; then
-    if [ -s "$FM_WAKE_QUEUE" ]; then
+    # Only announce a downtime marker when there is genuine watcher-loss to report:
+    # a recovered stale lock (WATCHER_RECOVERY_PENDING is set by the caller via
+    # FM_LOCK_RECOVERED_PID), or a genuinely absent marker with a non-empty queue
+    # that means some prior watcher died with unprocessed work.
+    # Without either condition, a non-empty queue is normal polling material that
+    # the new watcher handles in its own cycle — creating a marker here would
+    # cause the new watcher to wake and publish a fresh marker on every cycle,
+    # producing an infinite actionable-check loop.
+    if [ -s "$FM_WAKE_QUEUE" ] &&
+      [ -n "${FM_LOCK_RECOVERED_PID:-}" ]; then
       if ! _fm_recovery_marker_write_locked "$marker" downtime "" announced; then
         fm_lock_release "$lock"
         fm_lock_release "$FM_WAKE_QUEUE_LOCK"

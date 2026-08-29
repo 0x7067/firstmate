@@ -13,9 +13,10 @@
 # the beacon-age details used in their messages.
 
 # Portable mtime; Linux stat lacks -f, macOS stat lacks -c.
+# Uses explicit /usr/bin/stat on Darwin to avoid PATH shadowing by GNU stat in .local/bin.
 fm_sup_stat_mtime() {
   if [ "$(uname)" = Darwin ]; then
-    stat -f %m "$1" 2>/dev/null
+    /usr/bin/stat -f %m "$1" 2>/dev/null
   else
     stat -c %Y "$1" 2>/dev/null
   fi
