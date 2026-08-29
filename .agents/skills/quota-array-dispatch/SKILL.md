@@ -24,8 +24,9 @@ Deterministic shell owns only schema, configuration, and version validation plus
 The canonical shell helper for a worker that has already performed its model-selection reasoning and now needs to pick the first viable candidate is `bin/fm-quota-choose.sh`.
 Pass it the intake's already-captured default TOON or permitted JSON fallback through stdin or `--snapshot`; it never takes another quota snapshot, so it selects from the same quota state as the intake.
 Pass each candidate as `harness:model`, with earlier candidates preferred.
-The helper maps each harness to its primary provider family, matches the best quota scope for the model, then prints the first candidate with positive effective quota or disclosed unknown quota.
-Known quota is viable only when `effectivePercentRemaining` is greater than zero and runway status is not `exhausted_now`.
+The helper maps each harness to its primary provider family and applies the provider-wide scopes plus the exact model or product scopes for the model.
+An `exhausted_now` runway vetoes the candidate even when headroom is unknown.
+Otherwise, disclosed unknown quota stays eligible, and known quota is viable only when `effectivePercentRemaining` is greater than zero.
 This is an optional narrow helper with a known limitation: it maps each harness to one primary provider family only, so a candidate whose established provider differs from that primary family is checked against the wrong quota row.
 Authoritative multi-provider routing - including provider discovery from the harness catalog and quota matching by that explicit provider - stays owned by this skill's intake procedure above and AGENTS.md section 4, not by the helper.
 Use it only when the brief already fixed the candidate order and every candidate's provider is the harness's primary family.

@@ -6,10 +6,11 @@
 #
 # Reads one already-captured quota-axi default TOON or JSON snapshot from the
 # provided file, or from stdin when --snapshot is omitted. For each --candidate
-# in order, it maps <harness> to its primary provider family, then matches the
-# best quota scope for <model>. The first candidate with disclosed unknown
-# quota, or with effective percent remaining > 0 and runway status other than
-# `exhausted_now`, is printed as "<harness> <model>" and the script exits 0.
+# in order, it maps <harness> to its primary provider family, then applies the
+# provider-wide scopes and exact model or product scopes for <model>. A candidate
+# is eligible only when no applicable runway is `exhausted_now` and its effective
+# percent remaining is either unknown or greater than zero. The first eligible
+# candidate is printed as "<harness> <model>" and the script exits 0.
 # If no candidate is quota-eligible, it prints "none" and exits 1.
 #
 # Candidates are accepted as `--candidate <harness:model>` or as positional
@@ -317,8 +318,8 @@ provider_for_harness() {
 }
 
 # effective_for_provider_model <provider> <model>
-# Print a JSON object with effectivePercentRemaining and runway.status for the
-# provider/model tuple, preferring the most specific known scope.
+# Print the most constraining applicable quota evidence for the provider/model
+# tuple, including provider-wide and exact model or product scopes.
 effective_for_provider_model() {
   local provider=$1 model=${2:-default}
   printf '%s\n' "$QUOTA_JSON" | jq -c --arg provider "$provider" --arg model "$model" '
