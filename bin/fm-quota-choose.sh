@@ -345,14 +345,21 @@ effective_for_provider_model() {
   ' 2>/dev/null
 }
 
-chosen="none"
 for c in "${CANDIDATES[@]}"; do
   harness=${c%%:*}
   model=${c#*:}
   [ "$model" = "$c" ] && model="default"
   [ -n "$model" ] || die "invalid candidate: $c"
   fm_control_harness_supported "$harness" || die "unknown harness: $harness"
-  provider=$(provider_for_harness "$harness") || die "unknown harness: $harness"
+  provider_for_harness "$harness" >/dev/null || die "unknown harness: $harness"
+done
+
+chosen="none"
+for c in "${CANDIDATES[@]}"; do
+  harness=${c%%:*}
+  model=${c#*:}
+  [ "$model" = "$c" ] && model="default"
+  provider=$(provider_for_harness "$harness")
   effective=$(effective_for_provider_model "$provider" "$model")
   if [ -z "$effective" ] || [ "$effective" = "null" ]; then
     continue

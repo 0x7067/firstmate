@@ -228,6 +228,17 @@ fi
 [ "$err" = "error: unknown harness: bogus" ] || fail "unknown harness returned: $err"
 ok "unknown harness fails closed"
 
+if err=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:default --candidate agy:default 2>&1); then
+  fail "trailing unsupported harness was hidden by an earlier selection"
+fi
+[ "$err" = "error: unknown harness: agy" ] || fail "trailing unsupported harness returned: $err"
+
+if err=$(call_choose --snapshot "$LAB/captured.json" --candidate claude:default --candidate 'claude:' 2>&1); then
+  fail "trailing empty model was hidden by an earlier selection"
+fi
+[ "$err" = "error: invalid candidate: claude:" ] || fail "trailing empty model returned: $err"
+ok "all candidates are validated before selection"
+
 printf '{"schemaVersion":5,"providers":{"provider":"claude","quotaSemantics":{"effectiveAvailability":[{"scope":"all_models","status":"known","effectivePercentRemaining":50,"runway":{"status":"through_reset"}}]}}}\n' > "$MALFORMED"
 if err=$(call_choose --snapshot "$MALFORMED" --candidate claude:default 2>&1); then
   fail "malformed provider collection unexpectedly dispatched"
