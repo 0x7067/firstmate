@@ -8,8 +8,8 @@
 # provided file, or from stdin when --snapshot is omitted. For each --candidate
 # in order, it maps <harness> to its primary provider family, then applies the
 # provider-wide scopes and exact model or product scopes for <model>. A candidate
-# is eligible only when no applicable runway is `exhausted_now` and its effective
-# percent remaining is either unknown or greater than zero. The first eligible
+# is eligible only when no applicable runway is `exhausted_now` and its known
+# effective percent remaining is greater than zero. The first eligible
 # candidate is printed as "<harness> <model>" and the script exits 0.
 # If no candidate is quota-eligible, it prints "none" and exits 1.
 #
@@ -367,7 +367,7 @@ for c in "${CANDIDATES[@]}"; do
   fi
   if printf '%s\n' "$effective" | jq -e '
     if (.runway.status // "") == "exhausted_now" then false
-    elif .status == "unknown" then true
+    elif .status == "unknown" then false
     else
       .effectivePercentRemaining as $remaining |
       (($remaining | type) == "number") and

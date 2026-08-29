@@ -26,6 +26,7 @@ PARTIAL="$LAB/partial.json"
 NO_APPLICABLE="$LAB/no-applicable.json"
 APPLICABLE_VETO="$LAB/applicable-veto.json"
 MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
+MUSE_POSITIVE="$LAB/muse-positive.json"
 TOON="$LAB/quota.toon"
 RENDERER_TOON="$LAB/renderer-quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
@@ -280,9 +281,11 @@ ok "exhausted runway vetoes unknown headroom"
 
 jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) = [{"scope":"all_models","status":"unknown","runway":{"status":"unknown"}}]' \
   "$LAB/captured.json" > "$KNOWN_UNKNOWN"
-out=$(call_choose --snapshot "$KNOWN_UNKNOWN" --candidate claude:default)
-[ "$out" = "claude default" ] || fail "known semantics with unknown headroom was rejected: $out"
-ok "known semantics preserve unknown headroom"
+if out=$(call_choose --snapshot "$KNOWN_UNKNOWN" --candidate claude:default 2>/dev/null); then
+  fail "unknown headroom unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "unknown headroom returned: $out"
+ok "unknown headroom is not positive quota"
 
 jq '(.providers[] | select(.provider == "claude").quotaSemantics.status) = "partial" |
     (.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) += [{"scope":"model:unmeasured","status":"unknown","runway":{"status":"unknown"}}]' \
@@ -358,9 +361,11 @@ quota[0]:
 exhaustion[0]:
 attention[0]:
 TOON
-out=$(call_choose --snapshot "$EMPTY_TOON" --candidate claude:default)
-[ "$out" = "claude default" ] || fail "zero-row TOON did not preserve unknown quota: $out"
-ok "zero-row TOON preserves unknown quota"
+if out=$(call_choose --snapshot "$EMPTY_TOON" --candidate claude:default 2>/dev/null); then
+  fail "zero-row TOON unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "zero-row TOON returned: $out"
+ok "zero-row TOON has no positive quota"
 
 cat > "$EMPTY_ARRAY_TOON" <<'TOON'
 bin: ~/.local/bin/quota-axi
@@ -373,9 +378,11 @@ attention[1]{provider,scope,kind,detail,remedy}:
 help[1]:
   Run `quota-axi --full` for windows, pace, reserve, and account evidence
 TOON
-out=$(call_choose --snapshot "$EMPTY_ARRAY_TOON" --candidate claude:default)
-[ "$out" = "claude default" ] || fail "empty-array TOON rejected unknown candidate: $out"
-ok "empty-array TOON preserves counted unknown providers"
+if out=$(call_choose --snapshot "$EMPTY_ARRAY_TOON" --candidate claude:default 2>/dev/null); then
+  fail "empty-array TOON unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "empty-array TOON returned: $out"
+ok "empty-array TOON has no positive quota"
 
 cat > "$INLINE_ATTENTION_TOON" <<'TOON'
 bin: ~/.local/bin/quota-axi
@@ -384,9 +391,11 @@ quota: []
 exhaustion: []
 attention: [{"provider":"claude","scope":"all_models","kind":"unmeasurable","detail":"unknown quota","remedy":"none"}]
 TOON
-out=$(call_choose --snapshot "$INLINE_ATTENTION_TOON" --candidate claude:default)
-[ "$out" = "claude default" ] || fail "inline attention TOON rejected unknown candidate: $out"
-ok "empty-array TOON accepts inline attention"
+if out=$(call_choose --snapshot "$INLINE_ATTENTION_TOON" --candidate claude:default 2>/dev/null); then
+  fail "inline attention TOON unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "inline attention TOON returned: $out"
+ok "inline attention TOON has no positive quota"
 
 cat > "$WHITESPACE_ATTENTION_TOON" <<'TOON'
 bin: ~/.local/bin/quota-axi
@@ -504,11 +513,15 @@ fi
 [ "$out" = "none" ] || fail "quoted exhausted model scope returned: $out"
 ok "quoted TOON scope vetoes dispatch"
 
-out=$(call_choose --snapshot "$LAB/captured.json" --candidate cursor:default)
-[ "$out" = "cursor default" ] || fail "provider-level unknown quota was not eligible: $out"
-ok "provider-level unknown quota remains eligible"
+if out=$(call_choose --snapshot "$LAB/captured.json" --candidate cursor:default 2>/dev/null); then
+  fail "provider-level unknown quota unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "provider-level unknown quota returned: $out"
+ok "provider-level unknown quota is not positive"
 
-out=$(call_choose --snapshot "$LAB/captured.json" --candidate muse:default)
+jq '.providers += [{"provider":"meta","windows":[],"quotaSemantics":{"status":"known","effectiveAvailability":[{"scope":"all_models","status":"known","effectivePercentRemaining":25,"runway":{"status":"through_reset"}}]}}]' \
+  "$LAB/captured.json" > "$MUSE_POSITIVE"
+out=$(call_choose --snapshot "$MUSE_POSITIVE" --candidate muse:default)
 [ "$out" = "muse default" ] || fail "supported Muse candidate returned: $out"
 ok "Muse candidate is accepted"
 
@@ -574,9 +587,11 @@ ok "invalid runway status fails closed"
 
 jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) = [{"scope":"model:other","status":"known","effectivePercentRemaining":0,"runway":{"status":"exhausted_now"}}]' \
   "$LAB/captured.json" > "$NO_APPLICABLE"
-out=$(call_choose --snapshot "$NO_APPLICABLE" --candidate claude:fable)
-[ "$out" = "claude fable" ] || fail "unmeasured candidate quota was skipped: $out"
-ok "missing applicable quota remains eligible"
+if out=$(call_choose --snapshot "$NO_APPLICABLE" --candidate claude:fable 2>/dev/null); then
+  fail "candidate without applicable quota unexpectedly dispatched"
+fi
+[ "$out" = "none" ] || fail "missing applicable quota returned: $out"
+ok "missing applicable quota is not positive"
 
 jq '(.providers[] | select(.provider == "claude").quotaSemantics.effectiveAvailability) = [
       {"scope":"all_models","status":"known","effectivePercentRemaining":10,"runway":{"status":"exhausted_now"}},

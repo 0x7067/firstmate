@@ -10,14 +10,14 @@
 #   fm-procevent-quota.sh retire [--provider <provider>]
 #
 # arm        Register a recurring quota-axi --json poll that wakes firstmate
-#            when the tracked provider's effectivePercentRemaining reaches
+#            when the tracked provider's effectivePercentRemaining drops below
 #            <threshold> (default 10%) or when its runway.status becomes
 #            exhausted_now. The condition is deterministic, the action is only
 #            the durable `check: procevent:quota:<seq>` wake, and the watch is
 #            registered through `bin/fm-procevent.sh register`.
 # poll       The blocking child the generic runner executes; never run this
 #            directly in a conversational turn. It polls `quota-axi --json`
-#            until quota reaches the threshold or an error stops the watch.
+#            until quota drops below the threshold or an error stops the watch.
 # classify   Print the captured outcome class: low, exhausted, error, or unknown.
 # terminal   Every quota poll is terminal because the source fires at most once.
 # source-id  Print the canonical source id.
@@ -119,7 +119,7 @@ condition_status() {
       if ($availability | length) == 0 then "error"
       elif any($availability[]; (.runway.status // "") == "exhausted_now") then "exhausted"
       elif ($known | length) == 0 then "healthy"
-      elif any($known[]; .effectivePercentRemaining <= ($threshold | tonumber)) then "low"
+      elif any($known[]; .effectivePercentRemaining < ($threshold | tonumber)) then "low"
       else "healthy"
       end;
     if (.providers | type) != "array" then "error"
