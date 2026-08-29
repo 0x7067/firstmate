@@ -64,11 +64,10 @@ usage() {
 die() { printf 'error: %s\n' "$1" >&2; exit 1; }
 
 resolve_provider() {
+  local LC_ALL=C
   PROVIDER=${1:-}
   if [ -n "$PROVIDER" ]; then
-    case "$PROVIDER" in
-      ''|*[!a-z0-9-]*) die "invalid provider: $PROVIDER" ;;
-    esac
+    [[ "$PROVIDER" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]] || die "invalid provider: $PROVIDER"
     CANONICAL_SOURCE_ID="$SOURCE_ID_BASE-$PROVIDER"
   else
     CANONICAL_SOURCE_ID=$SOURCE_ID_BASE

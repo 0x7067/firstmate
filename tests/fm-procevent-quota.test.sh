@@ -147,6 +147,14 @@ fi
 [ "$err" = "error: --provider needs a value" ] || fail "missing provider value returned: $err"
 ok "arm rejects a missing provider value"
 
+for provider in -- codex-; do
+  if err=$(QUOTA_AXI_COUNT="$COUNT" PATH="$FAKEBIN:$PATH" "$BIN/fm-procevent-quota.sh" arm --provider "$provider" 2>&1); then
+    fail "noncanonical provider unexpectedly armed a watch: $provider"
+  fi
+  [ "$err" = "error: invalid provider: $provider" ] || fail "noncanonical provider returned: $err"
+done
+ok "arm rejects noncanonical provider identities"
+
 out=$(FM_HOME="$LAB/retire-home" FM_STATE_OVERRIDE="$LAB/retire-state" \
   "$BIN/fm-procevent-quota.sh" retire --provider codex)
 [ "$out" = "retired: quota-codex" ] || fail "provider retire targeted the wrong source: $out"
