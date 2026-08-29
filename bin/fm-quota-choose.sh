@@ -109,74 +109,107 @@ if printf '%s\n' "$QUOTA_SNAPSHOT" | jq -e 'type == "object"' >/dev/null 2>&1; t
   esac
 else
   QUOTA_JSON=$(printf '%s\n' "$QUOTA_SNAPSHOT" | jq -Rse '
-    def valid_zero_head:
-      (length == 0) or
+    def valid_preamble:
       ((length == 2) and
-       (.[0] | test("^bin: .+$")) and
+       .[0] == "bin: quota-axi" and
        (.[1] | test("^generatedAt: .+$"))) or
       ((length == 3) and
-       (.[0] | test("^bin: .+$")) and
+       .[0] == "bin: quota-axi" and
        (.[1] | test("^description: .+$")) and
        (.[2] | test("^generatedAt: .+$")));
+    def valid_zero_head:
+      (length == 0) or valid_preamble;
+    def valid_help_tail:
+      if length == 0 then true
+      else
+        (.[0] | capture("^help\\[(?<count>[0-9]+)\\]:$").count | tonumber) as $count |
+        (.[1:] | length) == $count and all(.[1:][]; startswith("  "))
+      end;
+    def exhaustion_count:
+      if . == "exhaustion[0]:" then 0
+      else
+        capture("^exhaustion\\[(?<count>[1-9][0-9]*)\\]\\{provider,scope,usableRunwaySeconds,projectedExhaustedAt,limitingWindowId\\}:$").count |
+        tonumber
+      end;
+    def attention_count:
+      if . == "attention[0]:" then 0
+      else
+        capture("^attention\\[(?<count>[1-9][0-9]*)\\]\\{provider,scope,kind,detail,remedy\\}:$").count |
+        tonumber
+      end;
     (split("\n") | map(select(length > 0))) as $lines |
     ($lines | index("quota[0]:")) as $zero_index |
     if $zero_index != null then
       ($lines[:$zero_index]) as $head |
       if ($head | valid_zero_head) then
         ($lines[($zero_index + 1):]) as $tail |
-        if ($tail | length) == 0 then
+        if ($tail | length) == 0 or
+           (($tail | length) >= 2 and
+            $tail[0] == "exhaustion[0]:" and
+            $tail[1] == "attention[0]:" and
+            ($tail[2:] | valid_help_tail)) then
           {schemaVersion: 5, providers: []}
-        elif ($tail | length) == 2 and
-             $tail[0] == "exhaustion[0]:" and
-             $tail[1] == "attention[0]:" then
-          {schemaVersion: 5, providers: []}
-        elif ($tail | length) >= 3 and
-             $tail[0] == "exhaustion[0]:" and
-             $tail[1] == "attention[0]:" then
-          ($tail[2] | capture("^help\\[(?<count>[0-9]+)\\]:$").count | tonumber) as $help_count |
-          if ($tail[3:] | length) == $help_count and
-             all($tail[3:][]; startswith("  ")) then
-            {schemaVersion: 5, providers: []}
-          else error("invalid zero-row quota sections")
-          end
         else error("invalid zero-row quota sections")
         end
       else error("invalid zero-row quota header")
       end
     else
-      capture("(?m)^quota\\[(?<count>[0-9]+)\\]\\{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt\\}:\\n(?<rows>(?:  [^\\n]*\\n?)*)") as $section |
-      ($section.rows | split("\n") | map(
-        select(length > 0) |
+      ($lines | map(test("^quota\\[[1-9][0-9]*\\]\\{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt\\}:$")) | index(true)) as $quota_index |
+      if $quota_index == null then error("missing quota section")
+      else
+        ($lines[:$quota_index]) as $head |
+        ($lines[$quota_index] | capture("^quota\\[(?<count>[1-9][0-9]*)\\]").count | tonumber) as $quota_count |
+        ($lines[($quota_index + 1):($quota_index + 1 + $quota_count)]) as $quota_lines |
+        ($quota_index + 1 + $quota_count) as $exhaustion_index |
+        ($lines[$exhaustion_index] | exhaustion_count) as $exhaustion_count |
+        ($lines[($exhaustion_index + 1):($exhaustion_index + 1 + $exhaustion_count)]) as $exhaustion_rows |
+        ($exhaustion_index + 1 + $exhaustion_count) as $attention_index |
+        ($lines[$attention_index] | attention_count) as $attention_count |
+        ($lines[($attention_index + 1):($attention_index + 1 + $attention_count)]) as $attention_rows |
+        ($lines[($attention_index + 1 + $attention_count):]) as $tail |
+        if (($head | valid_preamble) | not) or
+           ($quota_lines | length) != $quota_count or
+           (all($quota_lines[]; startswith("  ")) | not) or
+           ($exhaustion_rows | length) != $exhaustion_count or
+           (all($exhaustion_rows[]; startswith("  ")) | not) or
+           ($attention_rows | length) != $attention_count or
+           (all($attention_rows[]; startswith("  ")) | not) or
+           (($tail | valid_help_tail) | not) then
+          error("invalid quota-axi TOON envelope")
+        else
+          ($quota_lines | map(
         sub("^  "; "") |
         split(",") |
         map(if startswith("\"") and endswith("\"") then .[1:-1] else . end)
       )) as $rows |
-      if ($rows | length) != ($section.count | tonumber) or any($rows[]; length != 8) then error("invalid quota rows")
-      else
-        {
-          schemaVersion: 5,
-          providers: ($rows |
-            map({
-              provider: .[0],
-              scope: .[1],
-              effectivePercentRemaining: (.[2] | tonumber),
-              runway: .[4]
-            }) |
-            group_by(.provider) |
-            map({
-              provider: .[0].provider,
-              quotaSemantics: {
-                status: "known",
-                effectiveAvailability: map({
-                  scope,
-                  status: "known",
-                  effectivePercentRemaining,
-                  runway: {status: .runway}
+          if any($rows[]; length != 8) then error("invalid quota rows")
+          else
+            {
+              schemaVersion: 5,
+              providers: ($rows |
+                map({
+                  provider: .[0],
+                  scope: .[1],
+                  effectivePercentRemaining: (.[2] | tonumber),
+                  runway: .[4]
+                }) |
+                group_by(.provider) |
+                map({
+                  provider: .[0].provider,
+                  quotaSemantics: {
+                    status: "known",
+                    effectiveAvailability: map({
+                      scope,
+                      status: "known",
+                      effectivePercentRemaining,
+                      runway: {status: .runway}
+                    })
+                  }
                 })
-              }
-            })
-          )
-        }
+              )
+            }
+          end
+        end
       end
     end
   ' 2>/dev/null) || die "invalid quota-axi snapshot"

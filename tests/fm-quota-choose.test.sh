@@ -25,6 +25,9 @@ TOON="$LAB/quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
 MALFORMED_ZERO_TOON="$LAB/malformed-zero-quota.toon"
 LEADING_GARBAGE_TOON="$LAB/leading-garbage-quota.toon"
+LEADING_GARBAGE_NONZERO_TOON="$LAB/leading-garbage-nonzero-quota.toon"
+TRAILING_GARBAGE_NONZERO_TOON="$LAB/trailing-garbage-nonzero-quota.toon"
+TRUNCATED_NONZERO_TOON="$LAB/truncated-nonzero-quota.toon"
 QUOTED_TOON="$LAB/quoted-quota.toon"
 FAKEBIN="$LAB/fakebin"
 CALLS="$LAB/calls"
@@ -278,6 +281,23 @@ out=$(call_choose --snapshot "$TOON" --candidate claude:default)
 [ "$out" = "claude default" ] || fail "default TOON snapshot returned '$out'"
 ok "default TOON snapshot is accepted"
 
+printf 'garbage\n' > "$LEADING_GARBAGE_NONZERO_TOON"
+cat "$TOON" >> "$LEADING_GARBAGE_NONZERO_TOON"
+cat "$TOON" > "$TRAILING_GARBAGE_NONZERO_TOON"
+printf 'garbage\n' >> "$TRAILING_GARBAGE_NONZERO_TOON"
+sed '$d' "$TOON" > "$TRUNCATED_NONZERO_TOON"
+for malformed_toon in \
+  "$LEADING_GARBAGE_NONZERO_TOON" \
+  "$TRAILING_GARBAGE_NONZERO_TOON" \
+  "$TRUNCATED_NONZERO_TOON"; do
+  if err=$(call_choose --snapshot "$malformed_toon" --candidate claude:default 2>&1); then
+    fail "malformed nonzero TOON unexpectedly dispatched: $malformed_toon"
+  fi
+  [ "$err" = "error: invalid quota-axi snapshot" ] \
+    || fail "malformed nonzero TOON returned: $err"
+done
+ok "malformed nonzero TOON envelopes fail closed"
+
 cat > "$EMPTY_TOON" <<'TOON'
 bin: quota-axi
 generatedAt: "2030-01-01T00:00:00Z"
@@ -317,12 +337,15 @@ ok "zero-row TOON rejects leading garbage"
 
 cat > "$QUOTED_TOON" <<'TOON'
 bin: quota-axi
+description: Report local agent-provider quota windows for routing-aware agents
 generatedAt: "2030-01-01T00:00:00Z"
 quota[2]{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt}:
   claude,all_models,50,-1,through_reset,high,weekly,"2030-01-02T00:00:00Z"
   claude,"model:fable",0,-1,exhausted_now,high,weekly,"2030-01-02T00:00:00Z"
 exhaustion[0]:
 attention[0]:
+help[1]:
+  Run `quota-axi --full` for windows, pace, reserve, and account evidence
 TOON
 if out=$(call_choose --snapshot "$QUOTED_TOON" --candidate claude:fable 2>/dev/null); then
   fail "quoted exhausted model scope unexpectedly dispatched"
