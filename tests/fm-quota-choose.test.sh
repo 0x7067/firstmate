@@ -22,6 +22,7 @@ NO_APPLICABLE="$LAB/no-applicable.json"
 APPLICABLE_VETO="$LAB/applicable-veto.json"
 MUSE_EXHAUSTED="$LAB/muse-exhausted.json"
 TOON="$LAB/quota.toon"
+RENDERER_TOON="$LAB/renderer-quota.toon"
 EMPTY_TOON="$LAB/empty-quota.toon"
 MALFORMED_ZERO_TOON="$LAB/malformed-zero-quota.toon"
 LEADING_GARBAGE_TOON="$LAB/leading-garbage-quota.toon"
@@ -280,6 +281,21 @@ TOON
 out=$(call_choose --snapshot "$TOON" --candidate claude:default)
 [ "$out" = "claude default" ] || fail "default TOON snapshot returned '$out'"
 ok "default TOON snapshot is accepted"
+
+cat > "$RENDERER_TOON" <<'TOON'
+bin: ~/.local/bin/quota-axi
+description: Report local agent-provider quota windows for routing-aware agents
+generatedAt: "2030-01-01T00:00:00Z"
+quota[1]{provider,scope,effectivePercentRemaining,spendPriority,runway,confidence,limitedBy,resetsAt}:
+  claude,all_models,50,-1,through_reset,high,weekly,"2030-01-02T00:00:00Z"
+exhaustion: []
+attention: []
+help[1]:
+  Run `quota-axi --full` for windows, pace, reserve, and account evidence
+TOON
+out=$(call_choose --snapshot "$RENDERER_TOON" --candidate claude:default)
+[ "$out" = "claude default" ] || fail "renderer-shaped TOON snapshot returned: $out"
+ok "renderer-shaped TOON snapshot is accepted"
 
 printf 'garbage\n' > "$LEADING_GARBAGE_NONZERO_TOON"
 cat "$TOON" >> "$LEADING_GARBAGE_NONZERO_TOON"

@@ -111,10 +111,10 @@ else
   QUOTA_JSON=$(printf '%s\n' "$QUOTA_SNAPSHOT" | jq -Rse '
     def valid_preamble:
       ((length == 2) and
-       .[0] == "bin: quota-axi" and
+       (.[0] | test("^bin: (quota-axi|.*/quota-axi)$")) and
        (.[1] | test("^generatedAt: .+$"))) or
       ((length == 3) and
-       .[0] == "bin: quota-axi" and
+       (.[0] | test("^bin: (quota-axi|.*/quota-axi)$")) and
        (.[1] | test("^description: .+$")) and
        (.[2] | test("^generatedAt: .+$")));
     def valid_zero_head:
@@ -126,13 +126,13 @@ else
         (.[1:] | length) == $count and all(.[1:][]; startswith("  "))
       end;
     def exhaustion_count:
-      if . == "exhaustion[0]:" then 0
+      if . == "exhaustion[0]:" or . == "exhaustion: []" then 0
       else
         capture("^exhaustion\\[(?<count>[1-9][0-9]*)\\]\\{provider,scope,usableRunwaySeconds,projectedExhaustedAt,limitingWindowId\\}:$").count |
         tonumber
       end;
     def attention_count:
-      if . == "attention[0]:" then 0
+      if . == "attention[0]:" or . == "attention: []" then 0
       else
         capture("^attention\\[(?<count>[1-9][0-9]*)\\]\\{provider,scope,kind,detail,remedy\\}:$").count |
         tonumber
@@ -145,8 +145,8 @@ else
         ($lines[($zero_index + 1):]) as $tail |
         if ($tail | length) == 0 or
            (($tail | length) >= 2 and
-            $tail[0] == "exhaustion[0]:" and
-            $tail[1] == "attention[0]:" and
+            ($tail[0] == "exhaustion[0]:" or $tail[0] == "exhaustion: []") and
+            ($tail[1] == "attention[0]:" or $tail[1] == "attention: []") and
             ($tail[2:] | valid_help_tail)) then
           {schemaVersion: 5, providers: []}
         else error("invalid zero-row quota sections")
