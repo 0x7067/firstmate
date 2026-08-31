@@ -1,0 +1,36 @@
+Quota fixes validation transcript
+==================================
+Generated: $(date)
+
+Test 1: Known semantics with unknown headroom (status="unknown", runway.status="unknown")
+Result: PASS - Valid JSON schema-5 snapshot accepted
+
+Test 2: Known semantics with unknown headroom exhausted (status="unknown", runway.status="exhausted_now")  
+Result: PASS - Valid JSON schema-5 snapshot accepted (exhausted runway still vetoes dispatch)
+
+Test 3: Whitespace in provider identity (provider=" claude")
+Result: PASS - Correctly rejected by fm_quota_json_valid
+
+Test 4: Whitespace in scope identity (scope="all_models ")
+Result: PASS - Correctly rejected by fm_quota_json_valid
+
+Test 5: TOON trailing empty field (row ends with comma)
+Result: PASS - fm-quota-choose.sh correctly rejects with "error: invalid quota-axi snapshot"
+
+Test 6: TOON unknown headroom exhaustion conversion
+Result: PASS - headroom_unknown with exhausted_now correctly produces 'none' (not dispatched)
+
+Test 7: Noncanonical provider arm rejection ('--')
+Result: PASS - fm-procevent-quota.sh arm correctly rejects with "error: invalid provider: --"
+
+Test 8: Noncanonical provider arm rejection ('codex-')
+Result: PASS - fm-procevent-quota.sh arm correctly rejects with "error: invalid provider: codex-"
+
+Test 9: Candidate validation pre-pass (trailing unsupported harness)
+Result: PASS - fm-quota-choose.sh fails with "error: unknown harness: agy" before quota evaluation
+
+Test 10: Candidate validation pre-pass (trailing empty model)
+Result: PASS - fm-quota-choose.sh fails with "error: invalid candidate: claude:" before quota evaluation
+
+All 10 key validations PASSED.
+Mon Aug 31 10:48:14 -03 2026
