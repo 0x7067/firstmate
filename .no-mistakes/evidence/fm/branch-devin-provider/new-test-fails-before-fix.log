@@ -1,0 +1,4 @@
+Error: the picker must offer an extension-registered provider the branch can run: ["Follow main (anthropic/main-model)","anthropic/main-model"]
+    at file:///Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1WBS3Y0X154QRHW9F0V9DDV/[eval1]:40:9
+
+Node.js v24.20.0: expected exit 0, got 1

@@ -1,0 +1,3 @@
+ok - an extension-registered provider resolves in the isolated branch runtime
+ok - an unusable model pin rejects to watcher fallback and an unparseable one is treated as no pin
+ok - supervision-model opens a bounded searchable list, follow main first, and pins the branch alone

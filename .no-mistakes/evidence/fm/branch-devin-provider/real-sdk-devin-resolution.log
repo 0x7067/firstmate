@@ -1,0 +1,9 @@
+pi-devin-auth registered provider: devin | streamSimple: function | oauth: object | models: swe-1-7, swe-1-7-lightning, gpt-5-6-sol, gpt-5-6-luna, gpt-5-6-terra, claude-opus-4-8, claude-fable-5, claude-sonnet-5, glm-5-2, kimi-k2-7, grok-4-5
+
+[isolated branch runtime, before copy] getModel(devin/swe-1-7): undefined | hasConfiguredAuth(devin): false
+[after registerProvider + refresh]      getModel(devin/swe-1-7): found (SWE-1.7, api=devin-cloud) | hasConfiguredAuth(devin): true
+[branch runtime devin catalog] "(no getAll)"
+
+[no devin auth stored]                  getModel(devin/swe-1-7): found | hasConfiguredAuth(devin): false -> extension reports 'no configured credentials' and falls back
+
+RESULT: PASS
