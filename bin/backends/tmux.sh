@@ -26,6 +26,8 @@
 . "$FM_BACKEND_LIB_DIR/fm-cursor-lib.sh"
 # shellcheck source=bin/fm-gemini-lib.sh
 . "$FM_BACKEND_LIB_DIR/fm-gemini-lib.sh"
+# shellcheck source=bin/fm-prime-lib.sh
+. "$FM_BACKEND_LIB_DIR/fm-prime-lib.sh"
 
 # fm_backend_tmux_resolve_bare_selector: the live-window-listing fallback for a
 # selector that is neither an explicit target nor a task selector routed
@@ -356,6 +358,22 @@ EOF
   while IFS= read -r pid; do
     [ -n "$pid" ] || continue
     if fm_gemini_pid_is_gemini "$pid"; then
+      printf 'alive'
+      return 0
+    fi
+  done <<EOF
+$(fm_backend_tmux_foreground_pids "$target")
+EOF
+
+  # Prime Agent runs as a bare `node` bundle whose identity lives in argv[1],
+  # so it needs the same argv-boundary-preserving pid probe as Gemini. The
+  # structured argv read is limited to Node foreground processes so an
+  # unrelated interpreter never pays for it.
+  while IFS= read -r pid; do
+    [ -n "$pid" ] || continue
+    comm=$(LC_ALL=C ps -p "$pid" -o comm= 2>/dev/null) || continue
+    case "${comm##*/}" in node*) ;; *) continue ;; esac
+    if fm_prime_node_pid_matches "$pid"; then
       printf 'alive'
       return 0
     fi
