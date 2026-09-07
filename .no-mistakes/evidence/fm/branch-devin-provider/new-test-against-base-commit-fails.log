@@ -1,0 +1,9 @@
+not ok - an extension-registered provider must resolve in the isolated branch runtime: file:///Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1Y2A99WK5V46DH2DKRN7X43/[eval1]:40
+  throw new Error(`the picker must offer an extension-registered provider the branch can run: ${JSON.stringify(offered.options)}`);
+        ^
+
+Error: the picker must offer an extension-registered provider the branch can run: ["Follow main (anthropic/main-model)","anthropic/main-model"]
+    at file:///Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1Y2A99WK5V46DH2DKRN7X43/[eval1]:40:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.20.0: expected exit 0, got 1

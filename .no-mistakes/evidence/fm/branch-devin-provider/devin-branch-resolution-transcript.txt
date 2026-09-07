@@ -1,0 +1,24 @@
+# /supervision-model picker options (main has devin registered by pi-devin-auth):
+[
+  "Follow main (anthropic/main-model)",
+  "anthropic/main-model",
+  "devin/swe-1-7"
+]
+
+# operator picked devin/swe-1-7; persisted pin file config/supervision-branch-model:
+"devin/swe-1-7\n"
+
+# branch session built on wake; model bound to the branch:
+{"provider":"devin","id":"swe-1-7"}
+
+# branch ModelRuntime instances and the providers copied into them:
+{"registeredProviders":["devin"],"authenticated":["anthropic","devin"]}
+{"registeredProviders":["devin"],"authenticated":["anthropic","devin"]}
+{"registeredProviders":["devin"],"authenticated":["anthropic","devin"]}
+
+# branch resource-loader isolation flags kept:
+{"noExtensions":true,"noSkills":true,"noPromptTemplates":true,"noThemes":true,"noContextFiles":true}
+
+# same pin with NO extension registration in main -> branch refuses to build:
+supervision model pin devin/swe-1-7 is unavailable to the isolated branch runtime (config/supervision-branch-model)
+branch sessions built: 1
