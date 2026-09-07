@@ -1,0 +1,4 @@
+Scenario: real fm-bootstrap validates crew-dispatch codex max effort
+config: {"rules":[{"when":"big feature","use":{"harness":"codex","model":"gpt-5","effort":"max"}}]}
+
+-- fm-bootstrap output (network skipped) --

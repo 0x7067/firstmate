@@ -1,0 +1,62 @@
+Scenario: real fm-spawn with real tmux, real treehouse, and installed codex catalog
+codex_version: codex-cli 0.153.4
+catalog_efforts: high,low,max,medium,ultra,xhigh
+task_id: live-codex-max-2-58321
+treehouse_root: /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1YZT4ESRPAEFP6XH4VRX025/.tmp/live-codex-max-spawn/treehouse
+
+-- starting isolated tmux server fm3212codexmax258321 --
+
+-- fm-spawn output --
+spawned live-codex-max-2-58321 harness=codex kind=ship mode=no-mistakes yolo=off window=driver:fm-live-codex-max-2-58321 worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1YZT4ESRPAEFP6XH4VRX025/.tmp/live-codex-max-spawn/treehouse/.treehouse/project-26fbbb/1/project
+
+-- task meta profile --
+window=driver:fm-live-codex-max-2-58321
+worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1YZT4ESRPAEFP6XH4VRX025/.tmp/live-codex-max-spawn/treehouse/.treehouse/project-26fbbb/1/project
+harness=codex
+model=gpt-5
+effort=max
+
+-- spawned tmux pane capture --
+
+pedro@Pedro-Guimaraes-Ravn-GFV73Y4047 project % treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1YZT4
+ESRPAEFP6XH4VRX025/.tmp/live-codex-max-spawn/treehouse/.treehouse/project-26fbbb
+/1/project. Type 'exit' to return.
+pedro@Pedro-Guimaraes-Ravn-GFV73Y4047 project % export GOTMPDIR=/tmp/fm-live-cod
+ex-max-2-58321/gotmp
+pedro@Pedro-Guimaraes-Ravn-GFV73Y4047 project % export FM_TASK_ID=live-codex-max
+-2-58321
+pedro@Pedro-Guimaraes-Ravn-GFV73Y4047 project % env -u CURSOR_AGENT -u CURSOR_IN
+VOKED_AS -u GEMINI_CLI codex --model 'gpt-5' -c 'model_reasoning_effort="max"' -
+-dangerously-bypass-approvals-and-sandbox -c "notify=[\"bash\",\"-c\",\"touch '/
+Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1YZT4ESRPAEFP6XH4VRX025/.tmp/
+live-codex-max-spawn/home/state/live-codex-max-2-58321.turn-ended'\"]" "$('/User
+s/pedro/.no-mistakes/worktrees/b764898e6d62/01M1YZT4ESRPAEFP6XH4VRX025/bin/fm-op
+erational-input.sh' encode launch-brief < '/Users/pedro/.no-mistakes/worktrees/b
+764898e6d62/01M1YZT4ESRPAEFP6XH4VRX025/.tmp/live-codex-max-spawn/home/data/live-
+codex-max-2-58321/launch-brief.md')"
+  Welcome to Codex, OpenAI's command-line coding agent
+
+  Sign in with ChatGPT to use Codex as part of your paid plan
+  or connect an API key for usage-based billing
+
+> 1. Sign in with ChatGPT
+     Usage included with Plus, Pro, Business, and Enterprise plans
+
+  2. Sign in with Device Code
+     Sign in from another device with a one-time code
+
+  3. Provide your own API key
+     Pay for what you use
+
+  Press enter to continue
+
+
+
+
+
+
+
+
+
