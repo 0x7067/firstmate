@@ -1337,6 +1337,47 @@ else
   PROJ=${POS[1]}
   ARG3=${POS[2]:-}
 fi
+# A raw launch command that resolves to prime-agent is rejected at the
+# Prime isolation boundary even when --harness labels it differently; the
+# label cannot sanitize a raw Prime executable.
+if [ -n "$ARG3" ]; then
+  case "$ARG3" in
+    *' '*)
+      _raw_prime_check=""
+      _raw_prime_cmd=""
+      for _word in $ARG3; do
+        case "$_word" in [A-Za-z_]*=*) continue ;; esac
+        case "$_word" in command|exec|env) continue ;; esac
+        _raw_prime_check=$(basename "$_word")
+        _raw_prime_cmd=$_word
+        break
+      done
+      if [ "$_raw_prime_check" = prime-agent ]; then
+        echo "error: Prime isolation boundary: Prime Agent cannot be launched as a raw command; pass --harness prime-agent to use the verified path" >&2
+        exit 1
+      fi
+      if [ -n "$HARNESS_ARG" ] && [ -n "$_raw_prime_cmd" ]; then
+        _raw_resolved=$(command -v "$_raw_prime_cmd" 2>/dev/null || printf '%s' "$_raw_prime_cmd")
+        _raw_resolved=$(readlink -f "$_raw_resolved" 2>/dev/null || printf '%s' "$_raw_resolved")
+        _raw_base=${_raw_resolved##*/}
+        case "$_raw_base" in
+          echo|sleep|true|false|cat|printf|test|ls|sh)
+            case "$_raw_resolved" in
+              /bin/*|/sbin/*|/usr/bin/*|/usr/sbin*) : ;;
+              *)
+                echo "error: Prime isolation boundary: raw launch command resolves to '$_raw_base' outside system paths" >&2
+                exit 1
+                ;;
+            esac
+            ;;
+          *)
+            echo "error: Prime isolation boundary: raw launch command does not resolve to a trusted system utility" >&2
+            exit 1
+            ;;
+        esac
+      fi      ;;
+  esac
+fi
 [ -z "$HARNESS_ARG" ] || ARG3=$HARNESS_ARG
 
 shell_quote() {
@@ -1584,9 +1625,52 @@ case "$ARG3" in
     RAW_LAUNCH=1
     LAUNCH=$ARG3
     HARNESS=""
+    # A dispatch profile requires a verified harness; a raw command cannot
+    # prove complete runtime identity through the profile's resolution path.
+    if [ -f "$CONFIG/crew-dispatch.json" ]; then
+      echo "error: config/crew-dispatch.json is active - a raw launch command cannot prove complete runtime identity through the dispatch profile; pass an explicit verified harness" >&2
+      exit 1
+    fi
+    # Find the first real executable word, skipping env assignments and shell
+    # builtins (command, exec, env) that prefix the actual command.
+    raw_cmd=""
     for word in $LAUNCH; do
-      case "$word" in [A-Za-z_]*=*) continue ;; *) HARNESS=$(basename "$word"); break ;; esac
+      case "$word" in [A-Za-z_]*=*) continue ;; esac
+      case "$word" in command|exec|env) continue ;; esac
+      HARNESS=$(basename "$word")
+      raw_cmd=$word
+      break
     done
+    # Prime Agent must never be launched as a raw command; it requires the
+    # verified harness path for its isolation boundary.
+    if [ "$HARNESS" = prime-agent ]; then
+      echo "error: Prime isolation boundary: Prime Agent cannot be launched as a raw command; pass --harness prime-agent to use the verified path" >&2
+      exit 1
+    fi
+    # Admit only raw commands that resolve to a trusted simple utility under a
+    # system path. This prevents arbitrary executables and wrapper scripts from
+    # crossing the Prime isolation boundary.
+    raw_resolved=""
+    if [ -n "$raw_cmd" ]; then
+      raw_resolved=$(command -v "$raw_cmd" 2>/dev/null || printf '%s' "$raw_cmd")
+      raw_resolved=$(readlink -f "$raw_resolved" 2>/dev/null || printf '%s' "$raw_resolved")
+    fi
+    raw_base=${raw_resolved##*/}
+    case "$raw_base" in
+      echo|sleep|true|false|cat|printf|test|ls|sh)
+        case "$raw_resolved" in
+          /bin/*|/sbin/*|/usr/bin/*|/usr/sbin*) : ;;
+          *)
+            echo "error: Prime isolation boundary: raw launch command resolves to '$raw_base' outside system paths" >&2
+            exit 1
+            ;;
+        esac
+        ;;
+      *)
+        echo "error: Prime isolation boundary: raw launch command does not resolve to a trusted system utility" >&2
+        exit 1
+        ;;
+    esac
     ;;
   '')
     # No explicit harness: resolve from config. A secondmate AGENT launches on the
