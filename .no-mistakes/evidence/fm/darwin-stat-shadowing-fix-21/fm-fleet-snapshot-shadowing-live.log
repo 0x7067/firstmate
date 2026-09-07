@@ -1,0 +1,8 @@
+# Scenario: fm-fleet-snapshot on Darwin with a PATH-shadowed stat
+uname=Darwin
+fake_stat=/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-live-shadow.xj4AM7/fakebin/stat
+bare_stat_rc=42
+bare_stat_stderr=fake shadowed stat rejects: -f %m /var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-live-shadow.xj4AM7/home/data/secondmates.md
+snapshot_contract=pass
+fake_stat_log_lines=1
+{"schema":"fm-fleet-snapshot.v1","roots":{"fm_root":"/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1YT9AV1Y834NGA4N7RQ41G3"},"secondmate_current":{"registry":{"present":true,"available":true,"complete":true,"records_count":0}}}
