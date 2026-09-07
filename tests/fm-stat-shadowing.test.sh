@@ -19,7 +19,14 @@ set -u
 # shellcheck source=tests/lib.sh
 . "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
-[ "$(uname)" = Darwin ] || { echo "skip: Darwin only"; exit 0; }
+# Darwin-only: the shadowing assertions require a real BSD /usr/bin/stat to
+# shadow; on Linux the `stat -f` semantics differ and the helpers take the
+# `stat -c` branch instead, so there is nothing meaningful to assert. Skip
+# visibly (after lib.sh so `pass`/`fail` exist) rather than silently.
+if [ "$(uname)" != Darwin ]; then
+  pass "Darwin-only test: shadowing assertions require BSD /usr/bin/stat; skipping on $(uname -s)"
+  exit 0
+fi
 
 TMP_ROOT=$(mktemp -d "${TMPDIR:-/tmp}/fm-stat-shadowing.XXXXXX") || exit 1
 trap 'rm -rf "$TMP_ROOT"' EXIT
@@ -122,6 +129,10 @@ fi
 pass "_fm_status_file_size returns correct byte size under GNU stat shadowing"
 
 # 4. stat_mtime from bin/fm-watch.sh
+# fm-watch.sh runs a top-level `mkdir -p` on its state dir when sourced; pin it
+# to the temp root via FM_STATE_OVERRIDE so no artifact escapes into the repo's
+# git-ignored state/ directory.
+export FM_STATE_OVERRIDE="$TMP_ROOT/state"
 . "$ROOT/bin/fm-watch.sh"
 RESULT_WATCH_MTIME=$(stat_mtime "$TESTFILE") || true
 if [ -z "$RESULT_WATCH_MTIME" ] || [ "$RESULT_WATCH_MTIME" != "$EXPECTED_MTIME" ]; then
