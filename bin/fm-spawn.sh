@@ -1567,7 +1567,15 @@ launch_template() {
     # Its turn-end signal is a globally configured Stop hook plus a guarded
     # per-task worktree token, so no launch placeholder belongs here.
     kimi) printf '%s' '__KIMIBIN__ __MODELFLAG__--auto' ;;
-    # muse (Muse Code): a positional prompt starts the supervised interactive
+    # Prime Agent: a Pi-family CLI with its own executable identity and lifecycle.
+    # Clears stale Pi-family markers (PI_MODEL, PI_CODING_AGENT, AI_AGENT,
+    # FM_PI_HARNESS) that a Pi primary leaks into the spawn environment.
+    # The brief rides the canonical operational-input envelope as one positional.
+    # --daemon-socket carries the per-task daemon path; -e loads the
+    # firstmate-owned semantic lifecycle extension outside the worktree.
+    # Project-scoped HOME, PRIME_AGENT_CODING_AGENT_DIR, and
+    # PRIME_AGENT_SESSION_DIR are set by the outer env wrap below.
+    prime-agent) printf '%s' 'env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__--daemon-socket __PRIMEDAEMON__ -e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;    # muse (Muse Code): a positional prompt starts the supervised interactive
     # session. --yolo is the single flag that makes a crewmate pane viable: muse
     # ships approval prompts AND a filesystem/network sandbox ON by default
     # (--sandbox-network defaults to proxy-only, which refuses outright without a
@@ -1736,6 +1744,12 @@ case "$HARNESS" in
     fi
     LAUNCH=${LAUNCH//__PITUIMODE__/$PI_TUI_MODE}
     LAUNCH="FM_PI_HARNESS=$HARNESS $LAUNCH"
+    ;;
+  prime-agent)
+    PRIME_BIN=$(type -P prime-agent 2>/dev/null) || {
+      echo "error: prime-agent executable not found on PATH; install it or select a different verified harness" >&2
+      exit 1
+    }
     ;;
   cursor)
     # `cursor` is not the CLI name, and the legacy alias `agent` is far too
@@ -1937,6 +1951,12 @@ effort_flag_for_harness() {
     pi|pi-signed)
       # Pi 0.80.6 accepts the full shared effort vocabulary, including max, through
       # its --thinking flag.
+      case "$effort" in
+        low|medium|high|xhigh|max) printf -- '--thinking %s ' "$(shell_quote "$effort")" ;;
+      esac
+      ;;
+    prime-agent)
+      # Prime Agent accepts the same --thinking vocabulary as Pi (verified 0.8.0).
       case "$effort" in
         low|medium|high|xhigh|max) printf -- '--thinking %s ' "$(shell_quote "$effort")" ;;
       esac
@@ -3208,6 +3228,34 @@ mkdir -p "$TASK_TMP/gotmp"
 # check or leak into a commit.
 mkdir -p "$STATE"
 STATE_REAL=$(cd "$STATE" && pwd -P)
+# Prime Agent project-scoped state setup (runs after STATE_REAL is resolved)
+if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
+  PRIME_PROJECT_HASH=$(printf '%s' "$PROJ_ABS" | shasum | cut -c1-16)
+  PRIME_HOME="$STATE_REAL/prime-projects/$PRIME_PROJECT_HASH/home"
+  PRIME_DIR="$PRIME_HOME/.prime/agent"
+  PRIME_SESSION_DIR="$PRIME_DIR/sessions"
+  PRIME_DAEMON_SOCKET="/tmp/firstmate-prime-$PRIME_PROJECT_HASH"
+  mkdir -p "$PRIME_DIR" "$PRIME_SESSION_DIR"
+  PRIME_EXT="$STATE_REAL/$ID.prime-ext.ts"
+  sq_primeext=$(shell_quote "$PRIME_EXT")
+  sq_primehome=$(shell_quote "$PRIME_HOME")
+  sq_primegit=$(shell_quote "$PRIME_HOME/.gitconfig")
+  sq_primedir=$(shell_quote "$PRIME_DIR")
+  sq_primesession=$(shell_quote "$PRIME_SESSION_DIR")
+  sq_primedaemon=$(shell_quote "$PRIME_DAEMON_SOCKET")
+  state_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$STATE_REAL" 2>/dev/null || printf '"%s"' "$STATE_REAL")
+  turnend_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$STATE_REAL/$ID.turn-ended" 2>/dev/null || printf '"%s"' "$STATE_REAL/$ID.turn-ended")
+  cat > "$PRIME_EXT" <<PRIMEEOF
+// Firstmate-owned Prime Agent semantic lifecycle extension.
+const STATE_DIR = $state_literal;
+const TURNEND_PATH = $turnend_literal;
+PRIMEEOF
+  BUSY_GEN=$("$FM_ROOT/bin/fm-busy-event.sh" arm "$STATE_REAL" "$ID") || {
+    echo "error: failed to arm the busy-state contract for $ID" >&2
+    exit 1
+  }
+  LAUNCH="HOME=$sq_primehome GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=$sq_primegit PRIME_AGENT_CODING_AGENT_DIR=$sq_primedir PRIME_AGENT_SESSION_DIR=$sq_primesession $LAUNCH"
+fi
 TURNEND="$STATE_REAL/$ID.turn-ended"
 exclude_path() {
   local rel=$1 EXCL
@@ -3649,7 +3697,7 @@ SPAWN_META_PATH=$SPAWN_META_TMP
 preserve_relaunch_meta() {
   awk -F= '
     BEGIN {
-      split("window endpoint_task_id worktree project harness kind mode yolo tasktmp model effort busy_gen spawn_gen traceparent backend herdr_session herdr_workspace_id herdr_tab_id herdr_pane_id zellij_session zellij_tab_id zellij_pane_id orca_worktree_id terminal cmux_workspace_id cmux_surface_id home projects control_relaunch_tx", keys, " ")
+      split("window endpoint_task_id worktree project harness kind mode yolo tasktmp model effort busy_gen spawn_gen traceparent backend herdr_session herdr_workspace_id herdr_tab_id herdr_pane_id zellij_session zellij_tab_id zellij_pane_id orca_worktree_id terminal cmux_workspace_id cmux_surface_id prime_home prime_agent_dir prime_session_dir prime_daemon_socket home projects control_relaunch_tx", keys, " ")
       for (i in keys) owned[keys[i]] = 1
     }
     !($1 in owned)
@@ -3692,6 +3740,12 @@ preserve_relaunch_meta() {
   if [ "$BACKEND" = cmux ]; then
     echo "cmux_workspace_id=$CMUX_WORKSPACE_ID"
     echo "cmux_surface_id=$CMUX_SURFACE_ID"
+  fi
+  if [ "$HARNESS" = prime-agent ]; then
+    echo "prime_home=$PRIME_HOME"
+    echo "prime_agent_dir=$PRIME_DIR"
+    echo "prime_session_dir=$PRIME_SESSION_DIR"
+    echo "prime_daemon_socket=$PRIME_DAEMON_SOCKET"
   fi
   if [ "$KIND" = secondmate ]; then
     echo "home=$PROJ_ABS"
@@ -3826,7 +3880,7 @@ case "$HARNESS" in
   cursor) LAUNCH=${LAUNCH//__CURSORBIN__/"$(shell_quote "$CURSOR_BIN")"} ;;
   gemini) LAUNCH=${LAUNCH//__GEMINISETTINGS__/"$(shell_quote "$STATE_REAL/$ID.gemini-settings.json")"} ;;
   omp) LAUNCH=${LAUNCH//__OMPBIN__/"$(shell_quote "$OMP_BIN")"} ;;
-esac
+  prime-agent) LAUNCH=${LAUNCH//__PRIMEBIN__/"$(shell_quote "$PRIME_BIN")"}; LAUNCH=${LAUNCH//__PRIMEEXT__/$sq_primeext}; LAUNCH=${LAUNCH//__PRIMEDAEMON__/$sq_primedaemon} ;;esac
 LAUNCH=${LAUNCH//__WORKTREE__/$sq_worktree}
 case "$HARNESS" in
   claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|gemini|muse|rovo)
