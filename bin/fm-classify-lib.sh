@@ -680,7 +680,7 @@ _fm_status_file_size() {  # <status-file>
 _fm_status_file_mtime() {  # <status-file>
   local f=$1
   if [ "$(uname -s 2>/dev/null)" = Darwin ]; then
-    LC_ALL=C stat -f '%m' "$f" 2>/dev/null
+    LC_ALL=C /usr/bin/stat -f '%m' "$f" 2>/dev/null
   else
     LC_ALL=C stat -c '%Y' "$f" 2>/dev/null
   fi
