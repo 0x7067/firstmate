@@ -462,21 +462,24 @@ test_codex_clamps_max_effort_when_unsupported() {
   pass "codex clamps a requested max effort to xhigh when the CLI lacks max"
 }
 
-test_codex_clamps_max_effort_for_models_without_max() {
+test_codex_passes_max_for_model_when_cli_supports_it() {
   local rec id out status launch
   id=profile-codex-model-maxclamp-z4c
   rec=$(make_spawn_case profile-codex-model-maxclamp codex "$id")
   read_case_record "$rec"
 
+  # The capability check is model-agnostic: it asks whether the installed codex
+  # CLI supports max, not whether a specific model does. The fake catalog has
+  # gpt-5.5 topping out at xhigh, but because another catalog model advertises
+  # max the CLI is treated as max-capable and the request passes through.
   out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --model gpt-5.5 --effort max)
   status=$?
-  expect_code 0 "$status" "codex spawn with max effort on an xhigh-only model should succeed"
+  expect_code 0 "$status" "codex spawn with max effort on a max-capable CLI should succeed"
   assert_meta_profile "$HOME_DIR/state/$id.meta" codex gpt-5.5 max
   launch=$(cat "$LAUNCH_LOG")
-  assert_contains "$launch" "codex --model 'gpt-5.5' -c 'model_reasoning_effort=\"xhigh\"' --dangerously-bypass-approvals-and-sandbox" \
-    "codex launch did not clamp max effort for a model that lacks max"
-  assert_not_contains "$launch" 'model_reasoning_effort="max"' "codex launch must not emit max for a model that lacks max"
-  pass "codex clamps requested max to xhigh for a model without max"
+  assert_contains "$launch" "codex --model 'gpt-5.5' -c 'model_reasoning_effort=\"max\"' --dangerously-bypass-approvals-and-sandbox" \
+    "codex launch did not pass max through on a max-capable CLI"
+  pass "codex passes max through for any model when the CLI supports max"
 }
 
 test_grok_threads_model_and_reasoning_effort() {
@@ -1196,7 +1199,7 @@ test_claude_threads_model_and_effort
 test_codex_threads_model_and_effort
 test_codex_threads_max_effort
 test_codex_clamps_max_effort_when_unsupported
-test_codex_clamps_max_effort_for_models_without_max
+test_codex_passes_max_for_model_when_cli_supports_it
 test_grok_threads_model_and_reasoning_effort
 test_grok_omits_invalid_max_reasoning_effort
 test_grok_omits_invalid_xhigh_reasoning_effort

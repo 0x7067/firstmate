@@ -12,7 +12,7 @@ Verified on 2026-06-11 with codex-cli 0.139.0 unless a fact gives a newer versio
 | Skill invocation | `$<skill>`, for example `$no-mistakes`; `/<skill>` is Claude-only and Codex rejects it as "Unrecognized command". |
 | Resume | `codex resume <session-id>`, using the id printed on quit. |
 | Model flag | `--model <model>`. |
-| Effort flag | `-c 'model_reasoning_effort="<low\|medium\|high\|xhigh>"'`, verified on codex-cli 0.142.1; `max` is an accepted Firstmate request, passed through only when `codex debug models` reports it for the selected model, and otherwise clamped to `xhigh`. |
+| Effort flag | `-c 'model_reasoning_effort="<low\|medium\|high\|xhigh\|max>"'`. `max` is an accepted Firstmate request, passed through when the installed codex CLI advertises a `max` reasoning level in its bundled catalog (codex-cli 0.153.4 does) and clamped to `xhigh` when it does not, so a spawn never emits an unsupported value. The capability check is model-agnostic - it asks whether the CLI supports `max`, not a specific model. |
 | Model discovery | Open the current interactive session's `/model` picker. |
 
 A directory trust dialog appears on the first run for a repository root: "Do you trust the contents of this directory?"
