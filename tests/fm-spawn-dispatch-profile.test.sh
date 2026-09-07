@@ -47,16 +47,13 @@ fi
 exit 0
 SH
   chmod +x "$fakebin/timeout" "$fakebin/cursor-agent"
-  # codex answers `debug models` with a catalog whose supported reasoning
-  # levels include max only when FM_FAKE_CODEX_MAX=1 (the default); setting it
-  # to 0 exercises the xhigh clamp for a codex build that tops out at xhigh.
   cat > "$fakebin/codex" <<'SH'
 #!/usr/bin/env bash
 if [ "${1:-}" = debug ] && [ "${2:-}" = models ]; then
   if [ "${FM_FAKE_CODEX_MAX:-1}" = 1 ]; then
-    printf '%s\n' '{"models":[{"supported_reasoning_levels":[{"effort":"low"},{"effort":"medium"},{"effort":"high"},{"effort":"xhigh"},{"effort":"max"}]}]}'
+    printf '%s\n' '{"models":[{"slug":"gpt-5","supported_reasoning_levels":[{"effort":"low"},{"effort":"medium"},{"effort":"high"},{"effort":"xhigh"},{"effort":"max"}]},{"slug":"gpt-5.5","supported_reasoning_levels":[{"effort":"low"},{"effort":"medium"},{"effort":"high"},{"effort":"xhigh"}]}]}'
   else
-    printf '%s\n' '{"models":[{"supported_reasoning_levels":[{"effort":"low"},{"effort":"medium"},{"effort":"high"},{"effort":"xhigh"}]}]}'
+    printf '%s\n' '{"models":[{"slug":"gpt-5","supported_reasoning_levels":[{"effort":"low"},{"effort":"medium"},{"effort":"high"},{"effort":"xhigh"}]},{"slug":"gpt-5.5","supported_reasoning_levels":[{"effort":"low"},{"effort":"medium"},{"effort":"high"},{"effort":"xhigh"}]}]}'
   fi
 fi
 exit 0
@@ -438,7 +435,6 @@ test_codex_threads_max_effort() {
   rec=$(make_spawn_case profile-codex-max codex "$id")
   read_case_record "$rec"
 
-  # Default fake codex advertises max (FM_FAKE_CODEX_MAX=1): pass through.
   out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --model gpt-5 --effort max)
   status=$?
   expect_code 0 "$status" "codex spawn with max effort should succeed"
@@ -455,8 +451,6 @@ test_codex_clamps_max_effort_when_unsupported() {
   rec=$(make_spawn_case profile-codex-maxclamp codex "$id")
   read_case_record "$rec"
 
-  # FM_FAKE_CODEX_MAX=0 makes the fake codex catalog top out at xhigh, so a
-  # requested max must clamp to xhigh rather than emit an unsupported value.
   out=$(FM_FAKE_CODEX_MAX=0 run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --model gpt-5 --effort max)
   status=$?
   expect_code 0 "$status" "codex spawn with max effort on an xhigh-only CLI should succeed"
@@ -464,8 +458,25 @@ test_codex_clamps_max_effort_when_unsupported() {
   launch=$(cat "$LAUNCH_LOG")
   assert_contains "$launch" "codex --model 'gpt-5' -c 'model_reasoning_effort=\"xhigh\"' --dangerously-bypass-approvals-and-sandbox" \
     "codex launch did not clamp an unsupported max effort to xhigh"
-  assert_not_contains "$launch" 'model_reasoning_effort=\"max\"' "codex launch must not emit an unsupported max effort"
+  assert_not_contains "$launch" 'model_reasoning_effort="max"' "codex launch must not emit an unsupported max effort"
   pass "codex clamps a requested max effort to xhigh when the CLI lacks max"
+}
+
+test_codex_clamps_max_effort_for_models_without_max() {
+  local rec id out status launch
+  id=profile-codex-model-maxclamp-z4c
+  rec=$(make_spawn_case profile-codex-model-maxclamp codex "$id")
+  read_case_record "$rec"
+
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --model gpt-5.5 --effort max)
+  status=$?
+  expect_code 0 "$status" "codex spawn with max effort on an xhigh-only model should succeed"
+  assert_meta_profile "$HOME_DIR/state/$id.meta" codex gpt-5.5 max
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" "codex --model 'gpt-5.5' -c 'model_reasoning_effort=\"xhigh\"' --dangerously-bypass-approvals-and-sandbox" \
+    "codex launch did not clamp max effort for a model that lacks max"
+  assert_not_contains "$launch" 'model_reasoning_effort="max"' "codex launch must not emit max for a model that lacks max"
+  pass "codex clamps requested max to xhigh for a model without max"
 }
 
 test_grok_threads_model_and_reasoning_effort() {
@@ -1185,6 +1196,7 @@ test_claude_threads_model_and_effort
 test_codex_threads_model_and_effort
 test_codex_threads_max_effort
 test_codex_clamps_max_effort_when_unsupported
+test_codex_clamps_max_effort_for_models_without_max
 test_grok_threads_model_and_reasoning_effort
 test_grok_omits_invalid_max_reasoning_effort
 test_grok_omits_invalid_xhigh_reasoning_effort

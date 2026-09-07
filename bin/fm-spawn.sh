@@ -1824,18 +1824,22 @@ model_flag_for_harness() {
   esac
 }
 
-# codex_supports_max_effort: 0 when the installed codex CLI advertises a "max"
-# reasoning level in its bundled model catalog. Reads the local catalog via
-# `codex debug models`; returns non-zero when codex is absent, the subcommand
-# is unavailable, or no model lists a max effort - the fail-safe direction is
-# the clamp, never an unsupported pass-through.
-codex_supports_max_effort() {
+codex_model_supports_max_effort() {
+  local model=$1 catalog
+  [ -n "$model" ] && [ "$model" != default ] || return 1
   command -v codex >/dev/null 2>&1 || return 1
-  codex debug models 2>/dev/null | grep -q '"effort"[[:space:]]*:[[:space:]]*"max"'
+  command -v jq >/dev/null 2>&1 || return 1
+  catalog=$(codex debug models --bundled 2>/dev/null || codex debug models 2>/dev/null) || return 1
+  printf '%s' "$catalog" | jq -e --arg model "$model" '
+    .models[]?
+    | select(.slug == $model or .id == $model or .model == $model or .name == $model or .selector == $model or .display_name == $model)
+    | .supported_reasoning_levels[]?
+    | select((if type == "object" then .effort else . end) == "max")
+  ' >/dev/null 2>&1
 }
 
 effort_flag_for_harness() {
-  local harness=$1 effort=$2
+  local harness=$1 effort=$2 model=${3:-}
   [ -n "$effort" ] && [ "$effort" != default ] || return 0
   case "$harness" in
     claude)
@@ -1844,16 +1848,8 @@ effort_flag_for_harness() {
       esac
       ;;
     codex)
-      # The installed codex config schema uses model_reasoning_effort. codex-cli
-      # 0.153.4's bundled model catalog advertises low|medium|high|xhigh|max (and
-      # an "ultra" level above max that firstmate's shared vocabulary never
-      # emits), but older codex builds top out at xhigh. A requested max is
-      # passed through only when the installed CLI actually advertises it;
-      # otherwise it clamps to xhigh rather than launching with an unsupported
-      # value. The capability probe reads the local catalog via `codex debug
-      # models` and fails safe to the clamp when it cannot confirm support.
       local codex_effort=$effort
-      if [ "$effort" = max ] && ! codex_supports_max_effort; then
+      if [ "$effort" = max ] && ! codex_model_supports_max_effort "$model"; then
         codex_effort=xhigh
       fi
       case "$codex_effort" in
@@ -3738,7 +3734,7 @@ sq_ompcfg=$(shell_quote "${OMP_WORKER_CFG:-$FM_ROOT/.omp/fm-worker-overlay.yml}"
 sq_opinput=$(shell_quote "$FM_ROOT/bin/fm-operational-input.sh")
 sq_worktree=$(shell_quote "$WT")
 MODELFLAG=$(model_flag_for_harness "$HARNESS" "$MODEL")
-EFFORTFLAG=$(effort_flag_for_harness "$HARNESS" "$EFFORT")
+EFFORTFLAG=$(effort_flag_for_harness "$HARNESS" "$EFFORT" "$MODEL")
 LAUNCH=${LAUNCH//__MODELFLAG__/$MODELFLAG}
 LAUNCH=${LAUNCH//__EFFORTFLAG__/$EFFORTFLAG}
 if [ "$HARNESS" = rovo ]; then
