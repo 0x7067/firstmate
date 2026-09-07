@@ -1,0 +1,24 @@
+# Repro: GNU stat shadowing /usr/bin/stat on Darwin (PATH=fakebin:$PATH)
+# expected mtime via /usr/bin/stat -f %m: 1788803936
+
+## BEFORE fix (base 0b9f518): fm_sup_stat_mtime + arithmetic under set -u
+raw output: [  File: "/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/tmp.VsICRr7Nh8/probe"]
+_: File: unbound variable
+exit=127
+
+## AFTER fix (HEAD 7bb3960): same call
+raw output: [1788803936]
+age=1
+exit=0
+
+## AFTER fix: fm_lock_path_mtime (fm-lock-lib.sh)
+mtime=[1788803936]
+exit=0
+
+## tests/fm-stat-shadowing.test.sh
+ok - shadowing: fake GNU stat shadows /usr/bin/stat in PATH
+ok - fm_sup_stat_mtime returns correct epoch mtime under GNU stat shadowing
+ok - fm_startup_memory_budget_link_count returns correct link count under GNU stat shadowing
+ok - _fm_status_file_size returns correct byte size under GNU stat shadowing
+ok - stat_mtime from fm-watch.sh returns correct epoch mtime under GNU stat shadowing
+exit=0
