@@ -4811,6 +4811,12 @@ const pinned = globalThis.__fmSessions[0].options.model;
 if (!pinned || pinned.provider !== "devin" || pinned.id !== "swe-1-7") {
   throw new Error(`the extension-registered pin did not bind the branch: ${JSON.stringify(pinned)}`);
 }
+// Copying the provider registration must not loosen the branch's isolation:
+// the devin-pinned session still loads no extensions, skills, or context files.
+const pinnedLoader = globalThis.__fmLoaders.at(-1);
+for (const key of ["noExtensions", "noSkills", "noContextFiles"]) {
+  if (pinnedLoader.options[key] !== true) throw new Error(`devin-pinned branch loader must keep ${key}`);
+}
 
 // Without the registration, the same pin is unavailable and the branch
 // refuses to build rather than silently downgrading.
