@@ -1824,6 +1824,16 @@ model_flag_for_harness() {
   esac
 }
 
+# codex_supports_max_effort: 0 when the installed codex CLI advertises a "max"
+# reasoning level in its bundled model catalog. Reads the local catalog via
+# `codex debug models`; returns non-zero when codex is absent, the subcommand
+# is unavailable, or no model lists a max effort - the fail-safe direction is
+# the clamp, never an unsupported pass-through.
+codex_supports_max_effort() {
+  command -v codex >/dev/null 2>&1 || return 1
+  codex debug models 2>/dev/null | grep -q '"effort"[[:space:]]*:[[:space:]]*"max"'
+}
+
 effort_flag_for_harness() {
   local harness=$1 effort=$2
   [ -n "$effort" ] && [ "$effort" != default ] || return 0
@@ -1834,13 +1844,20 @@ effort_flag_for_harness() {
       esac
       ;;
     codex)
-      # The installed codex config schema uses model_reasoning_effort, and the
-      # bundled model catalog (codex-cli 0.153.4) advertises
-      # low|medium|high|xhigh|max, so every shared effort level maps straight
-      # across. codex also advertises an "ultra" level above max, but firstmate's
-      # shared vocabulary stops at max and never emits ultra.
-      case "$effort" in
-        low|medium|high|xhigh|max) printf -- '-c %s ' "$(shell_quote "model_reasoning_effort=\"$effort\"")" ;;
+      # The installed codex config schema uses model_reasoning_effort. codex-cli
+      # 0.153.4's bundled model catalog advertises low|medium|high|xhigh|max (and
+      # an "ultra" level above max that firstmate's shared vocabulary never
+      # emits), but older codex builds top out at xhigh. A requested max is
+      # passed through only when the installed CLI actually advertises it;
+      # otherwise it clamps to xhigh rather than launching with an unsupported
+      # value. The capability probe reads the local catalog via `codex debug
+      # models` and fails safe to the clamp when it cannot confirm support.
+      local codex_effort=$effort
+      if [ "$effort" = max ] && ! codex_supports_max_effort; then
+        codex_effort=xhigh
+      fi
+      case "$codex_effort" in
+        low|medium|high|xhigh|max) printf -- '-c %s ' "$(shell_quote "model_reasoning_effort=\"$codex_effort\"")" ;;
       esac
       ;;
     grok)
