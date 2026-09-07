@@ -1,0 +1,28 @@
+Evidence: Darwin stat PATH-shadowing fix survives the rebase onto main.
+
+The fix prefixes all Darwin `stat -f` invocations in bin/ with the absolute
+path /usr/bin/stat so a GNU coreutils `stat` earlier in PATH (e.g.
+~/.local/bin/stat) cannot shadow BSD stat. Under GNU shadowing, `stat -f %m`
+prints `File: "<path>"` and exits non-zero, which crashes callers that feed
+the output into arithmetic under `set -u`.
+
+Host: Darwin 25.6.0 (assertions active — this is a Darwin-only test).
+
+=== After fix (target commit 37bf779): all helpers correct under GNU shadowing ===
+$ bash tests/fm-stat-shadowing.test.sh
+ok - shadowing: fake GNU stat shadows /usr/bin/stat in PATH
+ok - fm_sup_stat_mtime returns correct epoch mtime under GNU stat shadowing
+ok - fm_startup_memory_budget_link_count returns correct link count under GNU stat shadowing
+ok - _fm_status_file_size returns correct byte size under GNU stat shadowing
+ok - stat_mtime from fm-watch.sh returns correct epoch mtime under GNU stat shadowing
+EXIT=0
+
+=== Regression proof: revert /usr/bin/stat prefix on one helper, re-run ===
+(bin/fm-supervision-lib.sh line 18: /usr/bin/stat -> stat)
+$ bash tests/fm-stat-shadowing.test.sh
+ok - shadowing: fake GNU stat shadows /usr/bin/stat in PATH
+not ok - fm_sup_stat_mtime: expected 1788802766, got ''
+EXIT=1
+
+The empty result ('') is exactly the shadowing failure the fix prevents.
+Prefix restored afterward; working tree clean.
