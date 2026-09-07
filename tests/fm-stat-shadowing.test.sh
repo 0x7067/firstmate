@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
-# tests/fm-stat-shadowing.test.sh - verify Darwin stat helpers survive GNU coreutils
-# stat shadowing /usr/bin/stat on hosts where ~/.local/bin/stat (GNU) precedes
-# /usr/bin/stat in PATH.
+# tests/fm-stat-shadowing.test.sh - verify Darwin BSD-stat helpers ignore a GNU
+# stat earlier on PATH.
 #
-# When GNU stat shadows BSD stat, `stat -f <fmt>` no longer means "format the
-# output" — it means "print a filesystem dump" and prints the literal text
-# `File: "<path>"` to stdout before failing on the format token. Callers that
-# feed the output into arithmetic (e.g. `age=$(( $(date +%s) - m ))`) crash
-# under `set -u` with "unbound variable" on the stray token.
+# On Darwin, GNU coreutils can put a GNU stat earlier on PATH than /usr/bin/stat.
+# A bare `stat -f <fmt>` then reaches GNU stat, where `-f` means filesystem stat
+# rather than BSD-format output and can leak a filesystem dump into callers.
+# Runtime Darwin BSD-format calls use /usr/bin/stat so their syntax stays tied
+# to the system BSD implementation.
 #
-# The fix: all Darwin `stat -f` calls in bin/ are prefixed with `/usr/bin/stat`
-# to bypass any PATH-shadowing wrapper.
-#
-# This test proves the fix works by installing a fake GNU-like stat that shadows
+# This test proves the invariant by installing a fake GNU-like stat that shadows
 # /usr/bin/stat and asserting the helpers still return correct values.
 set -u
 
@@ -33,10 +29,9 @@ trap 'rm -rf "$TMP_ROOT"' EXIT
 
 # --- fake GNU stat that mimics ~/.local/bin/stat shadowing /usr/bin/stat -------
 
-# GNU stat -f <fmt> prints a filesystem dump starting with `File: "<path>"` and
-# exits non-zero when the format token is unrecognized by the filesystem path.
-# We simulate this for the tokens used in our helpers so callers fail or produce
-# garbage when they use the shadowed stat instead of /usr/bin/stat.
+# A shadowed GNU stat does not interpret `-f <fmt>` as BSD-format output.
+# We fail the tokens used in our helpers so callers cannot accidentally use the
+# shadowed stat instead of /usr/bin/stat.
 FAKE_STAT="$TMP_ROOT/fakebin/stat"
 mkdir -p "$(dirname "$FAKE_STAT")"
 
@@ -45,9 +40,8 @@ cat > "$FAKE_STAT" <<'FAKESTAT'
 # Mimics GNU coreutils stat when it shadows BSD /usr/bin/stat.
 # On Darwin: BSD stat uses %m (mtime), %z (size), etc.
 # GNU stat -f treats its argument as a filesystem-path option, not a format.
-# For the format tokens our code uses, GNU stat prints the filesystem dump
-# starting with `File: "..."` and exits non-zero on the format token.
-# We simulate exactly that failure mode.
+# For the format tokens our code uses, this fake exits non-zero before a helper
+# could consume shadowed output.
 opt1=${1:-} opt2=${2:-}
 if [ "$opt1" = "-f" ]; then
   case "$opt2" in
@@ -72,7 +66,7 @@ export PATH="$TMP_ROOT/fakebin:$ORIGINAL_PATH"
 
 # Verify the shadowing is active: a bare `stat -f %m /` must fail (not use BSD)
 if stat -f %m / >/dev/null 2>&1; then
-  # The fake stat didn't catch this — something is wrong with the PATH setup
+  # The fake stat didn't catch this, so something is wrong with the PATH setup
   PATH="$ORIGINAL_PATH"
   fail "shadowing sanity check: bare stat -f %m / should fail under GNU-shadow but did not"
 fi
@@ -111,7 +105,7 @@ if [ -z "$RESULT_LINKS" ] || [ "$RESULT_LINKS" != "$EXPECTED_LINKS" ]; then
 fi
 pass "fm_startup_memory_budget_link_count returns correct link count under GNU stat shadowing"
 
-# 3. _fm_status_file_size from bin/fm-classify-lib.sh (LC_ALL=C stat -f '%z')
+# 3. _fm_status_file_size from bin/fm-classify-lib.sh
 #    We source it and call the internal function directly.
 RESULT_SIZE=$(LC_ALL=C /usr/bin/stat -f '%z' "$TESTFILE" 2>/dev/null) || true
 # The fixed code uses /usr/bin/stat so it should produce the same value as direct call
