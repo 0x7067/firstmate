@@ -1,0 +1,8 @@
+# Simulated older Codex catalog clamp evidence
+fake codex debug models --bundled returns gpt-5 levels low,medium,high,xhigh (no max)
+spawned old-cli-clamp harness=codex kind=ship mode=no-mistakes yolo=off window=firstmate:fm-old-cli-clamp worktree=/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-codex-old.UHsfFx/wt
+launch command captured from tmux send-keys:
+env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI codex --model 'gpt-5' -c 'model_reasoning_effort="xhigh"' --dangerously-bypass-approvals-and-sandbox -c "notify=[\"bash\",\"-c\",\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-codex-old.UHsfFx/home/state/old-cli-clamp.turn-ended'\"]" "$('/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M1YWT6TV1DXGBKPZ27FKAYKK/bin/fm-operational-input.sh' encode launch-brief < '/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-codex-old.UHsfFx/home/data/old-cli-clamp/launch-brief.md')"
+harness=codex
+model=gpt-5
+effort=max

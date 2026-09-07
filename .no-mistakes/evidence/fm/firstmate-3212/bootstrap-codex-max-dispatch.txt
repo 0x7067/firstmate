@@ -1,0 +1,7 @@
+# Bootstrap crew-dispatch codex max evidence
+crew-dispatch.json:
+{"rules":[{"when":"big feature","use":{"harness":"codex","model":"gpt-5","effort":"max"}}]}
+
+fm-bootstrap verbose output:
+BOOTSTRAP_INFO: crew dispatch active config/crew-dispatch.json
+BOOTSTRAP_INFO: crew dispatch rule: big feature -> codex/gpt-5/max
