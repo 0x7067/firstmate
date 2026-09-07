@@ -1,0 +1,18 @@
+# fm-stat-shadowing: Darwin /usr/bin/stat prefix survives GNU stat PATH-shadowing
+Host: Darwin 25.6.0 arm64   Date: Mon Sep  7 14:10:52 -03 2026
+
+## Targeted test run (real helpers under a fake GNU stat that shadows /usr/bin/stat)
+$ bash tests/fm-stat-shadowing.test.sh
+ok - shadowing: fake GNU stat shadows /usr/bin/stat in PATH
+ok - fm_sup_stat_mtime returns correct epoch mtime under GNU stat shadowing
+ok - fm_startup_memory_budget_link_count returns correct link count under GNU stat shadowing
+ok - _fm_status_file_size returns correct byte size under GNU stat shadowing
+ok - stat_mtime from fm-watch.sh returns correct epoch mtime under GNU stat shadowing
+exit=0
+
+## Regression semantics (pre-fix bare stat fails, post-fix /usr/bin/stat passes, same shadow)
+PRE-FIX (bare stat -f): FAILS under GNU shadow -> helper returns non-zero
+POST-FIX (/usr/bin/stat -f): PASSES -> mtime=1788801053
+
+## No bare Darwin 'stat -f' invocations remain in bin/ (comments excluded)
+(none — only /usr/bin/stat invocations and explanatory comments)
