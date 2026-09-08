@@ -441,7 +441,7 @@ test_active_dispatch_profile_preserves_raw_launch_escape_hatch() {
 test_raw_prime_launch_is_rejected_before_endpoint_creation() {
   local rec id out status index prime_package prime_project_package prime_wt_package time_bin env_primebin
   local -a ids commands
-  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-command-end-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-env-path-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-node-relative-z15b profile-raw-prime-node-variable-z15b profile-raw-prime-env-chdir-node-z15b profile-raw-prime-env-attached-chdir-node-z15b profile-raw-prime-env-split-string-z15b profile-raw-prime-shell-z15b profile-raw-prime-shell-cluster-z15b profile-raw-prime-shell-option-z15b profile-raw-prime-time-z15b profile-raw-prime-time-format-z15b profile-raw-prime-qualified-time-z15b profile-raw-prime-quoted-z15b profile-raw-prime-symlink-z15b profile-raw-prime-alias-z15b profile-raw-prime-nohup-z15b profile-raw-prime-nice-z15b profile-raw-prime-timeout-z15b profile-raw-prime-timeout-end-options-z15b profile-raw-prime-setsid-z15b profile-raw-prime-cd-node-z15b profile-raw-prime-cd-option-node-z15b profile-raw-prime-path-assignment-z15b profile-raw-prime-export-path-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-newline-z15b profile-raw-prime-substitution-z15b profile-raw-prime-quoted-substitution-z15b profile-raw-prime-substitution-quoted-paren-z15b profile-raw-prime-parameter-substitution-z15b profile-raw-prime-arithmetic-substitution-z15b profile-raw-prime-assignment-substitution-z15b profile-raw-prime-backtick-z15b profile-raw-prime-eval-z15b profile-raw-prime-variable-z15b profile-raw-prime-unresolved-variable-z15b profile-raw-prime-process-substitution-z15b profile-raw-prime-output-process-substitution-z15b profile-raw-prime-redir-process-substitution-z15b profile-raw-prime-redir-command-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b profile-raw-prime-unproved-path-z15b)
+  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-command-end-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-env-path-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-node-require-z15b profile-raw-prime-node-import-z15b profile-raw-prime-node-relative-z15b profile-raw-prime-node-variable-z15b profile-raw-prime-env-chdir-node-z15b profile-raw-prime-env-attached-chdir-node-z15b profile-raw-prime-env-split-string-z15b profile-raw-prime-shell-z15b profile-raw-prime-shell-cluster-z15b profile-raw-prime-shell-option-z15b profile-raw-prime-time-z15b profile-raw-prime-time-format-z15b profile-raw-prime-qualified-time-z15b profile-raw-prime-quoted-z15b profile-raw-prime-symlink-z15b profile-raw-prime-alias-z15b profile-raw-prime-nohup-z15b profile-raw-prime-nice-z15b profile-raw-prime-timeout-z15b profile-raw-prime-timeout-end-options-z15b profile-raw-prime-setsid-z15b profile-raw-prime-cd-node-z15b profile-raw-prime-cd-option-node-z15b profile-raw-prime-path-assignment-z15b profile-raw-prime-export-path-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-newline-z15b profile-raw-prime-substitution-z15b profile-raw-prime-command-substitution-output-z15b profile-raw-prime-quoted-substitution-z15b profile-raw-prime-substitution-quoted-paren-z15b profile-raw-prime-parameter-substitution-z15b profile-raw-prime-arithmetic-substitution-z15b profile-raw-prime-assignment-substitution-z15b profile-raw-prime-backtick-z15b profile-raw-prime-backtick-output-z15b profile-raw-prime-builtin-z15b profile-raw-prime-eval-z15b profile-raw-prime-variable-z15b profile-raw-prime-unresolved-variable-z15b profile-raw-prime-process-substitution-z15b profile-raw-prime-output-process-substitution-z15b profile-raw-prime-redir-process-substitution-z15b profile-raw-prime-redir-command-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b profile-raw-prime-unproved-path-z15b)
   rec=$(make_spawn_case profile-raw-prime claude "${ids[@]}" profile-raw-prime-mislabeled-z15b)
   read_case_record "$rec"
   prime_package="$CASE_DIR/prime-package"
@@ -486,7 +486,7 @@ SH
   ln -s "$(type -P env)" "$FAKEBIN_DIR/envx"
   time_bin=$(type -P time 2>/dev/null || printf '%s' /usr/bin/time)
   # shellcheck disable=SC2016 # The raw commands must keep literal shell syntax.
-  commands=("prime-agent --flag" "command prime-agent --flag" "command -- prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "env PATH=$env_primebin:\$PATH q --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "node './Linked Prime/dist/bundle/cli.js'" "entry=$prime_package/dist/bundle/cli.js; node \$entry" "env -C $prime_package node dist/bundle/cli.js" "env -C$prime_package node dist/bundle/cli.js" "env --split-string='prime-agent --flag'" "sh -c prime-agent" "bash -lc prime-agent" "bash -o posix -c prime-agent" "time -p prime-agent" "time --format '%C' prime-agent --flag" "$time_bin -p prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "p --flag" "prime-proxy --flag" "nohup prime-agent --flag" "nice -n 10 prime-agent --flag" "timeout 10 prime-agent --flag" "timeout -- 10 prime-agent --flag" "setsid prime-agent --flag" "cd $prime_package; node dist/bundle/cli.js" "cd -P $prime_package; node dist/bundle/cli.js" "PATH=$FAKEBIN_DIR:\$PATH p --flag" "export PATH=$env_primebin:\$PATH; q --flag" "claude --flag;prime-agent" $'custom-agent --flag\nprime-agent --flag' 'claude --flag $(prime-agent)' 'echo "$(prime-agent)"' 'echo "$(printf '\'')'\''; prime-agent)"' 'FOO="$(prime-agent)" custom-agent --flag' 'echo ${FM_X:-$(prime-agent)}' 'echo $(( $(prime-agent) ))' 'echo `prime-agent`' 'eval prime-agent' 'runner=prime-agent; $runner --flag' '$runner --flag' 'cat <(prime-agent)' 'cat >(prime-agent)' 'cat < <(prime-agent)' 'cat >$(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag" "r --flag")
+  commands=("prime-agent --flag" "command prime-agent --flag" "command -- prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "env PATH=$env_primebin:\$PATH q --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "node --require $prime_package/dist/bundle/cli.js -e ''" "node --import=$prime_package/dist/bundle/cli.js -e ''" "node './Linked Prime/dist/bundle/cli.js'" "entry=$prime_package/dist/bundle/cli.js; node \$entry" "env -C $prime_package node dist/bundle/cli.js" "env -C$prime_package node dist/bundle/cli.js" "env --split-string='prime-agent --flag'" "sh -c prime-agent" "bash -lc prime-agent" "bash -o posix -c prime-agent" "time -p prime-agent" "time --format '%C' prime-agent --flag" "$time_bin -p prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "p --flag" "prime-proxy --flag" "nohup prime-agent --flag" "nice -n 10 prime-agent --flag" "timeout 10 prime-agent --flag" "timeout -- 10 prime-agent --flag" "setsid prime-agent --flag" "cd $prime_package; node dist/bundle/cli.js" "cd -P $prime_package; node dist/bundle/cli.js" "PATH=$FAKEBIN_DIR:\$PATH p --flag" "export PATH=$env_primebin:\$PATH; q --flag" "claude --flag;prime-agent" $'custom-agent --flag\nprime-agent --flag' 'claude --flag $(prime-agent)' '$(printf prime-agent) --flag' 'echo "$(prime-agent)"' 'echo "$(printf '\'')'\''; prime-agent)"' 'FOO="$(prime-agent)" custom-agent --flag' 'echo ${FM_X:-$(prime-agent)}' 'echo $(( $(prime-agent) ))' 'echo `prime-agent`' '`printf prime-agent` --flag' 'builtin command prime-agent --flag' 'eval prime-agent' 'runner=prime-agent; $runner --flag' '$runner --flag' 'cat <(prime-agent)' 'cat >(prime-agent)' 'cat < <(prime-agent)' 'cat >$(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag" "r --flag")
 
   for index in "${!ids[@]}"; do
     id=${ids[$index]}
@@ -512,7 +512,7 @@ SH
 }
 
 test_native_non_prime_raw_launch_is_preserved() {
-  local rec id out status launch system_id copied_id echo_id shell_arg_id assigned_id
+  local rec id out status launch system_id copied_id echo_id shell_arg_id assigned_id pane_primebin path_result
   id=profile-raw-native-z15c
   system_id=profile-raw-system-native-z15c
   copied_id=profile-raw-copied-native-z15c
@@ -521,7 +521,17 @@ test_native_non_prime_raw_launch_is_preserved() {
   assigned_id=profile-raw-assigned-native-z15c
   rec=$(make_spawn_case profile-raw-native claude "$id" "$system_id" "$copied_id" "$echo_id" "$shell_arg_id" "$assigned_id")
   read_case_record "$rec"
-  ln -sf "$(type -P true)" "$FAKEBIN_DIR/custom-agent"
+  pane_primebin="$CASE_DIR/pane-primebin"
+  mkdir -p "$pane_primebin"
+  cat > "$FAKEBIN_DIR/custom-agent" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' scanner-path-agent
+SH
+  cat > "$pane_primebin/custom-agent" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' pane-path-agent
+SH
+  chmod +x "$FAKEBIN_DIR/custom-agent" "$pane_primebin/custom-agent"
 
   out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
     "$id" "$PROJ_DIR" "custom-agent --flag")
@@ -530,6 +540,10 @@ test_native_non_prime_raw_launch_is_preserved() {
   assert_contains "$out" "spawned $id harness=custom-agent" "raw launch did not retain executable identity"
   launch=$(cat "$LAUNCH_LOG")
   assert_contains "$launch" "custom-agent --flag" "non-Prime raw command was not preserved"
+  path_result=$(env -i PATH="$pane_primebin:/usr/bin:/bin" /bin/sh -c "$launch") \
+    || fail "accepted raw launch did not execute in a synthetic pane"
+  [ "$path_result" = scanner-path-agent ] \
+    || fail "accepted raw launch used an unverified pane PATH result: $path_result"
   ln -sf "$(type -P uname)" "$FAKEBIN_DIR/system-agent"
   : > "$LAUNCH_LOG"
   out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \

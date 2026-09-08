@@ -1701,12 +1701,16 @@ raw_launch_expand_shell_path() {  # <word>
 }
 
 raw_launch_word_is_prime_agent() {  # <word>
-  local word expanded resolved canonical base
+  local word expanded resolved canonical base search_path
   word=$1
   expanded=$(raw_launch_expand_shell_path "$word")
   base=${expanded##*/}
   [ "$base" != prime-agent ] || return 0
-  case "$word" in */*|'~'*|'$PWD'*|'${PWD}'*) resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded") ;; *) resolved=$(command -v -- "$word" 2>/dev/null) || return 0 ;; esac
+  search_path=${RAW_LAUNCH_SCAN_PATH:-${PATH:-}}
+  case "$word" in
+    */*|'~'*|'$PWD'*|'${PWD}'*) resolved=$(PATH=$search_path command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded") ;;
+    *) RAW_LAUNCH_PATH_PIN=1; resolved=$(PATH=$search_path command -v -- "$word" 2>/dev/null) || return 0 ;;
+  esac
   base=${resolved##*/}
   [ "$base" != prime-agent ] || return 0
   canonical=$(fm_cursor_canonical_path "$resolved") || canonical=$resolved
@@ -1716,10 +1720,11 @@ raw_launch_word_is_prime_agent() {  # <word>
 }
 
 raw_launch_word_resolved_base() {  # <word>
-  local word expanded resolved canonical
+  local word expanded resolved canonical search_path
   word=$1
   expanded=$(raw_launch_expand_shell_path "$word")
-  case "$word" in */*|'~'*|'$PWD'*|'${PWD}'*) resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded") ;; *) resolved=$(command -v -- "$word" 2>/dev/null || printf '%s' "$expanded") ;; esac
+  search_path=${RAW_LAUNCH_SCAN_PATH:-${PATH:-}}
+  case "$word" in */*|'~'*|'$PWD'*|'${PWD}'*) resolved=$(PATH=$search_path command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded") ;; *) resolved=$(PATH=$search_path command -v -- "$word" 2>/dev/null || printf '%s' "$expanded") ;; esac
   canonical=$(fm_cursor_canonical_path "$resolved") || canonical=$resolved
   printf '%s\n' "${canonical##*/}"
 }
@@ -1836,10 +1841,19 @@ raw_launch_resolve_literal_variable_or_self() {  # <word>
 }
 
 raw_launch_node_script_prime_agent_detected() {  # <tokens...>
-  local token resolved_token resolve_status skip_next=0
+  local token resolved_token resolve_status skip_next=0 inspect_next=0 option_value
   while [ "$#" -gt 0 ]; do
     token=$1
     shift
+    if [ "$inspect_next" -eq 1 ]; then
+      inspect_next=0
+      case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>('|'<'|'>') return 0 ;; esac
+      resolve_status=0
+      resolved_token=$(raw_launch_resolve_literal_variable_or_self "$token") || resolve_status=$?
+      [ "$resolve_status" -eq 2 ] && return 0
+      fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$resolved_token")" && return 0
+      continue
+    fi
     case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>('|'<'|'>') return 1 ;; esac
     if [ "$skip_next" -eq 1 ]; then
       skip_next=0
@@ -1856,8 +1870,21 @@ raw_launch_node_script_prime_agent_detected() {  # <tokens...>
         return 1
         ;;
       -e|-p|--eval|--print|--check|--interactive) return 1 ;;
-      -r|--require|--import|--loader|--experimental-loader|--conditions|--icu-data-dir|--openssl-config|--env-file) skip_next=1; continue ;;
-      --require=*|--import=*|--loader=*|--experimental-loader=*|--conditions=*|--icu-data-dir=*|--openssl-config=*|--env-file=*) continue ;;
+      -r|--require|--import|--loader|--experimental-loader) inspect_next=1; continue ;;
+      -r?*)
+        option_value=${token#-r}
+        case "$option_value" in ''|'$'*) return 0 ;; esac
+        fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$option_value")" && return 0
+        continue
+        ;;
+      --require=*|--import=*|--loader=*|--experimental-loader=*)
+        option_value=${token#*=}
+        case "$option_value" in ''|'$'*) return 0 ;; esac
+        fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$option_value")" && return 0
+        continue
+        ;;
+      --conditions|--icu-data-dir|--openssl-config|--env-file) skip_next=1; continue ;;
+      --conditions=*|--icu-data-dir=*|--openssl-config=*|--env-file=*) continue ;;
       -*) continue ;;
     esac
     resolve_status=0
@@ -1872,6 +1899,7 @@ raw_launch_node_script_prime_agent_detected() {  # <tokens...>
 raw_launch_prime_agent_detected() {  # <raw command>
   local command_text=$1 token expect_command=1 skip_redir=0 i j shell_script var_value var_status env_saved_cwd='' env_cwd_active=0 forwarder_base
   local RAW_LAUNCH_SCAN_CWD=${RAW_LAUNCH_SCAN_CWD:-${WT:-${PROJ_ABS:-$PWD}}}
+  local RAW_LAUNCH_SCAN_PATH=${RAW_LAUNCH_SCAN_PATH:-${PATH:-}}
   local -a tokens raw_vars raw_pending
   tokens=()
   raw_vars=()
@@ -1902,7 +1930,14 @@ raw_launch_prime_agent_detected() {  # <raw command>
     fi
     case "$token" in
       '<'|'>') skip_redir=1; i=$((i + 1)); continue ;;
-      ';'|'|'|'&'|'('|')'|'$('|'<('|'>(')
+      '$(')
+        [ "$expect_command" -eq 1 ] && return 0
+        raw_launch_commit_assignments
+        expect_command=1
+        i=$((i + 1))
+        continue
+        ;;
+      ';'|'|'|'&'|'('|')'|'<('|'>(')
         raw_launch_commit_assignments
         case "$token" in ';'|'|'|'&')
           if [ "$env_cwd_active" -eq 1 ]; then
@@ -1953,6 +1988,9 @@ raw_launch_prime_agent_detected() {  # <raw command>
           continue
           ;;
       esac
+      if [ "$token" = builtin ]; then
+        return 0
+      fi
       if [ "$token" = eval ]; then
         shell_script=
         j=$((i + 1))
@@ -2169,6 +2207,8 @@ refuse_raw_prime_launch() {
 # Prime isolation boundary even when --harness labels it differently; the
 # label cannot sanitize a raw Prime executable.
 RAW_PRIME_SCAN_TEXT=
+RAW_LAUNCH_SCAN_PATH=${PATH:-}
+RAW_LAUNCH_PATH_PIN=0
 if [ -n "$ARG3" ]; then
   case "$ARG3" in
     *' '*) RAW_PRIME_SCAN_TEXT=$ARG3; raw_launch_prime_agent_detected "$ARG3" && refuse_raw_prime_launch ;;
@@ -4885,6 +4925,9 @@ if [ -n "$SPAWN_TRACEPARENT" ]; then
     fi
     LAUNCH="unset TRACEPARENT; $LAUNCH"
   fi
+fi
+if [ "$RAW_LAUNCH" -eq 1 ] && [ "$RAW_LAUNCH_PATH_PIN" -eq 1 ]; then
+  LAUNCH="export PATH=$(shell_quote "${RAW_LAUNCH_SCAN_PATH:-${PATH:-}}") ; $LAUNCH"
 fi
 if [ "$LAUNCH_ENV_ENABLED" = 1 ]; then
   LAUNCH_ENV_PREFIX='/usr/bin/env -i'
