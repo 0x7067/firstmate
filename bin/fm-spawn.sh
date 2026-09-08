@@ -1741,6 +1741,17 @@ raw_launch_word_is_forwarder() {  # <word>
   return 1
 }
 
+raw_launch_word_is_command_runner() {  # <word>
+  local word expanded base
+  word=$1
+  expanded=$(raw_launch_expand_shell_path "$word")
+  base=${expanded##*/}
+  case "$base" in npx|npm|pnpm|yarn|bun|corepack) return 0 ;; esac
+  base=$(raw_launch_word_resolved_base "$word")
+  case "$base" in npx|npm|pnpm|yarn|bun|corepack|npx-cli.js|npm-cli.js|pnpm.cjs|yarn.js) return 0 ;; esac
+  return 1
+}
+
 raw_launch_token_is_assignment() {  # <word>
   local name
   case "$1" in [A-Za-z_]*=*) name=${1%%=*} ;; *) return 1 ;; esac
@@ -1807,20 +1818,12 @@ raw_launch_resolve_literal_variable_or_self() {  # <word>
 }
 
 raw_launch_node_script_prime_agent_detected() {  # <tokens...>
-  local token resolved_token resolve_status skip_next=0 inspect_next=0 option_value
+  local token resolved_token resolve_status skip_next=0
   while [ "$#" -gt 0 ]; do
     token=$1
     shift
-    if [ "$inspect_next" -eq 1 ]; then
-      inspect_next=0
-      case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>('|'<'|'>') return 0 ;; esac
-      resolve_status=0
-      resolved_token=$(raw_launch_resolve_literal_variable_or_self "$token") || resolve_status=$?
-      [ "$resolve_status" -eq 2 ] && return 0
-      fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$resolved_token")" && return 0
-      continue
-    fi
-    case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>('|'<'|'>') return 1 ;; esac
+    case "$token" in '<') return 0 ;; esac
+    case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>('|'>') return 1 ;; esac
     if [ "$skip_next" -eq 1 ]; then
       skip_next=0
       continue
@@ -1837,19 +1840,7 @@ raw_launch_node_script_prime_agent_detected() {  # <tokens...>
         ;;
       -e|-p|--eval|--print|-e?*|-p?*|--eval=*|--print=*|--run|--run=*) return 0 ;;
       --check|--interactive) return 1 ;;
-      -r|--require|--import|--loader|--experimental-loader) inspect_next=1; continue ;;
-      -r?*)
-        option_value=${token#-r}
-        case "$option_value" in ''|'$'*) return 0 ;; esac
-        fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$option_value")" && return 0
-        continue
-        ;;
-      --require=*|--import=*|--loader=*|--experimental-loader=*)
-        option_value=${token#*=}
-        case "$option_value" in ''|'$'*) return 0 ;; esac
-        fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$option_value")" && return 0
-        continue
-        ;;
+      -r|--require|--import|--loader|--experimental-loader|-r?*|--require=*|--import=*|--loader=*|--experimental-loader=*) return 0 ;;
       --conditions|--icu-data-dir|--openssl-config|--env-file) skip_next=1; continue ;;
       --conditions=*|--icu-data-dir=*|--openssl-config=*|--env-file=*) continue ;;
       -*) continue ;;
@@ -1923,7 +1914,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
         if|then|elif|else|fi|for|while|until|do|done|case|esac|in|select|function|'{'|'}'|'!') i=$((i + 1)); continue ;;
       esac
       if raw_launch_token_is_assignment "$token"; then
-        case "${token%%=*}" in PATH|CDPATH) return 0 ;; esac
+        case "${token%%=*}" in PATH|CDPATH|NODE_OPTIONS) return 0 ;; esac
         var_value=${token#*=}
         case "$var_value" in *'$'*|'') ;; *) raw_pending+=("$token") ;; esac
         i=$((i + 1))
@@ -1944,7 +1935,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
             case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') break ;; esac
             case "$token" in --|-*) j=$((j + 1)); continue ;; esac
             if raw_launch_token_is_assignment "$token"; then
-              case "${token%%=*}" in PATH|CDPATH) return 0 ;; esac
+              case "${token%%=*}" in PATH|CDPATH|NODE_OPTIONS) return 0 ;; esac
             else
               case "$token" in '$'*) return 0 ;; esac
             fi
@@ -1996,7 +1987,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
         while [ "$i" -lt "${#tokens[@]}" ]; do
           token=${tokens[$i]}
           if raw_launch_token_is_assignment "$token"; then
-            case "${token%%=*}" in PATH|CDPATH) return 0 ;; esac
+            case "${token%%=*}" in PATH|CDPATH|NODE_OPTIONS) return 0 ;; esac
             i=$((i + 1))
             continue
           fi
@@ -2102,6 +2093,9 @@ raw_launch_prime_agent_detected() {  # <raw command>
           break
         done
         continue
+      fi
+      if raw_launch_word_is_command_runner "$token"; then
+        return 0
       fi
       if raw_launch_word_is_cd "$token"; then
         j=$((i + 1))
