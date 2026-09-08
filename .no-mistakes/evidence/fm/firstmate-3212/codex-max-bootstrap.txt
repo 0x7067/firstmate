@@ -1,0 +1,5 @@
+# Bootstrap crew-dispatch codex max evidence
+config/crew-dispatch.json requests harness=codex model=gpt-6-astra effort=max.
+fm-bootstrap output:
+
+RESULT: no invalid-effort rejection for codex:max
