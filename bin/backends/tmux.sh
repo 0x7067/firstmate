@@ -177,7 +177,7 @@ fm_backend_tmux_classify_process_name() {  # <path> [argv0] -> agent|shell|other
     # omp (Oh My Pi) is anchored for the same reason as muse: its live process
     # name is the bare word `omp` (verified, omp 18.1.11) and a glob would claim
     # unrelated commands such as ompd or comp.
-    *claude*|*codex*|*opencode*|*grok*|*kimi*|*rovo*|pi|pi-signed|pi-launcher|Pi|omp) printf 'agent' ;;
+    *claude*|*codex*|*opencode*|*grok*|*kimi*|*rovo*|pi|pi-signed|pi-launcher|Pi|omp|prime-agent) printf 'agent' ;;
     zsh|bash|sh|dash|ash|ksh|mksh|tcsh|csh|fish) printf 'shell' ;;
     *)
       if fm_harness_path_name "$path" >/dev/null || fm_harness_path_name "$argv0" >/dev/null; then
@@ -366,13 +366,9 @@ $(fm_backend_tmux_foreground_pids "$target")
 EOF
 
   # Prime Agent runs as a bare `node` bundle whose identity lives in argv[1],
-  # so it needs the same argv-boundary-preserving pid probe as Gemini. The
-  # structured argv read is limited to Node foreground processes so an
-  # unrelated interpreter never pays for it.
+  # so it needs the same argv-boundary-preserving pid probe as Gemini.
   while IFS= read -r pid; do
     [ -n "$pid" ] || continue
-    comm=$(LC_ALL=C ps -p "$pid" -o comm= 2>/dev/null) || continue
-    case "${comm##*/}" in node*) ;; *) continue ;; esac
     if fm_prime_node_pid_matches "$pid"; then
       printf 'alive'
       return 0

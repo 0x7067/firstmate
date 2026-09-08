@@ -1352,7 +1352,7 @@ else
   ARG3=${POS[2]:-}
 fi
 raw_launch_shell_tokens() {  # <raw command>
-  local command_text=$1 len i ch next quote= word=
+  local command_text=$1 len i ch next quote= word= inner depth
   len=${#command_text}
   i=0
   while [ "$i" -lt "$len" ]; do
@@ -1360,6 +1360,36 @@ raw_launch_shell_tokens() {  # <raw command>
     if [ -n "$quote" ]; then
       if [ "$ch" = "$quote" ]; then
         quote=
+      elif [ "$quote" = '"' ] && [ "$ch" = '$' ] && [ $((i + 1)) -lt "$len" ] && [ "${command_text:$((i + 1)):1}" = '(' ] && { [ $((i + 2)) -ge "$len" ] || [ "${command_text:$((i + 2)):1}" != '(' ]; }; then
+        if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+        inner=
+        depth=1
+        i=$((i + 2))
+        while [ "$i" -lt "$len" ] && [ "$depth" -gt 0 ]; do
+          ch=${command_text:$i:1}
+          case "$ch" in
+            '(') depth=$((depth + 1)); inner=$inner$ch ;;
+            ')') depth=$((depth - 1)); [ "$depth" -eq 0 ] || inner=$inner$ch ;;
+            *) inner=$inner$ch ;;
+          esac
+          [ "$depth" -eq 0 ] || i=$((i + 1))
+        done
+        printf '%s\n' '$('
+        raw_launch_shell_tokens "$inner"
+        printf '%s\n' ')'
+      elif [ "$quote" = '"' ] && [ "$ch" = '`' ]; then
+        if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+        inner=
+        i=$((i + 1))
+        while [ "$i" -lt "$len" ]; do
+          ch=${command_text:$i:1}
+          [ "$ch" = '`' ] && break
+          inner=$inner$ch
+          i=$((i + 1))
+        done
+        printf '%s\n' '$('
+        raw_launch_shell_tokens "$inner"
+        printf '%s\n' ')'
       elif [ "$quote" = '"' ] && [ "$ch" = \\ ] && [ $((i + 1)) -lt "$len" ]; then
         i=$((i + 1))
         word=$word${command_text:$i:1}
@@ -1387,11 +1417,38 @@ raw_launch_shell_tokens() {  # <raw command>
         [ $((i + 1)) -lt "$len" ] && next=${command_text:$((i + 1)):1}
         if [ "$next" = '(' ] && { [ $((i + 2)) -ge "$len" ] || [ "${command_text:$((i + 2)):1}" != '(' ]; }; then
           if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+          inner=
+          depth=1
+          i=$((i + 2))
+          while [ "$i" -lt "$len" ] && [ "$depth" -gt 0 ]; do
+            ch=${command_text:$i:1}
+            case "$ch" in
+              '(') depth=$((depth + 1)); inner=$inner$ch ;;
+              ')') depth=$((depth - 1)); [ "$depth" -eq 0 ] || inner=$inner$ch ;;
+              *) inner=$inner$ch ;;
+            esac
+            [ "$depth" -eq 0 ] || i=$((i + 1))
+          done
           printf '%s\n' '$('
-          i=$((i + 1))
+          raw_launch_shell_tokens "$inner"
+          printf '%s\n' ')'
         else
           word=$word$ch
         fi
+        ;;
+      '`')
+        if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+        inner=
+        i=$((i + 1))
+        while [ "$i" -lt "$len" ]; do
+          ch=${command_text:$i:1}
+          [ "$ch" = '`' ] && break
+          inner=$inner$ch
+          i=$((i + 1))
+        done
+        printf '%s\n' '$('
+        raw_launch_shell_tokens "$inner"
+        printf '%s\n' ')'
         ;;
       ';'|'|'|'&'|'('|')')
         if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
@@ -1418,6 +1475,7 @@ raw_launch_expand_shell_path() {  # <word>
   if [ -n "$cwd" ]; then
     word=${word//\$\{PWD\}/$cwd}
     word=${word//\$PWD/$cwd}
+    case "$word" in /*|'') ;; */*) word=$cwd/$word ;; esac
   fi
   printf '%s\n' "$word"
 }
@@ -1602,6 +1660,8 @@ raw_launch_prime_agent_detected() {  # <raw command>
               fi
               break
               ;;
+            -*) ;;
+            *) break ;;
           esac
           j=$((j + 1))
         done
@@ -3556,7 +3616,7 @@ if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
   sq_primegnupg=$(shell_quote "$PRIME_HOME/.gnupg")
   sq_primenpm=$(shell_quote "$PRIME_HOME/.npmrc")
   sq_primenetrc=$(shell_quote "$PRIME_HOME/.netrc")
-  PRIME_GIT_CONFIG_ENV_CLEANUP="for __fm_git_config_env in \$(env | awk -F= '\$1 ~ /^GIT_CONFIG_(KEY|VALUE)_[0-9]+\$/ { print \$1 }'); do unset \"\$__fm_git_config_env\"; done; for __fm_secret_env in \$(env | awk -F= '\$1 ~ /(^|_)(TOKEN|API_KEY|SECRET|AUTH_TOKEN)(_|\$)/ || \$1 ~ /CREDENTIALS/ { print \$1 }'); do unset \"\$__fm_secret_env\"; done; unset GIT_CONFIG_PARAMETERS; "
+  PRIME_GIT_CONFIG_ENV_CLEANUP="for __fm_git_config_env in \$(env | awk -F= '\$1 ~ /^GIT_CONFIG_(KEY|VALUE)_[0-9]+\$/ { print \$1 }'); do unset \"\$__fm_git_config_env\"; done; for __fm_secret_env in \$(env | awk -F= '\$1 ~ /(^|_)(TOKEN|API_KEY|SECRET|AUTH_TOKEN)(_|\$)/ || \$1 ~ /(PASSWORD|PASSWD|AUTH_CONFIG|CREDENTIALS)/ || \$1 ~ /^(PGPASSWORD|MYSQL_PWD|REDISCLI_AUTH)$/ { print \$1 }'); do unset \"\$__fm_secret_env\"; done; unset GIT_CONFIG_PARAMETERS; "
   LAUNCH="HOME=$sq_primehome GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=$sq_primegit GIT_CONFIG_COUNT=0 PRIME_AGENT_CODING_AGENT_DIR=$sq_primedir PRIME_AGENT_SESSION_DIR=$sq_primesession XDG_CONFIG_HOME=$sq_primeconfig XDG_DATA_HOME=$sq_primedata XDG_CACHE_HOME=$sq_primecache XDG_STATE_HOME=$sq_primestate XDG_RUNTIME_DIR=$sq_primeruntime GH_CONFIG_DIR=$sq_primegh CLOUDSDK_CONFIG=$sq_primegcloud PRIME_AGENT_KERNEL_VENV=$sq_primekernel PRIME_AGENT_KERNEL_PYTHON=$sq_primepython AWS_SHARED_CREDENTIALS_FILE=$sq_primeawscreds AWS_CONFIG_FILE=$sq_primeawsconf AZURE_CONFIG_DIR=$sq_primeazure DOCKER_CONFIG=$sq_primedocker KUBECONFIG=$sq_primekube HF_HOME=$sq_primehf GNUPGHOME=$sq_primegnupg NPM_CONFIG_USERCONFIG=$sq_primenpm NETRC=$sq_primenetrc $LAUNCH"
 fi
 TURNEND="$STATE_REAL/$ID.turn-ended"

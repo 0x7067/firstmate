@@ -427,15 +427,15 @@ fm_prime_node_pid_matches() {
 }
 [ "$(fm_backend_agent_state tmux "$SESSION:idle")" = dead ] \
   || fail "idle shell liveness changed while measuring Prime probes"
-[ ! -s "$PRIME_PROBE_LOG" ] \
-  || fail "Prime argv probing ran for a non-Node foreground process"
+[ -s "$PRIME_PROBE_LOG" ] \
+  || fail "Prime argv probing skipped a non-Node-titled foreground process"
 if [ -n "$NODE_BIN" ]; then
   : > "$PRIME_PROBE_LOG"
   fm_backend_agent_state tmux "$SESSION:prime-node-decoy" >/dev/null
   [ -s "$PRIME_PROBE_LOG" ] \
     || fail "Prime argv probing did not run for a Node foreground process"
 fi
-pass "tmux liveness limits Prime argv probes to Node processes"
+pass "tmux liveness probes Prime argv independently of process title"
 
 cleanup_all
 trap - EXIT

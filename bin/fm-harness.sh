@@ -80,12 +80,12 @@ detect_ancestry() {
         *grok*) echo grok; return ;;
       esac
     fi
+    if fm_prime_node_pid_matches "$pid"; then
+      echo prime-agent
+      return
+    fi
     case "$base" in
       node*|python*)
-        if [ "${base#node}" != "$base" ] && fm_prime_node_pid_matches "$pid"; then
-          echo prime-agent
-          return
-        fi
         if fm_gemini_args_are_gemini "$(ps -o args= -p "$pid" 2>/dev/null)"; then
           echo gemini
           return

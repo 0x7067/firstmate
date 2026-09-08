@@ -38,8 +38,9 @@ touch "$SPACE_ENTRY"
 chmod +x "$SPACE_ENTRY"
 printf '%s\n' '{"name":"prime-agent","bin":{"prime-agent":"dist/bundle/cli.js"}}' \
   > "$TMP_ROOT/Linked Prime/package.json"
-for shape in node linked foreign argument space; do mkdir -p "$TMP_ROOT/proc-$shape/200"; done
+for shape in node mainthread linked foreign argument space; do mkdir -p "$TMP_ROOT/proc-$shape/200"; done
 printf '%s\0%s\0' "$NODE_BIN" "$PRIME_ENTRY" > "$TMP_ROOT/proc-node/200/cmdline"
+printf '%s\0%s\0' "$NODE_BIN" "$PRIME_ENTRY" > "$TMP_ROOT/proc-mainthread/200/cmdline"
 printf '%s\0%s\0' "$NODE_BIN" "$LINKED_ENTRY" > "$TMP_ROOT/proc-linked/200/cmdline"
 printf '%s\0%s\0' "$NODE_BIN" '/work/prime-agent/tool.js' > "$TMP_ROOT/proc-foreign/200/cmdline"
 printf '%s\0%s\0%s\0' "$NODE_BIN" '/work/tool.js' "$PRIME_ENTRY" > "$TMP_ROOT/proc-argument/200/cmdline"
@@ -61,6 +62,8 @@ case "$field:$pid:${FM_TEST_PRIME_SHAPE:-exact}" in
   comm=:200:exact) printf '%s\n' '/opt/prime/bin/prime-agent' ;;
   comm=:200:node) printf '%s\n' '/opt/node/bin/node' ;;
   args=:200:node) printf '/opt/node/bin/node %s\n' "$FM_TEST_PRIME_ENTRY" ;;
+  comm=:200:mainthread) printf '%s\n' 'MainThread' ;;
+  args=:200:mainthread) printf '/opt/node/bin/node %s\n' "$FM_TEST_PRIME_ENTRY" ;;
   comm=:200:linked) printf '%s\n' '/opt/node/bin/node' ;;
   args=:200:linked) printf '/opt/node/bin/node %s\n' "$FM_TEST_LINKED_ENTRY" ;;
   comm=:200:space) printf '%s\n' '/opt/node/bin/node' ;;
@@ -109,6 +112,10 @@ got=$(detect exact)
 got=$(detect node)
 [ "$got" = prime-agent ] \
   || fail "Prime's node package ancestry resolved '$got', expected prime-agent"
+
+got=$(detect mainthread)
+[ "$got" = prime-agent ] \
+  || fail "Prime's MainThread node package ancestry resolved '$got', expected prime-agent"
 
 got=$(detect linked)
 [ "$got" = prime-agent ] \
