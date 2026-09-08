@@ -1352,7 +1352,7 @@ else
   ARG3=${POS[2]:-}
 fi
 raw_launch_shell_tokens() {  # <raw command>
-  local command_text=$1 len i ch next quote= word= inner depth op
+  local command_text=$1 len i ch next quote= word= inner depth op sub_quote
   len=${#command_text}
   i=0
   while [ "$i" -lt "$len" ]; do
@@ -1364,10 +1364,30 @@ raw_launch_shell_tokens() {  # <raw command>
         if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
         inner=
         depth=1
+        sub_quote=
         i=$((i + 2))
         while [ "$i" -lt "$len" ] && [ "$depth" -gt 0 ]; do
           ch=${command_text:$i:1}
+          if [ -n "$sub_quote" ]; then
+            inner=$inner$ch
+            if [ "$ch" = "$sub_quote" ]; then
+              sub_quote=
+            elif [ "$sub_quote" != "'" ] && [ "$ch" = \\ ] && [ $((i + 1)) -lt "$len" ]; then
+              i=$((i + 1))
+              inner=$inner${command_text:$i:1}
+            fi
+            i=$((i + 1))
+            continue
+          fi
           case "$ch" in
+            "'"|'"'|'`') sub_quote=$ch; inner=$inner$ch ;;
+            \\)
+              inner=$inner$ch
+              if [ $((i + 1)) -lt "$len" ]; then
+                i=$((i + 1))
+                inner=$inner${command_text:$i:1}
+              fi
+              ;;
             '(') depth=$((depth + 1)); inner=$inner$ch ;;
             ')') depth=$((depth - 1)); [ "$depth" -eq 0 ] || inner=$inner$ch ;;
             *) inner=$inner$ch ;;
@@ -1423,10 +1443,30 @@ raw_launch_shell_tokens() {  # <raw command>
           if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
           inner=
           depth=1
+          sub_quote=
           i=$((i + 2))
           while [ "$i" -lt "$len" ] && [ "$depth" -gt 0 ]; do
             ch=${command_text:$i:1}
+            if [ -n "$sub_quote" ]; then
+              inner=$inner$ch
+              if [ "$ch" = "$sub_quote" ]; then
+                sub_quote=
+              elif [ "$sub_quote" != "'" ] && [ "$ch" = \\ ] && [ $((i + 1)) -lt "$len" ]; then
+                i=$((i + 1))
+                inner=$inner${command_text:$i:1}
+              fi
+              i=$((i + 1))
+              continue
+            fi
             case "$ch" in
+              "'"|'"'|'`') sub_quote=$ch; inner=$inner$ch ;;
+              \\)
+                inner=$inner$ch
+                if [ $((i + 1)) -lt "$len" ]; then
+                  i=$((i + 1))
+                  inner=$inner${command_text:$i:1}
+                fi
+                ;;
               '(') depth=$((depth + 1)); inner=$inner$ch ;;
               ')') depth=$((depth - 1)); [ "$depth" -eq 0 ] || inner=$inner$ch ;;
               *) inner=$inner$ch ;;
@@ -1464,10 +1504,30 @@ raw_launch_shell_tokens() {  # <raw command>
           op=$ch
           inner=
           depth=1
+          sub_quote=
           i=$((i + 2))
           while [ "$i" -lt "$len" ] && [ "$depth" -gt 0 ]; do
             ch=${command_text:$i:1}
+            if [ -n "$sub_quote" ]; then
+              inner=$inner$ch
+              if [ "$ch" = "$sub_quote" ]; then
+                sub_quote=
+              elif [ "$sub_quote" != "'" ] && [ "$ch" = \\ ] && [ $((i + 1)) -lt "$len" ]; then
+                i=$((i + 1))
+                inner=$inner${command_text:$i:1}
+              fi
+              i=$((i + 1))
+              continue
+            fi
             case "$ch" in
+              "'"|'"'|'`') sub_quote=$ch; inner=$inner$ch ;;
+              \\)
+                inner=$inner$ch
+                if [ $((i + 1)) -lt "$len" ]; then
+                  i=$((i + 1))
+                  inner=$inner${command_text:$i:1}
+                fi
+                ;;
               '(') depth=$((depth + 1)); inner=$inner$ch ;;
               ')') depth=$((depth - 1)); [ "$depth" -eq 0 ] || inner=$inner$ch ;;
               *) inner=$inner$ch ;;
@@ -1569,7 +1629,7 @@ raw_launch_word_is_cd() {  # <word>
 raw_launch_word_is_forwarder() {  # <word>
   local base
   base=$(raw_launch_word_resolved_base "$1")
-  case "$base" in nohup|nice) return 0 ;; esac
+  case "$base" in nohup|nice|timeout|gtimeout) return 0 ;; esac
   return 1
 }
 
@@ -1626,8 +1686,20 @@ raw_launch_command_variable_value() {  # <word>
   raw_launch_variable_value "$name" || return 2
 }
 
+raw_launch_resolve_literal_variable_or_self() {  # <word>
+  local word=$1 value status
+  if value=$(raw_launch_command_variable_value "$word"); then
+    printf '%s\n' "$value"
+    return 0
+  fi
+  status=$?
+  [ "$status" -eq 2 ] && return 2
+  printf '%s\n' "$word"
+  return 1
+}
+
 raw_launch_node_script_prime_agent_detected() {  # <tokens...>
-  local token skip_next=0
+  local token resolved_token resolve_status skip_next=0
   while [ "$#" -gt 0 ]; do
     token=$1
     shift
@@ -1637,20 +1709,31 @@ raw_launch_node_script_prime_agent_detected() {  # <tokens...>
       continue
     fi
     case "$token" in
-      --) [ "$#" -gt 0 ] && fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$1")" && return 0; return 1 ;;
+      --)
+        if [ "$#" -gt 0 ]; then
+          resolve_status=0
+          resolved_token=$(raw_launch_resolve_literal_variable_or_self "$1") || resolve_status=$?
+          [ "$resolve_status" -eq 2 ] && return 0
+          fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$resolved_token")" && return 0
+        fi
+        return 1
+        ;;
       -e|-p|--eval|--print|--check|--interactive) return 1 ;;
       -r|--require|--import|--loader|--experimental-loader|--conditions|--icu-data-dir|--openssl-config|--env-file) skip_next=1; continue ;;
       --require=*|--import=*|--loader=*|--experimental-loader=*|--conditions=*|--icu-data-dir=*|--openssl-config=*|--env-file=*) continue ;;
       -*) continue ;;
     esac
-    fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$token")" && return 0
+    resolve_status=0
+    resolved_token=$(raw_launch_resolve_literal_variable_or_self "$token") || resolve_status=$?
+    [ "$resolve_status" -eq 2 ] && return 0
+    fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$resolved_token")" && return 0
     return 1
   done
   return 1
 }
 
 raw_launch_prime_agent_detected() {  # <raw command>
-  local command_text=$1 token expect_command=1 skip_redir=0 i j shell_script var_value var_status env_saved_cwd= env_cwd_active=0
+  local command_text=$1 token expect_command=1 skip_redir=0 i j shell_script var_value var_status env_saved_cwd= env_cwd_active=0 forwarder_base
   local RAW_LAUNCH_SCAN_CWD=${RAW_LAUNCH_SCAN_CWD:-${WT:-${PROJ_ABS:-$PWD}}}
   local -a tokens raw_vars raw_pending
   tokens=()
@@ -1748,7 +1831,11 @@ raw_launch_prime_agent_detected() {  # <raw command>
         i=$((i + 1))
         while [ "$i" -lt "${#tokens[@]}" ]; do
           token=${tokens[$i]}
-          raw_launch_token_is_assignment "$token" && { i=$((i + 1)); continue; }
+          if raw_launch_token_is_assignment "$token"; then
+            case "${token%%=*}" in PATH|CDPATH) return 0 ;; esac
+            i=$((i + 1))
+            continue
+          fi
           case "$token" in
             -i|--ignore-environment|-0|--null) i=$((i + 1)); continue ;;
             -u|--unset) i=$((i + 2)); continue ;;
@@ -1799,7 +1886,25 @@ raw_launch_prime_agent_detected() {  # <raw command>
         continue
       fi
       if raw_launch_word_is_forwarder "$token"; then
+        forwarder_base=$(raw_launch_word_resolved_base "$token")
         i=$((i + 1))
+        if [ "$forwarder_base" = timeout ] || [ "$forwarder_base" = gtimeout ]; then
+          while [ "$i" -lt "${#tokens[@]}" ]; do
+            token=${tokens[$i]}
+            case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') break ;; esac
+            case "$token" in
+              --) i=$((i + 1)); [ "$i" -lt "${#tokens[@]}" ] && i=$((i + 1)); break ;;
+              --foreground|--preserve-status|-p|-v) i=$((i + 1)); continue ;;
+              -k|--kill-after|-s|--signal) i=$((i + 2)); continue ;;
+              --kill-after=*|--signal=*) i=$((i + 1)); continue ;;
+              --help|--version) expect_command=0; break ;;
+              -*) i=$((i + 1)); continue ;;
+            esac
+            i=$((i + 1))
+            break
+          done
+          continue
+        fi
         while [ "$i" -lt "${#tokens[@]}" ]; do
           token=${tokens[$i]}
           case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') break ;; esac
