@@ -1352,7 +1352,7 @@ else
   ARG3=${POS[2]:-}
 fi
 raw_launch_shell_tokens() {  # <raw command>
-  local command_text=$1 len i ch next quote= word= inner depth
+  local command_text=$1 len i ch next quote= word= inner depth op
   len=${#command_text}
   i=0
   while [ "$i" -lt "$len" ]; do
@@ -1456,8 +1456,27 @@ raw_launch_shell_tokens() {  # <raw command>
         ;;
       '<'|'>')
         if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
-        printf '%s\n' "$ch"
-        [ $((i + 1)) -lt "$len" ] && [ "${command_text:$((i + 1)):1}" = "$ch" ] && i=$((i + 1))
+        if [ $((i + 1)) -lt "$len" ] && [ "${command_text:$((i + 1)):1}" = '(' ]; then
+          op=$ch
+          inner=
+          depth=1
+          i=$((i + 2))
+          while [ "$i" -lt "$len" ] && [ "$depth" -gt 0 ]; do
+            ch=${command_text:$i:1}
+            case "$ch" in
+              '(') depth=$((depth + 1)); inner=$inner$ch ;;
+              ')') depth=$((depth - 1)); [ "$depth" -eq 0 ] || inner=$inner$ch ;;
+              *) inner=$inner$ch ;;
+            esac
+            [ "$depth" -eq 0 ] || i=$((i + 1))
+          done
+          printf '%s\n' "$op("
+          raw_launch_shell_tokens "$inner"
+          printf '%s\n' ')'
+        else
+          printf '%s\n' "$ch"
+          [ $((i + 1)) -lt "$len" ] && [ "${command_text:$((i + 1)):1}" = "$ch" ] && i=$((i + 1))
+        fi
         ;;
       *) word=$word$ch ;;
     esac
@@ -1537,7 +1556,7 @@ raw_launch_node_script_prime_agent_detected() {  # <tokens...>
   while [ "$#" -gt 0 ]; do
     token=$1
     shift
-    case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<'|'>') return 1 ;; esac
+    case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>('|'<'|'>') return 1 ;; esac
     if [ "$skip_next" -eq 1 ]; then
       skip_next=0
       continue
@@ -1567,24 +1586,44 @@ raw_launch_prime_agent_detected() {  # <raw command>
     token=${tokens[$i]}
     if [ "$skip_redir" -eq 1 ]; then
       skip_redir=0
-      if [ "$token" = '&' ] && [ $((i + 1)) -lt "${#tokens[@]}" ]; then
-        i=$((i + 2))
-      else
-        i=$((i + 1))
-      fi
-      continue
+      case "$token" in
+        '<('|'>(') ;;
+        *)
+          if [ "$token" = '&' ] && [ $((i + 1)) -lt "${#tokens[@]}" ]; then
+            i=$((i + 2))
+          else
+            i=$((i + 1))
+          fi
+          continue
+          ;;
+      esac
     fi
     if [[ "$token" =~ ^[0-9]+$ ]] && [ $((i + 1)) -lt "${#tokens[@]}" ]; then
       case "${tokens[$((i + 1))]}" in '<'|'>') i=$((i + 1)); continue ;; esac
     fi
     case "$token" in
       '<'|'>') skip_redir=1; i=$((i + 1)); continue ;;
-      ';'|'|'|'&'|'('|')'|'$(') expect_command=1; i=$((i + 1)); continue ;;
+      ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') expect_command=1; i=$((i + 1)); continue ;;
     esac
     if [ "$expect_command" -eq 1 ]; then
       case "$token" in if|then|elif|else|fi|for|while|until|do|done|case|esac|in|select|function|'{'|'}'|'!') i=$((i + 1)); continue ;; esac
       if raw_launch_token_is_assignment "$token"; then
         i=$((i + 1))
+        continue
+      fi
+      if [ "$token" = eval ]; then
+        shell_script=
+        j=$((i + 1))
+        while [ "$j" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$j]}
+          case "$token" in ';'|'|'|'&') break ;; esac
+          [ -z "$shell_script" ] || shell_script="$shell_script "
+          shell_script=$shell_script$token
+          j=$((j + 1))
+        done
+        [ -n "$shell_script" ] && raw_launch_prime_agent_detected "$shell_script" && return 0
+        expect_command=0
+        i=$j
         continue
       fi
       if [ "$token" = command ]; then
@@ -3616,7 +3655,7 @@ if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
   sq_primegnupg=$(shell_quote "$PRIME_HOME/.gnupg")
   sq_primenpm=$(shell_quote "$PRIME_HOME/.npmrc")
   sq_primenetrc=$(shell_quote "$PRIME_HOME/.netrc")
-  PRIME_GIT_CONFIG_ENV_CLEANUP="for __fm_git_config_env in \$(env | awk -F= '\$1 ~ /^GIT_CONFIG_(KEY|VALUE)_[0-9]+\$/ { print \$1 }'); do unset \"\$__fm_git_config_env\"; done; for __fm_secret_env in \$(env | awk -F= '\$1 ~ /(^|_)(TOKEN|API_KEY|SECRET|AUTH_TOKEN)(_|\$)/ || \$1 ~ /(PASSWORD|PASSWD|AUTH_CONFIG|CREDENTIALS)/ || \$1 ~ /^(PGPASSWORD|MYSQL_PWD|REDISCLI_AUTH)$/ { print \$1 }'); do unset \"\$__fm_secret_env\"; done; unset GIT_CONFIG_PARAMETERS; "
+  PRIME_GIT_CONFIG_ENV_CLEANUP="for __fm_git_config_env in \$(env | awk -F= '\$1 ~ /^GIT_CONFIG_(KEY|VALUE)_[0-9]+\$/ { print \$1 }'); do unset \"\$__fm_git_config_env\"; done; for __fm_secret_env in \$(env | awk -F= '\$1 ~ /(^|_)(TOKEN|API_KEY|SECRET|AUTH_TOKEN)(_|\$)/ || \$1 ~ /(PASSWORD|PASSWD|AUTH_CONFIG|CREDENTIALS)/ || \$1 ~ /(^|_)(URL|URI|DSN)\$/ || \$1 ~ /^(PGPASSWORD|MYSQL_PWD|REDISCLI_AUTH)$/ { print \$1 }'); do unset \"\$__fm_secret_env\"; done; unset GIT_CONFIG_PARAMETERS; "
   LAUNCH="HOME=$sq_primehome GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=$sq_primegit GIT_CONFIG_COUNT=0 PRIME_AGENT_CODING_AGENT_DIR=$sq_primedir PRIME_AGENT_SESSION_DIR=$sq_primesession XDG_CONFIG_HOME=$sq_primeconfig XDG_DATA_HOME=$sq_primedata XDG_CACHE_HOME=$sq_primecache XDG_STATE_HOME=$sq_primestate XDG_RUNTIME_DIR=$sq_primeruntime GH_CONFIG_DIR=$sq_primegh CLOUDSDK_CONFIG=$sq_primegcloud PRIME_AGENT_KERNEL_VENV=$sq_primekernel PRIME_AGENT_KERNEL_PYTHON=$sq_primepython AWS_SHARED_CREDENTIALS_FILE=$sq_primeawscreds AWS_CONFIG_FILE=$sq_primeawsconf AZURE_CONFIG_DIR=$sq_primeazure DOCKER_CONFIG=$sq_primedocker KUBECONFIG=$sq_primekube HF_HOME=$sq_primehf GNUPGHOME=$sq_primegnupg NPM_CONFIG_USERCONFIG=$sq_primenpm NETRC=$sq_primenetrc $LAUNCH"
 fi
 TURNEND="$STATE_REAL/$ID.turn-ended"
@@ -4301,7 +4340,8 @@ case "$HARNESS" in
   cursor) LAUNCH=${LAUNCH//__CURSORBIN__/"$(shell_quote "$CURSOR_BIN")"} ;;
   gemini) LAUNCH=${LAUNCH//__GEMINISETTINGS__/"$(shell_quote "$STATE_REAL/$ID.gemini-settings.json")"} ;;
   omp) LAUNCH=${LAUNCH//__OMPBIN__/"$(shell_quote "$OMP_BIN")"} ;;
-  prime-agent) LAUNCH=${LAUNCH//__PRIMEBIN__/"$(shell_quote "$PRIME_BIN")"}; LAUNCH=${LAUNCH//__PRIMEEXT__/$sq_primeext}; LAUNCH=${LAUNCH//__PRIMEDAEMON__/$sq_primedaemon} ;;esac
+  prime-agent) LAUNCH=${LAUNCH//__PRIMEBIN__/"$(shell_quote "$PRIME_BIN")"}; LAUNCH=${LAUNCH//__PRIMEEXT__/$sq_primeext}; LAUNCH=${LAUNCH//__PRIMEDAEMON__/$sq_primedaemon} ;;
+esac
 LAUNCH=${LAUNCH//__WORKTREE__/$sq_worktree}
 case "$HARNESS" in
   claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|gemini|muse|rovo)
