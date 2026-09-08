@@ -1746,9 +1746,9 @@ raw_launch_word_is_command_runner() {  # <word>
   word=$1
   expanded=$(raw_launch_expand_shell_path "$word")
   base=${expanded##*/}
-  case "$base" in npx|npm|pnpm|yarn|bun|corepack) return 0 ;; esac
+  case "$base" in npx|npm|pnpm|pnpx|yarn|bun|bunx|corepack) return 0 ;; esac
   base=$(raw_launch_word_resolved_base "$word")
-  case "$base" in npx|npm|pnpm|yarn|bun|corepack|npx-cli.js|npm-cli.js|pnpm.cjs|yarn.js) return 0 ;; esac
+  case "$base" in npx|npm|pnpm|pnpx|yarn|bun|bunx|corepack|npx-cli.js|npm-cli.js|pnpm.cjs|pnpx.cjs|yarn.js) return 0 ;; esac
   return 1
 }
 
@@ -1946,9 +1946,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
           continue
           ;;
       esac
-      if [ "$token" = builtin ]; then
-        return 0
-      fi
+      case "$token" in builtin|hash) return 0 ;; esac
       if [ "$token" = eval ]; then
         shell_script=
         j=$((i + 1))
@@ -2160,6 +2158,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
         j=$((i + 1))
         while [ "$j" -lt "${#tokens[@]}" ]; do
           token=${tokens[$j]}
+          case "$token" in '<') return 0 ;; esac
           case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') break ;; esac
           case "$token" in --) break ;; -c|-c?*|-e|-e?*|-E|-E?*|-r|-r?*) return 0 ;; esac
           j=$((j + 1))
