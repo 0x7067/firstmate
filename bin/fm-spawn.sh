@@ -1825,17 +1825,55 @@ model_flag_for_harness() {
   esac
 }
 
-# codex_supports_max_effort: 0 when the installed codex CLI advertises a "max"
-# reasoning level in its bundled model catalog. The check is deliberately
-# model-agnostic: a requested max is a CLI-capability question, so we probe
-# whether the installed codex supports max at all rather than gating on a
-# specific model. Reads the local catalog via `codex debug models`; returns
-# non-zero when codex is absent, the subcommand is unavailable, or no model
-# lists a max effort - the fail-safe direction is the clamp, never an
-# unsupported pass-through.
-codex_supports_max_effort() {
+# codex_default_model: print the active default Codex model from the local
+# codex configuration. Reads $CODEX_HOME/config.toml, falling back to
+# $HOME/.codex/config.toml. It looks only at top-level keys before the first
+# table header, and only for an exact `model = "..."` assignment. Returns
+# non-zero when the config is missing, unreadable, or contains no top-level
+# model, so an omitted/default model is not treated as unsupported.
+codex_default_model() {
+  local config
+  config="${CODEX_HOME:-$HOME/.codex}/config.toml"
+  [ -f "$config" ] || return 1
+  awk -f - "$config" <<'AWK'
+/^[[:space:]]*[[]/ { in_table=1; next }
+in_table { next }
+/^[[:space:]]*model[[:space:]]*=/ {
+  val=$0
+  sub(/^[[:space:]]*model[[:space:]]*=[[:space:]]*/, "", val)
+  sub(/[[:space:]]*#.*$/, "", val)
+  gsub(/^[[:space:]]+|[[:space:]]+$/, "", val)
+  if (val ~ /^".*"$/ || val ~ /^'.*'$/) {
+    gsub(/^["']|["']$/, "", val)
+    if (val != "") {
+      print val
+      exit 0
+    }
+  }
+}
+AWK
+}
+
+# codex_model_supports_max_effort: 0 when the selected Codex model (or, when
+# the caller passes an empty/default model, the active default model from
+# codex config) advertises a "max" reasoning level. Reads the local catalog
+# via `codex debug models` and queries it with jq. Returns non-zero when
+# codex is absent, jq is absent, the catalog is unreachable, the model cannot
+# be found, or the model's supported_reasoning_levels does not contain max.
+# The fail-safe direction is the clamp, never an unsupported pass-through.
+codex_model_supports_max_effort() {
+  local model=$1 catalog
+  [ -n "$model" ] && [ "$model" != default ] || model=$(codex_default_model)
+  [ -n "$model" ] || return 1
   command -v codex >/dev/null 2>&1 || return 1
-  codex debug models 2>/dev/null | grep -q '"effort"[[:space:]]*:[[:space:]]*"max"'
+  command -v jq >/dev/null 2>&1 || return 1
+  catalog=$(codex debug models 2>/dev/null) || return 1
+  printf '%s' "$catalog" | jq -e --arg model "$model" '
+    .models[]?
+    | select(.slug == $model or .id == $model or .model == $model or .name == $model or .selector == $model or .display_name == $model)
+    | .supported_reasoning_levels[]?
+    | select((if type == "object" then .effort else . end) == "max")
+  ' >/dev/null 2>&1
 }
 
 effort_flag_for_harness() {
@@ -1848,8 +1886,13 @@ effort_flag_for_harness() {
       esac
       ;;
     codex)
+      # The installed codex config schema uses model_reasoning_effort. The
+      # bundled catalog lists per-model supported reasoning levels, so a
+      # requested max is passed through only when the selected model (or the
+      # active default model when none is selected) advertises it. Otherwise
+      # it clamps to xhigh rather than launching with an unsupported value.
       local codex_effort=$effort
-      if [ "$effort" = max ] && ! codex_supports_max_effort; then
+      if [ "$effort" = max ] && ! codex_model_supports_max_effort "$model"; then
         codex_effort=xhigh
       fi
       case "$codex_effort" in
