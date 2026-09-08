@@ -439,26 +439,21 @@ test_active_dispatch_profile_preserves_raw_launch_escape_hatch() {
 }
 
 test_raw_prime_launch_is_rejected_before_endpoint_creation() {
-  local rec id out status index prime_package prime_project_package prime_wt_package time_bin env_primebin
+  local rec id out status index prime_package prime_project_package late_origin_wt time_bin env_primebin default_branch
   local -a ids commands
-  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-command-end-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-env-path-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-node-require-z15b profile-raw-prime-node-import-z15b profile-raw-prime-node-eval-z15b profile-raw-prime-node-relative-z15b profile-raw-prime-node-variable-z15b profile-raw-prime-env-chdir-node-z15b profile-raw-prime-env-attached-chdir-node-z15b profile-raw-prime-env-split-string-z15b profile-raw-prime-shell-z15b profile-raw-prime-shell-cluster-z15b profile-raw-prime-shell-option-z15b profile-raw-prime-shell-stdin-z15b profile-raw-prime-time-z15b profile-raw-prime-time-format-z15b profile-raw-prime-qualified-time-z15b profile-raw-prime-quoted-z15b profile-raw-prime-symlink-z15b profile-raw-prime-alias-z15b profile-raw-prime-nohup-z15b profile-raw-prime-nice-z15b profile-raw-prime-timeout-z15b profile-raw-prime-timeout-end-options-z15b profile-raw-prime-setsid-z15b profile-raw-prime-stdbuf-z15b profile-raw-prime-cd-node-z15b profile-raw-prime-cd-option-node-z15b profile-raw-prime-path-assignment-z15b profile-raw-prime-export-path-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-newline-z15b profile-raw-prime-substitution-z15b profile-raw-prime-command-substitution-output-z15b profile-raw-prime-quoted-substitution-z15b profile-raw-prime-substitution-quoted-paren-z15b profile-raw-prime-parameter-substitution-z15b profile-raw-prime-arithmetic-substitution-z15b profile-raw-prime-assignment-substitution-z15b profile-raw-prime-backtick-z15b profile-raw-prime-backtick-output-z15b profile-raw-prime-builtin-z15b profile-raw-prime-eval-z15b profile-raw-prime-variable-z15b profile-raw-prime-unresolved-variable-z15b profile-raw-prime-process-substitution-z15b profile-raw-prime-output-process-substitution-z15b profile-raw-prime-redir-process-substitution-z15b profile-raw-prime-redir-command-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b profile-raw-prime-unproved-path-z15b)
+  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-command-end-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-env-path-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-node-require-z15b profile-raw-prime-node-import-z15b profile-raw-prime-node-eval-z15b profile-raw-prime-node-run-z15b profile-raw-prime-node-relative-z15b profile-raw-prime-node-variable-z15b profile-raw-prime-env-chdir-node-z15b profile-raw-prime-env-attached-chdir-node-z15b profile-raw-prime-env-split-string-z15b profile-raw-prime-shell-z15b profile-raw-prime-shell-cluster-z15b profile-raw-prime-shell-option-z15b profile-raw-prime-shell-stdin-z15b profile-raw-prime-time-z15b profile-raw-prime-time-format-z15b profile-raw-prime-qualified-time-z15b profile-raw-prime-quoted-z15b profile-raw-prime-symlink-z15b profile-raw-prime-alias-z15b profile-raw-prime-nohup-z15b profile-raw-prime-nice-z15b profile-raw-prime-timeout-z15b profile-raw-prime-timeout-end-options-z15b profile-raw-prime-setsid-z15b profile-raw-prime-stdbuf-z15b profile-raw-prime-interpreter-z15b profile-raw-prime-cd-node-z15b profile-raw-prime-cd-option-node-z15b profile-raw-prime-path-assignment-z15b profile-raw-prime-export-path-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-newline-z15b profile-raw-prime-substitution-z15b profile-raw-prime-command-substitution-output-z15b profile-raw-prime-quoted-substitution-z15b profile-raw-prime-substitution-quoted-paren-z15b profile-raw-prime-parameter-substitution-z15b profile-raw-prime-arithmetic-substitution-z15b profile-raw-prime-assignment-substitution-z15b profile-raw-prime-backtick-z15b profile-raw-prime-backtick-output-z15b profile-raw-prime-builtin-z15b profile-raw-prime-eval-z15b profile-raw-prime-variable-z15b profile-raw-prime-unresolved-variable-z15b profile-raw-prime-process-substitution-z15b profile-raw-prime-output-process-substitution-z15b profile-raw-prime-redir-process-substitution-z15b profile-raw-prime-redir-command-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-worker-cwd-rescan-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b profile-raw-prime-unproved-path-z15b)
   rec=$(make_spawn_case profile-raw-prime claude "${ids[@]}" profile-raw-prime-mislabeled-z15b)
   read_case_record "$rec"
   prime_package="$CASE_DIR/prime-package"
   prime_project_package="$PROJ_DIR/Linked Prime"
-  prime_wt_package="$WT_DIR/Linked Prime"
   env_primebin="$CASE_DIR/env-primebin"
-  mkdir -p "$prime_package/dist/bundle" "$prime_project_package/dist/bundle" "$prime_wt_package/dist/bundle" "$env_primebin"
+  mkdir -p "$prime_package/dist/bundle" "$prime_project_package/dist/bundle" "$env_primebin"
   printf '%s\n' '{"name":"prime-agent","bin":{"prime-agent":"dist/bundle/cli.js"}}' > "$prime_package/package.json"
   printf '%s\n' '{"name":"prime-agent","bin":{"prime-agent":"dist/bundle/cli.js"}}' > "$prime_project_package/package.json"
-  printf '%s\n' '{"name":"prime-agent","bin":{"prime-agent":"dist/bundle/cli.js"}}' > "$prime_wt_package/package.json"
   cat > "$prime_package/dist/bundle/cli.js" <<'SH'
 #!/usr/bin/env node
 SH
   cat > "$prime_project_package/dist/bundle/cli.js" <<'SH'
-#!/usr/bin/env node
-SH
-  cat > "$prime_wt_package/dist/bundle/cli.js" <<'SH'
 #!/usr/bin/env node
 SH
   cat > "$FAKEBIN_DIR/prime-wrapper" <<'SH'
@@ -479,14 +474,25 @@ SH
 #!/usr/bin/env bash
 exit 0
 SH
-  chmod +x "$prime_package/dist/bundle/cli.js" "$prime_project_package/dist/bundle/cli.js" "$prime_wt_package/dist/bundle/cli.js" "$FAKEBIN_DIR/prime-wrapper" "$FAKEBIN_DIR/opaque-wrapper" "$FAKEBIN_DIR/claude" "$FAKEBIN_DIR/prime-agent"
+  chmod +x "$prime_package/dist/bundle/cli.js" "$prime_project_package/dist/bundle/cli.js" "$FAKEBIN_DIR/prime-wrapper" "$FAKEBIN_DIR/opaque-wrapper" "$FAKEBIN_DIR/claude" "$FAKEBIN_DIR/prime-agent"
   ln -s "$FAKEBIN_DIR/prime-agent" "$FAKEBIN_DIR/p"
   ln -s "$FAKEBIN_DIR/prime-agent" "$env_primebin/q"
   ln -s "$prime_package/dist/bundle/cli.js" "$FAKEBIN_DIR/prime-proxy"
   ln -s "$(type -P env)" "$FAKEBIN_DIR/envx"
   time_bin=$(type -P time 2>/dev/null || printf '%s' /usr/bin/time)
+  late_origin_wt="$CASE_DIR/origin-update"
+  default_branch=$(git -C "$PROJ_DIR" symbolic-ref --short HEAD)
+  git clone --quiet "$PROJ_DIR.origin.git" "$late_origin_wt"
+  mkdir -p "$late_origin_wt/Worker Prime/dist/bundle"
+  printf '%s\n' '{"name":"prime-agent","bin":{"prime-agent":"dist/bundle/cli.js"}}' > "$late_origin_wt/Worker Prime/package.json"
+  cat > "$late_origin_wt/Worker Prime/dist/bundle/cli.js" <<'SH'
+#!/usr/bin/env node
+SH
+  git -C "$late_origin_wt" add 'Worker Prime/package.json' 'Worker Prime/dist/bundle/cli.js'
+  git -C "$late_origin_wt" -c user.name='Firstmate Tests' -c user.email='tests@example.invalid' commit -qm 'add worker-only prime package'
+  git -C "$late_origin_wt" push --quiet origin "HEAD:$default_branch"
   # shellcheck disable=SC2016 # The raw commands must keep literal shell syntax.
-  commands=("prime-agent --flag" "command prime-agent --flag" "command -- prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "env PATH=$env_primebin:\$PATH q --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "node --require $prime_package/dist/bundle/cli.js -e ''" "node --import=$prime_package/dist/bundle/cli.js -e ''" "node -e \"require('child_process').execFileSync('prime-agent')\"" "node './Linked Prime/dist/bundle/cli.js'" "entry=$prime_package/dist/bundle/cli.js; node \$entry" "env -C $prime_package node dist/bundle/cli.js" "env -C$prime_package node dist/bundle/cli.js" "env --split-string='prime-agent --flag'" "sh -c prime-agent" "bash -lc prime-agent" "bash -o posix -c prime-agent" "bash <<< prime-agent" "time -p prime-agent" "time --format '%C' prime-agent --flag" "$time_bin -p prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "p --flag" "prime-proxy --flag" "nohup prime-agent --flag" "nice -n 10 prime-agent --flag" "timeout 10 prime-agent --flag" "timeout -- 10 prime-agent --flag" "setsid prime-agent --flag" "stdbuf -o0 prime-agent --flag" "cd $prime_package; node dist/bundle/cli.js" "cd -P $prime_package; node dist/bundle/cli.js" "PATH=$FAKEBIN_DIR:\$PATH p --flag" "export PATH=$env_primebin:\$PATH; q --flag" "claude --flag;prime-agent" $'custom-agent --flag\nprime-agent --flag' 'claude --flag $(prime-agent)' '$(printf prime-agent) --flag' 'echo "$(prime-agent)"' 'echo "$(printf '\'')'\''; prime-agent)"' 'FOO="$(prime-agent)" custom-agent --flag' 'echo ${FM_X:-$(prime-agent)}' 'echo $(( $(prime-agent) ))' 'echo `prime-agent`' '`printf prime-agent` --flag' 'builtin command prime-agent --flag' 'eval prime-agent' 'runner=prime-agent; $runner --flag' '$runner --flag' 'cat <(prime-agent)' 'cat >(prime-agent)' 'cat < <(prime-agent)' 'cat >$(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag" "r --flag")
+  commands=("prime-agent --flag" "command prime-agent --flag" "command -- prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "env PATH=$env_primebin:\$PATH q --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "node --require $prime_package/dist/bundle/cli.js -e ''" "node --import=$prime_package/dist/bundle/cli.js -e ''" "node -e \"require('child_process').execFileSync('prime-agent')\"" "node --run start" "node './Linked Prime/dist/bundle/cli.js'" "entry=$prime_package/dist/bundle/cli.js; node \$entry" "env -C $prime_package node dist/bundle/cli.js" "env -C$prime_package node dist/bundle/cli.js" "env --split-string='prime-agent --flag'" "sh -c prime-agent" "bash -lc prime-agent" "bash -o posix -c prime-agent" "bash <<< prime-agent" "time -p prime-agent" "time --format '%C' prime-agent --flag" "$time_bin -p prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "p --flag" "prime-proxy --flag" "nohup prime-agent --flag" "nice -n 10 prime-agent --flag" "timeout 10 prime-agent --flag" "timeout -- 10 prime-agent --flag" "setsid prime-agent --flag" "stdbuf -o0 prime-agent --flag" "python3 -c 'import os; os.execvp(\"prime-agent\", [\"prime-agent\"])'" "cd $prime_package; node dist/bundle/cli.js" "cd -P $prime_package; node dist/bundle/cli.js" "PATH=$FAKEBIN_DIR:\$PATH p --flag" "export PATH=$env_primebin:\$PATH; q --flag" "claude --flag;prime-agent" $'custom-agent --flag\nprime-agent --flag' 'claude --flag $(prime-agent)' '$(printf prime-agent) --flag' 'echo "$(prime-agent)"' 'echo "$(printf '\'')'\''; prime-agent)"' 'FOO="$(prime-agent)" custom-agent --flag' 'echo ${FM_X:-$(prime-agent)}' 'echo $(( $(prime-agent) ))' 'echo `prime-agent`' '`printf prime-agent` --flag' 'builtin command prime-agent --flag' 'eval prime-agent' 'runner=prime-agent; $runner --flag' '$runner --flag' 'cat <(prime-agent)' 'cat >(prime-agent)' 'cat < <(prime-agent)' 'cat >$(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' 'node "$PWD/Worker Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag" "r --flag")
 
   for index in "${!ids[@]}"; do
     id=${ids[$index]}
@@ -1552,229 +1558,6 @@ test_active_dispatch_profile_does_not_block_secondmate_launch() {
   assert_meta_profile "$HOME_DIR/state/$id.meta" codex default default
   pass "active crew-dispatch profile does not block secondmate launches"
 }
-
-# Execute the actual emitted command in a synthetic pane environment: the
-# fake backend records delivery, while real shells exercise the env boundary.
-# No developer environment or credential values are inspected by these probes.
-test_launch_environment_allowlist() {
-  local setting rec id out status probe result expected launch value pane_shell pane_path
-  # shellcheck disable=SC2016
-  value='synthetic value; $(touch SHOULD_NOT_EXIST) `false` "quoted"'
-  for setting in absent missing-config enabled empty; do
-    id="env-$setting"
-    rec=$(make_spawn_case "$id" codex "$id")
-    read_case_record "$rec"
-    case "$setting" in
-      missing-config) rm "$HOME_DIR/config/crew-harness"; rmdir "$HOME_DIR/config" ;;
-      enabled) printf '# Synthetic credential name\nFM_TEST_ALLOWED\nFM_TEST_EMPTY\nFM_TEST_UNSET\n' > "$HOME_DIR/config/launch-env-allowlist" ;;
-      empty) : > "$HOME_DIR/config/launch-env-allowlist" ;;
-    esac
-    probe="$CASE_DIR/probe.sh"
-    cat > "$probe" <<'SH'
-#!/bin/sh
-printf '%s\n' "${FM_TEST_AMBIENT_SENTINEL-unset}" "${FM_TEST_ALLOWED-unset}" \
-  "${FM_TEST_EMPTY-unset}" "${FM_TEST_UNSET-unset}" "$HOME" "$PATH" "$TERM" "$TMUX" "$GOTMPDIR"
-SH
-    out=$(FM_TEST_AMBIENT_SENTINEL=synthetic-unrelated \
-      run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
-      "$id" "$PROJ_DIR" --harness "/bin/sh '$probe'")
-    status=$?
-    expect_code 0 "$status" "allowlist=$setting spawn should succeed: $out"
-    launch=$(cat "$LAUNCH_LOG")
-    for pane_shell in /bin/sh /bin/bash /bin/zsh; do
-      [ -x "$pane_shell" ] || continue
-      pane_path=$(env -i HOME="$HOME_DIR/user-home" PATH=/usr/bin:/bin TERM=xterm \
-        TMUX=synthetic-pane GOTMPDIR=/synthetic/gotmp \
-        "$pane_shell" -c "printf %s \"\$PATH\"") \
-        || fail "could not read $pane_shell startup PATH"
-      result=$(env -i HOME="$HOME_DIR/user-home" PATH=/usr/bin:/bin TERM=xterm \
-      TMUX=synthetic-pane GOTMPDIR=/synthetic/gotmp \
-      FM_TEST_AMBIENT_SENTINEL=synthetic-unrelated FM_TEST_ALLOWED="$value" FM_TEST_EMPTY='' \
-      "$pane_shell" -c "$launch") || fail "allowlist=$setting emitted launch failed in $pane_shell"
-      case "$setting" in
-        absent|missing-config) expected=$(printf '%s\n' synthetic-unrelated "$value" '' unset) ;;
-        enabled) expected=$(printf '%s\n' unset "$value" '' unset) ;;
-        empty) expected=$(printf '%s\n' unset unset unset unset) ;;
-      esac
-      expected="$expected"$'\n'"$HOME_DIR/user-home"$'\n'"$pane_path"$'\nxterm\nsynthetic-pane\n/synthetic/gotmp'
-      [ "$result" = "$expected" ] || fail "allowlist=$setting worker environment mismatch: $result"
-    done
-    pass "allowlist=$setting preserves the operational floor and filters only when opted in"
-  done
-}
-
-test_launch_environment_invalid_config_refuses() {
-  local rec id bad out status
-  id=env-invalid
-  rec=$(make_spawn_case "$id" codex "$id")
-  read_case_record "$rec"
-  for bad in 'FM_TEST_ALLOWED=value' 'NAME;false' '1INVALID' '*'; do
-    printf '%s\n' "$bad" > "$HOME_DIR/config/launch-env-allowlist"
-    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
-    status=$?
-    expect_code 1 "$status" "invalid allowlist must refuse spawn"
-    assert_contains "$out" 'launch-env-allowlist' "refusal must identify the config file"
-    [ ! -s "$LAUNCH_LOG" ] || fail "invalid allowlist delivered a launch command"
-    [ ! -f "$HOME_DIR/state/$id.meta" ] || fail "invalid allowlist published a task"
-  done
-  pass "invalid allowlist names refuse before launch or task publication"
-}
-
-test_launch_environment_inaccessible_config_refuses() {
-  local setting presence rec id blocked out status
-  if [ "$(id -u)" = 0 ]; then
-    printf '# skip - inaccessible launch configuration requires a non-root user\n'
-    return
-  fi
-  for setting in config ancestor; do
-    for presence in present absent; do
-      id="env-inaccessible-$setting-$presence"
-      rec=$(make_spawn_case "$id" codex "$id")
-      read_case_record "$rec"
-      if [ "$presence" = present ]; then
-        printf 'FM_TEST_ALLOWED\n' > "$HOME_DIR/config/launch-env-allowlist"
-      fi
-      blocked="$HOME_DIR/config"
-      if [ "$setting" = ancestor ]; then
-        blocked="$HOME_DIR/config-parent"
-        mkdir "$blocked"
-        mv "$HOME_DIR/config" "$blocked/config"
-        ln -s config-parent/config "$HOME_DIR/config"
-      fi
-      chmod 600 "$blocked" || fail "could not remove configuration search permission"
-      out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
-        "$id" "$PROJ_DIR" --harness codex --backend tmux)
-      status=$?
-      chmod 700 "$blocked" || fail "could not restore configuration search permission"
-      expect_code 1 "$status" "inaccessible $setting with $presence allowlist must refuse spawn: $out"
-      assert_contains "$out" 'launch-env-allowlist' "refusal must identify the launch configuration"
-      [ ! -s "$LAUNCH_LOG" ] || fail "inaccessible configuration delivered a launch command"
-      [ ! -f "$HOME_DIR/state/$id.meta" ] || fail "inaccessible configuration published a task"
-      pass "inaccessible $setting with $presence allowlist refuses before launch or task publication"
-    done
-  done
-}
-
-test_launch_environment_inherited_by_secondmate() {
-  local rec id sm out status result
-  id=env-secondmate
-  rec=$(make_spawn_case "$id" codex "$id")
-  read_case_record "$rec"
-  printf 'FM_TEST_ALLOWED\n' > "$HOME_DIR/config/launch-env-allowlist"
-  sm="$CASE_DIR/secondmate-home"
-  make_seeded_secondmate_home "$sm" "$id"
-  out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$sm" --secondmate)
-  status=$?
-  expect_code 0 "$status" "secondmate with an allowlist should spawn: $out"
-  cmp -s "$HOME_DIR/config/launch-env-allowlist" "$sm/config/launch-env-allowlist" \
-    || fail "secondmate did not inherit the launch environment contract"
-  cat > "$FAKEBIN_DIR/codex" <<'SH'
-#!/bin/sh
-printf '%s\n' "${FM_TEST_AMBIENT_SENTINEL-unset}" "$FM_TEST_ALLOWED" "$FM_HOME" "${FM_STATE_OVERRIDE-unset}"
-SH
-  chmod +x "$FAKEBIN_DIR/codex"
-  result=$(env -i HOME="$HOME_DIR/user-home" PATH="$FAKEBIN_DIR:$PATH" \
-    FM_TEST_AMBIENT_SENTINEL=synthetic-unrelated FM_TEST_ALLOWED=synthetic-provider \
-    /bin/sh -c "$(cat "$LAUNCH_LOG")") || fail "secondmate's emitted command failed"
-  [ "$result" = "unset"$'\nsynthetic-provider\n'"$sm" ] \
-    || fail "secondmate's environment lost filtering or explicit home assignments: $result"
-  # Exercise the same inheritance owner used by local and remote transfers;
-  # removal must restore absence downstream as well as copying an opt-in.
-  (
-    # shellcheck source=/dev/null
-    . "$ROOT/bin/fm-config-inherit-lib.sh"
-    rm "$HOME_DIR/config/launch-env-allowlist"
-    propagate_secondmate_inheritance "$HOME_DIR" "$sm" >/dev/null
-  ) || fail "allowlist removal failed to converge"
-  [ ! -e "$sm/config/launch-env-allowlist" ] || fail "secondmate retained a removed allowlist"
-  pass "secondmate launch inherits the allowlist for subsequent worker launches"
-}
-
-run_launch_environment_inheritance() {
-  local route=$1 home=$2 dest=$3 fakebin=$4 generation=$5
-  if [ "$route" = local ]; then
-    (
-      # shellcheck source=/dev/null
-      . "$ROOT/bin/fm-config-inherit-lib.sh"
-      FM_INHERITABLE_CONFIG=launch-env-allowlist \
-        propagate_inheritable_config "$home/config" "$dest/config"
-    )
-  else
-    FM_HOME="$home" FM_ROOT_OVERRIDE="$ROOT" FM_CONFIG_OVERRIDE="$home/config" \
-      FM_DATA_OVERRIDE="$home/data" FM_INHERITABLE_CONFIG=launch-env-allowlist \
-      FM_SSH_BIN="$fakebin/inherit-ssh" \
-      "$ROOT/bin/fm-remote-inherit-push.sh" inherited-env "$generation"
-  fi
-}
-
-test_launch_environment_inheritance_preserves_on_source_errors() {
-  local route rec id dest out status
-  if [ "$(id -u)" = 0 ]; then
-    printf '# skip - inaccessible inheritance sources require a non-root user\n'
-    return
-  fi
-  for route in local remote; do
-    id="env-inherit-$route"
-    rec=$(make_spawn_case "$id" codex "$id")
-    read_case_record "$rec"
-    dest="$CASE_DIR/inherited-home"
-    mkdir -p "$dest/config"
-    printf 'FM_TEST_ALLOWED\n' > "$HOME_DIR/config/launch-env-allowlist"
-    printf -- '- inherited-env - Test route (host: inherit-host; root: %s; home: %s; scope: test; projects: ; added 2026-09-05)\n' \
-      "$ROOT" "$dest" > "$HOME_DIR/data/secondmates.md"
-    cat > "$FAKEBIN_DIR/inherit-ssh" <<'SH'
-#!/usr/bin/env bash
-set -eu
-while [ "$#" -gt 0 ]; do
-  case "$1" in -o) shift 2 ;; --) shift; break ;; *) exit 90 ;; esac
-done
-[ "$#" -eq 6 ] && [ "$1" = inherit-host ] && [ "$2" = fm-remote-entrypoint.sh ] && [ "$3" = 1 ] || exit 91
-remote_root=$(printf '%s' "$4" | base64 --decode)
-remote_home=$(printf '%s' "$5" | base64 --decode)
-args=()
-while IFS= read -r -d '' arg; do args+=("$arg"); done < <(printf '%s' "$6" | base64 --decode)
-[ "${args[0]}" = fm-remote-inherit.sh ] || exit 92
-FM_HOME="$remote_home" FM_STATE_OVERRIDE="$remote_home/state" \
-  exec "$remote_root/bin/${args[0]}" "${args[@]:1}"
-SH
-    chmod +x "$FAKEBIN_DIR/inherit-ssh"
-    out=$(run_launch_environment_inheritance "$route" "$HOME_DIR" "$dest" "$FAKEBIN_DIR" 1 2>&1)
-    status=$?
-    expect_code 0 "$status" "$route allowlist inheritance should succeed: $out"
-    [ "$(cat "$dest/config/launch-env-allowlist")" = FM_TEST_ALLOWED ] \
-      || fail "$route inheritance did not publish the allowlist"
-
-    chmod 600 "$HOME_DIR/config" || fail "could not remove source search permission"
-    out=$(run_launch_environment_inheritance "$route" "$HOME_DIR" "$dest" "$FAKEBIN_DIR" 2 2>&1)
-    status=$?
-    chmod 700 "$HOME_DIR/config" || fail "could not restore source search permission"
-    expect_code 1 "$status" "$route inheritance must refuse an inaccessible source: $out"
-    assert_contains "$out" launch-env-allowlist "$route inspection error must identify the allowlist"
-    [ "$(cat "$dest/config/launch-env-allowlist")" = FM_TEST_ALLOWED ] \
-      || fail "$route inheritance removed or changed the allowlist after an inspection error"
-
-    rm "$HOME_DIR/config/launch-env-allowlist"
-    ln -s missing-allowlist "$HOME_DIR/config/launch-env-allowlist"
-    out=$(run_launch_environment_inheritance "$route" "$HOME_DIR" "$dest" "$FAKEBIN_DIR" 3 2>&1)
-    status=$?
-    expect_code 1 "$status" "$route inheritance must refuse a dangling source link: $out"
-    [ "$(cat "$dest/config/launch-env-allowlist")" = FM_TEST_ALLOWED ] \
-      || fail "$route inheritance treated a dangling source link as absence"
-
-    rm "$HOME_DIR/config/launch-env-allowlist"
-    out=$(run_launch_environment_inheritance "$route" "$HOME_DIR" "$dest" "$FAKEBIN_DIR" 4 2>&1)
-    status=$?
-    expect_code 0 "$status" "$route inheritance should mirror proven absence: $out"
-    [ ! -e "$dest/config/launch-env-allowlist" ] || fail "$route inheritance retained a removed allowlist"
-    pass "$route inheritance preserves the allowlist on source errors and mirrors proven absence"
-  done
-}
-
-test_launch_environment_allowlist
-test_launch_environment_invalid_config_refuses
-test_launch_environment_inaccessible_config_refuses
-test_launch_environment_inherited_by_secondmate
-test_launch_environment_inheritance_preserves_on_source_errors
 
 test_worker_launch_delivers_role_scope() {
   local rec id out launch kind prompt brief_kind brief content

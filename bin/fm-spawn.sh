@@ -216,30 +216,7 @@
 #   and scout batches. The loop lives here, in bash, so callers never hand-write a
 #   multi-task shell loop (the tool shell is zsh, which does not word-split unquoted
 #   $vars and silently breaks ad-hoc `for ... in $pairs` loops).
-# Launch environment (config/launch-env-allowlist):
-#   Absent means unchanged ambient inheritance. A present readable regular file
-#   opts every launch (ship, scout, secondmate, raw command, and relaunch) into
-#   /usr/bin/env -i followed by /bin/sh -c of the existing launch command.
-#   Each line is one POSIX environment name, never a value or shell expression;
-#   blank lines and lines beginning with # are ignored. Invalid input refuses
-#   before launch, as do path inspection errors such as inaccessible config
-#   directories. An empty file retains only the operational floor below.
-#   Names are read once per spawn; values are expanded in the destination pane,
-#   not copied from the invoking process or written into the launch text.
-#   Unset names stay unset and empty values stay empty.
-#   The fixed operational floor is HOME PATH USER LOGNAME SHELL TERM COLORTERM
-#   LANG LC_ALL LC_CTYPE TMPDIR TMP TEMP GOTMPDIR, plus backend identity/routing:
-#   TMUX TMUX_PANE HERDR_ENV HERDR_SESSION HERDR_SOCKET_PATH HERDR_PANE_ID
-#   CMUX_WORKSPACE_ID CMUX_SURFACE_ID CMUX_TAB_ID CMUX_PANEL_ID CMUX_SOCKET_PATH
-#   ZELLIJ ZELLIJ_SESSION_NAME ZELLIJ_PANE_ID FM_ZELLIJ_SESSION, plus the task
-#   marker FM_TASK_ID that ship and scout panes receive above.
-#   An enabled task trace also retains TRACEPARENT. Explicit Firstmate launch
-#   assignments still apply inside the filtered environment. Raw commands must
-#   be POSIX sh compatible under this opt-in; the absent-file path is unchanged.
-#   This is an exec environment boundary, not a sandbox for the pane's startup
-#   shell, credential files, same-user processes, or later shell initialization.
-#   See docs/configuration.md for provider/Git setup and supported limits.
-#   Launch templates live in launch_template() below; placeholders replaced before launch:
+# Launch templates live in launch_template() below; placeholders replaced before launch:
 #     __BRIEF__    absolute path to data/<task-id>/brief.md
 #     __PIBIN__    quoted concrete Pi-family executable path resolved from PATH
 #     __PITUIMODE__ optional --tui-mode regular when that executable advertises it
@@ -380,24 +357,6 @@ PROJECTS="${FM_PROJECTS_OVERRIDE:-$FM_HOME/projects}"
 CONFIG="${FM_CONFIG_OVERRIDE:-$FM_HOME/config}"
 # shellcheck source=bin/fm-config-inherit-lib.sh
 . "$SCRIPT_DIR/fm-config-inherit-lib.sh"
-if ! LAUNCH_ENV_ENABLED=$(fm_config_source_present "$CONFIG/launch-env-allowlist"); then
-  exit 1
-fi
-LAUNCH_ENV_NAMES=
-if [ "$LAUNCH_ENV_ENABLED" = 1 ]; then
-  if [ ! -f "$CONFIG/launch-env-allowlist" ] || [ ! -r "$CONFIG/launch-env-allowlist" ]; then
-    echo "error: config/launch-env-allowlist must be a readable regular file" >&2
-    exit 1
-  fi
-  if ! LAUNCH_ENV_NAMES=$(jq -Rrs '
-    split("\n") | map(select(. != "" and (startswith("#") | not))) |
-    if all(.[]; test("^[A-Za-z_][A-Za-z0-9_]*$")) then .[]
-    else error("expected environment names only") end
-  ' "$CONFIG/launch-env-allowlist" 2>/dev/null); then
-    echo "error: config/launch-env-allowlist must contain one environment name per line, blank lines, or # comments" >&2
-    exit 1
-  fi
-fi
 SUB_HOME_MARKER=".fm-secondmate-home"
 if [ -e "$STATE" ] || [ -L "$STATE" ]; then
   fm_backlog_directory_present "$STATE" "state directory" || {
@@ -1744,6 +1703,13 @@ raw_launch_word_is_node() {  # <word>
   return 1
 }
 
+raw_launch_word_is_code_eval_interpreter() {  # <word>
+  local base
+  base=$(raw_launch_word_resolved_base "$1")
+  case "$base" in python|python[0-9]*|perl|ruby|php) return 0 ;; esac
+  return 1
+}
+
 raw_launch_word_is_env() {  # <word>
   local base
   base=$(raw_launch_word_resolved_base "$1")
@@ -1869,7 +1835,7 @@ raw_launch_node_script_prime_agent_detected() {  # <tokens...>
         fi
         return 1
         ;;
-      -e|-p|--eval|--print|-e?*|-p?*|--eval=*|--print=*) return 0 ;;
+      -e|-p|--eval|--print|-e?*|-p?*|--eval=*|--print=*|--run|--run=*) return 0 ;;
       --check|--interactive) return 1 ;;
       -r|--require|--import|--loader|--experimental-loader) inspect_next=1; continue ;;
       -r?*)
@@ -2195,6 +2161,15 @@ raw_launch_prime_agent_detected() {  # <raw command>
       fi
       if raw_launch_word_is_node "$token"; then
         raw_launch_node_script_prime_agent_detected "${tokens[@]:$((i + 1))}" && return 0
+      fi
+      if raw_launch_word_is_code_eval_interpreter "$token"; then
+        j=$((i + 1))
+        while [ "$j" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$j]}
+          case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') break ;; esac
+          case "$token" in --) break ;; -c|-c?*|-e|-e?*|-E|-E?*|-r|-r?*) return 0 ;; esac
+          j=$((j + 1))
+        done
       fi
       expect_command=0
     fi
@@ -2722,12 +2697,6 @@ resolve_rovo_binary() {
 # supervision like a wedged worker rather than a missing credential.
 muse_worker_meta_api_key_present() {
   local session worker_env
-  if [ "$LAUNCH_ENV_ENABLED" = 1 ]; then
-    case $'\n'"$LAUNCH_ENV_NAMES"$'\n' in
-      *$'\nMETA_API_KEY\n'*) ;;
-      *) return 1 ;;
-    esac
-  fi
   [ "$BACKEND" = tmux ] || return 1
   if [ -n "${TMUX:-}" ]; then
     session=$(tmux display-message -p '#S' 2>/dev/null) || return 1
@@ -4029,6 +3998,9 @@ fi
 if [ "$RELAUNCH" -eq 0 ] && [ "$KIND" != secondmate ]; then
   freshen_spawn_worktree_base "$WT" || exit 1
 fi
+if [ -n "$RAW_PRIME_SCAN_TEXT" ]; then
+  RAW_LAUNCH_SCAN_CWD=${WT:-$PROJ_ABS} raw_launch_prime_agent_detected "$RAW_PRIME_SCAN_TEXT" && refuse_raw_prime_launch
+fi
 
 # Pre-register Claude's workspace trust for the worktree, at the first point the
 # worktree is known and before any per-task state is created below. The dialog
@@ -4933,26 +4905,6 @@ if [ -n "$SPAWN_TRACEPARENT" ]; then
 fi
 if [ "$RAW_LAUNCH" -eq 1 ] && [ "$RAW_LAUNCH_PATH_PIN" -eq 1 ]; then
   LAUNCH="export PATH=$(shell_quote "${RAW_LAUNCH_SCAN_PATH:-${PATH:-}}") ; $LAUNCH"
-fi
-if [ "$LAUNCH_ENV_ENABLED" = 1 ]; then
-  LAUNCH_ENV_PREFIX='/usr/bin/env -i'
-  for env_name in HOME PATH USER LOGNAME SHELL TERM COLORTERM LANG LC_ALL LC_CTYPE \
-    TMPDIR TMP TEMP GOTMPDIR TMUX TMUX_PANE HERDR_ENV HERDR_SESSION HERDR_SOCKET_PATH \
-    HERDR_PANE_ID CMUX_WORKSPACE_ID CMUX_SURFACE_ID CMUX_TAB_ID CMUX_PANEL_ID \
-    CMUX_SOCKET_PATH ZELLIJ ZELLIJ_SESSION_NAME ZELLIJ_PANE_ID FM_ZELLIJ_SESSION \
-    FM_TASK_ID \
-    $LAUNCH_ENV_NAMES; do
-    # Only validated names enter shell syntax. Values expand once, quoted, in
-    # the pane shell and never become source text or spawn-process snapshots.
-    # shellcheck disable=SC2016
-    printf -v env_arg '${%s+"%s=$%s"}' "$env_name" "$env_name" "$env_name"
-    LAUNCH_ENV_PREFIX="$LAUNCH_ENV_PREFIX $env_arg"
-  done
-  if [ -n "$SPAWN_TRACEPARENT" ]; then
-    # shellcheck disable=SC2016
-    LAUNCH_ENV_PREFIX="$LAUNCH_ENV_PREFIX "'${TRACEPARENT+"TRACEPARENT=$TRACEPARENT"}'
-  fi
-  LAUNCH="$LAUNCH_ENV_PREFIX /bin/sh -c $(shell_quote "$LAUNCH")"
 fi
 sleep 0.3
 spawn_send_literal "$T" "$LAUNCH"
