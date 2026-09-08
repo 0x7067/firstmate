@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016,SC2088,SC1083,SC1010
 # Spawn a direct report: a crewmate in a treehouse or Orca worktree, or a
 # secondmate in its isolated firstmate home.
 # Usage: fm-spawn.sh <task-id> <project-dir> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>]
@@ -1352,7 +1353,7 @@ else
   ARG3=${POS[2]:-}
 fi
 raw_launch_shell_tokens() {  # <raw command>
-  local command_text=$1 len i ch next quote= word= inner depth op sub_quote
+  local command_text=$1 len i ch next quote='' word='' inner depth op sub_quote
   len=${#command_text}
   i=0
   while [ "$i" -lt "$len" ]; do
@@ -1733,7 +1734,7 @@ raw_launch_node_script_prime_agent_detected() {  # <tokens...>
 }
 
 raw_launch_prime_agent_detected() {  # <raw command>
-  local command_text=$1 token expect_command=1 skip_redir=0 i j shell_script var_value var_status env_saved_cwd= env_cwd_active=0 forwarder_base
+  local command_text=$1 token expect_command=1 skip_redir=0 i j shell_script var_value var_status env_saved_cwd='' env_cwd_active=0 forwarder_base
   local RAW_LAUNCH_SCAN_CWD=${RAW_LAUNCH_SCAN_CWD:-${WT:-${PROJ_ABS:-$PWD}}}
   local -a tokens raw_vars raw_pending
   tokens=()
@@ -1779,7 +1780,9 @@ raw_launch_prime_agent_detected() {  # <raw command>
         ;;
     esac
     if [ "$expect_command" -eq 1 ]; then
-      case "$token" in if|then|elif|else|fi|for|while|until|do|done|case|esac|in|select|function|'{'|'}'|'!') i=$((i + 1)); continue ;; esac
+      case "$token" in
+        if|then|elif|else|fi|for|while|until|do|done|case|esac|in|select|function|'{'|'}'|'!') i=$((i + 1)); continue ;;
+      esac
       if raw_launch_token_is_assignment "$token"; then
         case "${token%%=*}" in PATH|CDPATH) return 0 ;; esac
         var_value=${token#*=}
@@ -1880,7 +1883,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
         i=$((i + 1))
         while [ "$i" -lt "${#tokens[@]}" ]; do
           token=${tokens[$i]}
-          case "$token" in -f|-o) i=$((i + 2)); continue ;; -*) i=$((i + 1)); continue ;; --) i=$((i + 1)); break ;; esac
+          case "$token" in -f|-o) i=$((i + 2)); continue ;; --) i=$((i + 1)); break ;; -*) i=$((i + 1)); continue ;; esac
           break
         done
         continue
