@@ -16,8 +16,10 @@ Verified on 2026-06-11 with codex-cli 0.139.0 unless a fact gives a newer versio
 | Model discovery | Open the current interactive session's `/model` picker. |
 
 Codex `max` is an accepted Firstmate request.
-Firstmate passes `max` through only when the requested or active default Codex model advertises `max` in its `supported_reasoning_levels`; otherwise it clamps to `xhigh`, so a spawn never emits an unsupported value.
-When the caller omits `--model`, the active default model is discovered from `~/.codex/config.toml` (or `$CODEX_HOME/config.toml`) before checking capability levels.
+Firstmate passes `max` through only when the requested model, or the default model resolved from this `fm-spawn` process's Codex config, advertises `max` in its `supported_reasoning_levels`.
+Otherwise it clamps to `xhigh`, so a spawn never emits an unsupported value.
+When the caller omits `--model`, the default model is read from `$CODEX_HOME/config.toml` or `$HOME/.codex/config.toml` before checking capability levels.
+If no default model can be resolved, the `max` capability is unconfirmed and the request clamps to `xhigh`.
 
 A directory trust dialog appears on the first run for a repository root: "Do you trust the contents of this directory?"
 Accept it with Enter and verify the instructions begin processing.

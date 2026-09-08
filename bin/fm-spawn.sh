@@ -1825,12 +1825,13 @@ model_flag_for_harness() {
   esac
 }
 
-# codex_default_model: print the active default Codex model from the local
-# codex configuration. Reads $CODEX_HOME/config.toml, falling back to
+# codex_default_model: print the default Codex model from this fm-spawn
+# process's codex configuration. Reads $CODEX_HOME/config.toml, falling back to
 # $HOME/.codex/config.toml. It looks only at top-level keys before the first
 # table header, and only for an exact `model = "..."` assignment. Returns
 # non-zero when the config is missing, unreadable, or contains no top-level
-# model, so an omitted/default model is not treated as unsupported.
+# model, so callers can fail closed instead of treating an unknown default as
+# max-capable.
 codex_default_model() {
   local config
   config="${CODEX_HOME:-$HOME/.codex}/config.toml"
@@ -1855,11 +1856,12 @@ AWK
 }
 
 # codex_model_supports_max_effort: 0 when the selected Codex model (or, when
-# the caller passes an empty/default model, the active default model from
-# codex config) advertises a "max" reasoning level. Reads the local catalog
-# via `codex debug models` and queries it with jq. Returns non-zero when
-# codex is absent, jq is absent, the catalog is unreachable, the model cannot
-# be found, or the model's supported_reasoning_levels does not contain max.
+# the caller passes an empty/default model, the default model from this
+# fm-spawn process's codex config) advertises a "max" reasoning level. Reads
+# the local catalog via `codex debug models` and queries it with jq. Returns
+# non-zero when codex is absent, jq is absent, the catalog is unreachable, the
+# model cannot be found, or the model's supported_reasoning_levels does not
+# contain max.
 # The fail-safe direction is the clamp, never an unsupported pass-through.
 codex_model_supports_max_effort() {
   local model=$1 catalog
@@ -1889,8 +1891,9 @@ effort_flag_for_harness() {
       # The installed codex config schema uses model_reasoning_effort. The
       # bundled catalog lists per-model supported reasoning levels, so a
       # requested max is passed through only when the selected model (or the
-      # active default model when none is selected) advertises it. Otherwise
-      # it clamps to xhigh rather than launching with an unsupported value.
+      # default from this fm-spawn process's codex config when none is selected)
+      # advertises it. Otherwise it clamps to xhigh rather than launching with
+      # an unsupported value.
       local codex_effort=$effort
       if [ "$effort" = max ] && ! codex_model_supports_max_effort "$model"; then
         codex_effort=xhigh
