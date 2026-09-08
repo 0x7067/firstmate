@@ -21,7 +21,7 @@ Prime Agent is a Pi-family CLI with its own executable identity and lifecycle su
 | Model discovery | Run `prime-agent model list`; `prime-agent --help` owns the accepted `--model <id>` input shape. |
 
 Keep the brief as one positional argument through the canonical `fm-operational-input.sh encode launch-brief` envelope.
-The launch clears stale foreign markers (`PI_MODEL`, `PI_CODING_AGENT`, `AI_AGENT`, `FM_PI_HARNESS`) that a Pi-family primary leaks into the spawn environment, because a worker inherited the primary's `PI_MODEL` and self-reported the wrong model (verified live 2026-08-24); Prime sets its own `PI_CODING_AGENT=true` for children, so clearing the inherited value cannot blind ancestry-based detection.
+The launch clears foreign harness markers and ambient credential variables that a primary can leak into the spawn environment, because a worker inherited the primary's `PI_MODEL` and self-reported the wrong model (verified live 2026-08-24); Prime sets its own `PI_CODING_AGENT=true` for children, so clearing the inherited value cannot blind ancestry-based detection.
 Prime accepts `--model <id>`, repeatable `-e`, and `--thinking off|minimal|low|medium|high|xhigh|max`; Firstmate routes only its shared low-through-max effort axis.
 A live `--thinking low` launch rendered `high` in Prime's footer, so treat the 0.8.0 effective-level behavior as unconfirmed even though the CLI accepts and Firstmate preserves the flag.
 Firstmate preserves raw launches for unverified non-Prime adapters, refuses shell-visible raw Prime Agent executions at the Prime isolation boundary, and gives every canonical Prime launch a stable project-keyed `HOME` and `PRIME_AGENT_CODING_AGENT_DIR` under its own state root.

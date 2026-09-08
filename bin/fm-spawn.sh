@@ -1524,7 +1524,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
       ';'|'|'|'&'|'('|')'|'$(') expect_command=1; i=$((i + 1)); continue ;;
     esac
     if [ "$expect_command" -eq 1 ]; then
-      case "$token" in if|then|elif|else|fi|for|while|until|do|done|case|esac|in|select|function|time|'{'|'}'|'!') i=$((i + 1)); continue ;; esac
+      case "$token" in if|then|elif|else|fi|for|while|until|do|done|case|esac|in|select|function|'{'|'}'|'!') i=$((i + 1)); continue ;; esac
       if raw_launch_token_is_assignment "$token"; then
         i=$((i + 1))
         continue
@@ -1533,7 +1533,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
         i=$((i + 1))
         while [ "$i" -lt "${#tokens[@]}" ]; do
           token=${tokens[$i]}
-          case "$token" in -p) i=$((i + 1)); continue ;; -v|-V) expect_command=0; break ;; esac
+          case "$token" in -p) i=$((i + 1)); continue ;; --) i=$((i + 1)); break ;; -v|-V) expect_command=0; break ;; esac
           break
         done
         continue
@@ -1542,7 +1542,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
         i=$((i + 1))
         while [ "$i" -lt "${#tokens[@]}" ]; do
           token=${tokens[$i]}
-          case "$token" in -c|-l) i=$((i + 1)); continue ;; -a) i=$((i + 2)); continue ;; esac
+          case "$token" in -c|-l) i=$((i + 1)); continue ;; -a) i=$((i + 2)); continue ;; --) i=$((i + 1)); break ;; esac
           break
         done
         continue
@@ -1578,19 +1578,31 @@ raw_launch_prime_agent_detected() {  # <raw command>
         done
         continue
       fi
+      if [ "$token" = time ]; then
+        i=$((i + 1))
+        while [ "$i" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$i]}
+          case "$token" in -f|-o) i=$((i + 2)); continue ;; -*) i=$((i + 1)); continue ;; --) i=$((i + 1)); break ;; esac
+          break
+        done
+        continue
+      fi
       raw_launch_word_is_prime_agent "$token" && return 0
       if raw_launch_word_is_shell "$token"; then
         j=$((i + 1))
         while [ "$j" -lt "${#tokens[@]}" ]; do
           token=${tokens[$j]}
           case "$token" in ';'|'|'|'&'|'('|')'|'$(') break ;; esac
-          if [ "$token" = -c ]; then
-            if [ $((j + 1)) -lt "${#tokens[@]}" ]; then
-              shell_script=${tokens[$((j + 1))]}
-              raw_launch_prime_agent_detected "$shell_script" && return 0
-            fi
-            break
-          fi
+          case "$token" in
+            --) break ;;
+            -c|-[!-]*c*)
+              if [ $((j + 1)) -lt "${#tokens[@]}" ]; then
+                shell_script=${tokens[$((j + 1))]}
+                raw_launch_prime_agent_detected "$shell_script" && return 0
+              fi
+              break
+              ;;
+          esac
           j=$((j + 1))
         done
       fi
@@ -1833,14 +1845,14 @@ launch_template() {
     # per-task worktree token, so no launch placeholder belongs here.
     kimi) printf '%s' '__KIMIBIN__ __MODELFLAG__--auto' ;;
     # Prime Agent: a Pi-family CLI with its own executable identity and lifecycle.
-    # Clears stale Pi-family markers (PI_MODEL, PI_CODING_AGENT, AI_AGENT,
-    # FM_PI_HARNESS) that a Pi primary leaks into the spawn environment.
+    # Clears foreign harness markers and ambient credential variables that a
+    # primary can leak into the spawn environment.
     # The brief rides the canonical operational-input envelope as one positional.
     # --daemon-socket carries the per-task daemon path; -e loads the
     # firstmate-owned semantic lifecycle extension outside the worktree.
     # Project-scoped HOME, PRIME_AGENT_CODING_AGENT_DIR, and
     # PRIME_AGENT_SESSION_DIR are set by the outer env wrap below.
-    prime-agent) printf '%s' 'env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS -u PRIME_API_KEY -u PRIME_AGENT_TRACES_API_KEY -u OPENAI_API_KEY -u ANTHROPIC_API_KEY -u ANTHROPIC_OAUTH_TOKEN -u ANTHROPIC_AUTH_TOKEN -u GH_TOKEN -u SERPER_API_KEY -u PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN -u PRIME_TEAM_ID -u GOOGLE_APPLICATION_CREDENTIALS -u google_application_credentials -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL -u SSH_AUTH_SOCK -u SSH_AGENT_PID -u GIT_ASKPASS -u SSH_ASKPASS -u SUDO_ASKPASS -u GIT_SSH -u GIT_SSH_COMMAND -u PRIME_AGENT_CODING_AGENT_SESSION_DIR __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__--daemon-socket __PRIMEDAEMON__ -e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;    # muse (Muse Code): a positional prompt starts the supervised interactive
+    prime-agent) printf '%s' 'env -u CLAUDECODE -u GROK_AGENT -u GEMINI_CLI -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u ATLASSIAN_AGENT_TYPE -u ROVODEV_CLI -u FM_OMP_HARNESS -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS -u PRIME_API_KEY -u PRIME_AGENT_TRACES_API_KEY -u OPENAI_API_KEY -u ANTHROPIC_API_KEY -u GITHUB_TOKEN -u NPM_TOKEN -u NODE_AUTH_TOKEN -u GITLAB_TOKEN -u GL_TOKEN -u BITBUCKET_TOKEN -u HF_TOKEN -u HUGGINGFACE_HUB_TOKEN -u COHERE_API_KEY -u MISTRAL_API_KEY -u GEMINI_API_KEY -u GOOGLE_API_KEY -u XAI_API_KEY -u GROK_API_KEY -u GROQ_API_KEY -u TOGETHER_API_KEY -u OPENROUTER_API_KEY -u AZURE_OPENAI_API_KEY -u AWS_SESSION_TOKEN -u ANTHROPIC_OAUTH_TOKEN -u ANTHROPIC_AUTH_TOKEN -u GH_TOKEN -u SERPER_API_KEY -u PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN -u PRIME_TEAM_ID -u GOOGLE_APPLICATION_CREDENTIALS -u google_application_credentials -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL -u SSH_AUTH_SOCK -u SSH_AGENT_PID -u GIT_ASKPASS -u SSH_ASKPASS -u SUDO_ASKPASS -u GIT_SSH -u GIT_SSH_COMMAND -u PRIME_AGENT_CODING_AGENT_SESSION_DIR __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__--daemon-socket __PRIMEDAEMON__ -e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;    # muse (Muse Code): a positional prompt starts the supervised interactive
     # session. --yolo is the single flag that makes a crewmate pane viable: muse
     # ships approval prompts AND a filesystem/network sandbox ON by default
     # (--sandbox-network defaults to proxy-only, which refuses outright without a
@@ -3544,7 +3556,7 @@ if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
   sq_primegnupg=$(shell_quote "$PRIME_HOME/.gnupg")
   sq_primenpm=$(shell_quote "$PRIME_HOME/.npmrc")
   sq_primenetrc=$(shell_quote "$PRIME_HOME/.netrc")
-  PRIME_GIT_CONFIG_ENV_CLEANUP="for __fm_git_config_env in \$(env | awk -F= '\$1 ~ /^GIT_CONFIG_(KEY|VALUE)_[0-9]+\$/ { print \$1 }'); do unset \"\$__fm_git_config_env\"; done; unset GIT_CONFIG_PARAMETERS; "
+  PRIME_GIT_CONFIG_ENV_CLEANUP="for __fm_git_config_env in \$(env | awk -F= '\$1 ~ /^GIT_CONFIG_(KEY|VALUE)_[0-9]+\$/ { print \$1 }'); do unset \"\$__fm_git_config_env\"; done; for __fm_secret_env in \$(env | awk -F= '\$1 ~ /(^|_)(TOKEN|API_KEY|SECRET|AUTH_TOKEN)(_|\$)/ || \$1 ~ /CREDENTIALS/ { print \$1 }'); do unset \"\$__fm_secret_env\"; done; unset GIT_CONFIG_PARAMETERS; "
   LAUNCH="HOME=$sq_primehome GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=$sq_primegit GIT_CONFIG_COUNT=0 PRIME_AGENT_CODING_AGENT_DIR=$sq_primedir PRIME_AGENT_SESSION_DIR=$sq_primesession XDG_CONFIG_HOME=$sq_primeconfig XDG_DATA_HOME=$sq_primedata XDG_CACHE_HOME=$sq_primecache XDG_STATE_HOME=$sq_primestate XDG_RUNTIME_DIR=$sq_primeruntime GH_CONFIG_DIR=$sq_primegh CLOUDSDK_CONFIG=$sq_primegcloud PRIME_AGENT_KERNEL_VENV=$sq_primekernel PRIME_AGENT_KERNEL_PYTHON=$sq_primepython AWS_SHARED_CREDENTIALS_FILE=$sq_primeawscreds AWS_CONFIG_FILE=$sq_primeawsconf AZURE_CONFIG_DIR=$sq_primeazure DOCKER_CONFIG=$sq_primedocker KUBECONFIG=$sq_primekube HF_HOME=$sq_primehf GNUPGHOME=$sq_primegnupg NPM_CONFIG_USERCONFIG=$sq_primenpm NETRC=$sq_primenetrc $LAUNCH"
 fi
 TURNEND="$STATE_REAL/$ID.turn-ended"

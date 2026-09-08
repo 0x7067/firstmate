@@ -440,7 +440,7 @@ test_active_dispatch_profile_preserves_raw_launch_escape_hatch() {
 test_raw_prime_launch_is_rejected_before_endpoint_creation() {
   local rec id out status index prime_package prime_project_package
   local -a ids commands
-  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-shell-z15b profile-raw-prime-quoted-z15b profile-raw-prime-alias-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b)
+  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-command-end-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-shell-z15b profile-raw-prime-shell-cluster-z15b profile-raw-prime-time-z15b profile-raw-prime-quoted-z15b profile-raw-prime-alias-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b)
   rec=$(make_spawn_case profile-raw-prime claude "${ids[@]}" profile-raw-prime-mislabeled-z15b)
   read_case_record "$rec"
   prime_package="$CASE_DIR/prime-package"
@@ -473,7 +473,7 @@ SH
   ln -s "$prime_package/dist/bundle/cli.js" "$FAKEBIN_DIR/prime-proxy"
   ln -s "$(type -P env)" "$FAKEBIN_DIR/envx"
   # shellcheck disable=SC2016 # The raw commands must keep literal shell syntax.
-  commands=("prime-agent --flag" "command prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "sh -c prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "prime-proxy --flag" "claude --flag;prime-agent" 'claude --flag $(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag")
+  commands=("prime-agent --flag" "command prime-agent --flag" "command -- prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "sh -c prime-agent" "bash -lc prime-agent" "time -p prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "prime-proxy --flag" "claude --flag;prime-agent" 'claude --flag $(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag")
 
   for index in "${!ids[@]}"; do
     id=${ids[$index]}
@@ -850,7 +850,7 @@ done
   printf 'gnupg_home=%s\n' "${GNUPGHOME:-}"
   printf 'npm_config=%s\n' "${NPM_CONFIG_USERCONFIG:-}"
   printf 'netrc=%s\n' "${NETRC:-}"
-  for name in PRIME_AGENT_CODING_AGENT_SESSION_DIR PRIME_API_KEY PRIME_AGENT_TRACES_API_KEY PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN PRIME_TEAM_ID OPENAI_API_KEY ANTHROPIC_API_KEY ANTHROPIC_OAUTH_TOKEN ANTHROPIC_AUTH_TOKEN GH_TOKEN SERPER_API_KEY GOOGLE_APPLICATION_CREDENTIALS google_application_credentials AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY SSH_AUTH_SOCK SSH_AGENT_PID GIT_ASKPASS SSH_ASKPASS SUDO_ASKPASS GIT_SSH GIT_SSH_COMMAND GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0 GIT_CONFIG_PARAMETERS; do
+  for name in PRIME_AGENT_CODING_AGENT_SESSION_DIR PRIME_API_KEY PRIME_AGENT_TRACES_API_KEY PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN PRIME_TEAM_ID OPENAI_API_KEY ANTHROPIC_API_KEY GITHUB_TOKEN NPM_TOKEN NODE_AUTH_TOKEN GITLAB_TOKEN GL_TOKEN BITBUCKET_TOKEN HF_TOKEN HUGGINGFACE_HUB_TOKEN COHERE_API_KEY MISTRAL_API_KEY GEMINI_API_KEY GOOGLE_API_KEY XAI_API_KEY GROK_API_KEY GROQ_API_KEY TOGETHER_API_KEY OPENROUTER_API_KEY AZURE_OPENAI_API_KEY AWS_SESSION_TOKEN SLACK_BOT_TOKEN SENTRY_AUTH_TOKEN ANTHROPIC_OAUTH_TOKEN ANTHROPIC_AUTH_TOKEN GH_TOKEN SERPER_API_KEY GOOGLE_APPLICATION_CREDENTIALS google_application_credentials AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY SSH_AUTH_SOCK SSH_AGENT_PID GIT_ASKPASS SSH_ASKPASS SUDO_ASKPASS GIT_SSH GIT_SSH_COMMAND GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL CLAUDECODE GROK_AGENT GEMINI_CLI CURSOR_AGENT CURSOR_INVOKED_AS ATLASSIAN_AGENT_TYPE ROVODEV_CLI FM_OMP_HARNESS GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0 GIT_CONFIG_PARAMETERS; do
     [ -z "${!name+x}" ] || printf 'visible=%s\n' "$name"
   done
   [ "${GIT_CONFIG_COUNT:-0}" = 0 ] || printf '%s\n' 'visible=GIT_CONFIG_COUNT'
@@ -921,8 +921,18 @@ SH
     cd "$WT_DIR" || exit 1
     HOME="$HOME_DIR" PRIME_API_KEY=ambient-prime OPENAI_API_KEY=ambient-openai \
       ANTHROPIC_API_KEY=ambient-anthropic-api ANTHROPIC_OAUTH_TOKEN=ambient-anthropic \
-      ANTHROPIC_AUTH_TOKEN=ambient-anthropic-auth \
-      GH_TOKEN=ambient-github SERPER_API_KEY=ambient-serper \
+      ANTHROPIC_AUTH_TOKEN=ambient-anthropic-auth GITHUB_TOKEN=ambient-github-token \
+      NPM_TOKEN=ambient-npm NODE_AUTH_TOKEN=ambient-node GITLAB_TOKEN=ambient-gitlab \
+      GL_TOKEN=ambient-gl BITBUCKET_TOKEN=ambient-bitbucket HF_TOKEN=ambient-hf-token \
+      HUGGINGFACE_HUB_TOKEN=ambient-hf-hub COHERE_API_KEY=ambient-cohere \
+      MISTRAL_API_KEY=ambient-mistral GEMINI_API_KEY=ambient-gemini-api \
+      GOOGLE_API_KEY=ambient-google-api XAI_API_KEY=ambient-xai GROK_API_KEY=ambient-grok-key \
+      GROQ_API_KEY=ambient-groq TOGETHER_API_KEY=ambient-together \
+      OPENROUTER_API_KEY=ambient-openrouter AZURE_OPENAI_API_KEY=ambient-azure-openai \
+      AWS_SESSION_TOKEN=ambient-aws-session SLACK_BOT_TOKEN=ambient-slack \
+      SENTRY_AUTH_TOKEN=ambient-sentry CLAUDECODE=1 GROK_AGENT=1 GEMINI_CLI=1 \
+      CURSOR_AGENT=1 CURSOR_INVOKED_AS=cursor-agent ATLASSIAN_AGENT_TYPE=rovo \
+      ROVODEV_CLI=1 FM_OMP_HARNESS=omp GH_TOKEN=ambient-github SERPER_API_KEY=ambient-serper \
       PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN=ambient-daemon-token \
       PRIME_AGENT_SESSION_DIR=/tmp/ambient-prime-sessions \
       PRIME_AGENT_CODING_AGENT_SESSION_DIR=/tmp/ambient-prime-legacy-sessions \
