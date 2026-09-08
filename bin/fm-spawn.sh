@@ -1630,7 +1630,7 @@ raw_launch_word_is_cd() {  # <word>
 raw_launch_word_is_forwarder() {  # <word>
   local base
   base=$(raw_launch_word_resolved_base "$1")
-  case "$base" in nohup|nice|timeout|gtimeout) return 0 ;; esac
+  case "$base" in nohup|nice|setsid|timeout|gtimeout) return 0 ;; esac
   return 1
 }
 
@@ -1797,6 +1797,25 @@ raw_launch_prime_agent_detected() {  # <raw command>
         var_status=$?
         [ "$var_status" -eq 2 ] && return 0
       fi
+      case "$token" in
+        export|readonly|declare|typeset|local)
+          j=$((i + 1))
+          while [ "$j" -lt "${#tokens[@]}" ]; do
+            token=${tokens[$j]}
+            case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') break ;; esac
+            case "$token" in --|-*) j=$((j + 1)); continue ;; esac
+            if raw_launch_token_is_assignment "$token"; then
+              case "${token%%=*}" in PATH|CDPATH) return 0 ;; esac
+            else
+              case "$token" in '$'*) return 0 ;; esac
+            fi
+            j=$((j + 1))
+          done
+          expect_command=0
+          i=$j
+          continue
+          ;;
+      esac
       if [ "$token" = eval ]; then
         shell_script=
         j=$((i + 1))
@@ -1841,30 +1860,40 @@ raw_launch_prime_agent_detected() {  # <raw command>
           fi
           case "$token" in
             -i|--ignore-environment|-0|--null) i=$((i + 1)); continue ;;
-            -u|--unset) i=$((i + 2)); continue ;;
-            -C|--chdir)
-              if [ $((i + 1)) -lt "${#tokens[@]}" ]; then
-                [ "$env_cwd_active" -eq 0 ] && env_saved_cwd=$RAW_LAUNCH_SCAN_CWD && env_cwd_active=1
-                RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "${tokens[$((i + 1))]}")
-              fi
+            -u|--unset)
+              [ $((i + 1)) -lt "${#tokens[@]}" ] || return 0
               i=$((i + 2))
+              continue
+              ;;
+            -C|--chdir)
+              [ $((i + 1)) -lt "${#tokens[@]}" ] || return 0
+              token=${tokens[$((i + 1))]}
+              case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>('|''|'$'*) return 0 ;; esac
+              [ "$env_cwd_active" -eq 0 ] && env_saved_cwd=$RAW_LAUNCH_SCAN_CWD && env_cwd_active=1
+              RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "$token")
+              i=$((i + 2))
+              continue
+              ;;
+            -C?*)
+              token=${token#-C}
+              case "$token" in ''|'$'*) return 0 ;; esac
+              [ "$env_cwd_active" -eq 0 ] && env_saved_cwd=$RAW_LAUNCH_SCAN_CWD && env_cwd_active=1
+              RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "$token")
+              i=$((i + 1))
               continue
               ;;
             --unset=*) i=$((i + 1)); continue ;;
             --chdir=*)
+              token=${token#--chdir=}
+              case "$token" in ''|'$'*) return 0 ;; esac
               [ "$env_cwd_active" -eq 0 ] && env_saved_cwd=$RAW_LAUNCH_SCAN_CWD && env_cwd_active=1
-              RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "${token#--chdir=}")
+              RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "$token")
               i=$((i + 1))
               continue
               ;;
-            -S|--split-string)
-              if [ $((i + 1)) -lt "${#tokens[@]}" ]; then
-                raw_launch_prime_agent_detected "${tokens[$((i + 1))]}" && return 0
-              fi
-              return 1
-              ;;
+            -S|--split-string|-S?*|--split-string=*) return 0 ;;
             --) i=$((i + 1)); break ;;
-            -*) i=$((i + 1)); continue ;;
+            -*) return 0 ;;
           esac
           break
         done
@@ -1883,7 +1912,14 @@ raw_launch_prime_agent_detected() {  # <raw command>
         i=$((i + 1))
         while [ "$i" -lt "${#tokens[@]}" ]; do
           token=${tokens[$i]}
-          case "$token" in -f|-o) i=$((i + 2)); continue ;; --) i=$((i + 1)); break ;; -*) i=$((i + 1)); continue ;; esac
+          case "$token" in
+            -f|-o|--format|--output) i=$((i + 2)); continue ;;
+            -f?*|-o?*|--format=*|--output=*) i=$((i + 1)); continue ;;
+            -a|-p|-v|--append|--portability|--verbose|--quiet) i=$((i + 1)); continue ;;
+            --) i=$((i + 1)); break ;;
+            --help|--version) expect_command=0; break ;;
+            -*) return 0 ;;
+          esac
           break
         done
         continue
@@ -1923,10 +1959,36 @@ raw_launch_prime_agent_detected() {  # <raw command>
         continue
       fi
       if raw_launch_word_is_cd "$token"; then
-        if [ $((i + 1)) -lt "${#tokens[@]}" ]; then
-          token=${tokens[$((i + 1))]}
-          case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') ;; *) RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "$token"); i=$((i + 2)); expect_command=0; continue ;; esac
+        j=$((i + 1))
+        while [ "$j" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$j]}
+          case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') break ;; esac
+          case "$token" in
+            --) j=$((j + 1)); break ;;
+            -L|-P|-e) j=$((j + 1)); continue ;;
+            -*) return 0 ;;
+          esac
+          break
+        done
+        if [ "$j" -ge "${#tokens[@]}" ]; then
+          [ -n "${HOME:-}" ] || return 0
+          RAW_LAUNCH_SCAN_CWD=$HOME
+          i=$j
+          expect_command=0
+          continue
         fi
+        token=${tokens[$j]}
+        case "$token" in
+          ';'|'|'|'&'|'('|')'|'$('|'<('|'>(')
+            [ -n "${HOME:-}" ] || return 0
+            RAW_LAUNCH_SCAN_CWD=$HOME
+            i=$j
+            expect_command=0
+            continue
+            ;;
+          '$'*) return 0 ;;
+          *) RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "$token"); i=$((j + 1)); expect_command=0; continue ;;
+        esac
       fi
       raw_launch_word_is_prime_agent "$token" && return 0
       if raw_launch_word_is_shell "$token"; then
