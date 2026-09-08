@@ -440,7 +440,7 @@ test_active_dispatch_profile_preserves_raw_launch_escape_hatch() {
 test_raw_prime_launch_is_rejected_before_endpoint_creation() {
   local rec id out status index prime_package prime_project_package prime_wt_package time_bin
   local -a ids commands
-  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-command-end-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-node-relative-z15b profile-raw-prime-shell-z15b profile-raw-prime-shell-cluster-z15b profile-raw-prime-time-z15b profile-raw-prime-qualified-time-z15b profile-raw-prime-quoted-z15b profile-raw-prime-alias-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-newline-z15b profile-raw-prime-substitution-z15b profile-raw-prime-quoted-substitution-z15b profile-raw-prime-assignment-substitution-z15b profile-raw-prime-backtick-z15b profile-raw-prime-eval-z15b profile-raw-prime-process-substitution-z15b profile-raw-prime-output-process-substitution-z15b profile-raw-prime-redir-process-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b)
+  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-command-end-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-node-relative-z15b profile-raw-prime-env-chdir-node-z15b profile-raw-prime-shell-z15b profile-raw-prime-shell-cluster-z15b profile-raw-prime-shell-option-z15b profile-raw-prime-time-z15b profile-raw-prime-qualified-time-z15b profile-raw-prime-quoted-z15b profile-raw-prime-alias-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-newline-z15b profile-raw-prime-substitution-z15b profile-raw-prime-quoted-substitution-z15b profile-raw-prime-assignment-substitution-z15b profile-raw-prime-backtick-z15b profile-raw-prime-eval-z15b profile-raw-prime-variable-z15b profile-raw-prime-unresolved-variable-z15b profile-raw-prime-process-substitution-z15b profile-raw-prime-output-process-substitution-z15b profile-raw-prime-redir-process-substitution-z15b profile-raw-prime-redir-command-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b)
   rec=$(make_spawn_case profile-raw-prime claude "${ids[@]}" profile-raw-prime-mislabeled-z15b)
   read_case_record "$rec"
   prime_package="$CASE_DIR/prime-package"
@@ -479,7 +479,7 @@ SH
   ln -s "$(type -P env)" "$FAKEBIN_DIR/envx"
   time_bin=$(type -P time 2>/dev/null || printf '%s' /usr/bin/time)
   # shellcheck disable=SC2016 # The raw commands must keep literal shell syntax.
-  commands=("prime-agent --flag" "command prime-agent --flag" "command -- prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "node './Linked Prime/dist/bundle/cli.js'" "sh -c prime-agent" "bash -lc prime-agent" "time -p prime-agent" "$time_bin -p prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "prime-proxy --flag" "claude --flag;prime-agent" $'custom-agent --flag\nprime-agent --flag' 'claude --flag $(prime-agent)' 'echo "$(prime-agent)"' 'FOO="$(prime-agent)" custom-agent --flag' 'echo `prime-agent`' 'eval prime-agent' 'cat <(prime-agent)' 'cat >(prime-agent)' 'cat < <(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag")
+  commands=("prime-agent --flag" "command prime-agent --flag" "command -- prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "node './Linked Prime/dist/bundle/cli.js'" "env -C $prime_package node dist/bundle/cli.js" "sh -c prime-agent" "bash -lc prime-agent" "bash -o posix -c prime-agent" "time -p prime-agent" "$time_bin -p prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "prime-proxy --flag" "claude --flag;prime-agent" $'custom-agent --flag\nprime-agent --flag' 'claude --flag $(prime-agent)' 'echo "$(prime-agent)"' 'FOO="$(prime-agent)" custom-agent --flag' 'echo `prime-agent`' 'eval prime-agent' 'runner=prime-agent; $runner --flag' '$runner --flag' 'cat <(prime-agent)' 'cat >(prime-agent)' 'cat < <(prime-agent)' 'cat >$(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag")
 
   for index in "${!ids[@]}"; do
     id=${ids[$index]}
@@ -505,13 +505,14 @@ SH
 }
 
 test_native_non_prime_raw_launch_is_preserved() {
-  local rec id out status launch system_id copied_id echo_id shell_arg_id
+  local rec id out status launch system_id copied_id echo_id shell_arg_id assigned_id
   id=profile-raw-native-z15c
   system_id=profile-raw-system-native-z15c
   copied_id=profile-raw-copied-native-z15c
   echo_id=profile-raw-echo-prime-z15c
   shell_arg_id=profile-raw-shell-arg-prime-z15c
-  rec=$(make_spawn_case profile-raw-native claude "$id" "$system_id" "$copied_id" "$echo_id" "$shell_arg_id")
+  assigned_id=profile-raw-assigned-native-z15c
+  rec=$(make_spawn_case profile-raw-native claude "$id" "$system_id" "$copied_id" "$echo_id" "$shell_arg_id" "$assigned_id")
   read_case_record "$rec"
   ln -sf "$(type -P true)" "$FAKEBIN_DIR/custom-agent"
 
@@ -557,6 +558,13 @@ test_native_non_prime_raw_launch_is_preserved() {
   assert_contains "$out" "spawned $shell_arg_id harness=bash" "shell script argument was misclassified as Prime"
   launch=$(cat "$LAUNCH_LOG")
   assert_contains "$launch" "bash ./custom-shell-agent -c prime-agent" "non-Prime shell script command was not preserved"
+  : > "$LAUNCH_LOG"
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
+    "$assigned_id" "$PROJ_DIR" 'runner=custom-agent; $runner --flag')
+  status=$?
+  expect_code 0 "$status" "literal non-Prime command variables should remain available"
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" 'runner=custom-agent; $runner --flag' "non-Prime variable command was not preserved"
   pass "native non-Prime raw launch commands remain available"
 }
 
@@ -833,7 +841,14 @@ SH
   cat > "$FAKEBIN_DIR/prime-agent" <<'SH'
 #!/usr/bin/env bash
 set -eu
-if [ "${1:-}" = --version ]; then printf '%s\n' 'Prime Agent version v0.8.1 (project daemon build)'; exit 0; fi
+if [ "${1:-}" = --version ]; then
+  for name in PRIME_API_KEY DATABASE_URL GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0 SSH_PRIVATE_KEY; do
+    [ -z "${!name+x}" ] || exit 42
+  done
+  case "${GIT_CONFIG_COUNT:-0}" in ''|0) : ;; *) exit 42 ;; esac
+  printf '%s\n' 'Prime Agent version v0.8.1 (project daemon build)'
+  exit 0
+fi
 if [ "${1:-}" = --help ]; then printf '%s\n' 'Options: --daemon-socket <path>'; exit 0; fi
 : "${FM_FAKE_PRIME_ENV_LOG:?}"
 runtime_home=$(node -p 'require("node:os").homedir()')
@@ -897,6 +912,9 @@ SH
   printf '%s\n' '{"project":"global"}' > "$HOME_DIR/.prime/config.json"
 
   out=$(HOME="$operator_home" GIT_CONFIG_GLOBAL="$operator_home/.gitconfig" \
+    PRIME_API_KEY=version-prime DATABASE_URL=postgres://user:pass@example.test/db \
+    GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=credential.helper GIT_CONFIG_VALUE_0=version-helper \
+    SSH_PRIVATE_KEY=version-ssh-private \
     run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" \
       --model deepseek-v4-flash --effort max)
   status=$?

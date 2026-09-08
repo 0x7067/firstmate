@@ -1557,8 +1557,56 @@ raw_launch_word_is_time() {  # <word>
 }
 
 raw_launch_token_is_assignment() {  # <word>
-  case "$1" in [A-Za-z_]*=*) return 0 ;; esac
+  local name
+  case "$1" in [A-Za-z_]*=*) name=${1%%=*} ;; *) return 1 ;; esac
+  [[ "$name" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]
+}
+
+raw_launch_commit_assignments() {
+  local assignment name existing
+  local -a kept
+  [ "${#raw_pending[@]}" -gt 0 ] || return 0
+  for assignment in "${raw_pending[@]}"; do
+    name=${assignment%%=*}
+    kept=()
+    if [ "${#raw_vars[@]}" -gt 0 ]; then
+      for existing in "${raw_vars[@]}"; do
+        [ "${existing%%=*}" = "$name" ] || kept+=("$existing")
+      done
+    fi
+    if [ "${#kept[@]}" -gt 0 ]; then
+      raw_vars=("${kept[@]}" "$assignment")
+    else
+      raw_vars=("$assignment")
+    fi
+  done
+  raw_pending=()
+}
+
+raw_launch_variable_value() {  # <name>
+  local name=$1 i assignment
+  [ "${#raw_vars[@]}" -gt 0 ] || return 1
+  i=$((${#raw_vars[@]} - 1))
+  while [ "$i" -ge 0 ]; do
+    assignment=${raw_vars[$i]}
+    if [ "${assignment%%=*}" = "$name" ]; then
+      printf '%s\n' "${assignment#*=}"
+      return 0
+    fi
+    i=$((i - 1))
+  done
   return 1
+}
+
+raw_launch_command_variable_value() {  # <word>
+  local word=$1 name
+  case "$word" in
+    '$'{*}) name=${word#'${'}; name=${name%'}'} ;;
+    '$'*) name=${word#'$'} ;;
+    *) return 1 ;;
+  esac
+  [[ "$name" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]] || return 2
+  raw_launch_variable_value "$name" || return 2
 }
 
 raw_launch_node_script_prime_agent_detected() {  # <tokens...>
@@ -1585,9 +1633,12 @@ raw_launch_node_script_prime_agent_detected() {  # <tokens...>
 }
 
 raw_launch_prime_agent_detected() {  # <raw command>
-  local command_text=$1 token expect_command=1 skip_redir=0 i j shell_script
-  local -a tokens
+  local command_text=$1 token expect_command=1 skip_redir=0 i j shell_script var_value var_status env_saved_cwd= env_cwd_active=0
+  local RAW_LAUNCH_SCAN_CWD=${RAW_LAUNCH_SCAN_CWD:-${WT:-${PROJ_ABS:-$PWD}}}
+  local -a tokens raw_vars raw_pending
   tokens=()
+  raw_vars=()
+  raw_pending=()
   while IFS= read -r token; do
     tokens+=("$token")
   done < <(raw_launch_shell_tokens "$command_text")
@@ -1597,7 +1648,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
     if [ "$skip_redir" -eq 1 ]; then
       skip_redir=0
       case "$token" in
-        '<('|'>(') ;;
+        '$('|'<('|'>(') ;;
         *)
           if [ "$token" = '&' ] && [ $((i + 1)) -lt "${#tokens[@]}" ]; then
             i=$((i + 2))
@@ -1613,13 +1664,34 @@ raw_launch_prime_agent_detected() {  # <raw command>
     fi
     case "$token" in
       '<'|'>') skip_redir=1; i=$((i + 1)); continue ;;
-      ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') expect_command=1; i=$((i + 1)); continue ;;
+      ';'|'|'|'&'|'('|')'|'$('|'<('|'>(')
+        raw_launch_commit_assignments
+        case "$token" in ';'|'|'|'&')
+          if [ "$env_cwd_active" -eq 1 ]; then
+            RAW_LAUNCH_SCAN_CWD=$env_saved_cwd
+            env_cwd_active=0
+          fi
+          ;;
+        esac
+        expect_command=1
+        i=$((i + 1))
+        continue
+        ;;
     esac
     if [ "$expect_command" -eq 1 ]; then
       case "$token" in if|then|elif|else|fi|for|while|until|do|done|case|esac|in|select|function|'{'|'}'|'!') i=$((i + 1)); continue ;; esac
       if raw_launch_token_is_assignment "$token"; then
+        var_value=${token#*=}
+        case "$var_value" in *'$'*|'') ;; *) raw_pending+=("$token") ;; esac
         i=$((i + 1))
         continue
+      fi
+      raw_pending=()
+      if var_value=$(raw_launch_command_variable_value "$token"); then
+        token=${var_value%% *}
+      else
+        var_status=$?
+        [ "$var_status" -eq 2 ] && return 0
       fi
       if [ "$token" = eval ]; then
         shell_script=
@@ -1661,8 +1733,22 @@ raw_launch_prime_agent_detected() {  # <raw command>
           raw_launch_token_is_assignment "$token" && { i=$((i + 1)); continue; }
           case "$token" in
             -i|--ignore-environment|-0|--null) i=$((i + 1)); continue ;;
-            -u|--unset|-C|--chdir) i=$((i + 2)); continue ;;
-            --unset=*|--chdir=*) i=$((i + 1)); continue ;;
+            -u|--unset) i=$((i + 2)); continue ;;
+            -C|--chdir)
+              if [ $((i + 1)) -lt "${#tokens[@]}" ]; then
+                [ "$env_cwd_active" -eq 0 ] && env_saved_cwd=$RAW_LAUNCH_SCAN_CWD && env_cwd_active=1
+                RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "${tokens[$((i + 1))]}")
+              fi
+              i=$((i + 2))
+              continue
+              ;;
+            --unset=*) i=$((i + 1)); continue ;;
+            --chdir=*)
+              [ "$env_cwd_active" -eq 0 ] && env_saved_cwd=$RAW_LAUNCH_SCAN_CWD && env_cwd_active=1
+              RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "${token#--chdir=}")
+              i=$((i + 1))
+              continue
+              ;;
             -S|--split-string)
               if [ $((i + 1)) -lt "${#tokens[@]}" ]; then
                 raw_launch_prime_agent_detected "${tokens[$((i + 1))]}" && return 0
@@ -1709,6 +1795,8 @@ raw_launch_prime_agent_detected() {  # <raw command>
               fi
               break
               ;;
+            -o|-O|+o|+O|--rcfile|--init-file) j=$((j + 2)); continue ;;
+            --rcfile=*|--init-file=*) j=$((j + 1)); continue ;;
             -*) ;;
             *) break ;;
           esac
@@ -2105,18 +2193,6 @@ case "$HARNESS" in
       echo "error: prime-agent executable not found on PATH; install it or select a different verified harness" >&2
       exit 1
     }
-    # Verify the installed Prime Agent supports the scoped daemon (0.8.1+).
-    # A failed version probe or a version below 0.8.1 cannot receive --daemon-socket.
-    PRIME_VERSION=$("$PRIME_BIN" --version 2>/dev/null) || {
-      echo "error: Prime Agent requires version 0.8.1 or newer with --daemon-socket support; version probe failed" >&2
-      exit 1
-    }
-    PRIME_VERSION=${PRIME_VERSION##*v}
-    PRIME_VERSION=${PRIME_VERSION%% *}
-    if ! prime_version_supports_scoped_daemon "$PRIME_VERSION"; then
-      echo "error: Prime Agent requires version 0.8.1 or newer with --daemon-socket support; found $PRIME_VERSION" >&2
-      exit 1
-    fi
     ;;
   cursor)
     # `cursor` is not the CLI name, and the legacy alias `agent` is far too
@@ -3666,6 +3742,16 @@ if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
   sq_primenpm=$(shell_quote "$PRIME_HOME/.npmrc")
   sq_primenetrc=$(shell_quote "$PRIME_HOME/.netrc")
   PRIME_GIT_CONFIG_ENV_CLEANUP="for __fm_git_config_env in \$(env | awk -F= '\$1 ~ /^GIT_CONFIG_(KEY|VALUE)_[0-9]+\$/ { print \$1 }'); do unset \"\$__fm_git_config_env\"; done; for __fm_secret_env in \$(env | awk -F= '\$1 ~ /(^|_)(TOKEN|API_KEY|SECRET|AUTH_TOKEN|PRIVATE_KEY|DEPLOY_KEY|SIGNING_KEY)(_|\$)/ || \$1 ~ /(PASSWORD|PASSWD|AUTH_CONFIG|CREDENTIALS)/ || \$1 ~ /(^|_)(URL|URI|DSN)\$/ || \$1 ~ /^(PGPASSWORD|MYSQL_PWD|REDISCLI_AUTH)$/ { print \$1 }'); do unset \"\$__fm_secret_env\"; done; unset GIT_CONFIG_PARAMETERS; "
+  PRIME_VERSION=$(env -i PATH="${PATH:-/usr/bin:/bin}" HOME="$PRIME_HOME" GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL="$PRIME_HOME/.gitconfig" GIT_CONFIG_COUNT=0 PRIME_AGENT_CODING_AGENT_DIR="$PRIME_DIR" PRIME_AGENT_SESSION_DIR="$PRIME_SESSION_DIR" XDG_CONFIG_HOME="$PRIME_HOME/.config" XDG_DATA_HOME="$PRIME_HOME/.local/share" XDG_CACHE_HOME="$PRIME_HOME/.cache" XDG_STATE_HOME="$PRIME_HOME/.local/state" XDG_RUNTIME_DIR="$PRIME_HOME/.local/run" GH_CONFIG_DIR="$PRIME_HOME/.config/gh" CLOUDSDK_CONFIG="$PRIME_HOME/.config/gcloud" PRIME_AGENT_KERNEL_VENV="$PRIME_DIR/kernel-venv" PRIME_AGENT_KERNEL_PYTHON="$PRIME_DIR/kernel-venv/bin/python" AWS_SHARED_CREDENTIALS_FILE="$PRIME_HOME/.aws/credentials" AWS_CONFIG_FILE="$PRIME_HOME/.aws/config" AZURE_CONFIG_DIR="$PRIME_HOME/.azure" DOCKER_CONFIG="$PRIME_HOME/.docker" KUBECONFIG="$PRIME_HOME/.kube/config" HF_HOME="$PRIME_HOME/.cache/huggingface" GNUPGHOME="$PRIME_HOME/.gnupg" NPM_CONFIG_USERCONFIG="$PRIME_HOME/.npmrc" NETRC="$PRIME_HOME/.netrc" "$PRIME_BIN" --version 2>/dev/null) || {
+    echo "error: Prime Agent requires version 0.8.1 or newer with --daemon-socket support; version probe failed" >&2
+    exit 1
+  }
+  PRIME_VERSION=${PRIME_VERSION##*v}
+  PRIME_VERSION=${PRIME_VERSION%% *}
+  if ! prime_version_supports_scoped_daemon "$PRIME_VERSION"; then
+    echo "error: Prime Agent requires version 0.8.1 or newer with --daemon-socket support; found $PRIME_VERSION" >&2
+    exit 1
+  fi
   LAUNCH="HOME=$sq_primehome GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=$sq_primegit GIT_CONFIG_COUNT=0 PRIME_AGENT_CODING_AGENT_DIR=$sq_primedir PRIME_AGENT_SESSION_DIR=$sq_primesession XDG_CONFIG_HOME=$sq_primeconfig XDG_DATA_HOME=$sq_primedata XDG_CACHE_HOME=$sq_primecache XDG_STATE_HOME=$sq_primestate XDG_RUNTIME_DIR=$sq_primeruntime GH_CONFIG_DIR=$sq_primegh CLOUDSDK_CONFIG=$sq_primegcloud PRIME_AGENT_KERNEL_VENV=$sq_primekernel PRIME_AGENT_KERNEL_PYTHON=$sq_primepython AWS_SHARED_CREDENTIALS_FILE=$sq_primeawscreds AWS_CONFIG_FILE=$sq_primeawsconf AZURE_CONFIG_DIR=$sq_primeazure DOCKER_CONFIG=$sq_primedocker KUBECONFIG=$sq_primekube HF_HOME=$sq_primehf GNUPGHOME=$sq_primegnupg NPM_CONFIG_USERCONFIG=$sq_primenpm NETRC=$sq_primenetrc $LAUNCH"
 fi
 TURNEND="$STATE_REAL/$ID.turn-ended"
