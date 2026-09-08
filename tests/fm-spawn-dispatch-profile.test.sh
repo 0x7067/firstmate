@@ -984,7 +984,7 @@ SH
   second_wt="$CASE_DIR/wt-two"
   fm_git_worktree "$second_proj" "$second_wt" profile-prime-agent-other-project
   mkdir -p "$HOME_DIR/data/$second_id"
-  printf 'brief for %s\n' "$second_id" > "$HOME_DIR/data/$second_id/brief.md"
+  printf "# Task\n\n## Captain's intent\n\nbrief for %s\n\n## Firstmate spec\n\ntest spec\n" "$second_id" > "$HOME_DIR/data/$second_id/brief.md"
   out=$(HOME="$operator_home" GIT_CONFIG_GLOBAL="$operator_home/.gitconfig" \
     run_ship_spawn "$HOME_DIR" "$second_wt" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$second_id" "$second_proj")
   status=$?
@@ -1051,7 +1051,7 @@ SH
   alternate_id=profile-prime-agent-other-home-z8c
   mkdir -p "$alternate_home/data/$alternate_id" "$alternate_home/projects" "$alternate_home/state" "$alternate_home/config"
   printf '%s\n' prime-agent > "$alternate_home/config/crew-harness"
-  printf 'brief for %s\n' "$alternate_id" > "$alternate_home/data/$alternate_id/brief.md"
+  printf "# Task\n\n## Captain's intent\n\nbrief for %s\n\n## Firstmate spec\n\ntest spec\n" "$alternate_id" > "$alternate_home/data/$alternate_id/brief.md"
   touch "$alternate_home/state/.last-watcher-beat"
   out=$(HOME="$operator_home" GIT_CONFIG_GLOBAL="$operator_home/.gitconfig" \
     run_ship_spawn "$alternate_home" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$alternate_id" "$PROJ_DIR")

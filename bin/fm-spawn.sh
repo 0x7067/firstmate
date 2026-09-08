@@ -1575,7 +1575,7 @@ launch_template() {
     # firstmate-owned semantic lifecycle extension outside the worktree.
     # Project-scoped HOME, PRIME_AGENT_CODING_AGENT_DIR, and
     # PRIME_AGENT_SESSION_DIR are set by the outer env wrap below.
-    prime-agent) printf '%s' 'env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__--daemon-socket __PRIMEDAEMON__ -e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;    # muse (Muse Code): a positional prompt starts the supervised interactive
+    prime-agent) printf '%s' 'env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS -u PRIME_API_KEY -u OPENAI_API_KEY -u ANTHROPIC_OAUTH_TOKEN -u ANTHROPIC_AUTH_TOKEN -u GH_TOKEN -u SERPER_API_KEY -u PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN -u PRIME_TEAM_ID -u GOOGLE_APPLICATION_CREDENTIALS -u google_application_credentials -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL -u SSH_AUTH_SOCK -u SSH_AGENT_PID -u GIT_ASKPASS -u SSH_ASKPASS -u SUDO_ASKPASS -u GIT_SSH -u GIT_SSH_COMMAND -u PRIME_AGENT_CODING_AGENT_SESSION_DIR __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__--daemon-socket __PRIMEDAEMON__ -e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;    # muse (Muse Code): a positional prompt starts the supervised interactive
     # session. --yolo is the single flag that makes a crewmate pane viable: muse
     # ships approval prompts AND a filesystem/network sandbox ON by default
     # (--sandbox-network defaults to proxy-only, which refuses outright without a
@@ -1750,6 +1750,21 @@ case "$HARNESS" in
       echo "error: prime-agent executable not found on PATH; install it or select a different verified harness" >&2
       exit 1
     }
+    # Verify the installed Prime Agent supports the scoped daemon (0.8.1+).
+    # A failed version probe or a version below 0.8.1 cannot receive --daemon-socket.
+    PRIME_VERSION=$("$PRIME_BIN" --version 2>/dev/null) || {
+      echo "error: Prime Agent requires version 0.8.1 or newer with --daemon-socket support; version probe failed" >&2
+      exit 1
+    }
+    PRIME_VERSION=${PRIME_VERSION##*v}
+    PRIME_VERSION=${PRIME_VERSION%% *}
+    case "$PRIME_VERSION" in
+      0.8.1|0.8.[2-9]|0.9.*|[1-9].*) : ;;
+      *)
+        echo "error: Prime Agent requires version 0.8.1 or newer with --daemon-socket support; found $PRIME_VERSION" >&2
+        exit 1
+        ;;
+    esac
     ;;
   cursor)
     # `cursor` is not the CLI name, and the legacy alias `agent` is far too
@@ -3230,11 +3245,20 @@ mkdir -p "$STATE"
 STATE_REAL=$(cd "$STATE" && pwd -P)
 # Prime Agent project-scoped state setup (runs after STATE_REAL is resolved)
 if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
-  PRIME_PROJECT_HASH=$(printf '%s' "$PROJ_ABS" | shasum | cut -c1-16)
+  PRIME_PROJECT_HASH=$(printf '%s' "$PROJ_ABS" | sha256sum | cut -c1-16)
+  # Validate the digest is a proper hex string; a broken hash tool must not
+  # produce a malformed project key that collides or corrupts state.
+  case "$PRIME_PROJECT_HASH" in
+    *[!0-9a-f]*)
+      echo "error: cannot create project-scoped Prime Agent state: invalid project digest from sha256sum" >&2
+      exit 1
+      ;;
+  esac
   PRIME_HOME="$STATE_REAL/prime-projects/$PRIME_PROJECT_HASH/home"
   PRIME_DIR="$PRIME_HOME/.prime/agent"
   PRIME_SESSION_DIR="$PRIME_DIR/sessions"
-  PRIME_DAEMON_SOCKET="/tmp/firstmate-prime-$PRIME_PROJECT_HASH"
+  PRIME_HOME_HASH=$(printf '%s' "$STATE_REAL" | sha256sum | cut -c1-8)
+  PRIME_DAEMON_SOCKET="/tmp/firstmate-prime-$PRIME_PROJECT_HASH-$PRIME_HOME_HASH"
   mkdir -p "$PRIME_DIR" "$PRIME_SESSION_DIR"
   PRIME_EXT="$STATE_REAL/$ID.prime-ext.ts"
   sq_primeext=$(shell_quote "$PRIME_EXT")
@@ -3254,7 +3278,60 @@ PRIMEEOF
     echo "error: failed to arm the busy-state contract for $ID" >&2
     exit 1
   }
-  LAUNCH="HOME=$sq_primehome GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=$sq_primegit PRIME_AGENT_CODING_AGENT_DIR=$sq_primedir PRIME_AGENT_SESSION_DIR=$sq_primesession $LAUNCH"
+  # Credential and configuration isolation: redirect every ambient
+  # credential and config root into the project-scoped home so a worker
+  # cannot leak or inherit the operator's credentials.
+  mkdir -p "$PRIME_HOME/.config" "$PRIME_HOME/.local/share" "$PRIME_HOME/.cache"     "$PRIME_HOME/.local/state" "$PRIME_HOME/.local/run" "$PRIME_HOME/.config/gh"     "$PRIME_HOME/.config/gcloud" "$PRIME_HOME/.aws" "$PRIME_HOME/.azure"     "$PRIME_HOME/.docker" "$PRIME_HOME/.kube" "$PRIME_HOME/.cache/huggingface"     "$PRIME_HOME/.gnupg" "$PRIME_DIR/kernel-venv"
+  # Link the worktree .agents directory so Prime discovers project skills
+  # from its project-scoped HOME.
+  if [ -d "$WT/.agents" ]; then
+    ln -sfn "$WT/.agents" "$PRIME_HOME/.agents"
+  elif [ -d "$PROJ_ABS/.agents" ]; then
+    ln -sfn "$PROJ_ABS/.agents" "$PRIME_HOME/.agents"
+  elif [ -d "${HOME:-}/.agents" ]; then
+    ln -sfn "$HOME/.agents" "$PRIME_HOME/.agents"
+  fi
+  # Copy the operator gitconfig into the project-scoped home, stripping
+  # credential helpers so the worker cannot inherit the operator credentials.
+  # If the author identity is incomplete (name without email or vice versa),
+  # remove both so a stale partial identity cannot persist across relaunches.
+  # Serialize the gitconfig operations across concurrent relaunches of tasks
+  # in the same project so the copy and identity check do not race.
+  _prime_lock="$STATE_REAL/prime-projects/$PRIME_PROJECT_HASH.lock"
+  mkdir -p "$(dirname "$_prime_lock")"
+  while ! mkdir "$_prime_lock" 2>/dev/null; do sleep 0.05; done
+  if [ -f "${GIT_CONFIG_GLOBAL:-${HOME:-}/.gitconfig}" ]; then
+    cp "${GIT_CONFIG_GLOBAL:-${HOME:-}/.gitconfig}" "$PRIME_HOME/.gitconfig"
+    git config --file "$PRIME_HOME/.gitconfig" --unset credential.helper 2>/dev/null || true
+    _prime_git_name=$(git config --file "$PRIME_HOME/.gitconfig" user.name 2>/dev/null || true)
+    _prime_git_email=$(git config --file "$PRIME_HOME/.gitconfig" user.email 2>/dev/null || true)
+    if { [ -n "$_prime_git_name" ] && [ -z "$_prime_git_email" ]; } ||        { [ -z "$_prime_git_name" ] && [ -n "$_prime_git_email" ]; }; then
+      git config --file "$PRIME_HOME/.gitconfig" --unset user.name 2>/dev/null || true
+      git config --file "$PRIME_HOME/.gitconfig" --unset user.email 2>/dev/null || true
+    fi
+  else
+    : > "$PRIME_HOME/.gitconfig"
+  fi
+  rmdir "$_prime_lock" 2>/dev/null || true
+  sq_primeconfig=$(shell_quote "$PRIME_HOME/.config")
+  sq_primedata=$(shell_quote "$PRIME_HOME/.local/share")
+  sq_primecache=$(shell_quote "$PRIME_HOME/.cache")
+  sq_primestate=$(shell_quote "$PRIME_HOME/.local/state")
+  sq_primeruntime=$(shell_quote "$PRIME_HOME/.local/run")
+  sq_primegh=$(shell_quote "$PRIME_HOME/.config/gh")
+  sq_primegcloud=$(shell_quote "$PRIME_HOME/.config/gcloud")
+  sq_primekernel=$(shell_quote "$PRIME_DIR/kernel-venv")
+  sq_primepython=$(shell_quote "$PRIME_DIR/kernel-venv/bin/python")
+  sq_primeawscreds=$(shell_quote "$PRIME_HOME/.aws/credentials")
+  sq_primeawsconf=$(shell_quote "$PRIME_HOME/.aws/config")
+  sq_primeazure=$(shell_quote "$PRIME_HOME/.azure")
+  sq_primedocker=$(shell_quote "$PRIME_HOME/.docker")
+  sq_primekube=$(shell_quote "$PRIME_HOME/.kube/config")
+  sq_primehf=$(shell_quote "$PRIME_HOME/.cache/huggingface")
+  sq_primegnupg=$(shell_quote "$PRIME_HOME/.gnupg")
+  sq_primenpm=$(shell_quote "$PRIME_HOME/.npmrc")
+  sq_primenetrc=$(shell_quote "$PRIME_HOME/.netrc")
+  LAUNCH="HOME=$sq_primehome GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=$sq_primegit PRIME_AGENT_CODING_AGENT_DIR=$sq_primedir PRIME_AGENT_SESSION_DIR=$sq_primesession XDG_CONFIG_HOME=$sq_primeconfig XDG_DATA_HOME=$sq_primedata XDG_CACHE_HOME=$sq_primecache XDG_STATE_HOME=$sq_primestate XDG_RUNTIME_DIR=$sq_primeruntime GH_CONFIG_DIR=$sq_primegh CLOUDSDK_CONFIG=$sq_primegcloud PRIME_AGENT_KERNEL_VENV=$sq_primekernel PRIME_AGENT_KERNEL_PYTHON=$sq_primepython AWS_SHARED_CREDENTIALS_FILE=$sq_primeawscreds AWS_CONFIG_FILE=$sq_primeawsconf AZURE_CONFIG_DIR=$sq_primeazure DOCKER_CONFIG=$sq_primedocker KUBECONFIG=$sq_primekube HF_HOME=$sq_primehf GNUPGHOME=$sq_primegnupg NPM_CONFIG_USERCONFIG=$sq_primenpm NETRC=$sq_primenetrc $LAUNCH"
 fi
 TURNEND="$STATE_REAL/$ID.turn-ended"
 exclude_path() {
