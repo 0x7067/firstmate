@@ -1352,6 +1352,106 @@ else
   PROJ=${POS[1]}
   ARG3=${POS[2]:-}
 fi
+raw_launch_unmodeled_expansion_token() {
+  printf '%s\n' __fm_raw_launch_unmodeled_expansion__
+}
+
+raw_launch_collect_braced_parameter() {  # <command> <start-index-after-brace>
+  local command_text=$1 i=$2 len ch next quote='' depth=1 literal='${' has_command=0
+  len=${#command_text}
+  while [ "$i" -lt "$len" ]; do
+    ch=${command_text:$i:1}
+    literal=$literal$ch
+    if [ -n "$quote" ]; then
+      if [ "$ch" = "$quote" ]; then
+        quote=
+      elif [ "$quote" != "'" ] && [ "$ch" = \\ ] && [ $((i + 1)) -lt "$len" ]; then
+        i=$((i + 1))
+        literal=$literal${command_text:$i:1}
+      fi
+      i=$((i + 1))
+      continue
+    fi
+    case "$ch" in
+      "'"|'"') quote=$ch ;;
+      '`') has_command=1; quote=$ch ;;
+      \\)
+        if [ $((i + 1)) -lt "$len" ]; then
+          i=$((i + 1))
+          literal=$literal${command_text:$i:1}
+        fi
+        ;;
+      '$')
+        if [ $((i + 1)) -lt "$len" ]; then
+          next=${command_text:$((i + 1)):1}
+          if [ "$next" = '(' ]; then
+            has_command=1
+          elif [ "$next" = '{' ]; then
+            depth=$((depth + 1))
+            i=$((i + 1))
+            literal=$literal$next
+          fi
+        fi
+        ;;
+      '}')
+        depth=$((depth - 1))
+        [ "$depth" -gt 0 ] || break
+        ;;
+    esac
+    i=$((i + 1))
+  done
+  RAW_LAUNCH_COLLECT_LITERAL=$literal
+  RAW_LAUNCH_COLLECT_HAS_COMMAND=$has_command
+  RAW_LAUNCH_COLLECT_END=$i
+}
+
+raw_launch_collect_arithmetic_expansion() {  # <command> <start-index-after-double-paren>
+  local command_text=$1 i=$2 len ch quote='' depth=0 literal='$((' has_command=0
+  len=${#command_text}
+  while [ "$i" -lt "$len" ]; do
+    ch=${command_text:$i:1}
+    literal=$literal$ch
+    if [ -n "$quote" ]; then
+      if [ "$ch" = "$quote" ]; then
+        quote=
+      elif [ "$quote" != "'" ] && [ "$ch" = \\ ] && [ $((i + 1)) -lt "$len" ]; then
+        i=$((i + 1))
+        literal=$literal${command_text:$i:1}
+      fi
+      i=$((i + 1))
+      continue
+    fi
+    case "$ch" in
+      "'"|'"') quote=$ch ;;
+      '`') has_command=1; quote=$ch ;;
+      \\)
+        if [ $((i + 1)) -lt "$len" ]; then
+          i=$((i + 1))
+          literal=$literal${command_text:$i:1}
+        fi
+        ;;
+      '$')
+        if [ $((i + 1)) -lt "$len" ]; then
+          case "${command_text:$((i + 1)):1}" in '('|'{') has_command=1 ;; esac
+        fi
+        ;;
+      '(') depth=$((depth + 1)) ;;
+      ')')
+        if [ $((i + 1)) -lt "$len" ] && [ "${command_text:$((i + 1)):1}" = ')' ] && [ "$depth" -eq 0 ]; then
+          i=$((i + 1))
+          literal=$literal')'
+          break
+        fi
+        [ "$depth" -eq 0 ] || depth=$((depth - 1))
+        ;;
+    esac
+    i=$((i + 1))
+  done
+  RAW_LAUNCH_COLLECT_LITERAL=$literal
+  RAW_LAUNCH_COLLECT_HAS_COMMAND=$has_command
+  RAW_LAUNCH_COLLECT_END=$i
+}
+
 raw_launch_shell_tokens() {  # <raw command>
   local command_text=$1 len i ch next quote='' word='' inner depth op sub_quote
   len=${#command_text}
@@ -1361,6 +1461,24 @@ raw_launch_shell_tokens() {  # <raw command>
     if [ -n "$quote" ]; then
       if [ "$ch" = "$quote" ]; then
         quote=
+      elif [ "$quote" = '"' ] && [ "$ch" = '$' ] && [ $((i + 1)) -lt "$len" ] && [ "${command_text:$((i + 1)):1}" = '{' ]; then
+        raw_launch_collect_braced_parameter "$command_text" $((i + 2))
+        if [ "$RAW_LAUNCH_COLLECT_HAS_COMMAND" -eq 1 ]; then
+          if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+          raw_launch_unmodeled_expansion_token
+        else
+          word=$word$RAW_LAUNCH_COLLECT_LITERAL
+        fi
+        i=$RAW_LAUNCH_COLLECT_END
+      elif [ "$quote" = '"' ] && [ "$ch" = '$' ] && [ $((i + 2)) -lt "$len" ] && [ "${command_text:$((i + 1)):1}" = '(' ] && [ "${command_text:$((i + 2)):1}" = '(' ]; then
+        raw_launch_collect_arithmetic_expansion "$command_text" $((i + 3))
+        if [ "$RAW_LAUNCH_COLLECT_HAS_COMMAND" -eq 1 ]; then
+          if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+          raw_launch_unmodeled_expansion_token
+        else
+          word=$word$RAW_LAUNCH_COLLECT_LITERAL
+        fi
+        i=$RAW_LAUNCH_COLLECT_END
       elif [ "$quote" = '"' ] && [ "$ch" = '$' ] && [ $((i + 1)) -lt "$len" ] && [ "${command_text:$((i + 1)):1}" = '(' ] && { [ $((i + 2)) -ge "$len" ] || [ "${command_text:$((i + 2)):1}" != '(' ]; }; then
         if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
         inner=
@@ -1440,7 +1558,25 @@ raw_launch_shell_tokens() {  # <raw command>
       '$')
         next=
         [ $((i + 1)) -lt "$len" ] && next=${command_text:$((i + 1)):1}
-        if [ "$next" = '(' ] && { [ $((i + 2)) -ge "$len" ] || [ "${command_text:$((i + 2)):1}" != '(' ]; }; then
+        if [ "$next" = '{' ]; then
+          raw_launch_collect_braced_parameter "$command_text" $((i + 2))
+          if [ "$RAW_LAUNCH_COLLECT_HAS_COMMAND" -eq 1 ]; then
+            if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+            raw_launch_unmodeled_expansion_token
+          else
+            word=$word$RAW_LAUNCH_COLLECT_LITERAL
+          fi
+          i=$RAW_LAUNCH_COLLECT_END
+        elif [ "$next" = '(' ] && [ $((i + 2)) -lt "$len" ] && [ "${command_text:$((i + 2)):1}" = '(' ]; then
+          raw_launch_collect_arithmetic_expansion "$command_text" $((i + 3))
+          if [ "$RAW_LAUNCH_COLLECT_HAS_COMMAND" -eq 1 ]; then
+            if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+            raw_launch_unmodeled_expansion_token
+          else
+            word=$word$RAW_LAUNCH_COLLECT_LITERAL
+          fi
+          i=$RAW_LAUNCH_COLLECT_END
+        elif [ "$next" = '(' ]; then
           if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
           inner=
           depth=1
@@ -1570,7 +1706,7 @@ raw_launch_word_is_prime_agent() {  # <word>
   expanded=$(raw_launch_expand_shell_path "$word")
   base=${expanded##*/}
   [ "$base" != prime-agent ] || return 0
-  case "$word" in */*|'~'*|'$PWD'*|'${PWD}'*) resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded") ;; *) resolved=$(command -v -- "$word" 2>/dev/null || printf '%s' "$expanded") ;; esac
+  case "$word" in */*|'~'*|'$PWD'*|'${PWD}'*) resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded") ;; *) resolved=$(command -v -- "$word" 2>/dev/null) || return 0 ;; esac
   base=${resolved##*/}
   [ "$base" != prime-agent ] || return 0
   canonical=$(fm_cursor_canonical_path "$resolved") || canonical=$resolved
@@ -1746,6 +1882,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
   i=0
   while [ "$i" -lt "${#tokens[@]}" ]; do
     token=${tokens[$i]}
+    [ "$token" = __fm_raw_launch_unmodeled_expansion__ ] && return 0
     if [ "$skip_redir" -eq 1 ]; then
       skip_redir=0
       case "$token" in
