@@ -270,6 +270,9 @@ test_source_mismatch_cross_adapter() {
   [ "$out" = "busy pi-ext" ] || fail "pi-ext record on a pi task must classify, got '$out'"
   out=$(fm_busy_classify tmux w1 prime-agent t1 "$state")
   [ "$out" = "unknown source-mismatch" ] || fail "prime-agent must not trust Pi's source, got '$out'"
+  "$EV" apply "$state" t1 busy --gen "$gen" --source prime-ext --event agent-start
+  out=$(fm_busy_classify tmux w1 prime-agent t1 "$state")
+  [ "$out" = "busy prime-ext" ] || fail "prime-agent must trust Prime's busy source, got '$out'"
   "$EV" apply "$state" t1 idle --gen "$gen" --source prime-ext --event agent-end
   out=$(fm_busy_classify tmux w1 prime-agent t1 "$state")
   [ "$out" = "unknown legacy-prime-idle" ] || fail "legacy Prime idle must not prove current task idleness, got '$out'"

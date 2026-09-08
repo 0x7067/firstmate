@@ -424,6 +424,8 @@ fm_backlog_directory_present "$STATE" "state directory" || {
 . "$SCRIPT_DIR/fm-busy-lib.sh"
 # shellcheck source=bin/fm-cursor-lib.sh
 . "$SCRIPT_DIR/fm-cursor-lib.sh"
+# shellcheck source=bin/fm-prime-lib.sh
+. "$SCRIPT_DIR/fm-prime-lib.sh"
 # shellcheck source=bin/fm-pr-lib.sh
 . "$SCRIPT_DIR/fm-pr-lib.sh"
 # shellcheck source=bin/fm-dod-lib.sh
@@ -610,8 +612,14 @@ spawn_remote_secondmate() {
   else
     harness=$("$FM_ROOT/bin/fm-harness.sh" secondmate)
   fi
+  if [ "$harness" = prime-agent ]; then
+    fm_lock_release "$registry_lock" || true
+    fm_lock_release "$SPAWN_TASK_LOCK" || true
+    echo "error: prime-agent is a verified crewmate/scout adapter only and cannot run a secondmate; it has no primary supervision protocol. Select a harness verified for secondmates." >&2
+    return 1
+  fi
   case "$harness" in
-    claude|codex|opencode|pi|pi-signed|prime-agent|grok|kimi|cursor) ;;
+    claude|codex|opencode|pi|pi-signed|grok|kimi|cursor) ;;
     *)
       fm_lock_release "$registry_lock" || true
       fm_lock_release "$SPAWN_TASK_LOCK" || true
@@ -866,6 +874,8 @@ SPAWN_TASK_SET_LOCK=
 SPAWN_TASK_SET_LOCK_HELD=0
 SPAWN_TREEHOUSE_PROJECT_LOCK=
 SPAWN_TREEHOUSE_PROJECT_LOCK_HELD=0
+SPAWN_PRIME_PROJECT_LOCK=
+SPAWN_PRIME_PROJECT_LOCK_HELD=0
 RELAUNCH_REPLACEMENT_PENDING=0
 RELAUNCH_REPLACEMENT_BUSY_GEN=
 RELAUNCH_REPLACEMENT_HARNESS=
@@ -1000,6 +1010,10 @@ spawn_abort_cleanup() {
   if [ "$SPAWN_TREEHOUSE_PROJECT_LOCK_HELD" = 1 ]; then
     SPAWN_TREEHOUSE_PROJECT_LOCK_HELD=0
     fm_lock_release "$SPAWN_TREEHOUSE_PROJECT_LOCK" || true
+  fi
+  if [ "$SPAWN_PRIME_PROJECT_LOCK_HELD" = 1 ]; then
+    SPAWN_PRIME_PROJECT_LOCK_HELD=0
+    fm_lock_release "$SPAWN_PRIME_PROJECT_LOCK" || true
   fi
   if [ "$SPAWN_TASK_SET_LOCK_HELD" = 1 ]; then
     SPAWN_TASK_SET_LOCK_HELD=0
@@ -1337,45 +1351,47 @@ else
   PROJ=${POS[1]}
   ARG3=${POS[2]:-}
 fi
+raw_launch_prime_agent_detected() {  # <raw command>
+  local command_text=$1 word clean resolved base prev_node=0
+  local -a words
+  if printf '%s\n' "$command_text" \
+      | grep -Eq "(^|[[:space:];|&()<>\`\$])[\"']?([^[:space:];|&()<>\`\$\"'=]+/)?prime-agent([\"']?)([[:space:];|&()<>\`\$]|$)"; then
+    return 0
+  fi
+  read -r -a words <<< "$command_text"
+  for word in "${words[@]}"; do
+    clean=${word%\"}
+    clean=${clean#\"}
+    clean=${clean%\'}
+    clean=${clean#\'}
+    if [ "$prev_node" = 1 ] && fm_prime_package_entry_matches "$clean"; then
+      return 0
+    fi
+    prev_node=0
+    case "$clean" in [A-Za-z_]*=*) continue ;; esac
+    case "$clean" in command|exec|env) continue ;; esac
+    base=${clean##*/}
+    [ "$base" != prime-agent ] || return 0
+    resolved=$(command -v "$clean" 2>/dev/null || printf '%s' "$clean")
+    if fm_prime_package_entry_matches "$resolved"; then
+      return 0
+    fi
+    case "$base" in node*) prev_node=1 ;; esac
+  done
+  return 1
+}
+
+refuse_raw_prime_launch() {
+  echo "error: Prime isolation boundary: Prime Agent cannot be launched as a raw command; pass --harness prime-agent to use the verified path" >&2
+  exit 1
+}
+
 # A raw launch command that resolves to prime-agent is rejected at the
 # Prime isolation boundary even when --harness labels it differently; the
 # label cannot sanitize a raw Prime executable.
 if [ -n "$ARG3" ]; then
   case "$ARG3" in
-    *' '*)
-      _raw_prime_check=""
-      _raw_prime_cmd=""
-      for _word in $ARG3; do
-        case "$_word" in [A-Za-z_]*=*) continue ;; esac
-        case "$_word" in command|exec|env) continue ;; esac
-        _raw_prime_check=$(basename "$_word")
-        _raw_prime_cmd=$_word
-        break
-      done
-      if [ "$_raw_prime_check" = prime-agent ]; then
-        echo "error: Prime isolation boundary: Prime Agent cannot be launched as a raw command; pass --harness prime-agent to use the verified path" >&2
-        exit 1
-      fi
-      if [ -n "$HARNESS_ARG" ] && [ -n "$_raw_prime_cmd" ]; then
-        _raw_resolved=$(command -v "$_raw_prime_cmd" 2>/dev/null || printf '%s' "$_raw_prime_cmd")
-        _raw_resolved=$(readlink -f "$_raw_resolved" 2>/dev/null || printf '%s' "$_raw_resolved")
-        _raw_base=${_raw_resolved##*/}
-        case "$_raw_base" in
-          echo|sleep|true|false|cat|printf|test|ls|sh)
-            case "$_raw_resolved" in
-              /bin/*|/sbin/*|/usr/bin/*|/usr/sbin*) : ;;
-              *)
-                echo "error: Prime isolation boundary: raw launch command resolves to '$_raw_base' outside system paths" >&2
-                exit 1
-                ;;
-            esac
-            ;;
-          *)
-            echo "error: Prime isolation boundary: raw launch command does not resolve to a trusted system utility" >&2
-            exit 1
-            ;;
-        esac
-      fi      ;;
+    *' '*) raw_launch_prime_agent_detected "$ARG3" && refuse_raw_prime_launch ;;
   esac
 fi
 [ -z "$HARNESS_ARG" ] || ARG3=$HARNESS_ARG
@@ -1406,6 +1422,31 @@ pi_supports_tui_mode() {
   local executable=$1 help
   help=$("$executable" --help 2>&1) || return 1
   printf '%s\n' "$help" | grep -Eq -- '(^|[[:space:]])--tui-mode([[:space:]=]|$)'
+}
+
+prime_version_supports_scoped_daemon() {  # <version>
+  local version=$1 major minor patch_rest patch
+  IFS=. read -r major minor patch_rest _ <<< "$version"
+  patch=${patch_rest%%[!0-9]*}
+  case "$major$minor$patch" in *[!0-9]*|'') return 1 ;; esac
+  [ "$major" -gt 0 ] && return 0
+  [ "$major" -eq 0 ] || return 1
+  [ "$minor" -gt 8 ] && return 0
+  [ "$minor" -eq 8 ] || return 1
+  [ "$patch" -ge 1 ]
+}
+
+spawn_sha256_string() {  # <value>
+  local value=$1 digest
+  if command -v sha256sum >/dev/null 2>&1; then
+    digest=$(printf '%s' "$value" | sha256sum 2>/dev/null | awk '{print $1}') || return 1
+  elif command -v shasum >/dev/null 2>&1; then
+    digest=$(printf '%s' "$value" | shasum -a 256 2>/dev/null | awk '{print $1}') || return 1
+  else
+    return 1
+  fi
+  [[ "$digest" =~ ^[0-9a-f]{64}$ ]] || return 1
+  printf '%s' "$digest"
 }
 
 # omp pre-launch model validation. `omp models --json` (omp 18.1.11) prints
@@ -1575,7 +1616,7 @@ launch_template() {
     # firstmate-owned semantic lifecycle extension outside the worktree.
     # Project-scoped HOME, PRIME_AGENT_CODING_AGENT_DIR, and
     # PRIME_AGENT_SESSION_DIR are set by the outer env wrap below.
-    prime-agent) printf '%s' 'env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS -u PRIME_API_KEY -u OPENAI_API_KEY -u ANTHROPIC_OAUTH_TOKEN -u ANTHROPIC_AUTH_TOKEN -u GH_TOKEN -u SERPER_API_KEY -u PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN -u PRIME_TEAM_ID -u GOOGLE_APPLICATION_CREDENTIALS -u google_application_credentials -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL -u SSH_AUTH_SOCK -u SSH_AGENT_PID -u GIT_ASKPASS -u SSH_ASKPASS -u SUDO_ASKPASS -u GIT_SSH -u GIT_SSH_COMMAND -u PRIME_AGENT_CODING_AGENT_SESSION_DIR __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__--daemon-socket __PRIMEDAEMON__ -e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;    # muse (Muse Code): a positional prompt starts the supervised interactive
+    prime-agent) printf '%s' 'env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS -u PRIME_API_KEY -u PRIME_AGENT_TRACES_API_KEY -u OPENAI_API_KEY -u ANTHROPIC_OAUTH_TOKEN -u ANTHROPIC_AUTH_TOKEN -u GH_TOKEN -u SERPER_API_KEY -u PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN -u PRIME_TEAM_ID -u GOOGLE_APPLICATION_CREDENTIALS -u google_application_credentials -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL -u SSH_AUTH_SOCK -u SSH_AGENT_PID -u GIT_ASKPASS -u SSH_ASKPASS -u SUDO_ASKPASS -u GIT_SSH -u GIT_SSH_COMMAND -u PRIME_AGENT_CODING_AGENT_SESSION_DIR __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__--daemon-socket __PRIMEDAEMON__ -e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;    # muse (Muse Code): a positional prompt starts the supervised interactive
     # session. --yolo is the single flag that makes a crewmate pane viable: muse
     # ships approval prompts AND a filesystem/network sandbox ON by default
     # (--sandbox-network defaults to proxy-only, which refuses outright without a
@@ -1633,52 +1674,16 @@ case "$ARG3" in
     RAW_LAUNCH=1
     LAUNCH=$ARG3
     HARNESS=""
-    # A dispatch profile requires a verified harness; a raw command cannot
-    # prove complete runtime identity through the profile's resolution path.
-    if [ -f "$CONFIG/crew-dispatch.json" ]; then
-      echo "error: config/crew-dispatch.json is active - a raw launch command cannot prove complete runtime identity through the dispatch profile; pass an explicit verified harness" >&2
-      exit 1
-    fi
+    raw_launch_prime_agent_detected "$LAUNCH" && refuse_raw_prime_launch
     # Find the first real executable word, skipping env assignments and shell
     # builtins (command, exec, env) that prefix the actual command.
-    raw_cmd=""
-    for word in $LAUNCH; do
+    read -r -a raw_words <<< "$LAUNCH"
+    for word in "${raw_words[@]}"; do
       case "$word" in [A-Za-z_]*=*) continue ;; esac
       case "$word" in command|exec|env) continue ;; esac
       HARNESS=$(basename "$word")
-      raw_cmd=$word
       break
     done
-    # Prime Agent must never be launched as a raw command; it requires the
-    # verified harness path for its isolation boundary.
-    if [ "$HARNESS" = prime-agent ]; then
-      echo "error: Prime isolation boundary: Prime Agent cannot be launched as a raw command; pass --harness prime-agent to use the verified path" >&2
-      exit 1
-    fi
-    # Admit only raw commands that resolve to a trusted simple utility under a
-    # system path. This prevents arbitrary executables and wrapper scripts from
-    # crossing the Prime isolation boundary.
-    raw_resolved=""
-    if [ -n "$raw_cmd" ]; then
-      raw_resolved=$(command -v "$raw_cmd" 2>/dev/null || printf '%s' "$raw_cmd")
-      raw_resolved=$(readlink -f "$raw_resolved" 2>/dev/null || printf '%s' "$raw_resolved")
-    fi
-    raw_base=${raw_resolved##*/}
-    case "$raw_base" in
-      echo|sleep|true|false|cat|printf|test|ls|sh)
-        case "$raw_resolved" in
-          /bin/*|/sbin/*|/usr/bin/*|/usr/sbin*) : ;;
-          *)
-            echo "error: Prime isolation boundary: raw launch command resolves to '$raw_base' outside system paths" >&2
-            exit 1
-            ;;
-        esac
-        ;;
-      *)
-        echo "error: Prime isolation boundary: raw launch command does not resolve to a trusted system utility" >&2
-        exit 1
-        ;;
-    esac
     ;;
   '')
     # No explicit harness: resolve from config. A secondmate AGENT launches on the
@@ -1723,13 +1728,17 @@ if [ "$KIND" = secondmate ] && { [ "$HARNESS" = muse ] || [ "$HARNESS" = gemini 
   exit 1
 fi
 
-# rovo carries the same primary-supervision gap as muse: no turn-end hook, no
-# verified primary integration, so a secondmate (a firstmate instance that must
-# itself act as a primary) could never be supervised. Refuse loudly rather than
-# standing one up with no way to arm its watch cycle.
-if [ "$KIND" = secondmate ] && [ "$HARNESS" = rovo ]; then
-  echo "error: rovo is a verified crewmate/scout adapter only and cannot run a secondmate; it has no primary supervision protocol. Select a harness verified for secondmates." >&2
-  exit 1
+# Prime Agent and rovo carry the same primary-supervision gap as muse: no verified
+# primary integration, so a secondmate (a firstmate instance that must itself act
+# as a primary) could never be supervised. Refuse loudly rather than standing one
+# up with no way to arm its watch cycle.
+if [ "$KIND" = secondmate ]; then
+  case "$HARNESS" in
+    prime-agent|rovo)
+      echo "error: $HARNESS is a verified crewmate/scout adapter only and cannot run a secondmate; it has no primary supervision protocol. Select a harness verified for secondmates." >&2
+      exit 1
+      ;;
+  esac
 fi
 
 case "$HARNESS" in
@@ -1758,13 +1767,10 @@ case "$HARNESS" in
     }
     PRIME_VERSION=${PRIME_VERSION##*v}
     PRIME_VERSION=${PRIME_VERSION%% *}
-    case "$PRIME_VERSION" in
-      0.8.1|0.8.[2-9]|0.9.*|[1-9].*) : ;;
-      *)
-        echo "error: Prime Agent requires version 0.8.1 or newer with --daemon-socket support; found $PRIME_VERSION" >&2
-        exit 1
-        ;;
-    esac
+    if ! prime_version_supports_scoped_daemon "$PRIME_VERSION"; then
+      echo "error: Prime Agent requires version 0.8.1 or newer with --daemon-socket support; found $PRIME_VERSION" >&2
+      exit 1
+    fi
     ;;
   cursor)
     # `cursor` is not the CLI name, and the legacy alias `agent` is far too
@@ -3245,19 +3251,19 @@ mkdir -p "$STATE"
 STATE_REAL=$(cd "$STATE" && pwd -P)
 # Prime Agent project-scoped state setup (runs after STATE_REAL is resolved)
 if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
-  PRIME_PROJECT_HASH=$(printf '%s' "$PROJ_ABS" | sha256sum | cut -c1-16)
-  # Validate the digest is a proper hex string; a broken hash tool must not
-  # produce a malformed project key that collides or corrupts state.
-  case "$PRIME_PROJECT_HASH" in
-    *[!0-9a-f]*)
-      echo "error: cannot create project-scoped Prime Agent state: invalid project digest from sha256sum" >&2
-      exit 1
-      ;;
-  esac
+  PRIME_PROJECT_DIGEST=$(spawn_sha256_string "$PROJ_ABS") || {
+    echo "error: cannot create project-scoped Prime Agent state: invalid project digest" >&2
+    exit 1
+  }
+  PRIME_PROJECT_HASH=${PRIME_PROJECT_DIGEST:0:16}
+  PRIME_HOME_DIGEST=$(spawn_sha256_string "$STATE_REAL") || {
+    echo "error: cannot create project-scoped Prime Agent state: invalid home digest" >&2
+    exit 1
+  }
   PRIME_HOME="$STATE_REAL/prime-projects/$PRIME_PROJECT_HASH/home"
   PRIME_DIR="$PRIME_HOME/.prime/agent"
   PRIME_SESSION_DIR="$PRIME_DIR/sessions"
-  PRIME_HOME_HASH=$(printf '%s' "$STATE_REAL" | sha256sum | cut -c1-8)
+  PRIME_HOME_HASH=${PRIME_HOME_DIGEST:0:8}
   PRIME_DAEMON_SOCKET="/tmp/firstmate-prime-$PRIME_PROJECT_HASH-$PRIME_HOME_HASH"
   mkdir -p "$PRIME_DIR" "$PRIME_SESSION_DIR"
   PRIME_EXT="$STATE_REAL/$ID.prime-ext.ts"
@@ -3267,52 +3273,32 @@ if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
   sq_primedir=$(shell_quote "$PRIME_DIR")
   sq_primesession=$(shell_quote "$PRIME_SESSION_DIR")
   sq_primedaemon=$(shell_quote "$PRIME_DAEMON_SOCKET")
-  state_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$STATE_REAL" 2>/dev/null || printf '"%s"' "$STATE_REAL")
-  turnend_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$STATE_REAL/$ID.turn-ended" 2>/dev/null || printf '"%s"' "$STATE_REAL/$ID.turn-ended")
-  cat > "$PRIME_EXT" <<PRIMEEOF
-// Firstmate-owned Prime Agent semantic lifecycle extension.
-const STATE_DIR = $state_literal;
-const TURNEND_PATH = $turnend_literal;
-PRIMEEOF
-  BUSY_GEN=$("$FM_ROOT/bin/fm-busy-event.sh" arm "$STATE_REAL" "$ID") || {
-    echo "error: failed to arm the busy-state contract for $ID" >&2
-    exit 1
-  }
   # Credential and configuration isolation: redirect every ambient
   # credential and config root into the project-scoped home so a worker
   # cannot leak or inherit the operator's credentials.
   mkdir -p "$PRIME_HOME/.config" "$PRIME_HOME/.local/share" "$PRIME_HOME/.cache"     "$PRIME_HOME/.local/state" "$PRIME_HOME/.local/run" "$PRIME_HOME/.config/gh"     "$PRIME_HOME/.config/gcloud" "$PRIME_HOME/.aws" "$PRIME_HOME/.azure"     "$PRIME_HOME/.docker" "$PRIME_HOME/.kube" "$PRIME_HOME/.cache/huggingface"     "$PRIME_HOME/.gnupg" "$PRIME_DIR/kernel-venv"
-  # Link the worktree .agents directory so Prime discovers project skills
-  # from its project-scoped HOME.
-  if [ -d "$WT/.agents" ]; then
-    ln -sfn "$WT/.agents" "$PRIME_HOME/.agents"
-  elif [ -d "$PROJ_ABS/.agents" ]; then
+  if [ -d "$PROJ_ABS/.agents" ]; then
     ln -sfn "$PROJ_ABS/.agents" "$PRIME_HOME/.agents"
   elif [ -d "${HOME:-}/.agents" ]; then
     ln -sfn "$HOME/.agents" "$PRIME_HOME/.agents"
+  elif [ -L "$PRIME_HOME/.agents" ]; then
+    rm -f "$PRIME_HOME/.agents"
   fi
-  # Copy the operator gitconfig into the project-scoped home, stripping
-  # credential helpers so the worker cannot inherit the operator credentials.
-  # If the author identity is incomplete (name without email or vice versa),
-  # remove both so a stale partial identity cannot persist across relaunches.
-  # Serialize the gitconfig operations across concurrent relaunches of tasks
-  # in the same project so the copy and identity check do not race.
-  _prime_lock="$STATE_REAL/prime-projects/$PRIME_PROJECT_HASH.lock"
-  mkdir -p "$(dirname "$_prime_lock")"
-  while ! mkdir "$_prime_lock" 2>/dev/null; do sleep 0.05; done
-  if [ -f "${GIT_CONFIG_GLOBAL:-${HOME:-}/.gitconfig}" ]; then
-    cp "${GIT_CONFIG_GLOBAL:-${HOME:-}/.gitconfig}" "$PRIME_HOME/.gitconfig"
-    git config --file "$PRIME_HOME/.gitconfig" --unset credential.helper 2>/dev/null || true
-    _prime_git_name=$(git config --file "$PRIME_HOME/.gitconfig" user.name 2>/dev/null || true)
-    _prime_git_email=$(git config --file "$PRIME_HOME/.gitconfig" user.email 2>/dev/null || true)
-    if { [ -n "$_prime_git_name" ] && [ -z "$_prime_git_email" ]; } ||        { [ -z "$_prime_git_name" ] && [ -n "$_prime_git_email" ]; }; then
-      git config --file "$PRIME_HOME/.gitconfig" --unset user.name 2>/dev/null || true
-      git config --file "$PRIME_HOME/.gitconfig" --unset user.email 2>/dev/null || true
-    fi
-  else
-    : > "$PRIME_HOME/.gitconfig"
+  _prime_git_name=$(git config --global --get user.name 2>/dev/null || true)
+  _prime_git_email=$(git config --global --get user.email 2>/dev/null || true)
+  SPAWN_PRIME_PROJECT_LOCK="$STATE_REAL/prime-projects/$PRIME_PROJECT_HASH.lock"
+  mkdir -p "$(dirname "$SPAWN_PRIME_PROJECT_LOCK")"
+  fm_lock_acquire_wait "$SPAWN_PRIME_PROJECT_LOCK"
+  SPAWN_PRIME_PROJECT_LOCK_HELD=1
+  _prime_git_tmp="$PRIME_HOME/.gitconfig.tmp.${BASHPID:-$$}"
+  : > "$_prime_git_tmp"
+  if [ -n "$_prime_git_name" ] && [ -n "$_prime_git_email" ]; then
+    git config --file "$_prime_git_tmp" user.name "$_prime_git_name"
+    git config --file "$_prime_git_tmp" user.email "$_prime_git_email"
   fi
-  rmdir "$_prime_lock" 2>/dev/null || true
+  mv "$_prime_git_tmp" "$PRIME_HOME/.gitconfig"
+  fm_lock_release "$SPAWN_PRIME_PROJECT_LOCK"
+  SPAWN_PRIME_PROJECT_LOCK_HELD=0
   sq_primeconfig=$(shell_quote "$PRIME_HOME/.config")
   sq_primedata=$(shell_quote "$PRIME_HOME/.local/share")
   sq_primecache=$(shell_quote "$PRIME_HOME/.cache")
@@ -3363,9 +3349,8 @@ if [ "$KIND" != secondmate ]; then
   # embedded into each adapter's wiring so an event from a superseded
   # incarnation is rejected as stale. Grok and rovo stay on their isolated
   # rendered-tail fallbacks and standalone Kimi stays unknown until
-  # fm_busy_kimi_verified opens, so none of the three is armed here. Gemini IS
-  # armed: its BeforeAgent / AfterAgent / SessionEnd hooks are a verified
-  # open-close pair.
+  # fm_busy_kimi_verified opens, so none of the three is armed here. Gemini and
+  # Prime are armed through firstmate-owned lifecycle hooks.
   BUSY_GEN=
   case "$HARNESS" in
     codex*)
@@ -3376,7 +3361,7 @@ if [ "$KIND" != secondmate ]; then
       ;;
   esac
   case "$HARNESS" in
-    claude*|opencode*|pi|pi-signed|omp)
+    claude*|opencode*|pi|pi-signed|prime-agent|omp)
       BUSY_GEN=$("$FM_ROOT/bin/fm-busy-event.sh" arm "$STATE_REAL" "$ID") || {
         echo "error: failed to arm the busy-state contract for $ID" >&2
         exit 1
@@ -3512,6 +3497,65 @@ export const FmBusyState = async () => {
 };
 EOF
       exclude_path '.opencode/plugins/fm-busy-state.js'
+      ;;
+    prime-agent)
+      state_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$STATE_REAL")
+      id_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$ID")
+      gen_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$BUSY_GEN")
+      turnend_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$TURNEND")
+      busy_event_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$FM_ROOT/bin/fm-busy-event.sh")
+      cat > "$PRIME_EXT" <<EOF
+import { execFile } from "node:child_process";
+const STATE_DIR = $state_literal;
+const TASK_ID = $id_literal;
+const BUSY_GEN = $gen_literal;
+const TURNEND_PATH = $turnend_literal;
+const BUSY_EVENT = $busy_event_literal;
+const coordinatorKey = STATE_DIR + "\0" + TASK_ID + "\0" + BUSY_GEN;
+const coordinators = globalThis.__firstmatePrimeBusyCoordinators ??= new Map();
+const coordinator = coordinators.get(coordinatorKey) ?? { active: new Set(), compacting: new Set() };
+coordinators.set(coordinatorKey, coordinator);
+const eventSession = (event) => String(event?.sessionId ?? event?.sessionID ?? event?.session?.id ?? event?.runId ?? event?.id ?? "root");
+const busyEvent = (state, event) =>
+  new Promise((resolve) => {
+    execFile(BUSY_EVENT, [
+      "apply", STATE_DIR, TASK_ID, state,
+      "--gen", BUSY_GEN, "--source", "prime-ext", "--event", event,
+    ], () => resolve());
+  });
+const touchTurnEnd = () =>
+  new Promise((resolve) => {
+    execFile("touch", [TURNEND_PATH], () => resolve());
+  });
+const publishActiveState = (event) =>
+  coordinator.active.size > 0 || coordinator.compacting.size > 0
+    ? busyEvent("busy", event)
+    : busyEvent("unknown", event);
+export default function (pi) {
+  pi.on("agent_start", (event) => {
+    const session = eventSession(event);
+    coordinator.compacting.delete(session);
+    coordinator.active.add(session);
+    return busyEvent("busy", "agent-start");
+  });
+  pi.on("session_before_compact", (event) => {
+    const session = eventSession(event);
+    coordinator.active.add(session);
+    coordinator.compacting.add(session);
+    return busyEvent("busy", "session-before-compact");
+  });
+  pi.on("turn_end", () => touchTurnEnd());
+  pi.on("agent_end", (event) => {
+    const session = eventSession(event);
+    if (event?.willContinue === true || coordinator.compacting.has(session)) {
+      coordinator.active.add(session);
+      return busyEvent("busy", "agent-end-will-continue");
+    }
+    coordinator.active.delete(session);
+    return publishActiveState("agent-end");
+  });
+}
+EOF
       ;;
     pi|pi-signed)
       # Written OUTSIDE the worktree: pi's project-trust gate fires on any extension

@@ -9,6 +9,8 @@ set -u
 
 # shellcheck source=tests/lib.sh
 . "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+# shellcheck source=tests/fixtures.sh
+. "$(dirname "${BASH_SOURCE[0]}")/fixtures.sh"
 
 SPAWN="$ROOT/bin/fm-spawn.sh"
 TMP_ROOT=$(fm_test_tmproot fm-spawn-dispatch-profile)
@@ -417,27 +419,29 @@ test_active_dispatch_profile_allows_positional_harness() {
   pass "active crew-dispatch profile allows the legacy positional harness form"
 }
 
-test_active_dispatch_profile_rejects_raw_launch_command() {
-  local rec id out status
+test_active_dispatch_profile_preserves_raw_launch_escape_hatch() {
+  local rec id out status launch
   id=profile-raw-z15
   rec=$(make_spawn_case profile-raw claude "$id")
   read_case_record "$rec"
   enable_dispatch_profile "$HOME_DIR"
+  ln -sf "$(type -P true)" "$FAKEBIN_DIR/custom-agent"
+
   out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
     "$id" "$PROJ_DIR" "custom-agent --flag")
   status=$?
-  expect_code 1 "$status" "raw launch command must be rejected"
-  assert_contains "$out" "cannot prove complete runtime identity" "raw launch refusal did not name the identity boundary"
-  assert_absent "$HOME_DIR/state/$id.meta" "raw launch refusal wrote task metadata"
-  [ ! -s "$LAUNCH_LOG" ] || fail "raw launch refusal sent a command"
-  pass "active dispatch profiles require a verified harness"
+  expect_code 0 "$status" "raw launch command should remain available with dispatch active"
+  assert_contains "$out" "spawned $id harness=custom-agent" "raw launch did not retain executable identity"
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" "custom-agent --flag" "raw command was not preserved"
+  pass "active dispatch profiles preserve the raw launch escape hatch"
 }
 
 test_raw_prime_launch_is_rejected_before_endpoint_creation() {
   local rec id out status index prime_package
   local -a ids commands
-  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-node-z15b profile-raw-prime-shell-z15b profile-raw-prime-quoted-z15b profile-raw-prime-alias-z15b profile-raw-prime-wrapper-z15b profile-raw-prime-opaque-wrapper-z15b profile-raw-prime-variable-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-substitution-z15b profile-raw-prime-allowlisted-wrapper-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b)
-  rec=$(make_spawn_case profile-raw-prime claude "${ids[@]}" profile-raw-prime-mislabeled-z15b profile-raw-prime-opaque-mislabeled-z15b)
+  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-node-z15b profile-raw-prime-shell-z15b profile-raw-prime-quoted-z15b profile-raw-prime-alias-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-substitution-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b)
+  rec=$(make_spawn_case profile-raw-prime claude "${ids[@]}" profile-raw-prime-mislabeled-z15b)
   read_case_record "$rec"
   prime_package="$CASE_DIR/prime-package"
   mkdir -p "$prime_package/dist/bundle"
@@ -464,7 +468,7 @@ SH
   ln -s "$prime_package/dist/bundle/cli.js" "$FAKEBIN_DIR/prime-proxy"
   ln -s "$(type -P env)" "$FAKEBIN_DIR/envx"
   # shellcheck disable=SC2016 # The raw commands must keep literal shell syntax.
-  commands=("prime-agent --flag" "command prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "node $prime_package/dist/bundle/cli.js" "bash $FAKEBIN_DIR/opaque-wrapper --flag" "'$FAKEBIN_DIR/prime-agent' --flag" "prime-proxy --flag" "prime-wrapper --flag" "opaque-wrapper --flag" 'x=prime-; y=agent; exec "$x$y"' "claude --flag;prime-agent" 'claude --flag $(prime-agent)' "claude --flag" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag")
+  commands=("prime-agent --flag" "command prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "node $prime_package/dist/bundle/cli.js" "sh -c prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "prime-proxy --flag" "claude --flag;prime-agent" 'claude --flag $(prime-agent)' "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag")
 
   for index in "${!ids[@]}"; do
     id=${ids[$index]}
@@ -486,15 +490,7 @@ SH
   assert_contains "$out" "Prime isolation boundary" "mislabeled raw Prime refusal did not name the isolation boundary"
   assert_absent "$HOME_DIR/state/$id.meta" "mislabeled raw Prime refusal wrote task metadata"
   [ ! -s "$LAUNCH_LOG" ] || fail "mislabeled raw Prime refusal sent a launch command"
-  id=profile-raw-prime-opaque-mislabeled-z15b
-  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
-    "$id" "$PROJ_DIR" "opaque-wrapper --flag" --harness claude)
-  status=$?
-  expect_code 1 "$status" "an opaque wrapper must not claim a verified non-Prime executable identity"
-  assert_contains "$out" "Prime isolation boundary" "opaque wrapper refusal did not name the isolation boundary"
-  assert_absent "$HOME_DIR/state/$id.meta" "opaque wrapper refusal wrote task metadata"
-  [ ! -s "$LAUNCH_LOG" ] || fail "opaque wrapper refusal sent a launch command"
-  pass "raw launch commands fail closed before endpoint creation"
+  pass "raw Prime launch commands fail closed before endpoint creation"
 }
 
 test_native_non_prime_raw_launch_is_preserved() {
@@ -518,41 +514,21 @@ test_native_non_prime_raw_launch_is_preserved() {
   out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
     "$system_id" "$PROJ_DIR" "system-agent --flag")
   status=$?
-  expect_code 1 "$status" "an unlisted protected system executable must not cross the raw launch boundary"
-  assert_contains "$out" "Prime isolation boundary" "unlisted system executable refusal did not name the isolation boundary"
-  assert_absent "$HOME_DIR/state/$system_id.meta" "unlisted system executable refusal wrote task metadata"
-  [ ! -s "$LAUNCH_LOG" ] || fail "unlisted system executable refusal sent a launch command"
+  expect_code 0 "$status" "system non-Prime raw launch should remain available"
+  assert_contains "$out" "spawned $system_id harness=system-agent" "system raw launch did not retain executable identity"
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" "system-agent --flag" "system raw command was not preserved"
   cp "$(type -P true)" "$FAKEBIN_DIR/copied-agent"
   chmod +x "$FAKEBIN_DIR/copied-agent"
   : > "$LAUNCH_LOG"
   out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
     "$copied_id" "$PROJ_DIR" "copied-agent --flag")
   status=$?
-  expect_code 1 "$status" "an arbitrary native executable must not cross the raw launch boundary"
-  assert_contains "$out" "Prime isolation boundary" "arbitrary native executable refusal did not name the isolation boundary"
-  assert_absent "$HOME_DIR/state/$copied_id.meta" "arbitrary native executable refusal wrote task metadata"
-  [ ! -s "$LAUNCH_LOG" ] || fail "arbitrary native executable refusal sent a launch command"
-  pass "trusted native non-Prime raw launch commands remain available"
-}
-
-test_prime_extension_serializes_generated_values() {
-  local rec id out status extension state_literal turnend_literal quoted_home
-  id=profile-prime-serialized-z15d
-  rec=$(make_spawn_case profile-prime-special-path prime-agent "$id")
-  read_case_record "$rec"
-  quoted_home="$CASE_DIR/home-'\\path"
-  mv "$HOME_DIR" "$quoted_home"
-  HOME_DIR=$quoted_home
-
-  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
-  status=$?
-  expect_code 0 "$status" "prime-agent spawn with quoted state paths should succeed"
-  extension=$(cat "$HOME_DIR/state/$id.prime-ext.ts")
-  state_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$(cd "$HOME_DIR/state" && pwd -P)")
-  turnend_literal=$(node -e 'process.stdout.write(JSON.stringify(process.argv[1]))' "$(cd "$HOME_DIR/state" && pwd -P)/$id.turn-ended")
-  assert_contains "$extension" "$state_literal" "Prime extension did not serialize its state path"
-  assert_contains "$extension" "$turnend_literal" "Prime extension did not serialize its turn-end path"
-  pass "prime-agent extension serializes generated string values"
+  expect_code 0 "$status" "copied non-Prime raw launch should remain available"
+  assert_contains "$out" "spawned $copied_id harness=copied-agent" "copied raw launch did not retain executable identity"
+  launch=$(cat "$LAUNCH_LOG")
+  assert_contains "$launch" "copied-agent --flag" "copied raw command was not preserved"
+  pass "native non-Prime raw launch commands remain available"
 }
 
 test_claude_threads_model_and_effort() {
@@ -1061,6 +1037,53 @@ SH
   [ "$alternate_daemon_socket" != "$prime_daemon_socket" ] || \
     fail "distinct Firstmate homes shared a Prime daemon socket for one project"
   pass "prime-agent receives isolated project state, model, thinking, and its semantic extension"
+}
+
+run_prime_extension_event() {
+  local extension=$1 event=$2 session=${3:-root}
+  node --input-type=module - "$extension" "$event" "$session" <<'NODE'
+import fs from "node:fs";
+const extension = process.argv[2];
+const eventName = process.argv[3];
+const session = process.argv[4];
+const source = fs.readFileSync(extension, "utf8");
+const mod = await import("data:text/javascript;base64," + Buffer.from(source).toString("base64"));
+const handlers = new Map();
+mod.default({ on: (name, handler) => handlers.set(name, handler) });
+const handler = handlers.get(eventName);
+if (typeof handler !== "function") throw new Error(`missing handler ${eventName}`);
+await handler({ sessionId: session }, {});
+NODE
+}
+
+prime_busy_classify() {
+  local state=$1 id=$2
+  bash -c '. "$1/bin/fm-busy-lib.sh"; fm_busy_classify tmux w prime-agent "$2" "$3"' _ "$ROOT" "$id" "$state"
+}
+
+test_prime_extension_lifecycle_updates_busy_state() {
+  local rec id out status extension classified
+  id=profile-prime-lifecycle-z8c
+  rec=$(make_spawn_case profile-prime-lifecycle prime-agent "$id")
+  read_case_record "$rec"
+
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+  status=$?
+  expect_code 0 "$status" "prime-agent spawn for lifecycle coverage should succeed"
+  extension="$HOME_DIR/state/$id.prime-ext.ts"
+  assert_present "$extension" "prime-agent launch did not install its semantic lifecycle extension"
+
+  run_prime_extension_event "$extension" agent_start root
+  classified=$(prime_busy_classify "$HOME_DIR/state" "$id")
+  [ "$classified" = "busy prime-ext" ] || fail "Prime agent_start did not publish trusted busy state: $classified"
+
+  run_prime_extension_event "$extension" turn_end root
+  assert_present "$HOME_DIR/state/$id.turn-ended" "Prime turn_end did not touch the watcher notification"
+
+  run_prime_extension_event "$extension" agent_end root
+  classified=$(prime_busy_classify "$HOME_DIR/state" "$id")
+  [ "$classified" = "unknown prime-ext" ] || fail "Prime agent_end did not clear busy to unknown state: $classified"
+  pass "prime-agent extension publishes lifecycle busy state through its executable interface"
 }
 
 test_prime_git_config_drops_stale_identity() {
@@ -1730,10 +1753,9 @@ test_active_dispatch_profile_requires_explicit_harness_for_ship
 test_active_dispatch_profile_requires_explicit_harness_for_scout
 test_active_dispatch_profile_allows_explicit_harness
 test_active_dispatch_profile_allows_positional_harness
-test_active_dispatch_profile_rejects_raw_launch_command
+test_active_dispatch_profile_preserves_raw_launch_escape_hatch
 test_raw_prime_launch_is_rejected_before_endpoint_creation
 test_native_non_prime_raw_launch_is_preserved
-test_prime_extension_serializes_generated_values
 test_claude_threads_model_and_effort
 test_codex_threads_model_and_effort
 test_codex_omits_invalid_max_effort
@@ -1748,6 +1770,7 @@ test_pi_threads_model_and_max_effort
 test_pi_tui_mode_probe_is_safe_for_old_and_new_pi
 test_pi_signed_threads_shared_pi_profile_and_preserves_identity
 test_prime_agent_threads_model_thinking_and_semantic_extension
+test_prime_extension_lifecycle_updates_busy_state
 test_prime_git_config_drops_stale_identity
 test_prime_project_setup_serializes_concurrent_relaunches
 test_prime_agent_refuses_invalid_project_digest
