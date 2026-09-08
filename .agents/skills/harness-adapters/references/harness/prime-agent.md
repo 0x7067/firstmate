@@ -1,6 +1,6 @@
 # Prime Agent
 
-Verified crewmate/scout only on 2026-08-23, Prime Agent 0.8.0.
+Supported as crewmate/scout only at Firstmate's Prime Agent 0.8.1-or-newer scoped-daemon launch boundary.
 Never a secondmate or primary: Prime 0.8.0 does not emit Pi's `agent_settled` event and its primary watcher extensions have not been verified against Prime's `agent_end` boundary.
 `../../../bin/fm-spawn.sh` refuses `--secondmate` rather than assuming Pi's primary supervision contract.
 
