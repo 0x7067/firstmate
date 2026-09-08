@@ -1771,7 +1771,7 @@ raw_launch_word_is_cd() {  # <word>
 raw_launch_word_is_forwarder() {  # <word>
   local base
   base=$(raw_launch_word_resolved_base "$1")
-  case "$base" in nohup|nice|setsid|timeout|gtimeout) return 0 ;; esac
+  case "$base" in nohup|nice|setsid|timeout|gtimeout|stdbuf|gstdbuf) return 0 ;; esac
   return 1
 }
 
@@ -1869,7 +1869,8 @@ raw_launch_node_script_prime_agent_detected() {  # <tokens...>
         fi
         return 1
         ;;
-      -e|-p|--eval|--print|--check|--interactive) return 1 ;;
+      -e|-p|--eval|--print|-e?*|-p?*|--eval=*|--print=*) return 0 ;;
+      --check|--interactive) return 1 ;;
       -r|--require|--import|--loader|--experimental-loader) inspect_next=1; continue ;;
       -r?*)
         option_value=${token#-r}
@@ -2102,6 +2103,9 @@ raw_launch_prime_agent_detected() {  # <raw command>
       if raw_launch_word_is_forwarder "$token"; then
         forwarder_base=$(raw_launch_word_resolved_base "$token")
         i=$((i + 1))
+        if [ "$forwarder_base" = stdbuf ] || [ "$forwarder_base" = gstdbuf ]; then
+          return 0
+        fi
         if [ "$forwarder_base" = timeout ] || [ "$forwarder_base" = gtimeout ]; then
           while [ "$i" -lt "${#tokens[@]}" ]; do
             token=${tokens[$i]}
@@ -2170,6 +2174,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
         j=$((i + 1))
         while [ "$j" -lt "${#tokens[@]}" ]; do
           token=${tokens[$j]}
+          case "$token" in '<') return 0 ;; esac
           case "$token" in ';'|'|'|'&'|'('|')'|'$(') break ;; esac
           case "$token" in
             --) break ;;
