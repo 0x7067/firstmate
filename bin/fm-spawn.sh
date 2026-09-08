@@ -1351,32 +1351,247 @@ else
   PROJ=${POS[1]}
   ARG3=${POS[2]:-}
 fi
-raw_launch_prime_agent_detected() {  # <raw command>
-  local command_text=$1 word clean resolved base prev_node=0
-  local -a words
-  if printf '%s\n' "$command_text" \
-      | grep -Eq "(^|[[:space:];|&()<>\`\$])[\"']?([^[:space:];|&()<>\`\$\"'=]+/)?prime-agent([\"']?)([[:space:];|&()<>\`\$]|$)"; then
-    return 0
+raw_launch_shell_tokens() {  # <raw command>
+  local command_text=$1 len i ch next quote= word=
+  len=${#command_text}
+  i=0
+  while [ "$i" -lt "$len" ]; do
+    ch=${command_text:$i:1}
+    if [ -n "$quote" ]; then
+      if [ "$ch" = "$quote" ]; then
+        quote=
+      elif [ "$quote" = '"' ] && [ "$ch" = \\ ] && [ $((i + 1)) -lt "$len" ]; then
+        i=$((i + 1))
+        word=$word${command_text:$i:1}
+      else
+        word=$word$ch
+      fi
+      i=$((i + 1))
+      continue
+    fi
+    case "$ch" in
+      "'"|'"') quote=$ch ;;
+      \\)
+        if [ $((i + 1)) -lt "$len" ]; then
+          i=$((i + 1))
+          word=$word${command_text:$i:1}
+        else
+          word=$word$ch
+        fi
+        ;;
+      ' '|$'\t'|$'\n'|$'\r')
+        if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+        ;;
+      '$')
+        next=
+        [ $((i + 1)) -lt "$len" ] && next=${command_text:$((i + 1)):1}
+        if [ "$next" = '(' ] && { [ $((i + 2)) -ge "$len" ] || [ "${command_text:$((i + 2)):1}" != '(' ]; }; then
+          if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+          printf '%s\n' '$('
+          i=$((i + 1))
+        else
+          word=$word$ch
+        fi
+        ;;
+      ';'|'|'|'&'|'('|')')
+        if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+        printf '%s\n' "$ch"
+        ;;
+      '<'|'>')
+        if [ -n "$word" ]; then printf '%s\n' "$word"; word=; fi
+        printf '%s\n' "$ch"
+        [ $((i + 1)) -lt "$len" ] && [ "${command_text:$((i + 1)):1}" = "$ch" ] && i=$((i + 1))
+        ;;
+      *) word=$word$ch ;;
+    esac
+    i=$((i + 1))
+  done
+  [ -z "$word" ] || printf '%s\n' "$word"
+}
+
+raw_launch_expand_shell_path() {  # <word>
+  local word=$1 cwd=${RAW_LAUNCH_SCAN_CWD:-${WT:-${PROJ_ABS:-$PWD}}}
+  case "$word" in
+    '~') word=${HOME:-~} ;;
+    '~/'*) word=${HOME:-~}${word#\~} ;;
+  esac
+  if [ -n "$cwd" ]; then
+    word=${word//\$\{PWD\}/$cwd}
+    word=${word//\$PWD/$cwd}
   fi
-  read -r -a words <<< "$command_text"
-  for word in "${words[@]}"; do
-    clean=${word%\"}
-    clean=${clean#\"}
-    clean=${clean%\'}
-    clean=${clean#\'}
-    if [ "$prev_node" = 1 ] && fm_prime_package_entry_matches "$clean"; then
-      return 0
+  printf '%s\n' "$word"
+}
+
+raw_launch_word_is_prime_agent() {  # <word>
+  local word expanded resolved base
+  word=$1
+  expanded=$(raw_launch_expand_shell_path "$word")
+  base=${expanded##*/}
+  [ "$base" != prime-agent ] || return 0
+  resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded")
+  base=${resolved##*/}
+  [ "$base" != prime-agent ] || return 0
+  fm_prime_package_entry_matches "$expanded" || fm_prime_package_entry_matches "$resolved"
+}
+
+raw_launch_word_resolved_base() {  # <word>
+  local expanded resolved canonical
+  expanded=$(raw_launch_expand_shell_path "$1")
+  resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded")
+  canonical=$(fm_cursor_canonical_path "$resolved") || canonical=$resolved
+  printf '%s\n' "${canonical##*/}"
+}
+
+raw_launch_word_is_shell() {  # <word>
+  local base
+  base=$(raw_launch_word_resolved_base "$1")
+  case "$base" in sh|bash|zsh|dash|ksh) return 0 ;; esac
+  return 1
+}
+
+raw_launch_word_is_node() {  # <word>
+  local base
+  base=$(raw_launch_word_resolved_base "$1")
+  base=${base#-}
+  case "$base" in node|nodejs) return 0 ;; esac
+  return 1
+}
+
+raw_launch_word_is_env() {  # <word>
+  local base
+  base=$(raw_launch_word_resolved_base "$1")
+  [ "$base" = env ]
+}
+
+raw_launch_word_is_arch() {  # <word>
+  local base
+  base=$(raw_launch_word_resolved_base "$1")
+  [ "$base" = arch ]
+}
+
+raw_launch_token_is_assignment() {  # <word>
+  case "$1" in [A-Za-z_]*=*) return 0 ;; esac
+  return 1
+}
+
+raw_launch_node_script_prime_agent_detected() {  # <tokens...>
+  local token skip_next=0
+  while [ "$#" -gt 0 ]; do
+    token=$1
+    shift
+    case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<'|'>') return 1 ;; esac
+    if [ "$skip_next" -eq 1 ]; then
+      skip_next=0
+      continue
     fi
-    prev_node=0
-    case "$clean" in [A-Za-z_]*=*) continue ;; esac
-    case "$clean" in command|exec|env) continue ;; esac
-    base=${clean##*/}
-    [ "$base" != prime-agent ] || return 0
-    resolved=$(command -v "$clean" 2>/dev/null || printf '%s' "$clean")
-    if fm_prime_package_entry_matches "$resolved"; then
-      return 0
+    case "$token" in
+      --) [ "$#" -gt 0 ] && fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$1")" && return 0; return 1 ;;
+      -e|-p|--eval|--print|--check|--interactive) return 1 ;;
+      -r|--require|--import|--loader|--experimental-loader|--conditions|--icu-data-dir|--openssl-config|--env-file) skip_next=1; continue ;;
+      --require=*|--import=*|--loader=*|--experimental-loader=*|--conditions=*|--icu-data-dir=*|--openssl-config=*|--env-file=*) continue ;;
+      -*) continue ;;
+    esac
+    fm_prime_package_entry_matches "$(raw_launch_expand_shell_path "$token")" && return 0
+    return 1
+  done
+  return 1
+}
+
+raw_launch_prime_agent_detected() {  # <raw command>
+  local command_text=$1 token expect_command=1 skip_redir=0 i j shell_script
+  local -a tokens
+  tokens=()
+  while IFS= read -r token; do
+    tokens+=("$token")
+  done < <(raw_launch_shell_tokens "$command_text")
+  i=0
+  while [ "$i" -lt "${#tokens[@]}" ]; do
+    token=${tokens[$i]}
+    if [ "$skip_redir" -eq 1 ]; then
+      skip_redir=0
+      i=$((i + 1))
+      continue
     fi
-    case "$base" in node*) prev_node=1 ;; esac
+    case "$token" in
+      '<'|'>') skip_redir=1; i=$((i + 1)); continue ;;
+      ';'|'|'|'&'|'('|')'|'$(') expect_command=1; i=$((i + 1)); continue ;;
+    esac
+    if [ "$expect_command" -eq 1 ]; then
+      if raw_launch_token_is_assignment "$token"; then
+        i=$((i + 1))
+        continue
+      fi
+      if [ "$token" = command ]; then
+        i=$((i + 1))
+        while [ "$i" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$i]}
+          case "$token" in -p) i=$((i + 1)); continue ;; -v|-V) expect_command=0; break ;; esac
+          break
+        done
+        continue
+      fi
+      if [ "$token" = exec ]; then
+        i=$((i + 1))
+        while [ "$i" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$i]}
+          case "$token" in -c|-l) i=$((i + 1)); continue ;; -a) i=$((i + 2)); continue ;; esac
+          break
+        done
+        continue
+      fi
+      if raw_launch_word_is_env "$token"; then
+        i=$((i + 1))
+        while [ "$i" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$i]}
+          raw_launch_token_is_assignment "$token" && { i=$((i + 1)); continue; }
+          case "$token" in
+            -i|--ignore-environment|-0|--null) i=$((i + 1)); continue ;;
+            -u|--unset|-C|--chdir) i=$((i + 2)); continue ;;
+            --unset=*|--chdir=*) i=$((i + 1)); continue ;;
+            -S|--split-string)
+              if [ $((i + 1)) -lt "${#tokens[@]}" ]; then
+                raw_launch_prime_agent_detected "${tokens[$((i + 1))]}" && return 0
+              fi
+              return 1
+              ;;
+            --) i=$((i + 1)); break ;;
+            -*) i=$((i + 1)); continue ;;
+          esac
+          break
+        done
+        continue
+      fi
+      if raw_launch_word_is_arch "$token"; then
+        i=$((i + 1))
+        while [ "$i" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$i]}
+          case "$token" in -*) i=$((i + 1)); continue ;; esac
+          break
+        done
+        continue
+      fi
+      raw_launch_word_is_prime_agent "$token" && return 0
+      if raw_launch_word_is_shell "$token"; then
+        j=$((i + 1))
+        while [ "$j" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$j]}
+          case "$token" in ';'|'|'|'&'|'('|')'|'$(') break ;; esac
+          if [ "$token" = -c ]; then
+            if [ $((j + 1)) -lt "${#tokens[@]}" ]; then
+              shell_script=${tokens[$((j + 1))]}
+              raw_launch_prime_agent_detected "$shell_script" && return 0
+            fi
+            break
+          fi
+          j=$((j + 1))
+        done
+      fi
+      if raw_launch_word_is_node "$token"; then
+        raw_launch_node_script_prime_agent_detected "${tokens[@]:$((i + 1))}" && return 0
+      fi
+      expect_command=0
+    fi
+    i=$((i + 1))
   done
   return 1
 }
@@ -1389,9 +1604,10 @@ refuse_raw_prime_launch() {
 # A raw launch command that resolves to prime-agent is rejected at the
 # Prime isolation boundary even when --harness labels it differently; the
 # label cannot sanitize a raw Prime executable.
+RAW_PRIME_SCAN_TEXT=
 if [ -n "$ARG3" ]; then
   case "$ARG3" in
-    *' '*) raw_launch_prime_agent_detected "$ARG3" && refuse_raw_prime_launch ;;
+    *' '*) RAW_PRIME_SCAN_TEXT=$ARG3; raw_launch_prime_agent_detected "$ARG3" && refuse_raw_prime_launch ;;
   esac
 fi
 [ -z "$HARNESS_ARG" ] || ARG3=$HARNESS_ARG
@@ -1674,6 +1890,7 @@ case "$ARG3" in
     RAW_LAUNCH=1
     LAUNCH=$ARG3
     HARNESS=""
+    RAW_PRIME_SCAN_TEXT=$LAUNCH
     raw_launch_prime_agent_detected "$LAUNCH" && refuse_raw_prime_launch
     # Find the first real executable word, skipping env assignments and shell
     # builtins (command, exec, env) that prefix the actual command.
@@ -2294,6 +2511,9 @@ if [ "$RELAUNCH" -eq 0 ] && [ "$KIND" != secondmate ] && [ "$BACKEND" != orca ];
     exit 1
   fi
   SPAWN_TREEHOUSE_PROJECT_LOCK_HELD=1
+fi
+if [ -n "$RAW_PRIME_SCAN_TEXT" ]; then
+  RAW_LAUNCH_SCAN_CWD=${WT:-$PROJ_ABS} raw_launch_prime_agent_detected "$RAW_PRIME_SCAN_TEXT" && refuse_raw_prime_launch
 fi
 [ -f "$BRIEF" ] || { echo "error: task $ID has no brief at inaccessible data path $BRIEF" >&2; exit 1; }
 if [ "$KIND" = ship ] || [ "$KIND" = scout ]; then
@@ -3250,6 +3470,7 @@ mkdir -p "$TASK_TMP/gotmp"
 mkdir -p "$STATE"
 STATE_REAL=$(cd "$STATE" && pwd -P)
 # Prime Agent project-scoped state setup (runs after STATE_REAL is resolved)
+PRIME_GIT_CONFIG_ENV_CLEANUP=
 if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
   PRIME_PROJECT_DIGEST=$(spawn_sha256_string "$PROJ_ABS") || {
     echo "error: cannot create project-scoped Prime Agent state: invalid project digest" >&2
@@ -3279,8 +3500,6 @@ if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
   mkdir -p "$PRIME_HOME/.config" "$PRIME_HOME/.local/share" "$PRIME_HOME/.cache"     "$PRIME_HOME/.local/state" "$PRIME_HOME/.local/run" "$PRIME_HOME/.config/gh"     "$PRIME_HOME/.config/gcloud" "$PRIME_HOME/.aws" "$PRIME_HOME/.azure"     "$PRIME_HOME/.docker" "$PRIME_HOME/.kube" "$PRIME_HOME/.cache/huggingface"     "$PRIME_HOME/.gnupg" "$PRIME_DIR/kernel-venv"
   if [ -d "$PROJ_ABS/.agents" ]; then
     ln -sfn "$PROJ_ABS/.agents" "$PRIME_HOME/.agents"
-  elif [ -d "${HOME:-}/.agents" ]; then
-    ln -sfn "$HOME/.agents" "$PRIME_HOME/.agents"
   elif [ -L "$PRIME_HOME/.agents" ]; then
     rm -f "$PRIME_HOME/.agents"
   fi
@@ -3317,7 +3536,8 @@ if [ "$HARNESS" = prime-agent ] && [ "$RAW_LAUNCH" -eq 0 ]; then
   sq_primegnupg=$(shell_quote "$PRIME_HOME/.gnupg")
   sq_primenpm=$(shell_quote "$PRIME_HOME/.npmrc")
   sq_primenetrc=$(shell_quote "$PRIME_HOME/.netrc")
-  LAUNCH="HOME=$sq_primehome GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=$sq_primegit PRIME_AGENT_CODING_AGENT_DIR=$sq_primedir PRIME_AGENT_SESSION_DIR=$sq_primesession XDG_CONFIG_HOME=$sq_primeconfig XDG_DATA_HOME=$sq_primedata XDG_CACHE_HOME=$sq_primecache XDG_STATE_HOME=$sq_primestate XDG_RUNTIME_DIR=$sq_primeruntime GH_CONFIG_DIR=$sq_primegh CLOUDSDK_CONFIG=$sq_primegcloud PRIME_AGENT_KERNEL_VENV=$sq_primekernel PRIME_AGENT_KERNEL_PYTHON=$sq_primepython AWS_SHARED_CREDENTIALS_FILE=$sq_primeawscreds AWS_CONFIG_FILE=$sq_primeawsconf AZURE_CONFIG_DIR=$sq_primeazure DOCKER_CONFIG=$sq_primedocker KUBECONFIG=$sq_primekube HF_HOME=$sq_primehf GNUPGHOME=$sq_primegnupg NPM_CONFIG_USERCONFIG=$sq_primenpm NETRC=$sq_primenetrc $LAUNCH"
+  PRIME_GIT_CONFIG_ENV_CLEANUP="for __fm_git_config_env in \$(env | awk -F= '\$1 ~ /^GIT_CONFIG_(KEY|VALUE)_[0-9]+\$/ { print \$1 }'); do unset \"\$__fm_git_config_env\"; done; unset GIT_CONFIG_PARAMETERS; "
+  LAUNCH="HOME=$sq_primehome GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=$sq_primegit GIT_CONFIG_COUNT=0 PRIME_AGENT_CODING_AGENT_DIR=$sq_primedir PRIME_AGENT_SESSION_DIR=$sq_primesession XDG_CONFIG_HOME=$sq_primeconfig XDG_DATA_HOME=$sq_primedata XDG_CACHE_HOME=$sq_primecache XDG_STATE_HOME=$sq_primestate XDG_RUNTIME_DIR=$sq_primeruntime GH_CONFIG_DIR=$sq_primegh CLOUDSDK_CONFIG=$sq_primegcloud PRIME_AGENT_KERNEL_VENV=$sq_primekernel PRIME_AGENT_KERNEL_PYTHON=$sq_primepython AWS_SHARED_CREDENTIALS_FILE=$sq_primeawscreds AWS_CONFIG_FILE=$sq_primeawsconf AZURE_CONFIG_DIR=$sq_primeazure DOCKER_CONFIG=$sq_primedocker KUBECONFIG=$sq_primekube HF_HOME=$sq_primehf GNUPGHOME=$sq_primegnupg NPM_CONFIG_USERCONFIG=$sq_primenpm NETRC=$sq_primenetrc $LAUNCH"
 fi
 TURNEND="$STATE_REAL/$ID.turn-ended"
 exclude_path() {
@@ -4008,6 +4228,9 @@ case "$HARNESS" in
     LAUNCH="env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI $LAUNCH"
     ;;
 esac
+if [ "$HARNESS" = prime-agent ]; then
+  LAUNCH="$PRIME_GIT_CONFIG_ENV_CLEANUP$LAUNCH"
+fi
 # Crewmate panes are created by a long-lived tmux/herdr daemon that does not
 # inherit firstmate's current environment, so a bare `claude` in the pane falls
 # back to the default ~/.claude store even when firstmate itself runs under a
