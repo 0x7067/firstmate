@@ -1504,21 +1504,25 @@ raw_launch_expand_shell_path() {  # <word>
 }
 
 raw_launch_word_is_prime_agent() {  # <word>
-  local word expanded resolved base
+  local word expanded resolved canonical base
   word=$1
   expanded=$(raw_launch_expand_shell_path "$word")
   base=${expanded##*/}
   [ "$base" != prime-agent ] || return 0
-  resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded")
+  case "$word" in */*|'~'*|'$PWD'*|'${PWD}'*) resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded") ;; *) resolved=$(command -v -- "$word" 2>/dev/null || printf '%s' "$expanded") ;; esac
   base=${resolved##*/}
   [ "$base" != prime-agent ] || return 0
-  fm_prime_package_entry_matches "$expanded" || fm_prime_package_entry_matches "$resolved"
+  canonical=$(fm_cursor_canonical_path "$resolved") || canonical=$resolved
+  base=${canonical##*/}
+  [ "$base" != prime-agent ] || return 0
+  fm_prime_package_entry_matches "$expanded" || fm_prime_package_entry_matches "$resolved" || fm_prime_package_entry_matches "$canonical"
 }
 
 raw_launch_word_resolved_base() {  # <word>
-  local expanded resolved canonical
-  expanded=$(raw_launch_expand_shell_path "$1")
-  resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded")
+  local word expanded resolved canonical
+  word=$1
+  expanded=$(raw_launch_expand_shell_path "$word")
+  case "$word" in */*|'~'*|'$PWD'*|'${PWD}'*) resolved=$(command -v -- "$expanded" 2>/dev/null || printf '%s' "$expanded") ;; *) resolved=$(command -v -- "$word" 2>/dev/null || printf '%s' "$expanded") ;; esac
   canonical=$(fm_cursor_canonical_path "$resolved") || canonical=$resolved
   printf '%s\n' "${canonical##*/}"
 }
@@ -1554,6 +1558,19 @@ raw_launch_word_is_time() {  # <word>
   local base
   base=$(raw_launch_word_resolved_base "$1")
   [ "$base" = time ]
+}
+
+raw_launch_word_is_cd() {  # <word>
+  local base
+  base=$(raw_launch_word_resolved_base "$1")
+  [ "$base" = cd ]
+}
+
+raw_launch_word_is_forwarder() {  # <word>
+  local base
+  base=$(raw_launch_word_resolved_base "$1")
+  case "$base" in nohup|nice) return 0 ;; esac
+  return 1
 }
 
 raw_launch_token_is_assignment() {  # <word>
@@ -1681,6 +1698,7 @@ raw_launch_prime_agent_detected() {  # <raw command>
     if [ "$expect_command" -eq 1 ]; then
       case "$token" in if|then|elif|else|fi|for|while|until|do|done|case|esac|in|select|function|'{'|'}'|'!') i=$((i + 1)); continue ;; esac
       if raw_launch_token_is_assignment "$token"; then
+        case "${token%%=*}" in PATH|CDPATH) return 0 ;; esac
         var_value=${token#*=}
         case "$var_value" in *'$'*|'') ;; *) raw_pending+=("$token") ;; esac
         i=$((i + 1))
@@ -1779,6 +1797,28 @@ raw_launch_prime_agent_detected() {  # <raw command>
           break
         done
         continue
+      fi
+      if raw_launch_word_is_forwarder "$token"; then
+        i=$((i + 1))
+        while [ "$i" -lt "${#tokens[@]}" ]; do
+          token=${tokens[$i]}
+          case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') break ;; esac
+          case "$token" in
+            --) i=$((i + 1)); break ;;
+            -n|--adjustment) i=$((i + 2)); continue ;;
+            --adjustment=*) i=$((i + 1)); continue ;;
+            -[0-9]*) i=$((i + 1)); continue ;;
+            -*) i=$((i + 1)); continue ;;
+          esac
+          break
+        done
+        continue
+      fi
+      if raw_launch_word_is_cd "$token"; then
+        if [ $((i + 1)) -lt "${#tokens[@]}" ]; then
+          token=${tokens[$((i + 1))]}
+          case "$token" in ';'|'|'|'&'|'('|')'|'$('|'<('|'>(') ;; *) RAW_LAUNCH_SCAN_CWD=$(raw_launch_expand_shell_path "$token"); i=$((i + 2)); expect_command=0; continue ;; esac
+        fi
       fi
       raw_launch_word_is_prime_agent "$token" && return 0
       if raw_launch_word_is_shell "$token"; then
