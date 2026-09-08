@@ -1509,14 +1509,22 @@ raw_launch_prime_agent_detected() {  # <raw command>
     token=${tokens[$i]}
     if [ "$skip_redir" -eq 1 ]; then
       skip_redir=0
-      i=$((i + 1))
+      if [ "$token" = '&' ] && [ $((i + 1)) -lt "${#tokens[@]}" ]; then
+        i=$((i + 2))
+      else
+        i=$((i + 1))
+      fi
       continue
+    fi
+    if [[ "$token" =~ ^[0-9]+$ ]] && [ $((i + 1)) -lt "${#tokens[@]}" ]; then
+      case "${tokens[$((i + 1))]}" in '<'|'>') i=$((i + 1)); continue ;; esac
     fi
     case "$token" in
       '<'|'>') skip_redir=1; i=$((i + 1)); continue ;;
       ';'|'|'|'&'|'('|')'|'$(') expect_command=1; i=$((i + 1)); continue ;;
     esac
     if [ "$expect_command" -eq 1 ]; then
+      case "$token" in if|then|elif|else|fi|for|while|until|do|done|case|esac|in|select|function|time|'{'|'}'|'!') i=$((i + 1)); continue ;; esac
       if raw_launch_token_is_assignment "$token"; then
         i=$((i + 1))
         continue
@@ -1832,7 +1840,7 @@ launch_template() {
     # firstmate-owned semantic lifecycle extension outside the worktree.
     # Project-scoped HOME, PRIME_AGENT_CODING_AGENT_DIR, and
     # PRIME_AGENT_SESSION_DIR are set by the outer env wrap below.
-    prime-agent) printf '%s' 'env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS -u PRIME_API_KEY -u PRIME_AGENT_TRACES_API_KEY -u OPENAI_API_KEY -u ANTHROPIC_OAUTH_TOKEN -u ANTHROPIC_AUTH_TOKEN -u GH_TOKEN -u SERPER_API_KEY -u PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN -u PRIME_TEAM_ID -u GOOGLE_APPLICATION_CREDENTIALS -u google_application_credentials -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL -u SSH_AUTH_SOCK -u SSH_AGENT_PID -u GIT_ASKPASS -u SSH_ASKPASS -u SUDO_ASKPASS -u GIT_SSH -u GIT_SSH_COMMAND -u PRIME_AGENT_CODING_AGENT_SESSION_DIR __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__--daemon-socket __PRIMEDAEMON__ -e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;    # muse (Muse Code): a positional prompt starts the supervised interactive
+    prime-agent) printf '%s' 'env -u PI_MODEL -u PI_CODING_AGENT -u AI_AGENT -u FM_PI_HARNESS -u PRIME_API_KEY -u PRIME_AGENT_TRACES_API_KEY -u OPENAI_API_KEY -u ANTHROPIC_API_KEY -u ANTHROPIC_OAUTH_TOKEN -u ANTHROPIC_AUTH_TOKEN -u GH_TOKEN -u SERPER_API_KEY -u PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN -u PRIME_TEAM_ID -u GOOGLE_APPLICATION_CREDENTIALS -u google_application_credentials -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL -u SSH_AUTH_SOCK -u SSH_AGENT_PID -u GIT_ASKPASS -u SSH_ASKPASS -u SUDO_ASKPASS -u GIT_SSH -u GIT_SSH_COMMAND -u PRIME_AGENT_CODING_AGENT_SESSION_DIR __PRIMEBIN__ __MODELFLAG____EFFORTFLAG__--daemon-socket __PRIMEDAEMON__ -e __PRIMEEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"' ;;    # muse (Muse Code): a positional prompt starts the supervised interactive
     # session. --yolo is the single flag that makes a crewmate pane viable: muse
     # ships approval prompts AND a filesystem/network sandbox ON by default
     # (--sandbox-network defaults to proxy-only, which refuses outright without a
