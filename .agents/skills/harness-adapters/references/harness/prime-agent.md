@@ -1,7 +1,7 @@
 # Prime Agent
 
 Supported as crewmate/scout only at Firstmate's Prime Agent 0.8.1-or-newer scoped-daemon launch boundary.
-Never a secondmate or primary: Prime 0.8.0 does not emit Pi's `agent_settled` event and its primary watcher extensions have not been verified against Prime's `agent_end` boundary.
+Never a secondmate or primary: Prime's verified lifecycle surface is task-scoped, and its primary watcher extensions have not been verified against Prime's continuation and `agent_end` boundaries.
 `../../../bin/fm-spawn.sh` refuses `--secondmate` rather than assuming Pi's primary supervision contract.
 
 Prime Agent is a Pi-family CLI with its own executable identity and lifecycle surface.
@@ -25,4 +25,4 @@ The launch clears foreign harness markers and ambient credential variables that 
 Prime accepts `--model <id>`, repeatable `-e`, and `--thinking off|minimal|low|medium|high|xhigh|max`; Firstmate routes only its shared low-through-max effort axis.
 A live `--thinking low` launch rendered `high` in Prime's footer, so treat the 0.8.0 effective-level behavior as unconfirmed even though the CLI accepts and Firstmate preserves the flag.
 Firstmate preserves raw launches for unverified non-Prime adapters, refuses shell-visible raw Prime Agent executions at the Prime isolation boundary, and gives every canonical Prime launch a stable project-keyed `HOME` and `PRIME_AGENT_CODING_AGENT_DIR` under its own state root.
-[`docs/configuration.md`](../../../docs/configuration.md#harness-support) owns the isolated credential setup and the Prime 0.8.1 minimum-version boundary.
+[`docs/configuration.md`](../../../../../docs/configuration.md#harness-support) owns the isolated credential setup and the Prime 0.8.1 minimum-version boundary.
