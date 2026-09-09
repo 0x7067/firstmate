@@ -441,7 +441,7 @@ test_active_dispatch_profile_preserves_raw_launch_escape_hatch() {
 test_raw_prime_launch_is_rejected_before_endpoint_creation() {
   local rec id out status index prime_package prime_project_package late_origin_wt time_bin env_primebin default_branch
   local -a ids commands
-  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-command-end-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-env-path-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-node-require-z15b profile-raw-prime-node-import-z15b profile-raw-prime-node-eval-z15b profile-raw-prime-node-run-z15b profile-raw-prime-node-options-z15b profile-raw-prime-env-node-options-z15b profile-raw-prime-node-stdin-z15b profile-raw-prime-node-data-import-z15b profile-raw-prime-node-relative-z15b profile-raw-prime-node-variable-z15b profile-raw-prime-env-chdir-node-z15b profile-raw-prime-env-attached-chdir-node-z15b profile-raw-prime-env-split-string-z15b profile-raw-prime-shell-z15b profile-raw-prime-shell-cluster-z15b profile-raw-prime-shell-option-z15b profile-raw-prime-shell-stdin-z15b profile-raw-prime-time-z15b profile-raw-prime-time-format-z15b profile-raw-prime-qualified-time-z15b profile-raw-prime-quoted-z15b profile-raw-prime-symlink-z15b profile-raw-prime-alias-z15b profile-raw-prime-nohup-z15b profile-raw-prime-nice-z15b profile-raw-prime-timeout-z15b profile-raw-prime-timeout-end-options-z15b profile-raw-prime-setsid-z15b profile-raw-prime-stdbuf-z15b profile-raw-prime-interpreter-z15b profile-raw-prime-interpreter-stdin-z15b profile-raw-prime-npx-z15b profile-raw-prime-npm-exec-z15b profile-raw-prime-pnpx-z15b profile-raw-prime-bunx-z15b profile-raw-prime-cd-node-z15b profile-raw-prime-cd-option-node-z15b profile-raw-prime-path-assignment-z15b profile-raw-prime-export-path-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-newline-z15b profile-raw-prime-substitution-z15b profile-raw-prime-command-substitution-output-z15b profile-raw-prime-quoted-substitution-z15b profile-raw-prime-substitution-quoted-paren-z15b profile-raw-prime-parameter-substitution-z15b profile-raw-prime-arithmetic-substitution-z15b profile-raw-prime-assignment-substitution-z15b profile-raw-prime-backtick-z15b profile-raw-prime-backtick-output-z15b profile-raw-prime-builtin-z15b profile-raw-prime-hash-z15b profile-raw-prime-eval-z15b profile-raw-prime-variable-z15b profile-raw-prime-unresolved-variable-z15b profile-raw-prime-process-substitution-z15b profile-raw-prime-output-process-substitution-z15b profile-raw-prime-redir-process-substitution-z15b profile-raw-prime-redir-command-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-worker-cwd-rescan-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b profile-raw-prime-unproved-path-z15b)
+  ids=(profile-raw-prime-z15b profile-raw-prime-command-z15b profile-raw-prime-command-end-z15b profile-raw-prime-exec-z15b profile-raw-prime-env-z15b profile-raw-prime-env-path-z15b profile-raw-prime-node-z15b profile-raw-prime-node-flag-z15b profile-raw-prime-node-require-z15b profile-raw-prime-node-import-z15b profile-raw-prime-node-eval-z15b profile-raw-prime-node-run-z15b profile-raw-prime-node-options-z15b profile-raw-prime-env-node-options-z15b profile-raw-prime-node-stdin-z15b profile-raw-prime-node-data-import-z15b profile-raw-prime-node-relative-z15b profile-raw-prime-node-variable-z15b profile-raw-prime-env-chdir-node-z15b profile-raw-prime-env-attached-chdir-node-z15b profile-raw-prime-env-split-string-z15b profile-raw-prime-shell-z15b profile-raw-prime-shell-cluster-z15b profile-raw-prime-shell-option-z15b profile-raw-prime-shell-stdin-z15b profile-raw-prime-time-z15b profile-raw-prime-time-format-z15b profile-raw-prime-qualified-time-z15b profile-raw-prime-quoted-z15b profile-raw-prime-symlink-z15b profile-raw-prime-alias-z15b profile-raw-prime-nohup-z15b profile-raw-prime-nice-z15b profile-raw-prime-timeout-z15b profile-raw-prime-timeout-end-options-z15b profile-raw-prime-setsid-z15b profile-raw-prime-stdbuf-z15b profile-raw-prime-interpreter-z15b profile-raw-prime-interpreter-stdin-z15b profile-raw-prime-npx-z15b profile-raw-prime-npm-exec-z15b profile-raw-prime-pnpx-z15b profile-raw-prime-bunx-z15b profile-raw-prime-cd-node-z15b profile-raw-prime-cd-option-node-z15b profile-raw-prime-path-assignment-z15b profile-raw-prime-export-path-z15b profile-raw-prime-semicolon-z15b profile-raw-prime-newline-z15b profile-raw-prime-substitution-z15b profile-raw-prime-command-substitution-output-z15b profile-raw-prime-quoted-substitution-z15b profile-raw-prime-substitution-quoted-paren-z15b profile-raw-prime-parameter-substitution-z15b profile-raw-prime-arithmetic-substitution-z15b profile-raw-prime-assignment-substitution-z15b profile-raw-prime-backtick-z15b profile-raw-prime-backtick-output-z15b profile-raw-prime-builtin-z15b profile-raw-prime-hash-z15b profile-raw-prime-eval-z15b profile-raw-prime-variable-z15b profile-raw-prime-unresolved-variable-z15b profile-raw-prime-process-substitution-z15b profile-raw-prime-output-process-substitution-z15b profile-raw-prime-redir-process-substitution-z15b profile-raw-prime-redir-command-substitution-z15b profile-raw-prime-pwd-space-z15b profile-raw-prime-worker-cwd-rescan-z15b profile-raw-prime-redir-z15b profile-raw-prime-reserved-z15b profile-raw-prime-launcher-alias-z15b profile-raw-prime-system-launcher-z15b)
   rec=$(make_spawn_case profile-raw-prime claude "${ids[@]}" profile-raw-prime-mislabeled-z15b)
   read_case_record "$rec"
   prime_package="$CASE_DIR/prime-package"
@@ -492,7 +492,7 @@ SH
   git -C "$late_origin_wt" -c user.name='Firstmate Tests' -c user.email='tests@example.invalid' commit -qm 'add worker-only prime package'
   git -C "$late_origin_wt" push --quiet origin "HEAD:$default_branch"
   # shellcheck disable=SC2016 # The raw commands must keep literal shell syntax.
-  commands=("prime-agent --flag" "command prime-agent --flag" "command -- prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "env PATH=$env_primebin:\$PATH q --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "node --require $prime_package/dist/bundle/cli.js -e ''" "node --import=$prime_package/dist/bundle/cli.js -e ''" "node -e \"require('child_process').execFileSync('prime-agent')\"" "node --run start" "NODE_OPTIONS=--require=$prime_package/dist/bundle/cli.js node ./safe.js" "env NODE_OPTIONS=--require=$prime_package/dist/bundle/cli.js node ./safe.js" "node <<< 'require(\"node:child_process\").execFileSync(\"prime-agent\")'" "node --import='data:text/javascript,import{execFileSync}from\"node:child_process\";execFileSync(\"prime-agent\")' ./safe.js" "node './Linked Prime/dist/bundle/cli.js'" "entry=$prime_package/dist/bundle/cli.js; node \$entry" "env -C $prime_package node dist/bundle/cli.js" "env -C$prime_package node dist/bundle/cli.js" "env --split-string='prime-agent --flag'" "sh -c prime-agent" "bash -lc prime-agent" "bash -o posix -c prime-agent" "bash <<< prime-agent" "time -p prime-agent" "time --format '%C' prime-agent --flag" "$time_bin -p prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "p --flag" "prime-proxy --flag" "nohup prime-agent --flag" "nice -n 10 prime-agent --flag" "timeout 10 prime-agent --flag" "timeout -- 10 prime-agent --flag" "setsid prime-agent --flag" "stdbuf -o0 prime-agent --flag" "python3 -c 'import os; os.execvp(\"prime-agent\", [\"prime-agent\"])'" "python3 - <<< 'import subprocess; subprocess.run([\"prime-agent\"])'" "npx prime-agent --flag" "npm exec prime-agent --flag" "pnpx prime-agent --flag" "bunx prime-agent --flag" "cd $prime_package; node dist/bundle/cli.js" "cd -P $prime_package; node dist/bundle/cli.js" "PATH=$FAKEBIN_DIR:\$PATH p --flag" "export PATH=$env_primebin:\$PATH; q --flag" "claude --flag;prime-agent" $'custom-agent --flag\nprime-agent --flag' 'claude --flag $(prime-agent)' '$(printf prime-agent) --flag' 'echo "$(prime-agent)"' 'echo "$(printf '\'')'\''; prime-agent)"' 'FOO="$(prime-agent)" custom-agent --flag' 'echo ${FM_X:-$(prime-agent)}' 'echo $(( $(prime-agent) ))' 'echo `prime-agent`' '`printf prime-agent` --flag' 'builtin command prime-agent --flag' "hash -p $FAKEBIN_DIR/prime-agent ls; ls --flag" 'eval prime-agent' 'runner=prime-agent; $runner --flag' '$runner --flag' 'cat <(prime-agent)' 'cat >(prime-agent)' 'cat < <(prime-agent)' 'cat >$(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' 'node "$PWD/Worker Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag" "r --flag")
+  commands=("prime-agent --flag" "command prime-agent --flag" "command -- prime-agent --flag" "exec prime-agent --flag" "env prime-agent --flag" "env PATH=$env_primebin:\$PATH q --flag" "node $prime_package/dist/bundle/cli.js" "node --trace-warnings $prime_package/dist/bundle/cli.js" "node --require $prime_package/dist/bundle/cli.js -e ''" "node --import=$prime_package/dist/bundle/cli.js -e ''" "node -e \"require('child_process').execFileSync('prime-agent')\"" "node --run start" "NODE_OPTIONS=--require=$prime_package/dist/bundle/cli.js node ./safe.js" "env NODE_OPTIONS=--require=$prime_package/dist/bundle/cli.js node ./safe.js" "node <<< 'require(\"node:child_process\").execFileSync(\"prime-agent\")'" "node --import='data:text/javascript,import{execFileSync}from\"node:child_process\";execFileSync(\"prime-agent\")' ./safe.js" "node './Linked Prime/dist/bundle/cli.js'" "entry=$prime_package/dist/bundle/cli.js; node \$entry" "env -C $prime_package node dist/bundle/cli.js" "env -C$prime_package node dist/bundle/cli.js" "env --split-string='prime-agent --flag'" "sh -c prime-agent" "bash -lc prime-agent" "bash -o posix -c prime-agent" "bash <<< prime-agent" "time -p prime-agent" "time --format '%C' prime-agent --flag" "$time_bin -p prime-agent" "'$FAKEBIN_DIR/prime-agent' --flag" "p --flag" "prime-proxy --flag" "nohup prime-agent --flag" "nice -n 10 prime-agent --flag" "timeout 10 prime-agent --flag" "timeout -- 10 prime-agent --flag" "setsid prime-agent --flag" "stdbuf -o0 prime-agent --flag" "python3 -c 'import os; os.execvp(\"prime-agent\", [\"prime-agent\"])'" "python3 - <<< 'import subprocess; subprocess.run([\"prime-agent\"])'" "npx prime-agent --flag" "npm exec prime-agent --flag" "pnpx prime-agent --flag" "bunx prime-agent --flag" "cd $prime_package; node dist/bundle/cli.js" "cd -P $prime_package; node dist/bundle/cli.js" "PATH=$FAKEBIN_DIR:\$PATH p --flag" "export PATH=$env_primebin:\$PATH; q --flag" "claude --flag;prime-agent" $'custom-agent --flag\nprime-agent --flag' 'claude --flag $(prime-agent)' '$(printf prime-agent) --flag' 'echo "$(prime-agent)"' 'echo "$(printf '\'')'\''; prime-agent)"' 'FOO="$(prime-agent)" custom-agent --flag' 'echo ${FM_X:-$(prime-agent)}' 'echo $(( $(prime-agent) ))' 'echo `prime-agent`' '`printf prime-agent` --flag' 'builtin command prime-agent --flag' "hash -p $FAKEBIN_DIR/prime-agent ls; ls --flag" 'eval prime-agent' 'runner=prime-agent; $runner --flag' '$runner --flag' 'cat <(prime-agent)' 'cat >(prime-agent)' 'cat < <(prime-agent)' 'cat >$(prime-agent)' 'node "$PWD/Linked Prime/dist/bundle/cli.js"' 'node "$PWD/Worker Prime/dist/bundle/cli.js"' "2>$CASE_DIR/prime.err prime-agent --flag" "if true; then prime-agent; fi" "envx prime-agent --flag" "/usr/bin/arch prime-agent --flag")
 
   for index in "${!ids[@]}"; do
     id=${ids[$index]}
@@ -518,14 +518,15 @@ SH
 }
 
 test_native_non_prime_raw_launch_is_preserved() {
-  local rec id out status launch system_id copied_id echo_id shell_arg_id assigned_id pane_primebin path_result
+  local rec id out status launch system_id copied_id echo_id shell_arg_id assigned_id unresolved_id pane_primebin path_result
   id=profile-raw-native-z15c
   system_id=profile-raw-system-native-z15c
   copied_id=profile-raw-copied-native-z15c
   echo_id=profile-raw-echo-prime-z15c
   shell_arg_id=profile-raw-shell-arg-prime-z15c
   assigned_id=profile-raw-assigned-native-z15c
-  rec=$(make_spawn_case profile-raw-native claude "$id" "$system_id" "$copied_id" "$echo_id" "$shell_arg_id" "$assigned_id")
+  unresolved_id=profile-raw-pane-native-z15c
+  rec=$(make_spawn_case profile-raw-native claude "$id" "$system_id" "$copied_id" "$echo_id" "$shell_arg_id" "$assigned_id" "$unresolved_id")
   read_case_record "$rec"
   pane_primebin="$CASE_DIR/pane-primebin"
   mkdir -p "$pane_primebin"
@@ -537,7 +538,11 @@ SH
 #!/usr/bin/env bash
 printf '%s\n' pane-path-agent
 SH
-  chmod +x "$FAKEBIN_DIR/custom-agent" "$pane_primebin/custom-agent"
+  cat > "$pane_primebin/pane-only-agent" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' pane-only-agent
+SH
+  chmod +x "$FAKEBIN_DIR/custom-agent" "$pane_primebin/custom-agent" "$pane_primebin/pane-only-agent"
 
   out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
     "$id" "$PROJ_DIR" "custom-agent --flag")
@@ -548,8 +553,19 @@ SH
   assert_contains "$launch" "custom-agent --flag" "non-Prime raw command was not preserved"
   path_result=$(env -i PATH="$pane_primebin:/usr/bin:/bin" /bin/sh -c "$launch") \
     || fail "accepted raw launch did not execute in a synthetic pane"
-  [ "$path_result" = scanner-path-agent ] \
-    || fail "accepted raw launch used an unverified pane PATH result: $path_result"
+  [ "$path_result" = pane-path-agent ] \
+    || fail "accepted raw launch did not preserve pane PATH resolution: $path_result"
+  : > "$LAUNCH_LOG"
+  out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
+    "$unresolved_id" "$PROJ_DIR" "pane-only-agent --flag")
+  status=$?
+  expect_code 0 "$status" "pane-only non-Prime raw launch should remain available"
+  assert_contains "$out" "spawned $unresolved_id harness=pane-only-agent" "pane-only raw launch did not retain executable identity"
+  launch=$(cat "$LAUNCH_LOG")
+  path_result=$(env -i PATH="$pane_primebin:/usr/bin:/bin" /bin/sh -c "$launch") \
+    || fail "accepted pane-only raw launch did not execute in a synthetic pane"
+  [ "$path_result" = pane-only-agent ] \
+    || fail "accepted pane-only raw launch did not use pane PATH resolution: $path_result"
   ln -sf "$(type -P uname)" "$FAKEBIN_DIR/system-agent"
   : > "$LAUNCH_LOG"
   out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
@@ -907,7 +923,7 @@ done
   printf 'gnupg_home=%s\n' "${GNUPGHOME:-}"
   printf 'npm_config=%s\n' "${NPM_CONFIG_USERCONFIG:-}"
   printf 'netrc=%s\n' "${NETRC:-}"
-  for name in PRIME_AGENT_CODING_AGENT_SESSION_DIR PRIME_API_KEY PRIME_AGENT_TRACES_API_KEY PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN PRIME_TEAM_ID OPENAI_API_KEY ANTHROPIC_API_KEY GITHUB_TOKEN NPM_TOKEN NODE_AUTH_TOKEN GITLAB_TOKEN GL_TOKEN BITBUCKET_TOKEN HF_TOKEN HUGGINGFACE_HUB_TOKEN COHERE_API_KEY MISTRAL_API_KEY GEMINI_API_KEY GOOGLE_API_KEY XAI_API_KEY GROK_API_KEY GROQ_API_KEY TOGETHER_API_KEY OPENROUTER_API_KEY AZURE_OPENAI_API_KEY AWS_SESSION_TOKEN SLACK_BOT_TOKEN SENTRY_AUTH_TOKEN PGPASSWORD DOCKER_AUTH_CONFIG MYSQL_PWD REDISCLI_AUTH DATABASE_URL REDIS_URL MONGODB_URI PIP_INDEX_URL PIP_EXTRA_INDEX_URL SENTRY_DSN SSH_PRIVATE_KEY GPG_PRIVATE_KEY DEPLOY_KEY ANTHROPIC_OAUTH_TOKEN ANTHROPIC_AUTH_TOKEN GH_TOKEN SERPER_API_KEY GOOGLE_APPLICATION_CREDENTIALS google_application_credentials AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY SSH_AUTH_SOCK SSH_AGENT_PID GIT_ASKPASS SSH_ASKPASS SUDO_ASKPASS GIT_SSH GIT_SSH_COMMAND GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL CLAUDECODE GROK_AGENT GEMINI_CLI CURSOR_AGENT CURSOR_INVOKED_AS ATLASSIAN_AGENT_TYPE ROVODEV_CLI FM_OMP_HARNESS GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0 GIT_CONFIG_PARAMETERS; do
+  for name in PRIME_AGENT_CODING_AGENT_SESSION_DIR PRIME_API_KEY PRIME_AGENT_TRACES_API_KEY PRIME_AGENT_INTERNAL_DAEMON_WORKER_TOKEN PRIME_TEAM_ID OPENAI_API_KEY ANTHROPIC_API_KEY GITHUB_TOKEN NPM_TOKEN NODE_AUTH_TOKEN GITLAB_TOKEN GL_TOKEN BITBUCKET_TOKEN HF_TOKEN HUGGINGFACE_HUB_TOKEN COHERE_API_KEY MISTRAL_API_KEY GEMINI_API_KEY GOOGLE_API_KEY XAI_API_KEY GROK_API_KEY GROQ_API_KEY TOGETHER_API_KEY OPENROUTER_API_KEY AZURE_OPENAI_API_KEY AWS_SESSION_TOKEN SLACK_BOT_TOKEN SENTRY_AUTH_TOKEN PGPASSWORD DOCKER_AUTH_CONFIG MYSQL_PWD REDISCLI_AUTH DATABASE_URL REDIS_URL MONGODB_URI PIP_INDEX_URL PIP_EXTRA_INDEX_URL SENTRY_DSN SSH_PRIVATE_KEY GPG_PRIVATE_KEY DEPLOY_KEY ANTHROPIC_OAUTH_TOKEN ANTHROPIC_AUTH_TOKEN GH_TOKEN SERPER_API_KEY GOOGLE_APPLICATION_CREDENTIALS google_application_credentials AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY SSH_AUTH_SOCK SSH_AGENT_PID GIT_ASKPASS SSH_ASKPASS SUDO_ASKPASS GIT_SSH GIT_SSH_COMMAND GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL CLAUDECODE GROK_AGENT GEMINI_CLI CURSOR_AGENT CURSOR_INVOKED_AS ATLASSIAN_AGENT_TYPE ROVODEV_CLI FM_OMP_HARNESS GIT_CONFIG_KEY_0 GIT_CONFIG_VALUE_0 GIT_CONFIG_PARAMETERS NODE_OPTIONS; do
     [ -z "${!name+x}" ] || printf 'visible=%s\n' "$name"
   done
   [ "${GIT_CONFIG_COUNT:-0}" = 0 ] || printf '%s\n' 'visible=GIT_CONFIG_COUNT'
@@ -1018,6 +1034,7 @@ SH
       AWS_CONFIG_FILE=/tmp/ambient-aws-config AZURE_CONFIG_DIR=/tmp/ambient-azure \
       DOCKER_CONFIG=/tmp/ambient-docker KUBECONFIG=/tmp/ambient-kube HF_HOME=/tmp/ambient-hf \
       GNUPGHOME=/tmp/ambient-gnupg NPM_CONFIG_USERCONFIG=/tmp/ambient-npmrc NETRC=/tmp/ambient-netrc \
+      NODE_OPTIONS=--trace-warnings \
       GIT_CONFIG_GLOBAL="$operator_home/.gitconfig" GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=credential.helper \
       GIT_CONFIG_VALUE_0=visible-helper FM_FAKE_PRIME_GIT_REPO="$WT_DIR" \
       FM_FAKE_PRIME_COMMIT_FILE=prime-tooling-one.txt FM_FAKE_PRIME_ENV_LOG="$env_log" bash -c "$first_launch"
@@ -1559,6 +1576,103 @@ test_active_dispatch_profile_does_not_block_secondmate_launch() {
   pass "active crew-dispatch profile does not block secondmate launches"
 }
 
+test_launch_environment_allowlist() {
+  local setting rec id out status probe result expected launch value pane_shell pane_path
+  # shellcheck disable=SC2016
+  value='synthetic value; $(touch SHOULD_NOT_EXIST) `false` "quoted"'
+  for setting in absent missing-config enabled empty; do
+    id="env-$setting"
+    rec=$(make_spawn_case "$id" codex "$id")
+    read_case_record "$rec"
+    case "$setting" in
+      missing-config) rm "$HOME_DIR/config/crew-harness"; rmdir "$HOME_DIR/config" ;;
+      enabled) printf '# Synthetic credential name\nFM_TEST_ALLOWED\nFM_TEST_EMPTY\nFM_TEST_UNSET\n' > "$HOME_DIR/config/launch-env-allowlist" ;;
+      empty) : > "$HOME_DIR/config/launch-env-allowlist" ;;
+    esac
+    probe="$CASE_DIR/probe.sh"
+    cat > "$probe" <<'SH'
+#!/bin/sh
+printf '%s\n' "${FM_TEST_AMBIENT_SENTINEL-unset}" "${FM_TEST_ALLOWED-unset}" \
+  "${FM_TEST_EMPTY-unset}" "${FM_TEST_UNSET-unset}" "$HOME" "$PATH" "$TERM" "$TMUX" "$GOTMPDIR"
+SH
+    out=$(FM_TEST_AMBIENT_SENTINEL=synthetic-unrelated \
+      run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" \
+      "$id" "$PROJ_DIR" --harness "/bin/sh '$probe'")
+    status=$?
+    expect_code 0 "$status" "allowlist=$setting spawn should succeed: $out"
+    launch=$(cat "$LAUNCH_LOG")
+    for pane_shell in /bin/sh /bin/bash /bin/zsh; do
+      [ -x "$pane_shell" ] || continue
+      pane_path=$(env -i HOME="$HOME_DIR/user-home" PATH=/usr/bin:/bin TERM=xterm \
+        TMUX=synthetic-pane GOTMPDIR=/synthetic/gotmp \
+        "$pane_shell" -c "printf %s \"\$PATH\"") \
+        || fail "could not read $pane_shell startup PATH"
+      result=$(env -i HOME="$HOME_DIR/user-home" PATH=/usr/bin:/bin TERM=xterm \
+        TMUX=synthetic-pane GOTMPDIR=/synthetic/gotmp \
+        FM_TEST_AMBIENT_SENTINEL=synthetic-unrelated FM_TEST_ALLOWED="$value" FM_TEST_EMPTY='' \
+        "$pane_shell" -c "$launch") || fail "allowlist=$setting emitted launch failed in $pane_shell"
+      case "$setting" in
+        absent|missing-config) expected=$(printf '%s\n' synthetic-unrelated "$value" '' unset) ;;
+        enabled) expected=$(printf '%s\n' unset "$value" '' unset) ;;
+        empty) expected=$(printf '%s\n' unset unset unset unset) ;;
+      esac
+      expected="$expected"$'\n'"$HOME_DIR/user-home"$'\n'"$pane_path"$'\nxterm\nsynthetic-pane\n/synthetic/gotmp'
+      [ "$result" = "$expected" ] || fail "allowlist=$setting worker environment mismatch: $result"
+    done
+    pass "allowlist=$setting preserves the operational floor and filters only when opted in"
+  done
+}
+
+test_launch_environment_invalid_config_refuses() {
+  local rec id bad out status
+  id=env-invalid
+  rec=$(make_spawn_case "$id" codex "$id")
+  read_case_record "$rec"
+  for bad in 'FM_TEST_ALLOWED=value' 'NAME;false' '1INVALID' '*'; do
+    printf '%s\n' "$bad" > "$HOME_DIR/config/launch-env-allowlist"
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR")
+    status=$?
+    expect_code 1 "$status" "invalid allowlist must refuse spawn"
+    assert_contains "$out" 'launch-env-allowlist' "refusal must identify the config file"
+    [ ! -s "$LAUNCH_LOG" ] || fail "invalid allowlist delivered a launch command"
+    [ ! -f "$HOME_DIR/state/$id.meta" ] || fail "invalid allowlist published a task"
+  done
+  pass "invalid allowlist names refuse before launch or task publication"
+}
+
+test_launch_environment_inherited_by_secondmate() {
+  local rec id sm out status result
+  id=env-secondmate
+  rec=$(make_spawn_case "$id" codex "$id")
+  read_case_record "$rec"
+  printf 'FM_TEST_ALLOWED\n' > "$HOME_DIR/config/launch-env-allowlist"
+  sm="$CASE_DIR/secondmate-home"
+  make_seeded_secondmate_home "$sm" "$id"
+  out=$(run_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$sm" --secondmate)
+  status=$?
+  expect_code 0 "$status" "secondmate with an allowlist should spawn: $out"
+  cmp -s "$HOME_DIR/config/launch-env-allowlist" "$sm/config/launch-env-allowlist" \
+    || fail "secondmate did not inherit the launch environment contract"
+  cat > "$FAKEBIN_DIR/codex" <<'SH'
+#!/bin/sh
+printf '%s\n' "${FM_TEST_AMBIENT_SENTINEL-unset}" "$FM_TEST_ALLOWED" "$FM_HOME" "${FM_STATE_OVERRIDE-unset}"
+SH
+  chmod +x "$FAKEBIN_DIR/codex"
+  result=$(env -i HOME="$HOME_DIR/user-home" PATH="$FAKEBIN_DIR:$PATH" \
+    FM_TEST_AMBIENT_SENTINEL=synthetic-unrelated FM_TEST_ALLOWED=synthetic-provider \
+    /bin/sh -c "$(cat "$LAUNCH_LOG")") || fail "secondmate's emitted command failed"
+  [ "$result" = "unset"$'\nsynthetic-provider\n'"$sm" ] \
+    || fail "secondmate's environment lost filtering or explicit home assignments: $result"
+  (
+    # shellcheck source=/dev/null
+    . "$ROOT/bin/fm-config-inherit-lib.sh"
+    rm "$HOME_DIR/config/launch-env-allowlist"
+    propagate_secondmate_inheritance "$HOME_DIR" "$sm" >/dev/null
+  ) || fail "allowlist removal failed to converge"
+  [ ! -e "$sm/config/launch-env-allowlist" ] || fail "secondmate retained a removed allowlist"
+  pass "secondmate launch inherits the allowlist for subsequent worker launches"
+}
+
 test_worker_launch_delivers_role_scope() {
   local rec id out launch kind prompt brief_kind brief content
   for brief_kind in heading legacy scaffold; do
@@ -1621,6 +1735,9 @@ SH
   pass "fm-spawn: actual ship/scout launch commands deliver the worker role contract"
 }
 
+test_launch_environment_allowlist
+test_launch_environment_invalid_config_refuses
+test_launch_environment_inherited_by_secondmate
 test_worker_launch_delivers_role_scope
 test_no_profile_keeps_claude_profile_defaults
 test_non_cursor_launch_clears_inherited_cursor_markers
