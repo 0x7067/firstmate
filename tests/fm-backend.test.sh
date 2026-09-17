@@ -533,7 +533,7 @@ test_backend_source_requires_adapter_file() {
   test_bash=${FM_TEST_BASH:-${BASH:-bash}}
   mkdir -p "$dir/backends"
 
-  for condition in missing unreadable; do
+  for condition in missing unreadable syntax-broken; do
     if [ "$condition" = unreadable ]; then
       printf ':\n' > "$adapter"
       chmod 000 "$adapter"
@@ -541,6 +541,9 @@ test_backend_source_requires_adapter_file() {
         pass "fm_backend_source: unreadable adapter case skipped (this user can read mode-000 files)"
         continue
       fi
+    elif [ "$condition" = syntax-broken ]; then
+      chmod 644 "$adapter"
+      printf 'echo ((\n' > "$adapter"
     fi
     exit_status="$dir/$condition.exit"
     continuation="$dir/$condition.continued"

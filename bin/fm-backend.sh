@@ -651,6 +651,7 @@ fm_backend_source() {  # <name>
     path="$FM_BACKEND_LIB_DIR/$rel"
     fm_backend_source_readable "$path" || return 1
   done
+  bash -n "$adapter" 2>/dev/null || return 1
   case "$name" in
     tmux)
       if [ -z "${_FM_BACKEND_TMUX_SOURCED:-}" ]; then

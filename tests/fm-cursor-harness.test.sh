@@ -210,8 +210,13 @@ test_cursor_marker_outranks_inherited_claudecode() {
   local tree_dir
   tree_dir="$TMP_ROOT/marker-ordering-trees"
   mkdir -p "$tree_dir"
-  cp "$(command -v bash)" "$tree_dir/cursor-agent"
-  cp "$(command -v bash)" "$tree_dir/claude"
+  # Symlink, not a copy: macOS AMFI kills a renamed bash binary whose path
+  # does not match its code signature, but a symlink resolves to the signed
+  # binary while still presenting the renamed name to ps -o comm= -p $$, which
+  # is the ancestry evidence harness_process_verdict reads. Same rationale as
+  # the fm-muse-harness.test.sh / fm-harness-precedence.test.sh fix.
+  ln -sf "$(command -v bash)" "$tree_dir/cursor-agent"
+  ln -sf "$(command -v bash)" "$tree_dir/claude"
   out=$(env -u CLAUDECODE "$tree_dir/cursor-agent" -c \
     "r=\$(CURSOR_AGENT=1 \"$HARNESS\"); printf '%s' \"\$r\"")
   [ "$out" = cursor ] || fail "a real cursor-agent ancestor must detect cursor, got '$out'"

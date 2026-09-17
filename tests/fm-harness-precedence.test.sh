@@ -122,7 +122,12 @@ with_blind_ancestry() {  # <fakebin> [VAR=VAL ...]
 
 named_bin() {  # <dir> <name>
   mkdir -p "$1"
-  cp "$(command -v bash)" "$1/$2"
+  # Symlink, not a copy: macOS AMFI kills a renamed bash binary whose path does
+  # not match its code signature, but a symlink resolves to the signed binary
+  # while still presenting the renamed name to ps -o comm= -p $$, which is the
+  # ancestry evidence harness_process_verdict reads. Same rationale as the
+  # fm-muse-harness.test.sh fix.
+  ln -sf "$(command -v bash)" "$1/$2"
   printf '%s\n' "$1/$2"
 }
 
