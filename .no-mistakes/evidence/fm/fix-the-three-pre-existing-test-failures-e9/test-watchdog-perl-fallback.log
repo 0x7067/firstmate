@@ -1,0 +1,4 @@
+timeout on PATH: none; gtimeout: none; perl: /var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/tmp.gcmLhOIMTw/perl
+hanging-child(grandchild): rc=124 elapsed=8s (base would wait ~20s for the orphaned pipe)
+passthrough: rc=7 elapsed=0s out='hello-out'
+quick-exit: rc=0 elapsed=0s

@@ -1,0 +1,14 @@
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/bin/fm-backlog-transition-lib.sh: line 80: dirname: command not found
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/bin/fm-backlog-transition-lib.sh: line 80: /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/fm-timeout-lib.sh: No such file or directory
+ok - fm_tasks_axi bounds the call through its perl watchdog when no timeout binary exists
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/bin/fm-backlog-transition-lib.sh: line 80: dirname: command not found
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/bin/fm-backlog-transition-lib.sh: line 80: /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/fm-timeout-lib.sh: No such file or directory
+ok - fm_tasks_axi's perl watchdog passes the child status and output through unchanged
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/bin/fm-backlog-transition-lib.sh: line 80: dirname: command not found
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/bin/fm-backlog-transition-lib.sh: line 80: /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/fm-timeout-lib.sh: No such file or directory
+ok - fm_tasks_axi fails closed rather than running unbounded when no bounding mechanism exists
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/bin/fm-backlog-transition-lib.sh: line 80: dirname: command not found
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/bin/fm-backlog-transition-lib.sh: line 80: /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M2RKDH4KJ7JQ539KNKGC6A2M/fm-timeout-lib.sh: No such file or directory
+ok - fm_tasks_axi's GNU timeout kills a child that ignores SIGTERM after one further bound
+ok - a signal-deferred spawn bounds its verification so an unresponsive tasks-axi cannot hold the meta lock forever
+ok - spawn refuses a special-file tasks-axi config instead of blocking on it

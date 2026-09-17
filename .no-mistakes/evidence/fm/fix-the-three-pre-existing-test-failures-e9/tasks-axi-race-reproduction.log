@@ -1,0 +1,6 @@
+=== fm_tasks_axi grandchild-pipe race reproduction ===
+stub: #!/bin/bash + 'sleep 20' (non-exec => sleep is a grandchild holding stdout)
+bound: FM_TASKS_AXI_TIMEOUT=2 (TERM at 2s, KILL after 2s grace)
+
+BASE: rc=124 elapsed=20s out=''
+TARGET: rc=124 elapsed=8s out=''

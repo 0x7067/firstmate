@@ -1,0 +1,14 @@
+source tmux: ok
+source herdr: ok
+source zellij: ok
+source orca: ok
+source cmux: ok
+re-source herdr: ok
+defined: fm_backend_herdr_parse_target
+defined: fm_backend_herdr_pane_presence_state
+defined: fm_backend_herdr_workspace_presence_state
+defined: fm_backend_herdr_endpoint_confirmed_gone
+defined: fm_backend_herdr_explicit_close_pane_confirmed
+defined: fm_backend_herdr_presentation_session_lock_path
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+bogus rc=1

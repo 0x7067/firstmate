@@ -1,0 +1,3 @@
+ok - muse is detected through any versioned muse-bin ancestor
+ok - muse detection does not claim unrelated muse-containing commands
+ok - muse launch clears foreign harness markers before ancestry detection

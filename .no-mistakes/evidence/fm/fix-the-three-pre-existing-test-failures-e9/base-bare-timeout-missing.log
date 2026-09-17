@@ -1,0 +1,3 @@
+$ PATH=<no-coreutils> timeout -k 5 30 ./fm-spawn.sh ...   (the base test line on a stock-macOS host)
+/bin/bash: timeout: command not found
+rc=127 (127 -> the base case died on the watchdog itself before the spawn ran; assert_contains then fails on the empty/error output)
