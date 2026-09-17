@@ -1,0 +1,7 @@
+=== tree: base commit f5d7f5f2 bin/ + target tests/fm-watch-triage.test.sh
+=== command: FM_TEST_ONLY=test_turn_ended_churn_existing_marker_absorbed /bin/bash tests/fm-watch-triage.test.sh
+GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+=== output:
+/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-base-tree.31PZhy/bin/fm-watch.sh: line 554: missing_keys[@]: unbound variable
+not ok - a churning turn-end inside an open deferral window was not absorbed: 
+=== exit=1

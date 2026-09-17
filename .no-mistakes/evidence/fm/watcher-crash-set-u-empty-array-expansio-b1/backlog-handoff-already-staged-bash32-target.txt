@@ -1,0 +1,21 @@
+=== precondition: K1 already '## Queued' in data/handoff/ios.outbox.md -> to_move stays empty
+=== command: handoff_env FM_FAKE_SSH_MODE=normal /bin/bash bin/fm-backlog-handoff.sh ios K1
+GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+=== output:
+stored: state/handoff/ios.outbox.md bytes=71
+error: no-mistakes gate agent must not drive the fleet (NO_MISTAKES_GATE set)
+error: backlog delivery to secondmate ios succeeded, but its receiver wake failed; retry a tracked remote wake with --resume-pending or a later new handoff, and retry a local wake by rerunning its handoff
+warning: remote backlog is durable at ios and its outbox was released; the best-effort receiver wake remains pending for a later resume or handoff
+received: ios moved=1 already=0
+handed off 1 item(s) to remote secondmate ios: K1
+  already staged (recovered): K1
+=== exit=0
+=== remote backlog after delivery:
+## In flight
+
+## Queued
+- [ ] K1 - staged task for remote ios
+
+## Done
+=== local outbox exists?
+=== receiver wake log:

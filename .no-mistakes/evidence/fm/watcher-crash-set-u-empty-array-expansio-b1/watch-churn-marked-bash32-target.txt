@@ -1,0 +1,6 @@
+=== command: FM_TEST_ONLY=test_turn_ended_churn_existing_marker_absorbed /bin/bash tests/fm-watch-triage.test.sh
+=== interpreter:
+GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+=== output:
+ok - a churning turn-end inside an already-open deferral window is absorbed without re-marking
+=== exit=0

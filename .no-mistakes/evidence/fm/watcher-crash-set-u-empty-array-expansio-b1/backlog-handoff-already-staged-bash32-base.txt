@@ -1,0 +1,27 @@
+=== tree: BASE commit f5d7f5f2 bin/fm-backlog-handoff.sh (unguarded "${to_move[@]}")
+=== same fixture: K1 already '## Queued' in ios.outbox.md -> to_move stays empty
+=== command: /bin/bash $BASE_TREE/bin/fm-backlog-handoff.sh ios K1
+GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+=== output:
+/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-base-tree.31PZhy/bin/fm-backlog-handoff.sh: line 758: to_move[@]: unbound variable
+=== exit=0
+
+=== post-crash observable state (base run):
+--- local outbox still holds K1 (never delivered):
+## In flight
+
+## Queued
+
+- [ ] K1 - staged task for remote ios
+
+## Done
+--- remote backlog:
+(absent - nothing was delivered)
+
+=== note: exit=0 is itself part of the bug's blast radius on bash 3.2:
+    fm-backlog-handoff.sh runs 'set -eu' and invokes remote_handoff under 'if';
+    the set -u abort unwinds to the EXIT trap (release_remote_locks) and the
+    script exits with the trap's status 0 - a SILENT no-op handoff failure.
+    Minimal reproduction of that interaction:
+/bin/bash: a[@]: unbound variable
+    minimal-repro exit=0

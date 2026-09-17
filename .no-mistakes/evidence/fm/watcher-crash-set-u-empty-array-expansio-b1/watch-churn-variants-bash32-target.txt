@@ -1,0 +1,9 @@
+=== test_turn_ended_churning_pane_absorbed
+ok - a bare turn-end from a pane that churned since the previous poll is absorbed
+exit=0
+=== test_turn_ended_churn_resets_prior_stale_classification
+ok - pane churn starts a fresh stale-classification interval before a stopped render returns
+exit=0
+=== test_turn_ended_churn_resets_wedge_state_before_stale_poll
+ok - pane churn resets prior wedge escalation state before the stale-path poll
+exit=0

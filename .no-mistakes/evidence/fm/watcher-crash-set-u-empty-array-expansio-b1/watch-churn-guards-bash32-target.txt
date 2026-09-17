@@ -1,0 +1,15 @@
+=== test_turn_ended_churn_absorb_bounded
+ok - a perpetually churning pane surfaces once its bounded deferral window is spent
+exit=0
+=== test_turn_ended_churn_absorb_off_by_default
+ok - pane-churn turn-end absorb is off until a home opts in
+exit=0
+=== test_turn_ended_churn_timer_write_failure_surfaced
+ok - an unrecordable pane-churn deadline surfaces the turn-end
+exit=0
+=== test_secondmate_turn_ended_churning_pane_surfaced
+ok - a churning secondmate turn-end surfaces without a stale resurface path
+exit=0
+=== test_turn_ended_mixed_positive_evidence_batch_absorbed
+ok - a batch may satisfy positive evidence independently per task
+exit=0
