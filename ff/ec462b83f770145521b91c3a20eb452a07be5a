@@ -1,0 +1,21 @@
+bin/fm-backend.sh
+  s_b77487d2216016::t_82165d82a01640 621-625,627
+tests/fm-backend.test.sh
+  s_b77487d2216016::t_ac3bc7b6adac85 536,544-546
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ffec462b83f770145521b91c3a20eb452a07be5a",
+  "prompts": {},
+  "sessions": {
+    "s_b77487d2216016": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0d4a7-7340-707e-9d60-c3b86716eb20",
+        "model": "glm-5.3-flash"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
