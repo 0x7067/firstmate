@@ -157,7 +157,7 @@ fm_run_external_timeout() {
     *)
       if [ "$command_rc" -le 255 ]; then
         case "$runner_rc" in
-          124|137) [ "$command_rc" -lt 128 ] && return "$command_rc" ;;
+          124) [ "$command_rc" -lt 128 ] && return "$command_rc" ;;
           *) return "$command_rc" ;;
         esac
       fi
