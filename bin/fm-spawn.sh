@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 # Spawn a direct report: a crewmate in a treehouse or Orca worktree, or a
 # secondmate in its isolated firstmate home.
-# Usage: fm-spawn.sh <task-id> <project-dir> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--branch-prefix <prefix>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>]
-#        fm-spawn.sh <task-id> <project-dir> --scout [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>]
+# Usage: fm-spawn.sh <task-id> <project-path> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--branch-prefix <prefix>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>]
+#        fm-spawn.sh <task-id> <project-path> --scout [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>]
 #        fm-spawn.sh <task-id> [<firstmate-home>] [--harness <name>|harness|launch-command] [--model <name>] [--effort <level>] [--backend <name>] --secondmate
+#   <project-path> is the absolute path to the project's clone directory,
+#   a `projects/<name>` reference resolved against $FM_HOME/projects, or the
+#   registered project name (looked up in $FM_HOME/data/projects.md and
+#   resolved to its clone under $FM_HOME/projects). When omitted, the spawn
+#   falls back to the task's `repo:` field in $FM_HOME/data/backlog.md and
+#   prints a clean usage message when that field is also absent; the value is
+#   never a firstmate home path on ship or scout spawns.
 #   --mode and --yolo are this task's delivery contract, REQUIRED for every ship
 #   spawn and refused on --scout and --secondmate spawns. Firstmate resolves both
 #   per task at intake (AGENTS.md section 7); data/projects.md holds the captain's
@@ -520,6 +527,46 @@ STATE="${FM_STATE_OVERRIDE:-$FM_HOME/state}"
 DATA="${FM_DATA_OVERRIDE:-$FM_HOME/data}"
 PROJECTS="${FM_PROJECTS_OVERRIDE:-$FM_HOME/projects}"
 CONFIG="${FM_CONFIG_OVERRIDE:-$FM_HOME/config}"
+
+# fm_spawn_project_in_registry <name>
+#   Return 0 when <name> is registered as a project in $DATA/projects.md,
+#   1 otherwise. The boundary rules mirror fm-project-mode.sh: the line must
+#   start with "- " <name> and the text after <name> is empty, " - ", or " [",
+#   so a name that is a leading prefix of a longer registered name does not
+#   match that longer row. Names with spaces are compared literally (never a
+#   regex), so any character class is safe.
+fm_spawn_project_in_registry() {
+  local name=$1 reg="$DATA/projects.md"
+  [ -f "$reg" ] || return 1
+  awk -v n="$name" '
+    BEGIN { found = 0 }
+    {
+      prefix = "- " n
+      plen = length(prefix)
+      if (substr($0, 1, plen) != prefix) next
+      after = substr($0, plen + 1)
+      if (after == "" || substr(after, 1, 3) == " - " || substr(after, 1, 2) == " [") {
+        found = 1
+      }
+    }
+    END { exit (found == 0) }
+  ' "$reg"
+}
+
+# fm_spawn_repo_from_backlog <id>
+#   Print the value of the `repo:` field from <id>'s backlog row, or empty when
+#   the row is absent, unreadable, or carries no repo. Reads go through
+#   fm_backlog_row_show so they share the per-row bound and the wedged-backend
+#   latch with the rest of this script; a read-bound hit prints nothing rather
+#   than refusing outright, so the caller can fall back to a clean usage exit.
+fm_spawn_repo_from_backlog() {
+  local id=$1 data show=
+  [ -n "$id" ] || return 0
+  data=$(fm_backlog_data_absolute "$DATA") || return 0
+  show=$(fm_backlog_row_show "$data" "$id" 2>/dev/null) || return 0
+  printf '%s\n' "$show" | sed -n 's/^  repo: //p' | head -1
+}
+
 # shellcheck source=bin/fm-config-inherit-lib.sh
 . "$SCRIPT_DIR/fm-config-inherit-lib.sh"
 if ! LAUNCH_ENV_ENABLED=$(fm_config_source_present "$CONFIG/launch-env-allowlist"); then
@@ -1841,7 +1888,15 @@ elif [ "$KIND" = secondmate ]; then
     ;;
   esac
 else
-  PROJ=${POS[1]}
+  PROJ=${POS[1]:-}
+  if [ -z "$PROJ" ]; then
+    PROJ=$(fm_spawn_repo_from_backlog "$ID" 2>/dev/null) || PROJ=
+  fi
+  if [ -z "$PROJ" ]; then
+    echo "usage: fm-spawn.sh <task-id> <project-path> --mode <no-mistakes|direct-PR|local-only> --yolo <on|off> [--branch-prefix <prefix>] [--harness <name>] [--model <name>] [--effort <level>] [--backend <name>]" >&2
+    echo "       <project-path> is an absolute path, projects/<name>, or registered project name; the task's data/backlog.md repo: field was empty" >&2
+    exit 2
+  fi
   ARG3=${POS[2]:-}
 fi
 [ -z "$HARNESS_ARG" ] || ARG3=$HARNESS_ARG
@@ -2800,7 +2855,14 @@ resolve_project_dir_arg() {
   local path=$1
   case "$path" in
   projects/*) printf '%s/%s\n' "$PROJECTS" "${path#projects/}" ;;
-  *) printf '%s\n' "$path" ;;
+  /*) printf '%s\n' "$path" ;;
+  *)
+    if fm_spawn_project_in_registry "$path"; then
+      printf '%s/%s\n' "$PROJECTS" "$path"
+    else
+      printf '%s\n' "$path"
+    fi
+    ;;
   esac
 }
 
