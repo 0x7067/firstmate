@@ -39,10 +39,16 @@
 # seconds, and a read killed at that bound or at the deadline is budget
 # refusal, never a forge failure. A pull observation has three
 # dependent waves: core, six independent reads, then the closing head read;
-# an issue has two waves.
+# an issue has two waves. Before starting a URL, poll reserves the smaller of
+# the effective budget and 15 seconds for those waves. URLs needing forge
+# reads are sorted by URL and rotated by the current five-minute epoch bucket
+# modulo their count, without stored scheduling state or freshness-based
+# reordering. Terminal URLs settle separately before the forge budget starts
+# and consume no rotation slots.
 # A deliberately smaller configured budget remains bounded and may be
 # unmeasured, rather than being mislabeled unavailable. Each distinct URL is
-# observed once per poll and applied to every owner. A final observation applies
+# attempted at most once per poll and its observation applied to every owner.
+# A final observation applies
 # to every owner without another forge read. When the budget refuses a read
 # mid-observation, that URL's records stay untouched and the poll moves to the
 # next URL that still has a full observation reserve; only a genuine forge
