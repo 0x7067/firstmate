@@ -1,0 +1,21 @@
+tests/fm-timeout-lib.test.sh
+  s_67de0844fb11ca::t_0573ab2c9bdf2a 112,214
+bin/fm-timeout-lib.sh
+  s_67de0844fb11ca::t_72ac5144268069 33-34,219-221
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "31bee1f6a5a0e3e09c1e3f5ec43f1198ce8b4861",
+  "prompts": {},
+  "sessions": {
+    "s_67de0844fb11ca": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0e29b-a687-76c3-a5ed-7773baed5c06",
+        "model": "glm-5.3-flash"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
