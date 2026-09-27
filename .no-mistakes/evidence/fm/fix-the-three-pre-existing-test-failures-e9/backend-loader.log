@@ -1,0 +1,68 @@
+valid: process-status=0
+fm_backend_tmux_capture
+continuation-reached
+exit-status=0
+
+missing: process-status=1
+backend-refused
+exit-status=1
+
+unreadable: process-status=1
+backend-refused
+exit-status=1
+
+syntax-broken: process-status=1
+backend-refused
+exit-status=1
+
+/bin/bash: loaded=tmux
+status=0
+
+/bin/bash: loaded=herdr
+status=0
+
+/bin/bash: loaded=zellij
+status=0
+
+/bin/bash: loaded=orca
+status=0
+
+/bin/bash: loaded=cmux
+status=0
+
+/bin/zsh: loaded=tmux
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-tmux-lib.sh:45: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-tmux-lib.sh:.:45: no such file or directory: /fm-composer-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-tmux-lib.sh:47: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-tmux-lib.sh:.:47: no such file or directory: /fm-cursor-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-session-lock-lib.sh:22: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-session-lock-lib.sh:.:22: no such file or directory: /fm-cursor-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-agent-process-lib.sh:17: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-agent-process-lib.sh:.:17: no such file or directory: /fm-session-lock-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-agent-process-lib.sh:19: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/fm-agent-process-lib.sh:.:19: no such file or directory: /fm-gemini-lib.sh
+status=0
+
+/bin/zsh: loaded=herdr
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/herdr.sh:71: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/herdr.sh:.:79: no such file or directory: //bin/fm-composer-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/herdr.sh:.:87: no such file or directory: //bin/fm-transition-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/herdr.sh:.:94: no such file or directory: //bin/fm-agent-process-lib.sh
+status=0
+
+/bin/zsh: loaded=zellij
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/zellij.sh:115: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/zellij.sh:.:120: no such file or directory: //bin/fm-backend-hometag-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/zellij.sh:.:125: no such file or directory: //bin/fm-composer-lib.sh
+status=0
+
+/bin/zsh: loaded=orca
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/orca.sh:13: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/orca.sh:.:13: no such file or directory: /../fm-composer-lib.sh
+status=0
+
+/bin/zsh: loaded=cmux
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/cmux.sh:110: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/cmux.sh:.:115: no such file or directory: //bin/fm-backend-hometag-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/cmux.sh:.:121: no such file or directory: //bin/fm-composer-lib.sh
+status=0

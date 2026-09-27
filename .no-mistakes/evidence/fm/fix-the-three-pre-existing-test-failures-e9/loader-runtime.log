@@ -1,0 +1,12 @@
+shell=/bin/bash
+transition=p1	w1	working	blocked	claude
+plain=ready
+agent=agent
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+unknown-backend=rejected
+shell=/bin/zsh
+transition=p1	w1	working	blocked	claude
+plain=ready
+agent=agent
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+unknown-backend=rejected

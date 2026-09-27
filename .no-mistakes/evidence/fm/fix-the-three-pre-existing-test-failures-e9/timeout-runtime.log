@@ -1,0 +1,6 @@
+mechanism=timeout
+hung-descendant-status=124 elapsed=1
+child-status=7 output=child-output
+fallback-mechanism=perl
+fallback-hung-descendant-status=124 elapsed=1
+fallback-child-status=7 output=child-output

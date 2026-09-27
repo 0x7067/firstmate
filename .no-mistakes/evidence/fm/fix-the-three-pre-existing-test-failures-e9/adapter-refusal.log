@@ -1,0 +1,9 @@
+lifecycle-continued
+exit-status=0
+condition=valid status=0
+exit-status=1
+condition=missing status=1
+exit-status=1
+condition=unreadable status=1
+exit-status=1
+condition=syntax-broken status=1

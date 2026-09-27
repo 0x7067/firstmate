@@ -1,0 +1,7 @@
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/herdr.sh:71: command not found: dirname
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/herdr.sh:.:79: no such file or directory: //bin/fm-composer-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/herdr.sh:.:87: no such file or directory: //bin/fm-transition-lib.sh
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HC2B4H22YS0QGA0WVFVYDT/bin/backends/herdr.sh:.:94: no such file or directory: //bin/fm-agent-process-lib.sh
+loader-status=0
+fm_transition_record: none
+dependency-status=1
