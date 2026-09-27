@@ -1,0 +1,11 @@
+{
+  "root_cause": "fm_exec_timed referenced BASHPID, absent in Bash 3.2, under set -u",
+  "fix": "Move owner self-PID comparison into the existing exec-replaced Perl watchdog; use portable PID probes in existing tests",
+  "tests": {
+    "bash tests/fm-timeout-lib.test.sh": "15 checks passed",
+    "bash tests/fm-spawn-positional-project.test.sh": "3 checks passed",
+    "direct shell fm_exec_timed": "passed"
+  },
+  "live": "Both omitted-project and registered-name dispatch exited 0, moved tasks to In flight, and reached isolated copies of the intended repository; both workers executed the read-only verification and wrote reports",
+  "limits": "Requested gpt-5.4 rejected by account; relaunched workers with advertised gpt-6-luna low. No lint, static analysis, full suite, push, PR, or CI run."
+}

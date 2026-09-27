@@ -1,0 +1,6 @@
+Worker directory: /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-live-fixture/.treehouse/.spawn-live-fixture-76bee5/1/.spawn-live-fixture
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-live-fixture/.git
+POSITIONAL_PROJECT_LIVE_20260927
+Worker directory: /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-live-fixture/.treehouse/.spawn-live-fixture-76bee5/2/.spawn-live-fixture
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-live-fixture/.git
+POSITIONAL_PROJECT_LIVE_20260927

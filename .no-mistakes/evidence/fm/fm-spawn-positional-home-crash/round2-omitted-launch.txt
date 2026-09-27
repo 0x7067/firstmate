@@ -1,0 +1,3 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home
+warning: /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/data/omitted/launch-brief.md records no ship branch; defaulting to legacy branch fm/omitted
+spawned omitted harness=codex kind=ship mode=local-only yolo=off window=firstmate:fm-omitted worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/pool/.treehouse/quota-axi-0f6b83/1/quota-axi

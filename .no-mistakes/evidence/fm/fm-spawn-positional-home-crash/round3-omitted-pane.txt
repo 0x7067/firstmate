@@ -1,0 +1,35 @@
+> You are in /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.verify-launch/pool/.treehouse/
+
+  Note: You’re in a subdirectory of a Git project. Trusting will apply to the repository root:
+  /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.verify-launch/home/projects/positional-fi
+  xture
+
+  Do you trust the contents of this directory? Working with untrusted contents comes with higher risk of prompt
+  injection. Trusting the directory allows project-local config, hooks, and exec policies to load.
+
+› 1. Yes, continue
+  2. No, quit
+
+  Press enter to continue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

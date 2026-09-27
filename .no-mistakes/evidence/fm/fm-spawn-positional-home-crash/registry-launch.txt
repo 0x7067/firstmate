@@ -1,0 +1,7 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-lab.qpm8toin
+warning: /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-lab.qpm8toin/data/probe/launch-brief.md records no ship branch; defaulting to legacy branch fm/probe
+error connecting to /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-lab.qpm8toin/tmux/tmux-501/default (File name too long)
+error connecting to /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-lab.qpm8toin/tmux/tmux-501/default (File name too long)
+error connecting to /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-lab.qpm8toin/tmux/tmux-501/default (File name too long)
+
+exit=1

@@ -1,0 +1,15 @@
+window=primary:fm-omitted
+endpoint_task_id=omitted
+worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.verify-launch/pool/.treehouse/positional-fixture-e4c428/1/positional-fixture
+project=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.verify-launch/home/projects/positional-fixture
+harness=codex
+kind=ship
+mode=local-only
+yolo=on
+branch=fm/omitted
+tasktmp=/tmp/fm-omitted
+model=gpt-6-luna
+effort=low
+spawn_gen=s1790525918.14548.14394
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.verify-launch/home/projects/positional-fixture/.git
+positional-launch-verification

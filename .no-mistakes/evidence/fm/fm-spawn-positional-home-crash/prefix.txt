@@ -1,0 +1,4 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.spawn-lab.zd7dec9_
+bin/fm-spawn.sh: line 2990: cd: quota: No such file or directory
+
+exit=1

@@ -1,0 +1,15 @@
+window=primary:fm-registered
+endpoint_task_id=registered
+worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.verify-launch/pool/.treehouse/positional-fixture-e4c428/2/positional-fixture
+project=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.verify-launch/home/projects/positional-fixture
+harness=codex
+kind=ship
+mode=local-only
+yolo=on
+branch=fm/registered
+tasktmp=/tmp/fm-registered
+model=gpt-6-luna
+effort=low
+spawn_gen=s1790525957.24592.4501
+/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.verify-launch/home/projects/positional-fixture/.git
+positional-launch-verification

@@ -1,0 +1,25 @@
+{
+  "verdict": "pass",
+  "focused_regression": "bash tests/fm-spawn-positional-project.test.sh: three checks passed",
+  "root_cause": "Previous private tmux socket exceeded Unix-domain path length; short socket at worktree/.s succeeds",
+  "source_changes": false,
+  "live_checks": [
+    {
+      "form": "omitted",
+      "project": "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/projects/quota-axi",
+      "worktree": "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/pool/.treehouse/quota-axi-0f6b83/1/quota-axi",
+      "pane_cwd": "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/pool/.treehouse/quota-axi-0f6b83/1/quota-axi",
+      "git_common_dir": "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/projects/quota-axi/.git",
+      "worker_report_verified": true
+    },
+    {
+      "form": "registered",
+      "project": "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/projects/quota-axi",
+      "worktree": "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/pool/.treehouse/quota-axi-0f6b83/2/quota-axi",
+      "pane_cwd": "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/pool/.treehouse/quota-axi-0f6b83/2/quota-axi",
+      "git_common_dir": "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3HS5RC4JXRXRC7GB0QM5SDE/.launch-check/home/projects/quota-axi/.git",
+      "worker_report_verified": true
+    }
+  ],
+  "limits": "Live launches used local-only mode, yolo off, real Codex and treehouse; no broad suite, lint, push, PR, or CI phases run"
+}
