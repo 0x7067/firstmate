@@ -827,6 +827,13 @@ test_unmeasured_url_does_not_starve_the_tail() {
   wrap_forge "$home"
   record "$home" second 9 open mergeable
   record "$home" third 10 open mergeable
+  record "$home" merged-one 90 merged mergeable
+  record "$home" closed-one 91 closed mergeable
+  record "$home" merged-two 92 merged mergeable
+  record "$home" closed-two 93 closed mergeable
+  mutate_record "$home" closed-two '.records[0].error="forge observation unavailable or changed during read"'
+  cp "$home/data/closed-two/contributions.json" "$home/terminal.json"
+  printf -- '- [ ] late-owner - Shared https://github.com/o/r/pull/93 (repo: sample) (kind: ship)\n' >> "$home/data/backlog.md"
   for task in delivery second third; do
     mutate_record "$home" "$task" '.records[0].checked_at="2026-09-16T07:55:00Z"'
   done
@@ -840,6 +847,16 @@ test_unmeasured_url_does_not_starve_the_tail() {
     [ "$elapsed" -ge 9 ] && [ "$elapsed" -le 23 ] \
       || fail "slow successful poll did not respect its elapsed budget: $elapsed seconds"
     [ -z "$out" ] || fail "slow successful reads printed a wake: $out"
+    for task in closed-two late-owner; do
+      jq -e --slurpfile prior "$home/terminal.json" '.records[0] | .error == null
+        and .checked_at == $prior[0].records[0].checked_at
+        and .observation == $prior[0].records[0].observation' \
+        "$home/data/$task/contributions.json" >/dev/null \
+        || fail "terminal settlement or freshness changed for $task"
+    done
+    if grep -Eq '^api repos/o/r/pulls/9[0-3]($|/)' "$home/forge/calls"; then
+      fail 'a retained terminal PR was read from the forge'
+    fi
     if [ "$cycle" -ge 2 ]; then
       for task in delivery second third; do
         jq -e --arg at "$at" '.records[0] | .error == null

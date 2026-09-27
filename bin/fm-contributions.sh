@@ -343,24 +343,31 @@ poll() {
   read_saved
   [ "$ERRORS" -eq 0 ] || printf 'contributions: %s unreadable durable record(s)\n' "$ERRORS"
   # One line per distinct URL: the URL, then every owning task.
-  jq_lib -nr --slurpfile input "$TMP/input.json" --slurpfile saved "$TMP/saved.json" --argjson bucket "$((EPOCH / 300))" '
+  jq_lib -nr --slurpfile input "$TMP/input.json" --slurpfile saved "$TMP/saved.json" '
     known($input[0];$saved[0])
     | group_by(.url) | map({url:.[0].url,tasks:(map(.task) | unique)})
-    | if length == 0 then . else ($bucket % length) as $offset | .[$offset:] + .[:$offset] end
     | .[] | [.url] + .tasks | @tsv' > "$TMP/known.tsv"
-  DEADLINE=$(( $(date +%s) + BUDGET ))
-  OBSERVATION_RESERVE=$((BUDGET < 15 ? BUDGET : 15))
+  : > "$TMP/live.tsv"
   while IFS=$'\t' read -r -a row; do
     [ "${#row[@]}" -ge 2 ] || continue
-    [ $((DEADLINE - $(date +%s))) -ge "$OBSERVATION_RESERVE" ] || break
     url=${row[0]}
     # A contribution with a final observation is not re-read for any owner.
     if jq -ne --slurpfile saved "$TMP/saved.json" --arg url "$url" --args \
       'any($ARGS.positional[] as $task | [$saved[0][] | select(.task == $task) | .records[] | select(.url == $url)] | first;
         . != null and (.observation.state | IN("merged","closed")))' "${row[@]:1}" >/dev/null; then
       settle_final "$url" "${row[@]:1}"
-      continue
+    else
+      (IFS=$'\t'; printf '%s\n' "${row[*]}") >> "$TMP/live.tsv"
     fi
+  done < "$TMP/known.tsv"
+  jq -Rnr --argjson bucket "$((EPOCH / 300))" '
+    [inputs] | if length == 0 then . else ($bucket % length) as $offset | .[$offset:] + .[:$offset] end
+    | .[]' < "$TMP/live.tsv" > "$TMP/known.tsv"
+  DEADLINE=$(( $(date +%s) + BUDGET ))
+  OBSERVATION_RESERVE=$((BUDGET < 15 ? BUDGET : 15))
+  while IFS=$'\t' read -r -a row; do
+    [ $((DEADLINE - $(date +%s))) -ge "$OBSERVATION_RESERVE" ] || break
+    url=${row[0]}
     observed=0
     observe "$url" || observed=$?
     [ "$BUDGET_EXHAUSTED" -eq 0 ] || continue
