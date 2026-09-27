@@ -1,0 +1,19 @@
+.github/workflows/ci.yml
+  s_2be3659aa988fb::t_c4434acf6009f3 501-502
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c6bd0238a12a7a4ed06f92c5b17b074d2f5a8894",
+  "prompts": {},
+  "sessions": {
+    "s_2be3659aa988fb": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e2e3-f88c-74e0-985a-36533df75cd6",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
