@@ -32,7 +32,12 @@
 #
 # poll consumes fm-fleet-snapshot.sh --contribution-input, a local-only read,
 # and spends at most FM_CONTRIBUTIONS_BUDGET seconds on forge reads (default 20,
-# 1..25). Every read is capped at five seconds. A pull observation has three
+# 1..25). A configured value rides the generated check shim into watcher runs
+# and is cut down to the watcher's own per-check bound (FM_CHECK_TIMEOUT,
+# default 30, read from the poll's environment because the watcher runs it as
+# a direct child) with a three-second margin. Every read is capped at five
+# seconds, and a read killed at that bound or at the deadline is budget
+# refusal, never a forge failure. A pull observation has three
 # dependent waves: core, six independent reads, then the closing head read;
 # an issue has two waves. Parallelizing each independent wave bounds either
 # observation to 3 * 5 = 15 seconds. poll reserves min(the configured budget,
@@ -41,9 +46,10 @@
 # A deliberately smaller configured budget remains bounded and may be
 # unmeasured, rather than being mislabeled unavailable. Each distinct URL is
 # observed once per poll and applied to every owner. A final observation applies
-# to every owner without another forge read. When the budget runs out
-# mid-observation, the poll ends with that URL's records untouched; only a
-# genuine forge failure or head change records an error.
+# to every owner without another forge read. When the budget refuses a read
+# mid-observation, that URL's records stay untouched and the poll moves to the
+# next URL that still has a full observation reserve; only a genuine forge
+# failure or head change records an error.
 # API failure leaves error evidence; an expired or absent observation is not
 # silence. FM_CONTRIBUTIONS_MAX_AGE (default 900 seconds) bounds freshness.
 # A URL whose last good observation is merged or closed is final: it is
@@ -91,6 +97,11 @@ BUDGET=${FM_CONTRIBUTIONS_BUDGET:-20}
 case "$MAX_AGE" in ''|*[!0-9]*) fail 'invalid freshness bound' ;; esac
 case "$BUDGET" in ''|*[!0-9]*) fail 'invalid poll budget' ;; esac
 [ "$BUDGET" -ge 1 ] && [ "$BUDGET" -le 25 ] || fail 'poll budget must be 1..25 seconds'
+CHECK_TIMEOUT=${FM_CHECK_TIMEOUT:-30}
+case "$CHECK_TIMEOUT" in ''|*[!0-9]*|0) CHECK_TIMEOUT=30 ;; esac
+BUDGET_CAP=$((CHECK_TIMEOUT - 3))
+[ "$BUDGET_CAP" -ge 1 ] || BUDGET_CAP=1
+[ "$BUDGET" -le "$BUDGET_CAP" ] || BUDGET=$BUDGET_CAP
 TMP=$(mktemp -d "${TMPDIR:-/tmp}/fm-contributions.XXXXXX")
 LOCK_HELD=0
 cleanup() {
@@ -182,15 +193,16 @@ write_record() { # task record-json-file
 }
 
 forge() {
-  local remaining bounded=0 rc=0 forge_err=${FORGE_ERR:-$TMP/forge.err}
+  local remaining rc=0 forge_err=${FORGE_ERR:-$TMP/forge.err}
   remaining=$((DEADLINE - $(date +%s)))
   # The budget, not the forge, refused this read.
   [ "$remaining" -gt 0 ] || { BUDGET_EXHAUSTED=1; : > "$TMP/budget-exhausted"; return 1; }
-  if [ "$remaining" -le 5 ]; then bounded=1; else remaining=5; fi
+  [ "$remaining" -le 5 ] || remaining=5
   fm_run_timed "$remaining" env GH_PROMPT_DISABLED=1 GH_NO_UPDATE_NOTIFIER=1 \
     gh "$@" 2> "$forge_err" || rc=$?
-  # A read killed at the budget's own deadline is budget exhaustion too.
-  if [ "$rc" -eq 124 ] && [ "$bounded" -eq 1 ]; then
+  # A kill at the read bound or the deadline is budget refusal too; only the
+  # forge's own nonzero exit is unavailable evidence.
+  if [ "$rc" -eq 124 ]; then
     BUDGET_EXHAUSTED=1
     : > "$TMP/budget-exhausted"
   elif [ "$rc" -ne 0 ]; then
@@ -216,6 +228,7 @@ observe() { # canonical GitHub URL -> normalized JSON
   part=${url#https://github.com/}; number=${part##*/}; part=${part%/*}; kind=${part##*/}; part=${part%/*}
   case "$kind" in pull) endpoint="repos/$part/pulls/$number" ;; issues) endpoint="repos/$part/issues/$number" ;; *) return 1 ;; esac
   rm -f -- "$TMP/budget-exhausted" "$TMP/forge-unavailable"
+  BUDGET_EXHAUSTED=0
   forge api "$endpoint" > "$TMP/core.json" || return 1
   jq -e '(.state == "open" or .state == "closed") and (.user.login | type == "string")' "$TMP/core.json" >/dev/null || return 1
   if [ "$kind" = pull ]; then
@@ -339,7 +352,6 @@ poll() {
     | sort_by(.at,.tasks[0],.url)[] | [.url] + .tasks | @tsv' > "$TMP/known.tsv"
   DEADLINE=$(( $(date +%s) + BUDGET ))
   OBSERVATION_RESERVE=$((BUDGET < 15 ? BUDGET : 15))
-  BUDGET_EXHAUSTED=0
   while IFS=$'\t' read -r -a row; do
     [ "${#row[@]}" -ge 2 ] || continue
     [ $((DEADLINE - $(date +%s))) -ge "$OBSERVATION_RESERVE" ] || break
@@ -355,7 +367,7 @@ poll() {
     observe "$url" || observed=$?
     # An observation the budget cut short is unmeasured, not unavailable: keep
     # every owner's prior record so the URL is observed first next poll.
-    [ "$BUDGET_EXHAUSTED" -eq 0 ] || break
+    [ "$BUDGET_EXHAUSTED" -eq 0 ] || continue
     # Wake once per failure episode: only when no owner has a prior error.
     if [ "$observed" -ne 0 ] && jq -ne --slurpfile saved "$TMP/saved.json" --arg url "$url" --args \
       'all($ARGS.positional[] as $task | [$saved[0][] | select(.task == $task) | .records[] | select(.url == $url)] | first;
@@ -391,6 +403,7 @@ poll() {
 
 arm() {
   local device staged
+  local -a shim
   acquire
   if [ "${1:-}" = --if-owned ]; then
     get_input; read_saved
@@ -402,11 +415,15 @@ arm() {
   device=$(fm_pr_file_device "$STATE")
   fm_pr_regular_destination_on_device_or_absent "$STATE/contributions.check.sh" "$device" || fail 'unsafe check destination'
   staged=$(umask 077; mktemp "$STATE/.contributions-check.XXXXXX")
-  printf '%s\n' '#!/usr/bin/env bash' \
-    "export FM_HOME=$(printf '%q' "$FM_HOME")" \
-    "export FM_STATE_OVERRIDE=$(printf '%q' "$STATE")" \
-    "export FM_DATA_OVERRIDE=$(printf '%q' "$DATA")" \
-    "exec $(printf '%q' "$SCRIPT_DIR/fm-contributions.sh") poll" > "$staged"
+  shim=('#!/usr/bin/env bash'
+    "export FM_HOME=$(printf '%q' "$FM_HOME")"
+    "export FM_STATE_OVERRIDE=$(printf '%q' "$STATE")"
+    "export FM_DATA_OVERRIDE=$(printf '%q' "$DATA")")
+  if [ -n "${FM_CONTRIBUTIONS_BUDGET:-}" ]; then
+    shim+=("export FM_CONTRIBUTIONS_BUDGET=$(printf '%q' "$FM_CONTRIBUTIONS_BUDGET")")
+  fi
+  shim+=("exec $(printf '%q' "$SCRIPT_DIR/fm-contributions.sh") poll")
+  printf '%s\n' "${shim[@]}" > "$staged"
   chmod 700 "$staged"
   mv -f -- "$staged" "$STATE/contributions.check.sh"
   "$SCRIPT_DIR/fm-check-register.sh" contributions
