@@ -527,14 +527,21 @@ test_backend_source_shell_portable() {
 }
 
 test_backend_source_requires_adapter_file() {
-  local dir adapter exit_status continuation out rc condition test_bash
+  local dir adapter exit_status continuation out rc condition test_bash rel
   dir="$TMP_ROOT/adapter-precheck"
   adapter="$dir/backends/tmux.sh"
   test_bash=${FM_TEST_BASH:-${BASH:-bash}}
   mkdir -p "$dir/backends"
+  for rel in fm-tmux-lib.sh fm-composer-lib.sh fm-cursor-lib.sh fm-session-lock-lib.sh fm-agent-process-lib.sh fm-gemini-lib.sh; do
+    printf ':\n' > "$dir/$rel"
+  done
 
-  for condition in missing unreadable syntax-broken; do
-    if [ "$condition" = unreadable ]; then
+  for condition in valid missing unreadable syntax-broken; do
+    if [ "$condition" = valid ]; then
+      printf ':\n' > "$adapter"
+    elif [ "$condition" = missing ]; then
+      rm -f "$adapter"
+    elif [ "$condition" = unreadable ]; then
       printf ':\n' > "$adapter"
       chmod 000 "$adapter"
       if [ -r "$adapter" ]; then
@@ -557,6 +564,14 @@ test_backend_source_requires_adapter_file() {
       : > "$4"
     ' _ "$ROOT/bin/fm-backend.sh" "$dir" "$exit_status" "$continuation" 2>&1)
     rc=$?
+    if [ "$condition" = valid ]; then
+      [ "$rc" -eq 0 ] || fail "fm_backend_source rejected a valid adapter: $out"
+      [ -f "$exit_status" ] || fail "fm_backend_source did not record the valid adapter exit status"
+      [ "$(cat "$exit_status")" -eq 0 ] || fail "fm_backend_source lost the valid adapter success at EXIT"
+      [ -f "$continuation" ] || fail "fm_backend_source did not continue the lifecycle after a valid adapter"
+      pass "fm_backend_source: valid adapter permits lifecycle continuation"
+      continue
+    fi
     [ "$rc" -ne 0 ] || fail "fm_backend_source returned success for a $condition adapter: $out"
     [ -f "$exit_status" ] || fail "fm_backend_source did not record the $condition adapter exit status"
     [ "$(cat "$exit_status")" -ne 0 ] || fail "fm_backend_source lost the $condition adapter failure at EXIT"
