@@ -1,0 +1,12 @@
+shell=/bin/bash loader=success
+/usr/bin/dirname
+pane	workspace	idle	busy	codex
+classification=shell
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+unknown-backend-status=1
+shell=/bin/zsh loader=success
+/usr/bin/dirname
+pane	workspace	idle	busy	codex
+classification=shell
+error: unknown backend 'bogus' (known: tmux herdr zellij orca cmux)
+unknown-backend-status=1
