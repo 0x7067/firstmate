@@ -1,0 +1,14 @@
+GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)
+Copyright (C) 2007 Free Software Foundation, Inc.
+BASE: bounded command should print executed and return 7
+/bin/bash: fm_exec_timed: command not found
+base status=127
+TARGET: same invocation
+executed
+target status=7
+TARGET: subshell replaces caller (PID equality)
+caller=71069
+command-parent=71069
+BASE RETRY: supply source and invocation as one shell script; /dev/stdin sourcing did not load the piped library
+/bin/bash: line 218: BASHPID: unbound variable
+base status=1
