@@ -1,0 +1,19 @@
+bin/fm-contributions.sh
+  s_4fb21ec6423727::t_699d7e5a90814b 42-47,50-51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "eae72b63bdb23624b04a3fd370d38756e6ad4b92",
+  "prompts": {},
+  "sessions": {
+    "s_4fb21ec6423727": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e2fb-60ba-7113-96fa-e80c421a41f9",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}

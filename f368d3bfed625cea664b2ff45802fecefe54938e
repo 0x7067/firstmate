@@ -1,0 +1,19 @@
+tests/fm-watch-triage.test.sh
+  s_09d0bfc967d72c::t_e35a81635a5585 4653
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f368d3bfed625cea664b2ff45802fecefe54938e",
+  "prompts": {},
+  "sessions": {
+    "s_09d0bfc967d72c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e331-173a-76c3-80b1-3b8f56503d7b",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+tests/fm-contributions.test.sh
+  s_ec7cada22e8b3c::t_9ad0af90481e2c 126,135-136,560-561,793,797-798,800-802,804-825,847-871
+  s_ec7cada22e8b3c::t_df528f33e9be48 803
+bin/fm-contributions.sh
+  s_ec7cada22e8b3c::t_df528f33e9be48 42,346
+  s_ec7cada22e8b3c::t_9ad0af90481e2c 349-351
+tests/fm-timeout-lib.test.sh
+  s_ec7cada22e8b3c::t_9ad0af90481e2c 112
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "722884176938c028f2480e849c24565ce829325d",
+  "prompts": {},
+  "sessions": {
+    "s_ec7cada22e8b3c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e2d9-e1d1-7ea2-8a98-8024d43b3c8b",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+bin/fm-session-lock-lib.sh
+  s_d87c9c9fe279db::t_cdc142872d0063 22
+bin/fm-backend.sh
+  s_d87c9c9fe279db::t_10fadfe692570c 625,659
+bin/backends/herdr.sh
+  s_d87c9c9fe279db::t_a459f0f9d20781 71
+tests/fm-backend.test.sh
+  s_d87c9c9fe279db::t_82025b15411b3d 509,520
+bin/fm-agent-process-lib.sh
+  s_d87c9c9fe279db::t_cdc142872d0063 17,19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2528e98f060d3ad2fcb513597dce1a477b1a617d",
+  "prompts": {},
+  "sessions": {
+    "s_d87c9c9fe279db": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e2c8-8efa-7842-b3ab-b3baccc0289c",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
