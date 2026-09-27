@@ -506,7 +506,7 @@ test_backend_source_shell_portable() {
   # zsh does not word-split unquoted expansions; sourcing fm-backend.sh from
   # an interactive zsh session must still recognize known backend names.
   if command -v zsh >/dev/null 2>&1; then
-    zsh -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source herdr && whence -w fm_backend_herdr_capture >/dev/null" 2>/dev/null \
+    zsh -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source herdr && whence -w fm_backend_herdr_capture fm_composer_strip_ansi fm_transition_record fm_agent_process_classify fm_session_lock_owned_by_self fm_gemini_args_are_gemini fm_cursor_process_matches >/dev/null" \
       || fail "zsh: fm_backend_source herdr should load the adapter when sourced"
     out=$(zsh -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source bogus" 2>&1) \
       && fail "zsh: fm_backend_source bogus should fail"
@@ -517,7 +517,7 @@ test_backend_source_shell_portable() {
     pass "zsh: shell-portable backend matching skipped (zsh not found)"
   fi
 
-  bash -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source herdr && declare -F fm_backend_herdr_capture >/dev/null" 2>/dev/null \
+  bash -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source herdr && declare -F fm_backend_herdr_capture fm_composer_strip_ansi fm_transition_record fm_agent_process_classify fm_session_lock_owned_by_self fm_gemini_args_are_gemini fm_cursor_process_matches >/dev/null" \
     || fail "bash: fm_backend_source herdr should load the adapter when sourced"
   out=$(bash -c "cd '$ROOT' && source bin/fm-backend.sh && fm_backend_source bogus" 2>&1) \
     && fail "bash: fm_backend_source bogus should fail"
