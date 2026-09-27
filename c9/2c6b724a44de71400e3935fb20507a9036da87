@@ -1,0 +1,19 @@
+bin/fm-spawn.sh
+  s_088a511e6086e9::t_4d84771ba1b946 4-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c92c6b724a44de71400e3935fb20507a9036da87",
+  "prompts": {},
+  "sessions": {
+    "s_088a511e6086e9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e3ab-3e65-7b43-8a3a-3901df0ffcfc",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
