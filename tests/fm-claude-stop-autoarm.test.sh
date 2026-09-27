@@ -902,7 +902,7 @@ test_abandoned_owner_claim_is_reclaimed_and_rearms() {
 # owner. The next reclaim must reap it directly, never by nesting another
 # .steal.steal mutex around it.
 test_abandoned_claim_reclaim_reaps_dead_steal_without_nesting() {
-  local dir out status pid holder lnbin lnlog i
+  local dir out status pid lnbin lnlog
   dir=$(make_primary_dir "$TMP_ROOT/abandoned-claim-dead-steal")
   : > "$dir/state/task1.meta"
   write_arm_fixture "$dir" actionable
@@ -913,16 +913,8 @@ test_abandoned_claim_reclaim_reaps_dead_steal_without_nesting() {
   FM_STATE_OVERRIDE="$dir/state" bash -c '
     . "$1"
     fm_lock_try_create "$2" || exit 7
-    exec sleep 30
-  ' _ "$dir/bin/fm-wake-lib.sh" "$dir/state/.claude-autoarm.lock.steal" >/dev/null 2>&1 &
-  holder=$!
-  i=0
-  while [ "$i" -lt 50 ] && [ ! -s "$dir/state/.claude-autoarm.lock.steal/pid" ]; do
-    sleep 0.02
-    i=$((i + 1))
-  done
-  kill -KILL "$holder" 2>/dev/null || true
-  wait "$holder" 2>/dev/null || true
+  ' _ "$dir/bin/fm-wake-lib.sh" "$dir/state/.claude-autoarm.lock.steal" >/dev/null 2>&1 \
+    || fail "fixture did not acquire the steal mutex"
   assert_present "$dir/state/.claude-autoarm.lock.steal" "fixture did not leave a dead-owner steal mutex"
   lnbin="$dir/lnbin"
   lnlog="$dir/ln.log"
