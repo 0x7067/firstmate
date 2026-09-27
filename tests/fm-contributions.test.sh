@@ -747,7 +747,7 @@ test_reservation_defers_later_url_when_fifteen_seconds_do_not_remain() {
   [ -z "$out" ] || fail "reservation poll printed an unavailable wake: $out"
   jq -e --arg now "$NOW" '.records[0] | .checked_at == $now and .error == null' \
     "$home/data/filed/contributions.json" >/dev/null \
-    || fail 'the first oldest issue was not observed before reserving the remaining budget'
+    || fail 'the first issue was not observed before reserving the remaining budget'
   grep -F 'api repos/o/r/pulls/8' "$home/forge/calls" >/dev/null \
     && fail 'a later PR began without the fifteen-second observation reservation'
   jq -e '.records[0].checked_at == "2026-09-15T08:00:00Z"' "$home/data/delivery/contributions.json" >/dev/null \
@@ -800,7 +800,7 @@ test_unmeasured_url_does_not_starve_the_tail() {
   cp "$home/data/delivery/contributions.json" "$home/prior.json"
   printf 'slow-wave\n' > "$home/forge/fault"
   for cycle in 0 1 2; do
-    at=$(jq -nr --arg now "$NOW" --argjson cycle "$cycle" '(($now | fromdateiso8601) + $cycle * 300) | todateiso8601')
+    at=$(jq -nr --arg now "$NOW" --argjson cycle "$cycle" '(($now | fromdateiso8601) + ($cycle + 1) * 300) | todateiso8601')
     started=$(/bin/date +%s)
     out=$(with_home "$home" env FM_CONTRIBUTIONS_NOW="$at" FM_CONTRIBUTIONS_BUDGET=20 "$ROOT/bin/fm-contributions.sh" poll) \
       || fail 'poll failed after an unmeasured first URL'
@@ -822,7 +822,35 @@ test_unmeasured_url_does_not_starve_the_tail() {
       || fail "successive polls starved $task behind the slow head"
   done
   [ ! -s "$home/state/.wake-queue" ] || fail 'routine slow reads enqueued a wake'
-  pass 'successive polls rotate past a slow PR without changing its observation freshness'
+  home=$(new_home sustained-slow-refresh)
+  forge_home "$home"
+  wrap_forge "$home"
+  record "$home" second 9 open mergeable
+  record "$home" third 10 open mergeable
+  for task in delivery second third; do
+    mutate_record "$home" "$task" '.records[0].checked_at="2026-09-16T07:55:00Z"'
+  done
+  printf 'latency\n' > "$home/forge/fault"
+  for cycle in 0 1 2 3 4 5; do
+    at=$(jq -nr --arg now "$NOW" --argjson cycle "$cycle" '(($now | fromdateiso8601) + $cycle * 300) | todateiso8601')
+    started=$(/bin/date +%s)
+    out=$(with_home "$home" env FM_CONTRIBUTIONS_NOW="$at" FM_CONTRIBUTIONS_BUDGET=20 FORGE_LATENCY=3 "$ROOT/bin/fm-contributions.sh" poll) \
+      || fail 'sustained slow-read poll failed'
+    elapsed=$(( $(/bin/date +%s) - started ))
+    [ "$elapsed" -ge 9 ] && [ "$elapsed" -le 23 ] \
+      || fail "slow successful poll did not respect its elapsed budget: $elapsed seconds"
+    [ -z "$out" ] || fail "slow successful reads printed a wake: $out"
+    if [ "$cycle" -ge 2 ]; then
+      for task in delivery second third; do
+        jq -e --arg at "$at" '.records[0] | .error == null
+          and (($at | fromdateiso8601) - (.checked_at | fromdateiso8601) <= 600)' \
+          "$home/data/$task/contributions.json" >/dev/null \
+          || fail "$task was not refreshed within three consecutive slow polls at $at"
+      done
+    fi
+  done
+  [ ! -s "$home/state/.wake-queue" ] || fail 'slow successful reads enqueued a wake'
+  pass 'rotation preserves timed-out records and refreshes every slow PR on successive cycles'
 }
 
 test_budget_is_cut_down_to_the_watcher_check_bound() {
