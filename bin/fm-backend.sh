@@ -622,36 +622,43 @@ fm_backend_source_readable() {  # <path>
 }
 
 fm_backend_source() {  # <name>
-  local name=$1 adapter rel path siblings
+  local name=$1 adapter rel path
   fm_backend_validate "$name" || return 1
   adapter="$FM_BACKEND_LIB_DIR/backends/$name.sh"
   case "$name" in
     tmux)
-      siblings="fm-tmux-lib.sh fm-composer-lib.sh fm-cursor-lib.sh fm-session-lock-lib.sh fm-agent-process-lib.sh fm-gemini-lib.sh"
+      set -- fm-tmux-lib.sh fm-composer-lib.sh fm-cursor-lib.sh fm-session-lock-lib.sh fm-agent-process-lib.sh fm-gemini-lib.sh
       ;;
     herdr)
-      siblings="fm-composer-lib.sh fm-transition-lib.sh fm-agent-process-lib.sh fm-session-lock-lib.sh fm-gemini-lib.sh"
+      set -- fm-composer-lib.sh fm-transition-lib.sh fm-agent-process-lib.sh fm-session-lock-lib.sh fm-gemini-lib.sh
       ;;
     zellij)
-      siblings="fm-backend-hometag-lib.sh fm-composer-lib.sh"
+      set -- fm-backend-hometag-lib.sh fm-composer-lib.sh
       ;;
     orca)
-      siblings="fm-composer-lib.sh"
+      set -- fm-composer-lib.sh
       ;;
     cmux)
-      siblings="fm-backend-hometag-lib.sh fm-composer-lib.sh"
+      set -- fm-backend-hometag-lib.sh fm-composer-lib.sh
       ;;
     *)
       return 1
       ;;
   esac
   fm_backend_source_readable "$adapter" || return 1
-  # shellcheck disable=SC2086 # sibling names are a fixed space-separated list
-  for rel in $siblings; do
+  # A successful -f/-r stat cannot see a syntactically broken adapter; the
+  # `bash -n` pre-parse refuses it so callers retain the real failure status
+  # and never continue a destructive lifecycle operation after an unavailable
+  # backend prerequisite. The EXIT-trap swallow it guards is a Bash behavior,
+  # so the pre-parse runs only under Bash; a broken adapter still fails the
+  # dot-source natively on every other shell.
+  if [ -n "${BASH_VERSION:-}" ]; then
+    bash -n "$adapter" 2>/dev/null || return 1
+  fi
+  for rel in "$@"; do
     path="$FM_BACKEND_LIB_DIR/$rel"
     fm_backend_source_readable "$path" || return 1
   done
-  bash -n "$adapter" 2>/dev/null || return 1
   case "$name" in
     tmux)
       if [ -z "${_FM_BACKEND_TMUX_SOURCED:-}" ]; then
