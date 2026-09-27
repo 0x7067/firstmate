@@ -1,0 +1,30 @@
+tests/fm-spawn-positional-project.test.sh
+  s_213c2b85281fc5::t_ce65ce3ed2d4b4 111
+  s_213c2b85281fc5::t_0cea6df7a4cd60 1-109,112-148
+  s_213c2b85281fc5::t_91e693f927f19c 110
+bin/fm-spawn.sh
+  s_213c2b85281fc5::t_7df458de551587 4-5
+  s_213c2b85281fc5::t_6b45b122d895cf 524-563
+  s_213c2b85281fc5::t_e6eafc651ee518 7-13
+  s_213c2b85281fc5::t_fe41e15f87b78d 1884
+  s_213c2b85281fc5::t_451d08ef4ad3fe 2798
+  s_213c2b85281fc5::t_bae42039268176 2799-2805
+  s_213c2b85281fc5::t_d59c3826227230 1882,1887
+  s_213c2b85281fc5::t_4cbfb470206050 1883,1885-1886,1888-1890
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0d074bb84ae89f76161fe43e64b27dcae9120352",
+  "prompts": {},
+  "sessions": {
+    "s_213c2b85281fc5": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0e384-8009-7376-9ffa-a2a20b5860ae",
+        "model": "MiniMax-M3"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
