@@ -39,10 +39,7 @@
 # seconds, and a read killed at that bound or at the deadline is budget
 # refusal, never a forge failure. A pull observation has three
 # dependent waves: core, six independent reads, then the closing head read;
-# an issue has two waves. Parallelizing each independent wave bounds either
-# observation to 3 * 5 = 15 seconds. poll reserves min(the configured budget,
-# 15) before starting a URL, so an in-progress normal-budget observation gets
-# all three waves and a later URL waits for the next oldest-checked-first poll.
+# an issue has two waves.
 # A deliberately smaller configured budget remains bounded and may be
 # unmeasured, rather than being mislabeled unavailable. Each distinct URL is
 # observed once per poll and applied to every owner. A final observation applies
@@ -346,10 +343,12 @@ poll() {
   read_saved
   [ "$ERRORS" -eq 0 ] || printf 'contributions: %s unreadable durable record(s)\n' "$ERRORS"
   # One line per distinct URL: the URL, then every owning task.
-  jq_lib -nr --slurpfile input "$TMP/input.json" --slurpfile saved "$TMP/saved.json" '
+  jq_lib -nr --slurpfile input "$TMP/input.json" --slurpfile saved "$TMP/saved.json" --argjson bucket "$((EPOCH / 300))" '
     known($input[0];$saved[0]) | map(. as $k | . + {at:([$saved[0][] | select(.task == $k.task) | .records[] | select(.url == $k.url) | .checked_at] | first // "")})
     | group_by(.url) | map({url:.[0].url,at:(map(.at) | min),tasks:(map(.task) | unique)})
-    | sort_by(.at,.tasks[0],.url)[] | [.url] + .tasks | @tsv' > "$TMP/known.tsv"
+    | sort_by(.at,.tasks[0],.url)
+    | if length == 0 then . else ($bucket % length) as $offset | .[$offset:] + .[:$offset] end
+    | .[] | [.url] + .tasks | @tsv' > "$TMP/known.tsv"
   DEADLINE=$(( $(date +%s) + BUDGET ))
   OBSERVATION_RESERVE=$((BUDGET < 15 ? BUDGET : 15))
   while IFS=$'\t' read -r -a row; do
@@ -365,8 +364,6 @@ poll() {
     fi
     observed=0
     observe "$url" || observed=$?
-    # An observation the budget cut short is unmeasured, not unavailable: keep
-    # every owner's prior record so the URL is observed first next poll.
     [ "$BUDGET_EXHAUSTED" -eq 0 ] || continue
     # Wake once per failure episode: only when no owner has a prior error.
     if [ "$observed" -ne 0 ] && jq -ne --slurpfile saved "$TMP/saved.json" --arg url "$url" --args \

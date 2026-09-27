@@ -123,7 +123,7 @@ case "$*" in
     jq -n --arg head "$(cat "$FORGE/head")" '{headRefOid:$head,reviewDecision:"APPROVED"}' ;;
   'pr view '*headRefOid*) cat "$FORGE/head" ;;
   'pr view '*state*) printf 'OPEN\n' ;;
-  'api repos/o/r/pulls/8')
+  'api repos/o/r/pulls/8'|'api repos/o/r/pulls/9'|'api repos/o/r/pulls/10')
     jq -n --arg head "$(cat "$FORGE/head")" --arg state "$(cat "$FORGE/state" 2>/dev/null || printf open)" '
       {state:(if $state == "open" then "open" else "closed" end),user:{login:"author"},head:{sha:$head},draft:false,
        mergeable:(if $state == "open" then true else null end),
@@ -132,8 +132,8 @@ case "$*" in
     jq -n --slurpfile labels "$FORGE/labels.json" '{state:"open",user:{login:"author"},labels:$labels[0]}' ;;
   'api repos/o/r/issues/'*'/events?'*) jq -s . "$FORGE/events.json" ;;
   'api repos/o/r/issues/'*'/comments?'*) jq -s . "$FORGE/comments.json" ;;
-  'api repos/o/r/pulls/8/reviews?'*) jq -s . "$FORGE/reviews.json" ;;
-  'api repos/o/r/pulls/8/comments?'*) jq -s . "$FORGE/inline.json" ;;
+  'api repos/o/r/pulls/'*'/reviews?'*) jq -s . "$FORGE/reviews.json" ;;
+  'api repos/o/r/pulls/'*'/comments?'*) jq -s . "$FORGE/inline.json" ;;
   'api repos/o/r/commits/'*'/check-runs?'*)
     printf '[{"check_runs":[{"name":"test","id":1,"status":"completed","conclusion":"success","started_at":"2026-09-16T08:00:00Z"}]}]\n' ;;
   'api repos/o/r/commits/'*'/statuses?'*) printf '[[]]\n' ;;
@@ -557,7 +557,8 @@ case "$fault:$*" in
   # Advance once before the parallel read wave; its readers share this clock.
   reserve:'api repos/o/r/issues/9')
     printf '%s\n' "$(( $(cat "$FORGE/clock") + 6 ))" > "$FORGE/clock" ;;
-  slow-issue:'api repos/o/r/issues/9') sleep "${FORGE_LATENCY:-6}" ;;
+  slow-wave:'api repos/o/r/pulls/8') sleep 3 ;;
+  slow-wave:'api repos/o/r/pulls/8/reviews?'*) sleep 6 ;;
   exhaust:'api repos/o/r/issues/8/comments?'*)
     printf '%s\n' "$(( $(cat "$FORGE/clock") + 100 ))" > "$FORGE/clock" ;;
   fail-late:'api repos/o/r/pulls/8/reviews?'*)
@@ -789,24 +790,39 @@ test_slow_read_deadline_kill_is_budget_refusal() {
 }
 
 test_unmeasured_url_does_not_starve_the_tail() {
-  local home out
+  local home out cycle at started elapsed task
   home=$(new_home unmeasured-tail)
   forge_home "$home"
   wrap_forge "$home"
-  printf -- '- [ ] filed - Measured defect https://github.com/o/r/issues/9 (repo: sample) (kind: ship)\n' >> "$home/data/backlog.md"
+  record "$home" second 9 open mergeable
+  record "$home" third 10 open mergeable
   mutate_record "$home" delivery '.records[0].checked_at="2026-09-15T08:00:00Z"'
-  /bin/date +%s > "$home/forge/clock"
-  printf 'slow-issue\n' > "$home/forge/fault"
-  out=$(with_home "$home" env FM_CONTRIBUTIONS_BUDGET=20 "$ROOT/bin/fm-contributions.sh" poll) \
-    || fail 'poll failed after an unmeasured first URL'
-  [ -z "$out" ] || fail "a poll after an unmeasured URL printed a wake: $out"
-  [ "$(grep -cF 'api repos/o/r/issues/9' "$home/forge/calls")" = 1 ] \
-    || fail 'the unmeasured URL was not attempted exactly once'
-  jq -e --arg now "$NOW" '.records[0] | .checked_at == $now and .error == null' \
-    "$home/data/delivery/contributions.json" >/dev/null \
-    || fail 'the tail URL did not receive its observation in the same poll'
-  [ ! -s "$home/state/.wake-queue" ] || fail 'an unmeasured-then-observed poll enqueued a wake'
-  pass 'an unmeasured URL leaves the tail URL its full observation reserve in the same poll'
+  cp "$home/data/delivery/contributions.json" "$home/prior.json"
+  printf 'slow-wave\n' > "$home/forge/fault"
+  for cycle in 0 1 2; do
+    at=$(jq -nr --arg now "$NOW" --argjson cycle "$cycle" '(($now | fromdateiso8601) + $cycle * 300) | todateiso8601')
+    started=$(/bin/date +%s)
+    out=$(with_home "$home" env FM_CONTRIBUTIONS_NOW="$at" FM_CONTRIBUTIONS_BUDGET=20 "$ROOT/bin/fm-contributions.sh" poll) \
+      || fail 'poll failed after an unmeasured first URL'
+    elapsed=$(( $(/bin/date +%s) - started ))
+    [ -z "$out" ] || fail "a poll after an unmeasured URL printed a wake: $out"
+    [ "$elapsed" -le 23 ] || fail "poll exceeded its elapsed budget: $elapsed seconds"
+    if [ "$cycle" -eq 0 ]; then
+      [ "$elapsed" -ge 8 ] || fail 'the slow head did not consume its core and parallel-wave budget'
+      if grep -Eq '^api repos/o/r/pulls/(9|10)$' "$home/forge/calls"; then
+        fail 'a tail PR began without its observation reserve'
+      fi
+    fi
+    cmp -s "$home/prior.json" "$home/data/delivery/contributions.json" \
+      || fail 'a timed-out observation changed its prior freshness or record'
+  done
+  for task in second third; do
+    jq -e --arg prior "$NOW" '.records[0] | .checked_at != $prior and .error == null' \
+      "$home/data/$task/contributions.json" >/dev/null \
+      || fail "successive polls starved $task behind the slow head"
+  done
+  [ ! -s "$home/state/.wake-queue" ] || fail 'routine slow reads enqueued a wake'
+  pass 'successive polls rotate past a slow PR without changing its observation freshness'
 }
 
 test_budget_is_cut_down_to_the_watcher_check_bound() {
@@ -828,21 +844,31 @@ test_budget_is_cut_down_to_the_watcher_check_bound() {
 }
 
 test_arm_plumbs_a_configured_budget_into_the_check_shim() {
-  local home
-  home=$(new_home arm-budget)
-  forge_home "$home"
-  with_home "$home" env FM_CONTRIBUTIONS_BUDGET=12 "$ROOT/bin/fm-contributions.sh" arm >/dev/null \
-    || fail 'arm with a configured budget failed'
-  grep -Fxq 'export FM_CONTRIBUTIONS_BUDGET=12' "$home/state/contributions.check.sh" \
-    || fail 'the generated check shim dropped the configured budget'
-  home=$(new_home arm-no-budget)
-  forge_home "$home"
-  with_home "$home" "$ROOT/bin/fm-contributions.sh" arm >/dev/null \
-    || fail 'arm without a configured budget failed'
-  if grep -Fq 'FM_CONTRIBUTIONS_BUDGET' "$home/state/contributions.check.sh"; then
-    fail 'an unconfigured arm invented a budget export'
-  fi
-  pass 'the generated check shim carries only a configured budget into watcher runs'
+  local home out mode
+  for mode in configured inherited; do
+    home=$(new_home "arm-budget-$mode")
+    forge_home "$home"
+    wrap_forge "$home"
+    mutate_record "$home" delivery '.records[0].checked_at="2026-09-15T08:00:00Z"'
+    cp "$home/data/delivery/contributions.json" "$home/prior.json"
+    printf 'hang\n' > "$home/forge/fault"
+    if [ "$mode" = configured ]; then
+      with_home "$home" env FM_CONTRIBUTIONS_BUDGET=1 "$ROOT/bin/fm-contributions.sh" arm >/dev/null \
+        || fail 'arm with a configured budget failed'
+      out=$(with_home "$home" env -u FM_CONTRIBUTIONS_BUDGET bash "$home/state/contributions.check.sh") \
+        || fail 'configured check shim failed'
+    else
+      with_home "$home" env -u FM_CONTRIBUTIONS_BUDGET "$ROOT/bin/fm-contributions.sh" arm >/dev/null \
+        || fail 'arm without a configured budget failed'
+      out=$(with_home "$home" env FM_CONTRIBUTIONS_BUDGET=1 bash "$home/state/contributions.check.sh") \
+        || fail 'inherited-budget check shim failed'
+    fi
+    [ -z "$out" ] || fail "generated check printed an unavailable wake: $out"
+    grep -Fxq 'api repos/o/r/pulls/8' "$home/forge/calls" || fail 'generated check did not attempt a read'
+    cmp -s "$home/prior.json" "$home/data/delivery/contributions.json" \
+      || fail "generated check failed to preserve the $mode one-second budget"
+  done
+  pass 'generated checks enforce configured and inherited budgets at runtime'
 }
 
 test_unavailable_forge_records_error_and_wakes_once_per_episode() { # genuine outage, two consecutive cycles
