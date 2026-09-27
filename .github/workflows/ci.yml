@@ -498,8 +498,8 @@ jobs:
             /bin/bash tests/fm-backend.test.sh)
           printf '%s\n' "$backend_output"
           backend_count=$(printf '%s\n' "$backend_output" | grep -c '^ok - ')
-          [ "$backend_count" -eq 2 ] || {
-            echo "::error::expected 2 backend adapter-file bash 3.2 regressions, got $backend_count"
+          [ "$backend_count" -eq 4 ] || {
+            echo "::error::expected 4 backend adapter-file bash 3.2 regressions, got $backend_count"
             exit 1
           }
 
