@@ -1,0 +1,19 @@
+tests/fm-spawn-positional-project.test.sh
+  s_6b2562aefc5c65::t_0b1d75c345a8db 146-180,182
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a93fb81bf1379d0a58b9de7d5681e3c688609f8e",
+  "prompts": {},
+  "sessions": {
+    "s_6b2562aefc5c65": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e748-c6a3-73a1-8b83-21147f83b78c",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
