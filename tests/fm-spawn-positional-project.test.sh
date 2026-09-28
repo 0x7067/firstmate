@@ -143,6 +143,42 @@ test_usage_text_describes_project_path() {
   esac
 }
 
+test_populated_backlog_repo_dispatches_to_registered_clone() {
+  local case_dir project out status
+  case_dir=$(make_home populated-repo populated-repo-task)
+  project="$case_dir/home/projects/quota-axi"
+  mkdir -p "$project"
+  git -C "$project" init -q
+  printf '%s\n' '# Backlog' '' '## In flight' \
+    '- [ ] populated-repo-task - Exercise fallback (repo: quota-axi)' \
+    '' '## Queued' '' '## Done' > "$case_dir/home/data/backlog.md"
+  cat > "$case_dir/fakebin/tmux" <<'SH'
+#!/usr/bin/env bash
+case "$1" in
+  new-window)
+    while [ "$#" -gt 0 ]; do
+      if [ "$1" = -c ]; then
+        printf '%s\n' "$2" > "$FM_HOME/state/dispatch-project"
+        exit 1
+      fi
+      shift
+    done
+    exit 1
+    ;;
+  display-message) printf '%s\n' firstmate ;;
+esac
+SH
+  chmod +x "$case_dir/fakebin/tmux"
+  out=$(run_spawn "$case_dir" populated-repo-task --mode no-mistakes --yolo off \
+    --harness claude --model opus --effort high --backend tmux)
+  status=$?
+  [ "$status" -ne 0 ] || fail "terminal fixture should stop before worker launch"
+  [ -f "$case_dir/home/state/dispatch-project" ] || fail "spawn did not reach terminal dispatch: $out"
+  [ "$(cat "$case_dir/home/state/dispatch-project")" = "$project" ] || fail "backlog repo dispatched into the wrong clone: $out"
+  pass "omitted project dispatches into the registered clone from the populated backlog repo"
+}
+
 test_missing_second_positional_uses_backlog_repo
+test_populated_backlog_repo_dispatches_to_registered_clone
 test_repo_name_resolves_through_registry
 test_usage_text_describes_project_path
