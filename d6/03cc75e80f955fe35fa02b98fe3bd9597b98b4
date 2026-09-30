@@ -1,0 +1,21 @@
+docs/configuration.md
+  s_10d0e6f30e1093::t_7ddf0014c79e3f 1078
+.agents/skills/harness-adapters/references/harness/codex.md
+  s_10d0e6f30e1093::t_7ddf0014c79e3f 21,23-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d603cc75e80f955fe35fa02b98fe3bd9597b98b4",
+  "prompts": {},
+  "sessions": {
+    "s_10d0e6f30e1093": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f32f-8651-7c73-8dc2-6de7f3e65fca",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
