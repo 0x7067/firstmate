@@ -1,0 +1,21 @@
+bin/fm-spawn.sh
+  s_b1134115a829bc::t_951ca1a060147f 8-9,12-14,560-564,566,568-580,1909,2876
+tests/fm-spawn-positional-project.test.sh
+  s_b1134115a829bc::t_d003b61234bd03 78-101,179,189-231,236-237
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "45b4bd9494ccc374000abbc4ac0d5761fe9ff2a4",
+  "prompts": {},
+  "sessions": {
+    "s_b1134115a829bc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "405a5bce-9dd3-4994-8874-c471a7e27dfc",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
