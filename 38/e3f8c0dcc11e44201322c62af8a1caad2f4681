@@ -1,0 +1,40 @@
+tests/fm-bootstrap.test.sh
+  s_b1134115a829bc::t_f62417a2341f9b 1138,1183
+.agents/skills/harness-adapters/references/common/model-and-effort.md
+  s_b1134115a829bc::t_e709beb641cf70 22-23
+bin/fm-spawn.sh
+  s_b1134115a829bc::t_387060aeb88e52 2563-2567,2570-2589,2597,2605-2609,2611
+  s_b1134115a829bc::t_6e06ad0d8ce81d 82-85
+  s_b1134115a829bc::t_6a16bff0718b7b 2632-2634
+  s_b1134115a829bc::t_066053379a31cd 2560-2562,2568-2569,2590-2596,2598-2604,2610,2624-2631
+tests/fm-spawn-dispatch-profile.test.sh
+  s_b1134115a829bc::t_387060aeb88e52 52-55,57-63,579-662,1925-1928
+  s_b1134115a829bc::t_f62417a2341f9b 575,578,1924
+  s_b1134115a829bc::t_6b4dca0e44c5b2 56,567,569-570
+docs/architecture.md
+  s_b1134115a829bc::t_e709beb641cf70 319-320
+docs/configuration.md
+  s_b1134115a829bc::t_e709beb641cf70 1078
+.agents/skills/harness-adapters/references/harness/codex.md
+  s_b1134115a829bc::t_387060aeb88e52 15,19-23
+bin/fm-bootstrap.sh
+  s_b1134115a829bc::t_f62417a2341f9b 1077
+tests/fixtures.sh
+  s_b1134115a829bc::t_387060aeb88e52 333
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "38e3f8c0dcc11e44201322c62af8a1caad2f4681",
+  "prompts": {},
+  "sessions": {
+    "s_b1134115a829bc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "405a5bce-9dd3-4994-8874-c471a7e27dfc",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
