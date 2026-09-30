@@ -2573,18 +2573,13 @@ codex_launch_home() {
   printf '%s\n' "${CODEX_HOME:-$HOME/.codex}"
 }
 
-# codex_default_model <codex-home>: print the default model from
-# <codex-home>/config.toml. It looks only at top-level keys before the first
-# table header, and only for an exact `model = "..."` assignment. Returns
-# non-zero when the config is missing, unreadable, or contains no top-level
-# model, so callers can fail closed instead of treating an unknown default as
-# max-capable.
 codex_default_model() {
   local config="$1/config.toml"
   [ -f "$config" ] || return 1
   awk -f - "$config" <<'AWK'
 /^[[:space:]]*[[]/ { in_table=1; next }
 in_table { next }
+/^[[:space:]]*profile[[:space:]]*=/ { has_profile=1 }
 /^[[:space:]]*model[[:space:]]*=/ {
   val=$0
   sub(/^[[:space:]]*model[[:space:]]*=[[:space:]]*/, "", val)
@@ -2593,11 +2588,11 @@ in_table { next }
   if (val ~ /^".*"$/ || val ~ /^'.*'$/) {
     gsub(/^["']|["']$/, "", val)
     if (val != "") {
-      print val
-      exit 0
+      model=val
     }
   }
 }
+END { if (!has_profile && model != "") print model }
 AWK
 }
 
@@ -2627,9 +2622,9 @@ codex_max_effort_gap() {
   fi
   printf '%s' "$catalog" | jq -e --arg model "$model" '
     .models[]?
-    | select(.slug == $model or .id == $model or .model == $model or .name == $model or .selector == $model or .display_name == $model)
+    | select(.slug == $model)
     | .supported_reasoning_levels[]?
-    | select((if type == "object" then .effort else . end) == "max")
+    | select(.effort == "max")
   ' >/dev/null 2>&1 || echo "the catalog does not advertise max for model '$model'"
 }
 

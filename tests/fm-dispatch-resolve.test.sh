@@ -948,6 +948,24 @@ TYPESAFE_API_KEY=$KEY FAKE_CURL_HTTP=500 run code out err "$BRIEF"
 assert_contains "$out" '  status: error' "http 500 is a TOON error outcome"
 pass "API, transport, and response failures are error outcomes with exit 0"
 
+for shape in object array; do
+  for selected in rule_1 default; do
+    reset_log
+    profile='{"harness":"codex","model":"gpt-5","effort":"max"}'
+    [ "$shape" != array ] || profile="[$profile]"
+    printf '{"rules":[{"when":"x","use":%s}],"default":%s}\n' "$profile" "$profile" > "$RULES"
+    write_response "$RESPONSE" "$selected" 0.99
+    jq --arg selected "$selected" '.answers.rule.probabilities = {rule_1: 0.01, default: 0.01} | .answers.rule.probabilities[$selected] = 0.99' "$RESPONSE" > "$TMP_ROOT/max-response.json"
+    mv "$TMP_ROOT/max-response.json" "$RESPONSE"
+    TYPESAFE_API_KEY=$KEY run code out err "$BRIEF"
+    expect_code 0 "$code" "codex max should validate for $shape $selected"
+    assert_contains "$out" '  status: clear' "codex max should resolve for $shape $selected"
+    assert_contains "$out" "--harness 'codex' --model 'gpt-5' --effort 'max'" "resolution must preserve requested max"
+  done
+done
+cp "$BASE_RULES" "$RULES"
+pass "codex max resolves for rule and default profiles in both shapes"
+
 # --- configuration errors exit 2 and select nothing ----------------------------------
 reset_log
 TYPESAFE_API_KEY=$KEY run code out err

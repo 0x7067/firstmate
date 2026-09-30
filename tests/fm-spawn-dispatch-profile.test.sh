@@ -620,6 +620,65 @@ test_codex_clamps_max_for_model_that_lacks_max() {
   pass "codex clamps max to xhigh for a selected model that does not support it"
 }
 
+test_codex_profile_default_clamps() {
+  local rec id out status launch order selection fake_codex_home expected
+  for order in before after; do
+    for selection in omitted default explicit; do
+      id=codex-profile-$order-$selection
+      rec=$(make_spawn_case "$id" codex "$id")
+      read_case_record "$rec"
+      fake_codex_home="$HOME_DIR/fake-codex"
+      mkdir -p "$fake_codex_home"
+      if [ "$order" = before ]; then
+        printf 'profile = "work"\nmodel = "gpt-5"\n' > "$fake_codex_home/config.toml"
+      else
+        printf 'model = "gpt-5"\nprofile = "work"\n' > "$fake_codex_home/config.toml"
+      fi
+      printf '[profiles.work]\nmodel = "gpt-5.5"\n' >> "$fake_codex_home/config.toml"
+      set --
+      expected=xhigh
+      case "$selection" in
+      default) set -- --model default ;;
+      explicit) set -- --model gpt-5; expected=max ;;
+      esac
+      out=$(FM_TEST_CODEX_HOME="$fake_codex_home" run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" "$@" --effort max)
+      status=$?
+      expect_code 0 "$status" "profile-selected default spawn should succeed"
+      launch=$(cat "$LAUNCH_LOG")
+      assert_contains "$launch" "model_reasoning_effort=\"$expected\"" "profile handling emitted the wrong effort"
+      if [ "$expected" = xhigh ]; then
+        assert_not_contains "$launch" 'model_reasoning_effort="max"' "profile override must not confirm top-level max"
+        assert_contains "$out" 'notice: codex effort=max clamped to xhigh:' "unconfirmed profile model needs a visible notice"
+      else
+        assert_not_contains "$out" 'clamped to xhigh' "explicit model must override the configured profile model"
+      fi
+    done
+  done
+  pass "codex clamps profile defaults while honoring explicit models"
+}
+
+test_codex_catalog_requires_slug_and_effort_objects() {
+  local rec id out status launch representation
+  for representation in alias string; do
+    id=codex-catalog-$representation
+    rec=$(make_spawn_case "$id" codex "$id")
+    read_case_record "$rec"
+    if [ "$representation" = alias ]; then
+      printf '%s\n' '#!/usr/bin/env bash' "echo '{\"models\":[{\"slug\":\"other\",\"display_name\":\"gpt-5\",\"supported_reasoning_levels\":[{\"effort\":\"max\"}]}]}'" > "$FAKEBIN_DIR/codex"
+    else
+      printf '%s\n' '#!/usr/bin/env bash' "echo '{\"models\":[{\"slug\":\"gpt-5\",\"supported_reasoning_levels\":[\"max\"]}]}'" > "$FAKEBIN_DIR/codex"
+    fi
+    out=$(run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --model gpt-5 --effort max)
+    status=$?
+    expect_code 0 "$status" "unconfirmed catalog model should still launch"
+    launch=$(cat "$LAUNCH_LOG")
+    assert_contains "$launch" 'model_reasoning_effort="xhigh"' "unconfirmed catalog model must clamp"
+    assert_not_contains "$launch" 'model_reasoning_effort="max"' "catalog aliases and bare levels cannot confirm max"
+    assert_contains "$out" 'notice: codex effort=max clamped to xhigh:' "catalog clamp needs a visible notice"
+  done
+  pass "codex confirms max only through slug and effort objects"
+}
+
 test_codex_passes_max_for_default_model_with_max() {
   local rec id out status launch fake_codex_home
   id=profile-codex-default-max-z4d
@@ -1958,6 +2017,8 @@ test_codex_threads_model_and_max_effort
 test_codex_threads_max_effort
 test_codex_clamps_max_effort_when_unsupported
 test_codex_clamps_max_for_model_that_lacks_max
+test_codex_profile_default_clamps
+test_codex_catalog_requires_slug_and_effort_objects
 test_codex_passes_max_for_default_model_with_max
 test_codex_clamps_max_for_default_model_without_max
 test_codex_max_default_model_follows_launch_env_codex_home
