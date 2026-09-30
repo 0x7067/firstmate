@@ -578,6 +578,8 @@ test_codex_threads_max_effort() {
   launch=$(cat "$LAUNCH_LOG")
   assert_contains "$launch" "codex --model 'gpt-5' -c 'model_reasoning_effort=\"max\"' --dangerously-bypass-approvals-and-sandbox" \
     "codex launch did not pass a supported max effort through"
+  assert_contains "$launch" "CODEX_HOME='$HOME_DIR/user-home/.codex' " \
+    "codex max launch was not pinned to the Codex home its capability was probed in"
   pass "codex passes a requested max effort through when the CLI supports it"
 }
 
@@ -615,6 +617,7 @@ test_codex_clamps_max_for_model_that_lacks_max() {
   assert_contains "$launch" "codex --model 'gpt-5.5' -c 'model_reasoning_effort=\"xhigh\"' --dangerously-bypass-approvals-and-sandbox" \
     "codex launch did not clamp max to xhigh for a model that lacks max"
   assert_not_contains "$launch" 'model_reasoning_effort="max"' "codex launch must not emit an unsupported max effort for gpt-5.5"
+  assert_not_contains "$launch" "CODEX_HOME=" "a clamped codex launch must keep the pane's own Codex home"
   assert_contains "$out" "notice: codex effort=max clamped to xhigh: the catalog does not advertise max for model 'gpt-5.5'" \
     "codex spawn did not report why it clamped max to xhigh"
   pass "codex clamps max to xhigh for a selected model that does not support it"
@@ -726,7 +729,7 @@ test_codex_clamps_max_for_default_model_without_max() {
 
 test_codex_max_default_model_follows_launch_env_codex_home() {
   local rec id out status launch mode codex_home expect
-  for mode in dropped allowlisted; do
+  for mode in dropped allowlisted pane-differs; do
     id=profile-codex-launch-env-$mode-z4f
     rec=$(make_spawn_case profile-codex-launch-env-$mode codex "$id")
     read_case_record "$rec"
@@ -743,6 +746,9 @@ test_codex_max_default_model_follows_launch_env_codex_home() {
       printf 'CODEX_HOME\n' > "$HOME_DIR/config/launch-env-allowlist"
       expect=max
       ;;
+    pane-differs)
+      expect=max
+      ;;
     esac
 
     out=$(FM_TEST_CODEX_HOME="$codex_home" run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --effort max)
@@ -751,6 +757,10 @@ test_codex_max_default_model_follows_launch_env_codex_home() {
     launch=$(cat "$LAUNCH_LOG")
     assert_contains "$launch" "model_reasoning_effort=\"$expect\"" \
       "codex max with a $mode CODEX_HOME did not follow the Codex home the worker resolves"
+    if [ "$expect" = max ]; then
+      assert_contains "$launch" "$codex_home" \
+        "codex max with a $mode CODEX_HOME was not pinned to the probed Codex home"
+    fi
   done
   pass "codex max resolves the default model from the Codex home the launched worker sees"
 }

@@ -5197,6 +5197,15 @@ if [ -n "$WORKER_ACCOUNT" ]; then
 elif [ "$HARNESS" = claude ] && [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then
   LAUNCH="CLAUDE_CONFIG_DIR=$(shell_quote "$CLAUDE_CONFIG_DIR") $LAUNCH"
 fi
+# A passed-through codex max was confirmed against codex_launch_home, but the
+# daemon-created pane may resolve a different HOME or CODEX_HOME, so pin the
+# worker to the probed home rather than let it pick another default model or
+# catalog.
+if [ "$HARNESS" = codex ]; then
+  case "$EFFORTFLAG" in
+  *'model_reasoning_effort="max"'*) LAUNCH="CODEX_HOME=$(shell_quote "$(codex_launch_home)") $LAUNCH" ;;
+  esac
+fi
 if [ "$KIND" = secondmate ]; then
   sq_home=$(shell_quote "$PROJ_ABS")
   sq_primary_home=$(shell_quote "$FM_HOME")

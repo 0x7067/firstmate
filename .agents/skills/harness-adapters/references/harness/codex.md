@@ -23,6 +23,7 @@ That Codex home is `$CODEX_HOME`, falling back to `$HOME/.codex`; when `config/l
 When the caller omits `--model` or selects `default`, Firstmate reads only the top-level `model` from that home's `config.toml`; a top-level `profile` leaves the default unconfirmed even when a top-level `model` is present.
 An explicit model bypasses that default-model lookup.
 The catalog probe runs with the same `CODEX_HOME` under the shared hard bound (`FM_CODEX_MODELS_TIMEOUT`, default 15 seconds).
+A launch that passes `max` through carries `CODEX_HOME=<probed home>`, because the backend daemon that creates the pane may resolve a different `HOME` or `CODEX_HOME` than the spawning process.
 If no default model can be resolved, including a built-in or profile-selected default, or the catalog is unreachable, the `max` capability is unconfirmed and the request clamps to `xhigh`.
 
 A directory trust dialog appears on the first run for a repository root: "Do you trust the contents of this directory?"
