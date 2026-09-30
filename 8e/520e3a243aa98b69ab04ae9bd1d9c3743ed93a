@@ -1,0 +1,24 @@
+bin/fm-spawn.sh
+  s_b1134115a829bc::t_6871082d958669 5200-5208
+tests/fm-spawn-dispatch-profile.test.sh
+  s_b1134115a829bc::t_8b481c714f791b 581-582,620,732,749-751,760,762-763
+  s_b1134115a829bc::t_254be93dffef8d 761
+.agents/skills/harness-adapters/references/harness/codex.md
+  s_b1134115a829bc::t_c3ed81f583e296 26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8e520e3a243aa98b69ab04ae9bd1d9c3743ed93a",
+  "prompts": {},
+  "sessions": {
+    "s_b1134115a829bc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "405a5bce-9dd3-4994-8874-c471a7e27dfc",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
