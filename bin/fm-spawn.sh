@@ -2557,16 +2557,30 @@ model_flag_for_harness() {
   esac
 }
 
-# codex_default_model: print the default Codex model from this fm-spawn
-# process's codex configuration. Reads $CODEX_HOME/config.toml, falling back to
-# $HOME/.codex/config.toml. It looks only at top-level keys before the first
+# codex_launch_home: print the Codex home the launched worker resolves. With
+# config/launch-env-allowlist enabled, env -i drops a CODEX_HOME that is not
+# allowlisted, so the worker falls back to $HOME/.codex (HOME is on the floor).
+codex_launch_home() {
+  if [ "$LAUNCH_ENV_ENABLED" = 1 ]; then
+    case $'\n'"$LAUNCH_ENV_NAMES"$'\n' in
+    *$'\nCODEX_HOME\n'*) ;;
+    *)
+      printf '%s\n' "$HOME/.codex"
+      return 0
+      ;;
+    esac
+  fi
+  printf '%s\n' "${CODEX_HOME:-$HOME/.codex}"
+}
+
+# codex_default_model <codex-home>: print the default model from
+# <codex-home>/config.toml. It looks only at top-level keys before the first
 # table header, and only for an exact `model = "..."` assignment. Returns
 # non-zero when the config is missing, unreadable, or contains no top-level
 # model, so callers can fail closed instead of treating an unknown default as
 # max-capable.
 codex_default_model() {
-  local config
-  config="${CODEX_HOME:-$HOME/.codex}/config.toml"
+  local config="$1/config.toml"
   [ -f "$config" ] || return 1
   awk -f - "$config" <<'AWK'
 /^[[:space:]]*[[]/ { in_table=1; next }
@@ -2587,27 +2601,36 @@ in_table { next }
 AWK
 }
 
-# codex_model_supports_max_effort: 0 when the selected Codex model (or, when
-# the caller passes an empty/default model, the default model from this
-# fm-spawn process's codex config) advertises a "max" reasoning level. Reads
-# the local catalog via `codex debug models` and queries it with jq. Returns
-# non-zero when codex is absent, jq is absent, the catalog is unreachable, the
-# model cannot be found, or the model's supported_reasoning_levels does not
-# contain max.
+# codex_max_effort_gap <model>: print why a requested max cannot be confirmed
+# for the selected Codex model (or, for an empty/default model, the default
+# model of the Codex home the launched worker resolves), or nothing when that
+# model's `codex debug models` catalog entry advertises a "max" reasoning
+# level. The catalog is read with the same CODEX_HOME the worker gets, under
+# the shared hard bound (bin/fm-timeout-lib.sh) with stdin detached.
 # The fail-safe direction is the clamp, never an unsupported pass-through.
-codex_model_supports_max_effort() {
-  local model=$1 catalog
-  [ -n "$model" ] && [ "$model" != default ] || model=$(codex_default_model)
-  [ -n "$model" ] || return 1
-  command -v codex >/dev/null 2>&1 || return 1
-  command -v jq >/dev/null 2>&1 || return 1
-  catalog=$(codex debug models 2>/dev/null) || return 1
+codex_max_effort_gap() {
+  local model=$1 home catalog rc=0 bound=${FM_CODEX_MODELS_TIMEOUT:-15}
+  case "$bound" in '' | *[!0-9]* | 0*) bound=15 ;; esac
+  home=$(codex_launch_home)
+  if [ -z "$model" ] || [ "$model" = default ]; then
+    if ! model=$(codex_default_model "$home") || [ -z "$model" ]; then
+      echo "no default model in $home/config.toml"
+      return 0
+    fi
+  fi
+  command -v codex >/dev/null 2>&1 || { echo "codex is not on PATH"; return 0; }
+  command -v jq >/dev/null 2>&1 || { echo "jq is not on PATH"; return 0; }
+  catalog=$(fm_run_timed "$bound" env CODEX_HOME="$home" codex debug models 2>/dev/null </dev/null) || rc=$?
+  if [ "$rc" -ne 0 ] || [ -z "$catalog" ]; then
+    echo "'codex debug models' catalog is unreachable (exit $rc)"
+    return 0
+  fi
   printf '%s' "$catalog" | jq -e --arg model "$model" '
     .models[]?
     | select(.slug == $model or .id == $model or .model == $model or .name == $model or .selector == $model or .display_name == $model)
     | .supported_reasoning_levels[]?
     | select((if type == "object" then .effort else . end) == "max")
-  ' >/dev/null 2>&1
+  ' >/dev/null 2>&1 || echo "the catalog does not advertise max for model '$model'"
 }
 
 effort_flag_for_harness() {
@@ -2620,15 +2643,17 @@ effort_flag_for_harness() {
     esac
     ;;
   codex)
-    # The installed codex config schema uses model_reasoning_effort. The
-    # bundled catalog lists per-model supported reasoning levels, so a
-    # requested max is passed through only when the selected model (or the
-    # default from this fm-spawn process's codex config when none is selected)
-    # advertises it. Otherwise it clamps to xhigh rather than launching with
-    # an unsupported value.
-    local codex_effort=$effort
-    if [ "$effort" = max ] && ! codex_model_supports_max_effort "$model"; then
-      codex_effort=xhigh
+    # The installed codex config schema uses model_reasoning_effort, and the
+    # catalog lists per-model supported reasoning levels. A requested max is
+    # passed through only when codex_max_effort_gap confirms it; otherwise it
+    # clamps to xhigh with a notice rather than launching an unsupported value.
+    local codex_effort=$effort gap
+    if [ "$effort" = max ]; then
+      gap=$(codex_max_effort_gap "$model")
+      if [ -n "$gap" ]; then
+        echo "notice: codex effort=max clamped to xhigh: $gap" >&2
+        codex_effort=xhigh
+      fi
     fi
     case "$codex_effort" in
     low | medium | high | xhigh | max) printf -- '-c %s ' "$(shell_quote "model_reasoning_effort=\"$codex_effort\"")" ;;

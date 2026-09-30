@@ -17,10 +17,11 @@ Verified on 2026-06-11 with codex-cli 0.139.0 unless a fact gives a newer versio
 | Marker | None; identity comes from ancestry, and `../../../bin/fm-harness.sh` is what keeps a retained foreign `CLAUDECODE` from renaming it. Verified on 2026-09-01 with codex-cli 0.152.0: the pane process is the `node` npm shim and the native `codex` binary runs as its foreground child, so a tool subprocess reaches the native name directly while the shim itself is identified from its script path. |
 
 Codex `max` is an accepted Firstmate request.
-Firstmate passes `max` through only when the requested model, or the default model resolved from this `fm-spawn` process's Codex config, advertises `max` in its `supported_reasoning_levels`.
-Otherwise it clamps to `xhigh`, so a spawn never emits an unsupported value.
-When the caller omits `--model`, the default model is read from `$CODEX_HOME/config.toml` or `$HOME/.codex/config.toml` before checking capability levels.
-If no default model can be resolved, the `max` capability is unconfirmed and the request clamps to `xhigh`.
+Firstmate passes `max` through only when the requested model, or the default model of the Codex home the launched worker resolves, advertises `max` in its `codex debug models` `supported_reasoning_levels`.
+Otherwise it clamps to `xhigh` and prints a `notice:` naming the reason, so a spawn never emits an unsupported value or downgrades silently.
+That Codex home is `$CODEX_HOME`, falling back to `$HOME/.codex`; when `config/launch-env-allowlist` is present without `CODEX_HOME`, the worker loses that variable, so the probe uses `$HOME/.codex`.
+When the caller omits `--model`, the default model is read from that home's `config.toml`, and the catalog probe runs with the same `CODEX_HOME` under the shared hard bound (`FM_CODEX_MODELS_TIMEOUT`, default 15 seconds).
+If no default model can be resolved or the catalog is unreachable, the `max` capability is unconfirmed and the request clamps to `xhigh`.
 
 A directory trust dialog appears on the first run for a repository root: "Do you trust the contents of this directory?"
 Accept it with Enter and verify the instructions begin processing.

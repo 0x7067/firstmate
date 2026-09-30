@@ -37,6 +37,7 @@ make_spawn_fakebin() {
   fakebin=$(fm_test_make_spawn_fakebin "$dir")
   cat > "$fakebin/timeout" <<'SH'
 #!/usr/bin/env bash
+[ "${1:-}" != -k ] || shift 2
 shift
 exec "$@"
 SH
@@ -614,6 +615,8 @@ test_codex_clamps_max_for_model_that_lacks_max() {
   assert_contains "$launch" "codex --model 'gpt-5.5' -c 'model_reasoning_effort=\"xhigh\"' --dangerously-bypass-approvals-and-sandbox" \
     "codex launch did not clamp max to xhigh for a model that lacks max"
   assert_not_contains "$launch" 'model_reasoning_effort="max"' "codex launch must not emit an unsupported max effort for gpt-5.5"
+  assert_contains "$out" "notice: codex effort=max clamped to xhigh: the catalog does not advertise max for model 'gpt-5.5'" \
+    "codex spawn did not report why it clamped max to xhigh"
   pass "codex clamps max to xhigh for a selected model that does not support it"
 }
 
@@ -660,6 +663,37 @@ test_codex_clamps_max_for_default_model_without_max() {
   assert_not_contains "$launch" "--model" "codex launch must not add a --model flag when none was requested"
   assert_not_contains "$launch" 'model_reasoning_effort="max"' "codex launch must not emit an unsupported max effort for the default model"
   pass "codex clamps max to xhigh for the active default model when it does not support max"
+}
+
+test_codex_max_default_model_follows_launch_env_codex_home() {
+  local rec id out status launch mode codex_home expect
+  for mode in dropped allowlisted; do
+    id=profile-codex-launch-env-$mode-z4f
+    rec=$(make_spawn_case profile-codex-launch-env-$mode codex "$id")
+    read_case_record "$rec"
+    codex_home="$HOME_DIR/fake-codex"
+    mkdir -p "$codex_home" "$HOME_DIR/user-home/.codex"
+    printf 'model = "gpt-5"\n' > "$codex_home/config.toml"
+    printf 'model = "gpt-5.5"\n' > "$HOME_DIR/user-home/.codex/config.toml"
+    case "$mode" in
+    dropped)
+      : > "$HOME_DIR/config/launch-env-allowlist"
+      expect=xhigh
+      ;;
+    allowlisted)
+      printf 'CODEX_HOME\n' > "$HOME_DIR/config/launch-env-allowlist"
+      expect=max
+      ;;
+    esac
+
+    out=$(FM_TEST_CODEX_HOME="$codex_home" run_ship_spawn "$HOME_DIR" "$WT_DIR" "$FAKEBIN_DIR" "$LAUNCH_LOG" "$id" "$PROJ_DIR" --effort max)
+    status=$?
+    expect_code 0 "$status" "codex max spawn with a $mode CODEX_HOME should succeed"$'\n'"$out"
+    launch=$(cat "$LAUNCH_LOG")
+    assert_contains "$launch" "model_reasoning_effort=\"$expect\"" \
+      "codex max with a $mode CODEX_HOME did not follow the Codex home the worker resolves"
+  done
+  pass "codex max resolves the default model from the Codex home the launched worker sees"
 }
 
 # Codex parks a crewmate launch forever on its unanswerable hook-trust modal
@@ -1926,6 +1960,7 @@ test_codex_clamps_max_effort_when_unsupported
 test_codex_clamps_max_for_model_that_lacks_max
 test_codex_passes_max_for_default_model_with_max
 test_codex_clamps_max_for_default_model_without_max
+test_codex_max_default_model_follows_launch_env_codex_home
 test_codex_crewmate_launch_disables_the_hook_layer
 test_codex_secondmate_launch_keeps_the_hook_layer
 test_grok_threads_model_and_reasoning_effort
