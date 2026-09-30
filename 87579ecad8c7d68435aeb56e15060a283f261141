@@ -1,0 +1,26 @@
+tests/fm-backend.test.sh
+  s_b77487d2216016::t_9e6cf0d890a825 546
+  s_b77487d2216016::t_ac3bc7b6adac85 536,544-545
+tests/fm-harness-precedence.test.sh
+  s_b77487d2216016::t_8ff904f937235f 125-130
+bin/fm-backend.sh
+  s_b77487d2216016::t_82165d82a01640 654
+tests/fm-cursor-harness.test.sh
+  s_b77487d2216016::t_d621d07da9a73c 213-219
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "87579ecad8c7d68435aeb56e15060a283f261141",
+  "prompts": {},
+  "sessions": {
+    "s_b77487d2216016": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0d4a7-7340-707e-9d60-c3b86716eb20",
+        "model": "glm-5.3-flash"
+      },
+      "human_author": null
+    }
+  }
+}

@@ -1,0 +1,21 @@
+bin/fm-contributions.sh
+  s_1161aa5fe69a3f::t_8a5cca3dc4f0b8 35-40,49-52,100-104,196,200,203-205,231,370,406,418-426
+tests/fm-contributions.test.sh
+  s_1161aa5fe69a3f::t_d3d22ea7798610 560,773-847,908
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "332425f20a357c38a234db08cb44bd0517d9e298",
+  "prompts": {},
+  "sessions": {
+    "s_1161aa5fe69a3f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0d4a8-4d46-70a7-9bd8-0b41fa72e330",
+        "model": "glm-5.3-flash"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}

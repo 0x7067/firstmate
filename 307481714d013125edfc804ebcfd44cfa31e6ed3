@@ -1,0 +1,21 @@
+tests/fm-watcher-lock.test.sh
+  s_be84ee06a79af6::t_8d34ca624a217f 377,383-384
+tests/fm-claude-stop-autoarm.test.sh
+  s_be84ee06a79af6::t_8d34ca624a217f 905,916-917
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "307481714d013125edfc804ebcfd44cfa31e6ed3",
+  "prompts": {},
+  "sessions": {
+    "s_be84ee06a79af6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e3c2-fd61-72e1-806d-09ccd3129209",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}

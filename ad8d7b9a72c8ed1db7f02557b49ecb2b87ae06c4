@@ -1,0 +1,21 @@
+tests/fm-timeout-lib.test.sh
+  s_b6963524815efe::t_d1aed2cb8eb015 112,214
+bin/fm-timeout-lib.sh
+  s_b6963524815efe::t_296d436a532eb5 223
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ad8d7b9a72c8ed1db7f02557b49ecb2b87ae06c4",
+  "prompts": {},
+  "sessions": {
+    "s_b6963524815efe": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e3a2-0272-7d70-bfaa-6acb29809642",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}

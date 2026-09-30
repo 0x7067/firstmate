@@ -1,0 +1,28 @@
+bin/fm-backend.sh
+  s_e7d3e677052f6b::t_edd2d6875d12ea 625,630,633,636,639,642,652-658
+  s_d82b9b7dfc25fe::t_11c2ababc0aedf 649-651
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b76a3f785517679ad5a0b3bd6e1d814060b5d990",
+  "prompts": {},
+  "sessions": {
+    "s_d82b9b7dfc25fe": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e4e0-9fe8-78b2-8a24-179fbf71d905",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    },
+    "s_e7d3e677052f6b": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0e29c-e965-7697-b74c-37293bd0bcfa",
+        "model": "glm-5.3-flash"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}

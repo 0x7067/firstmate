@@ -1,0 +1,19 @@
+tests/fm-backend.test.sh
+  s_f093b37eb128ea::t_5f719413655c9d 530,535-537,539-544,567-574
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "52cdb6be0e6f8c11167d90a22db5f7fedcabae7f",
+  "prompts": {},
+  "sessions": {
+    "s_f093b37eb128ea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e2c2-d048-7303-9b93-158cd53fe505",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
