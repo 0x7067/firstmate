@@ -1,0 +1,13 @@
+window=firstmate:fm-labcodex-max-a
+endpoint_task_id=labcodex-max-a
+worktree=/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab-3212.VkXNcv/treehouse/.treehouse/notes-e033e5/1/notes
+project=/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab-3212.VkXNcv/projects/notes
+harness=codex
+kind=ship
+mode=local-only
+yolo=on
+branch=fm/labcodex-max-a
+tasktmp=/tmp/fm-labcodex-max-a
+model=default
+effort=max
+spawn_gen=s1790790907.81610.19355

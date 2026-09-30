@@ -1,0 +1,7 @@
+zsh
+fm-labcodex-max-a
+fm-labcodex-clamp-b
+fm-labcodex-env-c
+fm-labcodex-prefix-d
+fm-labcodex-env-e
+fm-labcodex-high-f
