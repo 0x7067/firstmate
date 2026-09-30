@@ -1,0 +1,10 @@
+window=primary:fm-default-max
+endpoint_task_id=default-max
+worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/4/project
+project=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/project
+harness=codex
+kind=scout
+tasktmp=/tmp/fm-default-max
+model=default
+effort=max
+spawn_gen=s1790786020.56982.10127

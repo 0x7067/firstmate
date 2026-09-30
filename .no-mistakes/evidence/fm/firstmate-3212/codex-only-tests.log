@@ -1,0 +1,13 @@
+# all fm-spawn-dispatch-profile tests passed
+ok - codex receives --model and model_reasoning_effort profile flags
+ok - codex Luna receives --model and model_reasoning_effort max profile flags
+ok - codex passes a requested max effort through when the CLI supports it
+ok - codex clamps a requested max effort to xhigh when the CLI lacks max
+ok - codex clamps max to xhigh for a selected model that does not support it
+ok - codex clamps profile defaults while honoring explicit models
+ok - codex confirms max only through slug and effort objects
+ok - codex passes max through for the active default model when it supports max
+ok - codex clamps max to xhigh for the active default model when it does not support max
+ok - codex max resolves the default model from the Codex home the launched worker sees
+ok - a codex crewmate launches with no hook layer and keeps its turn-end signal
+ok - a codex secondmate keeps the project hook layer its primary session runs on

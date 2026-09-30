@@ -1,0 +1,140 @@
+[
+  {
+    "worker_environment": null,
+    "scenario": "explicit-luna",
+    "requested_effort": "max",
+    "observed_effort": "max",
+    "notice": [],
+    "actual_command": "codex --model gpt-5.6-luna -c model_reasoning_effort=\"max\" --dangerously-bypass-approvals-and-sandbox --disable hooks -c notify=[\"bash\",\"-c\",\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.ydn2GH/state/explicit-luna.turn-ended'\"] \\040-cFIRSTMATE_OP: v1 launch-brief: # Current worker role contract\\012You are a crewmate: an autonomous worker agent managed by firstmate.\\012This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.\\012Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.\\012Your steering inbox is `/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.ydn2GH/state/explicit-luna.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.\\012Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.\\012When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.\\012Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.\\012\\012# Task\\012## Captain's intent\\012Reply OK only, do not run any tools.\\012## Firstmate spec\\012Reply OK only.\n",
+    "transcript": "live-explicit-luna.log",
+    "limit": "Launch verified; model completion and provider acceptance were not verified."
+  },
+  {
+    "worker_environment": null,
+    "scenario": "explicit-clamp",
+    "requested_effort": "max",
+    "observed_effort": "xhigh",
+    "notice": [
+      "notice: codex effort=max clamped to xhigh: the catalog does not advertise max for model 'gpt-5.5'"
+    ],
+    "actual_command": "codex --model gpt-5.5 -c model_reasoning_effort=\"xhigh\" --dangerously-bypass-approvals-and-sandbox --disable hooks -c notify=[\"bash\",\"-c\",\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.ydn2GH/state/explicit-clamp.turn-ended'\"] \\040-cFIRSTMATE_OP: v1 launch-brief: # Current worker role contract\\012You are a crewmate: an autonomous worker agent managed by firstmate.\\012This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.\\012Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.\\012Your steering inbox is `/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.ydn2GH/state/explicit-clamp.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.\\012Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.\\012When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.\\012Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.\\012\\012# Task\\012## Captain's intent\\012Reply OK only, do not run any tools.\\012## Firstmate spec\\012Reply OK only.\n",
+    "transcript": "live-explicit-clamp.log",
+    "limit": "Launch verified; model completion and provider acceptance were not verified."
+  },
+  {
+    "worker_environment": [
+      {
+        "pid": "59961",
+        "HOME": [
+          "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/cases/default-max/user"
+        ],
+        "CODEX_HOME": [
+          "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/cases/default-max/codex"
+        ]
+      }
+    ],
+    "scenario": "default-max",
+    "requested_effort": "max",
+    "observed_effort": "max",
+    "notice": [],
+    "actual_command": "codex -c model_reasoning_effort=\"max\" --dangerously-bypass-approvals-and-sandbox --disable hooks -c notify=[\"bash\",\"-c\",\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.e8Jilz/state/default-max.turn-ended'\"] \\040-cFIRSTMATE_OP: v1 launch-brief: # Current worker role contract\\012You are a crewmate: an autonomous worker agent managed by firstmate.\\012This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.\\012Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.\\012Your steering inbox is `/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.e8Jilz/state/default-max.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.\\012Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.\\012When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.\\012Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.\\012\\012# Task\\012## Captain's intent\\012Reply OK only, do not run any tools.\\012## Firstmate spec\\012Reply OK only.\n",
+    "transcript": "live-default-max.log",
+    "limit": "Launch verified; model completion and provider acceptance were not verified."
+  },
+  {
+    "worker_environment": [
+      {
+        "pid": "11085",
+        "HOME": [
+          "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/cases/default-clamp/user"
+        ],
+        "CODEX_HOME": [
+          "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/cases/default-clamp/codex"
+        ]
+      }
+    ],
+    "scenario": "default-clamp",
+    "requested_effort": "max",
+    "observed_effort": "xhigh",
+    "notice": [
+      "notice: codex effort=max clamped to xhigh: the catalog does not advertise max for model 'gpt-5.5'"
+    ],
+    "actual_command": "codex -c model_reasoning_effort=\"xhigh\" --dangerously-bypass-approvals-and-sandbox --disable hooks -c notify=[\"bash\",\"-c\",\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.1o0coS/state/default-clamp.turn-ended'\"] \\040-cFIRSTMATE_OP: v1 launch-brief: # Current worker role contract\\012You are a crewmate: an autonomous worker agent managed by firstmate.\\012This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.\\012Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.\\012Your steering inbox is `/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.1o0coS/state/default-clamp.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.\\012Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.\\012When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.\\012Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.\\012\\012# Task\\012## Captain's intent\\012Reply OK only, do not run any tools.\\012## Firstmate spec\\012Reply OK only.\n",
+    "transcript": "live-default-clamp.log",
+    "limit": "Launch verified; model completion and provider acceptance were not verified."
+  },
+  {
+    "worker_environment": [
+      {
+        "pid": "66247",
+        "HOME": [
+          "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/cases/env-kept/user"
+        ],
+        "CODEX_HOME": [
+          "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/cases/env-kept/codex"
+        ]
+      }
+    ],
+    "scenario": "env-kept",
+    "requested_effort": "max",
+    "observed_effort": "max",
+    "notice": [],
+    "actual_command": "codex -c model_reasoning_effort=\"max\" --dangerously-bypass-approvals-and-sandbox --disable hooks -c notify=[\"bash\",\"-c\",\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.e8Jilz/state/env-kept.turn-ended'\"] \\040-cFIRSTMATE_OP: v1 launch-brief: # Current worker role contract\\012You are a crewmate: an autonomous worker agent managed by firstmate.\\012This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.\\012Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.\\012Your steering inbox is `/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.e8Jilz/state/env-kept.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.\\012Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.\\012When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.\\012Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.\\012\\012# Task\\012## Captain's intent\\012Reply OK only, do not run any tools.\\012## Firstmate spec\\012Reply OK only.\n",
+    "transcript": "live-env-kept.log",
+    "limit": "Launch verified; model completion and provider acceptance were not verified."
+  },
+  {
+    "worker_environment": [
+      {
+        "pid": "69830",
+        "HOME": [
+          "/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/cases/env-dropped/user"
+        ],
+        "CODEX_HOME": []
+      }
+    ],
+    "scenario": "env-dropped",
+    "requested_effort": "max",
+    "observed_effort": "xhigh",
+    "notice": [
+      "notice: codex effort=max clamped to xhigh: the catalog does not advertise max for model 'gpt-5.5'"
+    ],
+    "actual_command": "codex -c model_reasoning_effort=\"xhigh\" --dangerously-bypass-approvals-and-sandbox --disable hooks -c notify=[\"bash\",\"-c\",\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.e8Jilz/state/env-dropped.turn-ended'\"] \\040-cFIRSTMATE_OP: v1 launch-brief: # Current worker role contract\\012You are a crewmate: an autonomous worker agent managed by firstmate.\\012This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.\\012Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.\\012Your steering inbox is `/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.e8Jilz/state/env-dropped.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.\\012Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.\\012When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.\\012Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.\\012\\012# Task\\012## Captain's intent\\012Reply OK only, do not run any tools.\\012## Firstmate spec\\012Reply OK only.\n",
+    "transcript": "live-env-dropped.log",
+    "limit": "Launch verified; model completion and provider acceptance were not verified."
+  },
+  {
+    "worker_environment": [],
+    "scenario": "profile",
+    "requested_effort": "max",
+    "observed_effort": "xhigh",
+    "notice": [
+      "notice: codex effort=max clamped to xhigh: no default model in /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/cases/profile/codex/config.toml"
+    ],
+    "actual_command": "export COMPACT_ADVISER_DISABLE=1; export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0='/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.e8Jilz/state/profile.git-hooks'; env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI codex -c 'model_reasoning_effort=\"xhigh\"' --dangerously-bypass-approvals-and-sandbox --disable hooks -c \"notify=[\\\"bash\\\",\\\"-c\\\",\\\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.e8Jilz/state/profile.turn-ended'\\\"]\" \"$('/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/bin/fm-operational-input.sh' encode launch-brief < '/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.e8Jilz/data/profile/launch-brief.md')\"\n",
+    "transcript": "live-profile.log",
+    "limit": "Installed Codex rejects legacy profile configuration after Firstmate emits the clamp."
+  },
+  {
+    "worker_environment": null,
+    "scenario": "unknown",
+    "requested_effort": "max",
+    "observed_effort": "xhigh",
+    "notice": [
+      "notice: codex effort=max clamped to xhigh: the catalog does not advertise max for model 'missing-model'"
+    ],
+    "actual_command": "codex --model missing-model -c model_reasoning_effort=\"xhigh\" --dangerously-bypass-approvals-and-sandbox --disable hooks -c notify=[\"bash\",\"-c\",\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.ydn2GH/state/unknown.turn-ended'\"] \\040-cFIRSTMATE_OP: v1 launch-brief: # Current worker role contract\\012You are a crewmate: an autonomous worker agent managed by firstmate.\\012This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.\\012Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.\\012Your steering inbox is `/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.ydn2GH/state/unknown.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.\\012Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.\\012When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.\\012Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.\\012\\012# Task\\012## Captain's intent\\012Reply OK only, do not run any tools.\\012## Firstmate spec\\012Reply OK only.\n",
+    "transcript": "live-unknown.log",
+    "limit": "Launch verified; model completion and provider acceptance were not verified."
+  },
+  {
+    "worker_environment": null,
+    "scenario": "non-luna",
+    "requested_effort": "max",
+    "observed_effort": "max",
+    "notice": [],
+    "actual_command": "codex --model gpt-6-luna -c model_reasoning_effort=\"max\" --dangerously-bypass-approvals-and-sandbox --disable hooks -c notify=[\"bash\",\"-c\",\"touch '/private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-lab.h4hkSd/state/non-luna.turn-ended'\"] \\040-cFIRSTMATE_OP: v1 launch-brief: # Current worker role contract\\012You are a crewmate: an autonomous worker agent managed by firstmate.\\012This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.\\012Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.\\012Your steering inbox is `/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.h4hkSd/state/non-luna.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.\\012Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.\\012When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.\\012Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.\\012\\012# Task\\012## Captain's intent\\012Reply OK only, do not run any tools.\\012## Firstmate spec\\012Reply OK only.\n",
+    "transcript": "live-non-luna.log",
+    "limit": "Launch verified; model completion and provider acceptance were not verified."
+  }
+]

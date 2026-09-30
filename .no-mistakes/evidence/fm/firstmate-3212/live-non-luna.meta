@@ -1,0 +1,10 @@
+window=primary:fm-non-luna
+endpoint_task_id=non-luna
+worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/5/project
+project=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/project
+harness=codex
+kind=scout
+tasktmp=/tmp/fm-non-luna
+model=gpt-6-luna
+effort=max
+spawn_gen=s1790785933.39684.19140

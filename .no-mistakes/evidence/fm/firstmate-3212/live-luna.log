@@ -1,0 +1,44 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.aWhVz1
+spawned luna harness=codex kind=scout window=primary:fm-luna worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/1/project
+%0 bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V
+%1 codex /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/1/project
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool
+/.treehouse/project-eb5881/1/project. Type 'exit' to return.
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ cd -- '/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S
+6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/1/project'
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ export GOTMPDIR=/tmp/fm-luna/gotmp
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ export COMPACT_ADVISER_DISABLE=1
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ export FM_TASK_ID=luna
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ . '/tmp/fm-luna+5858eeb181c0058a31dd882a0fc1a07dc08a2f8a0a59332fa9bb3d9a3
+c48319e/launch.s1790784807.232.23254.sh'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

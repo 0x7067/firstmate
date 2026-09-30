@@ -1,0 +1,50 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T//fm-lab.e8Jilz
+WARNING: watcher still down (same stale episode; last beat: 1s ago, grace 300s) - full banner already printed this episode.
+notice: codex effort=max clamped to xhigh: no default model in /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/cases/profile/codex/config.toml
+spawned profile harness=codex kind=scout window=primary:fm-profile worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/5/project
+%0 bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V
+%1 codex /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/4/project
+%2 bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/1/project
+%3 bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/2/project
+%4 bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/3/project
+%5 bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/5/project
+treehouse get
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ treehouse get
+🌳 Setting up worktree...
+🌳 Entered worktree at /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool
+/.treehouse/project-eb5881/5/project. Type 'exit' to return.
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ cd -- '/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S
+6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/5/project'
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ export GOTMPDIR=/tmp/fm-profile/gotmp
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ export COMPACT_ADVISER_DISABLE=1
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ export FM_TASK_ID=profile
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$ . '/tmp/fm-profile+45622868e1b0da5155ac4f0e660dcca237fb7d5405ea0179e69f84
+f10e138aad/launch.s1790786080.70274.18430.sh'
+Error loading configuration: legacy `profile = "work"` config is no longer supported; use `--profile work` with `work.co
+nfig.toml` instead
+Pedro-Guimaraes-Ravn-GFV73Y4047:project pedro$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

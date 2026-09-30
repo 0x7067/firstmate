@@ -1,0 +1,10 @@
+window=primary:fm-default-clamp
+endpoint_task_id=default-clamp
+worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/1/project
+project=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/project
+harness=codex
+kind=scout
+tasktmp=/tmp/fm-default-clamp
+model=default
+effort=max
+spawn_gen=s1790786200.88663.19171

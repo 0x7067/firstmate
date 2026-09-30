@@ -1,0 +1,10 @@
+window=primary:fm-explicit-luna
+endpoint_task_id=explicit-luna
+worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/pool/.treehouse/project-eb5881/2/project
+project=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M3SDPW8TREH6V2S6Y8EVAZ4V/.test-codex-live/project
+harness=codex
+kind=scout
+tasktmp=/tmp/fm-explicit-luna
+model=gpt-5.6-luna
+effort=max
+spawn_gen=s1790785147.30743.24556
