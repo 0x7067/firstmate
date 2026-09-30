@@ -1,0 +1,27 @@
+bin/fm-dispatch-resolve.sh
+  s_b0b98d78e85459::t_58e191b6c30de8 154
+bin/fm-spawn.sh
+  s_b0b98d78e85459::t_58e191b6c30de8 2582,2591,2595,2625,2627
+tests/fm-dispatch-resolve.test.sh
+  s_b0b98d78e85459::t_f587f41e3acc60 958-959
+  s_b0b98d78e85459::t_45780abeeb0fd6 951-957,960-968
+tests/fm-spawn-dispatch-profile.test.sh
+  s_b0b98d78e85459::t_45780abeeb0fd6 623-637,639-640,643,645-681,2020-2021
+  s_b0b98d78e85459::t_3dac52205bdb7c 638,641-642,644
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "99198d29516cf8761d3546aa82845b986f21e341",
+  "prompts": {},
+  "sessions": {
+    "s_b0b98d78e85459": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f2f0-e13d-75c0-8df2-bd4ee1abf8a7",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Pedro Guimarães <21346846+0x7067@users.noreply.github.com>"
+    }
+  }
+}
