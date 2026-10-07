@@ -1,0 +1,56 @@
+ok - host+hook: the next park takes over the cycle a main-only pass-through left, so one arm owns it
+ok - host+hook: a recorded successor is taken over despite a missed parent lookup
+ok - host+hook: a park stopped mid take-over leaves the take-over to the next park
+
+FILE hook-takeover-interrupted/hook.out
+
+FILE hook-takeover-parent-miss/hook.out
+
+FILE hook-takeover/hook.out
+
+FILE hook-takeover-interrupted/state/.watch-cycle-exits.log
+arm_pid=48601	watcher_pid=48694	origin=started	started_at=1791400830	ended_at=1791400833	exit_code=0	signal=none	reason=actionable-signal	beacon_age=2	lock_before=pid:48694|identity:Wed Oct  7 16:20:30 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-interrupted/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=started:53286
+arm_pid=59020	watcher_pid=53286	origin=attached	started_at=1791400838	ended_at=1791400839	exit_code=143	signal=TERM	reason=arm-interrupted	beacon_age=0	lock_before=pid:53286|identity:Wed Oct  7 16:20:34 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-interrupted/bin/fm-watch.sh	lock_after=pid:53286|identity:Wed Oct  7 16:20:34 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-interrupted/bin/fm-watch.sh	successor=none
+arm_pid=53216	watcher_pid=53286	origin=started	started_at=1791400834	ended_at=1791400841	exit_code=143	signal=TERM	reason=signal-exit	beacon_age=1	lock_before=pid:53286|identity:Wed Oct  7 16:20:34 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-interrupted/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+arm_pid=61009	watcher_pid=53286	origin=attached	started_at=1791400840	ended_at=1791400841	exit_code=unknown	signal=unknown	reason=taken-over	beacon_age=1	lock_before=pid:53286|identity:Wed Oct  7 16:20:34 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-interrupted/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+
+FILE hook-takeover-parent-miss/state/.watch-cycle-exits.log
+arm_pid=32992	watcher_pid=33064	origin=started	started_at=1791400820	ended_at=1791400822	exit_code=0	signal=none	reason=actionable-signal	beacon_age=1	lock_before=pid:33064|identity:Wed Oct  7 16:20:20 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-parent-miss/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=started:36892
+arm_pid=36834	watcher_pid=36892	origin=started	started_at=1791400822	ended_at=1791400827	exit_code=143	signal=TERM	reason=signal-exit	beacon_age=1	lock_before=pid:36892|identity:Wed Oct  7 16:20:22 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-parent-miss/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+arm_pid=43527	watcher_pid=36892	origin=attached	started_at=1791400826	ended_at=1791400827	exit_code=unknown	signal=unknown	reason=taken-over	beacon_age=1	lock_before=pid:36892|identity:Wed Oct  7 16:20:22 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-parent-miss/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=started:44507
+
+FILE hook-takeover/state/.watch-cycle-exits.log
+arm_pid=16967	watcher_pid=17006	origin=started	started_at=1791400806	ended_at=1791400808	exit_code=0	signal=none	reason=actionable-signal	beacon_age=1	lock_before=pid:17006|identity:Wed Oct  7 16:20:06 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=started:19611
+arm_pid=19536	watcher_pid=19611	origin=started	started_at=1791400808	ended_at=1791400812	exit_code=143	signal=TERM	reason=signal-exit	beacon_age=1	lock_before=pid:19611|identity:Wed Oct  7 16:20:08 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+arm_pid=25201	watcher_pid=19611	origin=attached	started_at=1791400812	ended_at=1791400812	exit_code=unknown	signal=unknown	reason=taken-over	beacon_age=1	lock_before=pid:19611|identity:Wed Oct  7 16:20:08 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=started:25951
+arm_pid=25201	watcher_pid=25951	origin=started	started_at=1791400812	ended_at=1791400817	exit_code=0	signal=none	reason=actionable-signal	beacon_age=1	lock_before=pid:25951|identity:Wed Oct  7 16:20:12 2026     bash /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=started:30977
+
+FILE hook-takeover-interrupted/state/.watcher-down
+acked:handling:48694.1791400832.u46tY2
+
+FILE hook-takeover-parent-miss/state/.watcher-down
+acked:handling:33064.1791400821.hcSQDf
+
+FILE hook-takeover/state/.watcher-down
+announced:downtime:25951.1791400816.EDUfSU
+
+FILE hook-takeover-interrupted/state/.supervision-host.log
+1791400830	start	gen=host-48212-1791400830	primary=claude
+1791400834	pass-through	attended	main-only	signal: /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-interrupted/state/demo.status
+1791400838	start	gen=host-58531-1791400838	primary=claude
+1791400838	take-over	arm=53216
+1791400840	start	gen=host-60699-1791400840	primary=claude
+1791400840	take-over	arm=53216
+
+FILE hook-takeover-parent-miss/state/.supervision-host.log
+1791400820	start	gen=host-32575-1791400820	primary=claude
+1791400822	pass-through	attended	main-only	signal: /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover-parent-miss/state/demo.status
+1791400826	start	gen=host-42881-1791400826	primary=claude
+1791400826	take-over	arm=36834
+
+FILE hook-takeover/state/.supervision-host.log
+1791400806	start	gen=host-16806-1791400806	primary=claude
+1791400808	pass-through	attended	main-only	signal: /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover/state/demo.status
+1791400812	start	gen=host-24838-1791400812	primary=claude
+1791400812	take-over	arm=19536
+1791400818	pass-through	attended	main-only	signal: /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-supervision-host.TnhGZs/hook-takeover/state/demo.status

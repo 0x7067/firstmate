@@ -1,0 +1,78 @@
+ok - watch-arm: --take-over attaches to a cycle the named arm does not own and leaves it running
+ok - watch-arm: recorded attached successors cannot qualify for identity-based takeover
+ok - watch-arm: --take-over owns a fresh cycle without a recovery wake and still surfaces queued work
+watcher: secondmate liveness check failed
+ok - watch-arm: takeover preserves self-exit downtime and surfaces a recovery wake
+
+FILE take-over-attached-successor/attached.out
+watcher: attached pid=19042 (beacon 0s)
+signal: /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-watch-arm-tests.1ork2i/take-over-attached-successor/state/demo.status
+
+FILE take-over-attached-successor/owner.out
+watcher: started pid=19042 (beacon fresh)
+signal: /private/var/folders/9p/7pl_yxb55vqf1cg3mrjs19d00000gn/T/fm-watch-arm-tests.1ork2i/take-over-attached-successor/state/demo.status
+
+FILE take-over-attached-successor/takeover-attached.out
+watcher: attached pid=19042 (beacon 0s)
+
+FILE take-over-attached-successor/takeover-legacy.out
+watcher: attached pid=19042 (beacon 0s)
+
+FILE take-over-not-owner/arm.out
+watcher: attached pid=15713 (beacon 1s)
+
+FILE take-over-not-owner/watch.out
+
+FILE take-over-owner/arm.out
+watcher: started pid=46210 (beacon fresh)
+check: rearm-resurface
+
+FILE take-over-owner/owner.out
+watcher: started pid=32574 (beacon fresh)
+watcher: FAILED - watcher cycle exited 143 without an actionable reason
+
+FILE take-over-owner/owner2.out
+watcher: started pid=43896 (beacon fresh) recovery-generation=36939.1791400826.vuEvTt
+watcher: FAILED - watcher cycle exited 143 without an actionable reason
+
+FILE take-over-self-exit/arm.out
+watcher: started pid=54970 (beacon fresh)
+check: rearm-resurface
+
+FILE take-over-self-exit/owner.out
+watcher: started pid=47552 (beacon fresh)
+watcher: FAILED - watcher cycle exited 1 without an actionable reason
+
+FILE take-over-attached-successor/state/.watch-cycle-exits.log
+arm_pid=22160	watcher_pid=19042	origin=attached	started_at=1791400811	ended_at=1791400811	exit_code=143	signal=TERM	reason=arm-interrupted	beacon_age=0	lock_before=pid:19042|identity:Wed Oct  7 16:20:08 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:19042|identity:Wed Oct  7 16:20:08 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	successor=none
+arm_pid=24453	watcher_pid=19042	origin=attached	started_at=1791400812	ended_at=1791400813	exit_code=143	signal=TERM	reason=arm-interrupted	beacon_age=1	lock_before=pid:19042|identity:Wed Oct  7 16:20:08 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:19042|identity:Wed Oct  7 16:20:08 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	successor=none
+arm_pid=19008	watcher_pid=19042	origin=started	started_at=1791400808	ended_at=1791400814	exit_code=0	signal=none	reason=actionable-signal	beacon_age=1	lock_before=pid:19042|identity:Wed Oct  7 16:20:08 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+arm_pid=21835	watcher_pid=19042	origin=attached	started_at=1791400809	ended_at=1791400820	exit_code=unknown	signal=unknown	reason=attached-delivered-wake	beacon_age=7	lock_before=pid:19042|identity:Wed Oct  7 16:20:08 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+
+FILE take-over-not-owner/state/.watch-cycle-exits.log
+arm_pid=16025	watcher_pid=15713	origin=attached	started_at=1791400806	ended_at=1791400807	exit_code=143	signal=TERM	reason=arm-interrupted	beacon_age=2	lock_before=pid:15713|identity:Wed Oct  7 16:20:04 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+
+FILE take-over-owner/state/.watch-cycle-exits.log
+arm_pid=32525	watcher_pid=32574	origin=started	started_at=1791400820	ended_at=1791400822	exit_code=143	signal=TERM	reason=signal-exit	beacon_age=1	lock_before=pid:32574|identity:Wed Oct  7 16:20:20 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+arm_pid=36132	watcher_pid=32574	origin=attached	started_at=1791400822	ended_at=1791400822	exit_code=unknown	signal=unknown	reason=taken-over	beacon_age=1	lock_before=pid:32574|identity:Wed Oct  7 16:20:20 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=started:36939
+arm_pid=36132	watcher_pid=36939	origin=started	started_at=1791400822	ended_at=1791400826	exit_code=143	signal=TERM	reason=arm-interrupted	beacon_age=1	lock_before=pid:36939|identity:Wed Oct  7 16:20:22 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+arm_pid=43861	watcher_pid=43896	origin=started	started_at=1791400827	ended_at=1791400828	exit_code=143	signal=TERM	reason=signal-exit	beacon_age=1	lock_before=pid:43896|identity:Wed Oct  7 16:20:27 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+arm_pid=45057	watcher_pid=43896	origin=attached	started_at=1791400827	ended_at=1791400828	exit_code=unknown	signal=unknown	reason=taken-over	beacon_age=1	lock_before=pid:43896|identity:Wed Oct  7 16:20:27 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=started:46210
+arm_pid=45057	watcher_pid=46210	origin=started	started_at=1791400828	ended_at=1791400829	exit_code=0	signal=none	reason=actionable-check	beacon_age=0	lock_before=pid:46210|identity:Wed Oct  7 16:20:28 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+
+FILE take-over-self-exit/state/.watch-cycle-exits.log
+arm_pid=47489	watcher_pid=47552	origin=started	started_at=1791400830	ended_at=1791400834	exit_code=1	signal=none	reason=nonzero-exit	beacon_age=0	lock_before=pid:47552|identity:Wed Oct  7 16:20:30 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+arm_pid=51162	watcher_pid=47552	origin=attached	started_at=1791400832	ended_at=1791400835	exit_code=unknown	signal=unknown	reason=taken-over-unconfirmed-stop	beacon_age=1	lock_before=pid:47552|identity:Wed Oct  7 16:20:30 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=started:54970
+arm_pid=51162	watcher_pid=54970	origin=started	started_at=1791400835	ended_at=1791400836	exit_code=0	signal=none	reason=actionable-check	beacon_age=1	lock_before=pid:54970|identity:Wed Oct  7 16:20:35 2026     bash /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BW59FNH11CYKBZQJEWVSG4/bin/fm-watch.sh	lock_after=pid:none|identity:none	successor=none
+
+FILE take-over-attached-successor/state/.watcher-down
+pending:downtime:19042.1791400814.0OVJ4m
+
+FILE take-over-not-owner/state/.watcher-down
+pending:downtime:15713.1791400807.mQCqk2
+
+FILE take-over-owner/state/.watcher-down
+announced:downtime:44809.1791400827.fqdKfv
+
+FILE take-over-self-exit/state/.watcher-down
+announced:downtime:47552.1791400834.MoQU4s
