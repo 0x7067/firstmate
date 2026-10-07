@@ -55,6 +55,8 @@
 #                writes its model name there); a titled bottom border that
 #                still starts and ends with the family's rule glyph is
 #                tolerated, including Grok 1.0.5's three-column title overhang.
+#                Pi's rounded branch-titled box uses the title constraints in
+#                _fm_composer_titled_top_spaces and _fm_composer_titled_bottom_ok.
 #   bare       - an agent prompt glyph row with no border at all (claude `❯`,
 #                codex `›`, muse `⟩`, cursor `→`). The agent glyph is itself the container
 #                proof; a bare SHELL glyph (`>` `$` `%` `#`) never is.
@@ -1070,6 +1072,8 @@ EOF
 # 0 when a mismatched bottom border reads as a legitimate TITLE: the trimmed
 # inner (corners already stripped) still starts and ends with the family's own
 # rule glyph, so the title is embedded IN the rule rather than replacing it.
+# Non-ASCII middle dots are admitted only for a rounded Pi elapsed/model/effort
+# footer matching the validated vocabulary below; its width must still align.
 _fm_composer_titled_bottom_ok() {  # <family> <bottom-inner> <top-spaces>
   local family=$1 inner=$2 expected=$3 dash spaces title effort model pi_title=0
   fm_composer_normalize_trim_var inner
@@ -1125,8 +1129,10 @@ _fm_composer_titled_bottom_ok() {  # <family> <bottom-inner> <top-spaces>
 }
 
 # A Pi 1.0.4 top border includes its current git branch after the first rule
-# glyph. Accept only the explicit `─ ⎇ <branch> ─...` shape, and return a
-# column-preserving blank row for the existing content-geometry proof.
+# glyph. Accept only rounded frames with the explicit `─ ⎇ <branch> ─...`
+# shape, and return a column-preserving blank row for the existing
+# corners/family/indent/content-geometry proof. Unvalidated titles stay unknown;
+# this does not extend titled-top acceptance to the legacy border families.
 _fm_composer_titled_top_spaces() {  # <family> <top-inner> -> spaces
   local family=$1 inner=$2 dash='─' rest branch spaces
   [ "$family" = rounded ] || return 1
