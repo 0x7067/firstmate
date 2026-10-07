@@ -1,0 +1,2 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BS5XBJ5AM49MMHGMJRM415/.live-pi/home
+stopped pi104 harness=pi backend=herdr endpoint=fm-lab-composer-pi104-test:w1:p1 worktree=/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BS5XBJ5AM49MMHGMJRM415

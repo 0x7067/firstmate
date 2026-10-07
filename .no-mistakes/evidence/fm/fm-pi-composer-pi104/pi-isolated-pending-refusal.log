@@ -1,0 +1,2 @@
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BS5XBJ5AM49MMHGMJRM415/.live-pi/home
+error: task pi104's composer visibly holds pending text; refusing to type the /quit exit command because it would concatenate onto that text. Clear or submit the pending text, then retry 'exit'

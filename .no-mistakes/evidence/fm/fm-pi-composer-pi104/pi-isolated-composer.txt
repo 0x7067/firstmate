@@ -1,0 +1,40 @@
+01M4BS5XBJ5AM49MMHGMJRM415 HEAD ? 34s
+❯ leave this draft intactpi -ne --offline --no-session --no-approve --no-mcp --no-skills --no
+-context-files --tui-mode regular --thinking max -e builtin:composer
+usage: leave [[+]hhmm]
+
+01M4BS5XBJ5AM49MMHGMJRM415 HEAD ?
+❯
+pi -ne --offline --no-session --no-approve --no-mcp --no-skills --no-context-files --tui-mode
+ regular --thinking max -e builtin:composer
+
+01M4BS5XBJ5AM49MMHGMJRM415 HEAD ?
+❯ pi -ne --offline --no-session --no-approve --no-mcp --no-skills --no-context-files --tui-mo
+de regular --thinking max -e builtin:composer
+Error: Failed to load extension "builtin:composer": Unknown built-in extension: builtin:compo
+ser
+Hint: Start without extensions using "pi -ne".
+
+01M4BS5XBJ5AM49MMHGMJRM415 HEAD ? 14s
+❯ pi -ne --offline --no-session --no-approve --no-mcp --no-skills --no-context-files --tui-mo
+de regular --thinking max
+ This project is not trusted. Project .pi resources and packages are ignored. Use /trust to
+ save a trust decision, then restart pi.
+
+─────────────────────────────────────────────────────────────────────────────────────────────
+
+─────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/b764898e6d62/01M4BS5XBJ5AM49MMHGMJRM415 (detached)
+$0.000 (sub) 0.0%/272k (auto)                                (openai-codex) gpt-6.1-sol • max
+
+01M4BS5XBJ5AM49MMHGMJRM415 HEAD ? 3m11s
+❯ pi -ne --offline --no-session --no-approve --no-mcp --no-skills --no-context-files --tui-mo
+de regular --thinking max
+ This project is not trusted. Project .pi resources and packages are ignored. Use /trust to
+ save a trust decision, then restart pi.
+
+─────────────────────────────────────────────────────────────────────────────────────────────
+
+─────────────────────────────────────────────────────────────────────────────────────────────
+~/.no-mistakes/worktrees/b764898e6d62/01M4BS5XBJ5AM49MMHGMJRM415 (detached)
+$0.000 (sub) 0.0%/272k (auto)                                (openai-codex) gpt-6.1-sol • max

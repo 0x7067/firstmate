@@ -1,0 +1,10 @@
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_
+PROJECTS_OVERRIDE FM_HOME='/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BS5XBJ5AM49MM
+HGMJRM415/.live-pi/home' pi --no-session --offline --no-approve --no-mcp --no-skills --no-con
+text-files --tui-mode regular --thinking max
+
+[0m[1m[38;5;4m01M4BS5XBJ5AM49MMHGMJRM415[0m [0m[38;5;5mHEAD[0m [0m[38;5;8m?[0m 
+❯ [0m[4m[38;5;2menv[0m -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u F
+M_PROJECTS_OVERRIDE FM_HOME=[0m[38;5;3m'/Users/pedro/.no-mistakes/worktrees/b764898e6d62/01M4BS5XBJ5AM49[0m
+[0m[38;5;3mMMHGMJRM415/.live-pi/home'[0m [0m[38;5;2mpi[0m --no-session --offline --no-approve --no-mcp --no-skills --no-c
+ontext-files --tui-mode regular --thinking max
