@@ -1,0 +1,4 @@
+ok - fm_backend_herdr_send_text_submit: a typed /exit above Claude 2.1.293's glyph-marked command popup is proven and submitted
+ok - fm_backend_herdr_send_text_submit: a partial command under Claude 2.1.293's popup is refused and cleared, not borrowed from the popup's selection
+ok - fm_backend_herdr_send_text_submit: a long payload whose Claude composer kept only the tail is not submitted, is cleared, and reports send-failed
+ok - fm_backend_herdr_send_text_submit: a Claude composer holding leftover text is refused before anything is typed
