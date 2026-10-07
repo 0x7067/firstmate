@@ -601,15 +601,16 @@ take_over_cycle() {  # <watcher-pid> <identity>
 }
 
 take_over_owner_matches() {  # <watcher-pid> <watcher-identity>
-  local record_arm record_identity record_watcher record_watcher_identity
+  local record_arm record_identity record_watcher record_watcher_identity record_origin
   if [ "$(ps -o ppid= -p "$1" 2>/dev/null | tr -d ' ')" = "$take_over_arm_pid" ]; then
     return 0
   fi
   [ -f "$STATE/.supervision-host-left" ] \
     && [ ! -L "$STATE/.supervision-host-left" ] || return 1
-  IFS=$'\t' read -r record_arm record_identity record_watcher record_watcher_identity \
+  IFS=$'\t' read -r record_arm record_identity record_watcher record_watcher_identity record_origin \
     < "$STATE/.supervision-host-left" || return 1
-  [ "$record_arm" = "$take_over_arm_pid" ] \
+  [ "$record_origin" = started ] \
+    && [ "$record_arm" = "$take_over_arm_pid" ] \
     && [ -n "$record_identity" ] \
     && [ "$(fm_pid_identity "$record_arm" 2>/dev/null || true)" = "$record_identity" ] \
     && [ "$record_watcher" = "$1" ] \

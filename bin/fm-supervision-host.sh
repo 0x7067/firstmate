@@ -263,6 +263,7 @@ SUCCESSOR_PID=
 SUCCESSOR_OUT=
 SUCCESSOR_WATCHER=
 SUCCESSOR_GENERATION=
+SUCCESSOR_ORIGIN=
 ENGINE_RUNNING=0
 # The successor arm a predecessor's pass-through left for main, which the
 # first cycle takes over.
@@ -651,6 +652,7 @@ start_successor() {  # <predecessor-arm-pid>
   local deadline line
   SUCCESSOR_WATCHER=
   SUCCESSOR_GENERATION=
+  SUCCESSOR_ORIGIN=
   start_arm "$1" || return 1
   SUCCESSOR_PID=$STARTED_ARM_PID
   SUCCESSOR_OUT=$STARTED_ARM_OUT
@@ -658,6 +660,8 @@ start_successor() {  # <predecessor-arm-pid>
   while :; do
     line=$(grep -E '^watcher: (started|attached) pid=[0-9]+' "$SUCCESSOR_OUT" 2>/dev/null | head -n 1)
     if [ -n "$line" ]; then
+      SUCCESSOR_ORIGIN=${line#watcher: }
+      SUCCESSOR_ORIGIN=${SUCCESSOR_ORIGIN%% *}
       SUCCESSOR_WATCHER=$(printf '%s\n' "$line" | sed -E 's/^watcher: (started|attached) pid=([0-9]+).*/\2/')
       case "$line" in
         *' recovery-generation='*) SUCCESSOR_GENERATION=${line##* recovery-generation=} ;;
@@ -687,7 +691,7 @@ detach_successor() {
   if fm_watcher_lock_matches_pid "$STATE" "$SCRIPT_DIR/fm-watch.sh" "$SUCCESSOR_WATCHER" "$FM_HOME"; then
     watcher_identity=$FM_WATCHER_MATCHED_IDENTITY
   fi
-  record=$(printf '%s\t%s\t%s\t%s' "$SUCCESSOR_PID" "$identity" "$SUCCESSOR_WATCHER" "$watcher_identity")
+  record=$(printf '%s\t%s\t%s\t%s\t%s' "$SUCCESSOR_PID" "$identity" "$SUCCESSOR_WATCHER" "$watcher_identity" "$SUCCESSOR_ORIGIN")
   if [ -z "$identity" ] || [ -z "$watcher_identity" ] \
     || ! tmp=$(mktemp "$LEFT_RECORD.tmp.XXXXXX" 2>/dev/null) \
     || ! printf '%s\n' "$record" > "$tmp" 2>/dev/null \
