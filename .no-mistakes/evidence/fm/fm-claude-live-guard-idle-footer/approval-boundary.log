@@ -1,0 +1,31 @@
+viewer attached to fm-lab-idle-boundary-2252923-21393 (pid 2253121)
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE
+-u FM_PROJECTS_OVERRIDE FM_HOME=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M
+4C8JJK1KHES4SVA7117BP53/.live-test-tmp/home claude --permission-mode auto
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4C8JJK1KHES4SVA7117BP53/.live-test-tmp/untrusted HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRID
+E -u FM_PROJECTS_OVERRIDE FM_HOME=/home/denguinho/.no-mistakes/worktrees/159e9a668321/0
+1M4C8JJK1KHES4SVA7117BP53/.live-test-tmp/home claude --permission-mode auto
+
+───────────────────────────────────────────────────────────────────────────────────────
+  Allow external CLAUDE.md file imports?
+
+  This project's CLAUDE.md or .claude/rules imports files outside the current working
+  directory. Never allow this for third-party repositories.
+
+  External imports:
+    /home/denguinho/.no-mistakes/worktrees/…8321/01M4C8JJK1KHES4SVA7117BP53/AGENTS.md
+
+  Important: Only use Claude Code with files you trust. Accessing untrusted files may
+  pose security risks https://code.claude.com/docs/en/security
+
+  ❯ No, disable external imports
+    Yes, allow external imports
+
+  Enter to confirm · Esc to cancel
+Trust prompt native=unknown composer=pending
+PASS: unresolved trust or import approval dialog cannot meet idle-plus-empty readiness

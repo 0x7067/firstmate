@@ -1,0 +1,10 @@
+ready-auto-footer native=idle composer=empty
+ok - current idle empty Claude rejected by the old bypass-footer predicate
+pending-draft native=idle composer=pending
+after-first-submit native=working composer=empty
+landed-1-3 native=working composer=empty
+ok - live Herdr submit confirm: Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3 reports empty and renders the requested reply in isolated session fm-lab-herdr-submit-con-2688527-31593
+landed-1-4 native=working composer=empty
+ok - live Herdr submit confirm: Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3 submits a U+2063 away-supervisor payload whose read-back drops the mark
+exit-popup native=idle composer=pending
+ok - live Herdr submit confirm: Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3 proves and submits a typed /exit behind its command popup

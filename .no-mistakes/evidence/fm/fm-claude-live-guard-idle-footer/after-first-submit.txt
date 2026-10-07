@@ -1,0 +1,25 @@
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4C8JJK1KHES4SVA7117BP53 HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4C8JJK1KHES4SVA7117BP53
+
+▎ Message from Ravn_Muninn:
+▎ git blame says it was you.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2688478_30430 and nothing else.
+
+· Beboppin'…
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents                 Ctrl+Y to paste deleted text
