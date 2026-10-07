@@ -929,7 +929,14 @@ _fm_composer_scan_screen() {  # <plain-screen> <cursor-or-empty> [extract-wrap]
        && ! _fm_composer_row_is_pi_status "$trimmed"; then
       FM_COMPOSER_SCAN_SHELL_ROW=$row
     elif fm_composer_leading_agent_glyph_var glyph "$trimmed"; then
-      FM_COMPOSER_SCAN_BARE_ROW=$row
+      # Claude's selected slash-completion row repeats its prompt glyph just
+      # below the closing composer rule. It is a menu item, not a newer draft.
+      if ! { [ "$FM_COMPOSER_SCAN_PI_GLYPH" = '❯' ] \
+             && [ "$row" -eq "$((FM_COMPOSER_SCAN_PI_CLOSE + 1))" ] \
+             && [[ "$line" =~ ^"  ❯ /"[^[:space:]]+[[:space:]]{2,}[^[:space:]] ]] \
+             && [[ "$(_fm_composer_screen_row "$((row + 1))" "$pane")" == '    /'* ]]; }; then
+        FM_COMPOSER_SCAN_BARE_ROW=$row
+      fi
     fi
     # Cursor safety: a cursor sitting on a structural edge row is never an
     # input row.
