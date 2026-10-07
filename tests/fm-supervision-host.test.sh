@@ -1559,7 +1559,7 @@ exec "$real_ps" "\$@"
 SH
   chmod +x "$home/fakebin/ps"
   turn_end "$home"
-  wait_until 150 grep -q "\ttake-over\tarm=$left_arm\$" "$home/state/.supervision-host.log" \
+  wait_until 150 grep -q $'\ttake-over\tarm='"$left_arm"'$' "$home/state/.supervision-host.log" \
     || fail "parent miss: the next park did not request take-over"
   wait_until 100 test -s "$home/ps-intercepts" \
     || fail "parent miss: the process-table miss was not exercised"
@@ -1599,7 +1599,7 @@ test_a_park_stopped_mid_take_over_leaves_the_take_over_to_the_next_park() {
   holder=$!
   wait_until 100 test -e "$home/marker-lock-held" || fail "fixture: could not hold the recovery-marker lock"
   turn_end "$home"
-  wait_until 150 grep -q "	take-over	arm=$LEFT_ARM\$" "$home/state/.supervision-host.log" \
+  wait_until 150 grep -q $'\ttake-over\tarm='"$LEFT_ARM"'$' "$home/state/.supervision-host.log" \
     || fail "interrupted takeover: the park did not start a take-over of $LEFT_ARM: $(cat "$home/state/.supervision-host.log")"
   host=$(awk -F '\t' '$1 == "host" { print $2; exit }' "$home/state/.supervision-host")
   sleep 1
