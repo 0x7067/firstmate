@@ -1264,6 +1264,38 @@ FM_HERDR_SUBMIT_CONFIRM_LIVE=1 tests/fm-herdr-submit-confirm-live-e2e.test.sh
 ok - live Herdr submit confirm: Claude Code (2.1.283 (Claude Code)) on herdr 0.9.0 proves and submits a typed /exit behind its command popup
 ```
 
+Measured 2026-10-07 against Herdr 0.9.3 and Claude Code 2.1.293 in an isolated `fm-lab-` session.
+Claude Code 2.1.293 marks the popup's selected entry with the composer's own glyph, directly below the composer's closing rule (`  ❯ /exit      Exit the CLI`).
+That row read as a lower live composer, so the cursorless selection took it and every popup row joined the payload proof (`/exit Exit the CLI /context ...`).
+The proof refused the typed `/exit`, cleared it, and reported `send-failed`, so `bin/fm-control.sh` exit and relaunch refused every Claude worker on Herdr.
+The shared classifier now recognizes the popup as one command table under an envelope holding a slash draft: one shared command column, one shared description column, exactly one glyph-marked entry, and continuation rows starting at the description column.
+A recognized popup is furniture of the envelope above it, so the proof reads only the composer's own row; a partial draft such as `/exi` under a popup that selects `/exit` is still refused.
+Any row that breaks the table keeps the old reading, and the verdict stays `pending` either way because the envelope holds a non-empty slash draft.
+The portable fixture is a real styled capture, `tests/captures/claude-code-v2.1.293/slash-popup-exit.ansi`.
+
+```sh
+tests/fm-composer-lib.test.sh
+tests/fm-backend-herdr.test.sh
+```
+
+```text
+ok - fm_composer_extract_selected_content: Claude 2.1.293's glyph-marked slash popup is not composer content
+ok - fm_composer_extract_selected_content: an unrecognized popup shape still refuses
+ok - fm_backend_herdr_send_text_submit: a typed /exit above Claude 2.1.293's glyph-marked command popup is proven and submitted
+ok - fm_backend_herdr_send_text_submit: a partial command under Claude 2.1.293's popup is refused and cleared, not borrowed from the popup's selection
+```
+
+The live guard's third scenario failed before the classifier change and passed after it:
+
+```sh
+FM_HERDR_SUBMIT_CONFIRM_LIVE=1 tests/fm-herdr-submit-confirm-live-e2e.test.sh
+```
+
+```text
+not ok - Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3: a typed /exit behind its command popup was judged unsent and cleared instead of submitted
+ok - live Herdr submit confirm: Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3 proves and submits a typed /exit behind its command popup
+```
+
 ### Claude background-task exit picker
 
 Measured 2026-10-05 against Claude Code 2.1.289 in an isolated tmux session.
