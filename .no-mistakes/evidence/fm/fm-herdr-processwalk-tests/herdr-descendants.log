@@ -1,0 +1,10 @@
+CASE=plain
+PROCESS-INFO={"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2254842,"foreground_processes":[{"argv":["/bin/sh"],"cmdline":"/bin/sh","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4C8JQ5QN37VN6CEZWSKW6G5","name":"sh","pid":2254842}],"pane_id":"w1:p2","shell_pid":2254842},"type":"pane_process_info"}}
+2255323 2254842 pi              /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4C8JQ5QN37VN6CEZWSKW6G5/.validation/plain/pi 300
+background descendant process=agent registered state=alive
+childless control process=shell registered state=dead
+CASE=Application Support/Some Dir
+PROCESS-INFO={"id":"cli:pane:process_info","result":{"process_info":{"foreground_process_group_id":2254842,"foreground_processes":[{"argv":["/bin/sh"],"cmdline":"/bin/sh","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4C8JQ5QN37VN6CEZWSKW6G5","name":"sh","pid":2254842}],"pane_id":"w1:p2","shell_pid":2254842},"type":"pane_process_info"}}
+2258042 2254842 pi              /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4C8JQ5QN37VN6CEZWSKW6G5/.validation/Application Support/Some Dir/pi 300
+background descendant process=agent registered state=alive
+childless control process=shell registered state=dead

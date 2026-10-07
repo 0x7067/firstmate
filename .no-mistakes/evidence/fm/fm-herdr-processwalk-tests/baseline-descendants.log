@@ -1,0 +1,8 @@
+Security violation: Requested utility `pi` does not match executable name:
+  /usr/lib/cargo/bin/coreutils/sleep
+not ok - a registered agent with a live agent-named descendant must stay live/alive, got 'unknown unreadable refused'
+plain descendant baseline exit=1
+Security violation: Requested utility `pi` does not match executable name:
+  /usr/lib/cargo/bin/coreutils/sleep
+not ok - an agent-named descendant under a spaced install path must stay live/alive, got 'unknown unreadable refused'
+spaced descendant baseline exit=1
