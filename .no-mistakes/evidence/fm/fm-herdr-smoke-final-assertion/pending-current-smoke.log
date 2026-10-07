@@ -1,0 +1,55 @@
+ok - real herdr: exit on a pane with no registered agent is idempotent success
+ok - real herdr 0.9.3: a gone session reads recoverable while a live pane and a malformed target do not
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.qmu1PB/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.qmu1PB/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a drifted agent-free shell returns to its worktree and reuses the same endpoint
+ok - real herdr: interrupt refuses when herdr's own agent registry reports no agent
+ok - real herdr: interrupt delivers the harness's key and proves the agent survived it
+ok - real herdr: no control verb removed the endpoint or the task's local copy
+ok - real herdr 0.9.3: a registration Herdr keeps after its agent exits reads stale-agent and recovers as dead
+ok - real herdr: exit on a pane with a stale registration is idempotent success
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.qmu1PB/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.qmu1PB/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a stale registration no longer blocks relaunch, and the endpoint and local copy survive
+Observed exit refusal: error: task hsmoke's composer visibly holds pending text; refusing to type the /exit exit command because it would concatenate onto that text. Clear or submit the pending text, then retry 'exit'
+ok - real herdr: exit refuses an unproven or pending composer without typing an exit command
+gpgtar                              ppmtopcx                            zeisstopnm
+gpgv                                ppmtopgm                            zenity
+gpic@                               ppmtopi1                            zerofree
+gprof@                              ppmtopict                           zfgrep
+gprofng                             ppmtopj                             zforce
+gprofng-archive                     ppmtopjxl                           zfsdist-bpfcc
+gprofng-collect-app                 ppmtoppm                            zfsslower-bpfcc
+gprofng-display-html                ppmtopuzz                           zgrep
+gprofng-display-src                 ppmtorgb3                           zic
+gprofng-display-text                ppmtosixel                          zip
+gprofng-gmon                        ppmtospu                            zipcloak
+gpu-manager                         ppmtoterm                           zipdetails
+gputemps                            ppmtotga@                           zipgrep
+gputop                              ppmtouil@                           zipinfo
+grdctl                              ppmtowinicon                        zipnote
+grep                                ppmtoxpm                            zipsplit
+gresource                           ppmtoyuv                            zless
+groff                               ppmtoyuvsplit                       zmore
+grog                                ppmtv                               znew
+grok@                               ppmwheel                            zoxide
+grops                               pr@                                 zramctl
+grotty                              preconv                             zstd
+groupadd                            prime-agent@                        zstdcat@
+groupdel                            prime-offload                       zstdgrep
+groupmod                            prime-select                        zstdless
+groups@                             prime-supported                     zstdmt@
+growpart                            prime-switch                        zutty
+grpck                               print@                              {
+grpconv                             printafm                            }
+❯ -- '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.qm
+u1PB/wt'~
+bash: --: command not found
+❯ export GOTMPDIR=/tmp/fm-hsmoke/gotmp
+❯ export COMPACT_ADVISER_DISABLE=1
+❯ export FM_TASK_ID=hsmoke
+❯ . '/tmp/fm-hsmoke+e7d324e2be29b4573eb86699edb9b09d2d483bb1fbf159604a2fbd406b88a62e/launch.s1791417039.1049432.29356.sh
+'
+❯ /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.qmu1PB
+/agentbin/claude 900
+not ok - deliberate late failure to verify cleanup

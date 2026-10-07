@@ -1,0 +1,14 @@
+ok - real herdr: exit on a pane with no registered agent is idempotent success
+ok - real herdr 0.9.3: a gone session reads recoverable while a live pane and a malformed target do not
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+wt hsmoke
+❯ export PATH=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-
+herdr.3urYtK/fakebin:$PATH
+cd -- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.3u
+rYtK/proj
+
+-- MULTILINE -- (RET or C-m: insert a newline, C-j: run)
+not ok - the real Herdr pane did not drift out of its recorded worktree

@@ -1,0 +1,56 @@
+ok - real herdr: exit on a pane with no registered agent is idempotent success
+ok - real herdr 0.9.3: a gone session reads recoverable while a live pane and a malformed target do not
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a drifted agent-free shell returns to its worktree and reuses the same endpoint
+ok - real herdr: interrupt refuses when herdr's own agent registry reports no agent
+bash-5.3$ export PATH=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-
+control-herdr.GdUeDa/fakebin:$PATH
+bash-5.3$ cd -- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-contro
+l-herdr.GdUeDa/proj
+bash-5.3$ cd -- '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-contr
+ol-herdr.GdUeDa/wt'
+bash-5.3$ cd -- '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-contr
+ol-herdr.GdUeDa/wt'
+bash-5.3$ export GOTMPDIR=/tmp/fm-hsmoke/gotmp
+bash-5.3$ export COMPACT_ADVISER_DISABLE=1
+bash-5.3$ export FM_TASK_ID=hsmoke
+bash-5.3$ . '/tmp/fm-hsmoke+d804534bef7d222afbdb8d77025447e69f82de40e84d8cf75f1fe02ba04c2ffe/launch.s1791416931.931909.1
+7151.sh'
+bash-5.3$ /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herd
+r.GdUeDa/agentbin/claude 900
+Security violation: Requested utility `claude` does not match executable name:
+  /usr/lib/cargo/bin/coreutils/sleep
+bash-5.3$
+not ok - a real agent-named foreground process reads 'shell' rather than 'agent' through pane process-info [herdr 0.9.3]
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-commit': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-merge': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-push': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-applypatch': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-rebase': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/commit-msg': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/sendemail-validate': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/prepare-commit-msg': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-auto-gc': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-commit': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-applypatch': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-commit': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-rewrite': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-merge': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/post-checkout': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-merge-commit': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/applypatch-msg': Permission denied
+rm: cannot remove '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.GdUeDa/home/state/hsmoke.git-hooks/pre-push': Permission denied
+fm-herdr-lab: missing fleet-state tripwire for 'fm-lab-control-smoke-931100'; refusing destructive calls

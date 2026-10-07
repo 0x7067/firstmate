@@ -1,0 +1,7 @@
+ok - real herdr: exit on a pane with no registered agent is idempotent success
+ok - real herdr 0.9.3: a gone session reads recoverable while a live pane and a malformed target do not
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.kiy550/home/data/hsmoke/launch-brief.md records no ship branch; defaulting to legacy branch fm/hsmoke
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-herdr-tmp/fm-control-herdr.kiy550/home/data/hsmoke/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+ok - real herdr: a drifted agent-free shell returns to its worktree and reuses the same endpoint
+ok - real herdr: interrupt refuses when herdr's own agent registry reports no agent
+not ok - a real agent-named foreground process reads 'shell' rather than 'agent' through pane process-info [herdr 0.9.3]

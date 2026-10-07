@@ -1,0 +1,5 @@
+fm-herdr-lab: session 'fm-lab-prep-refusal-1080284-9108' already exists; refusing to adopt or overwrite it
+not ok - could not prepare isolated Herdr lab session
+Preparation refusal preserved exit status: 1
+true
+Pre-existing owned lab survived refused preparation; outer owner will tear it down.

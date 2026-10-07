@@ -1,0 +1,6 @@
+gnu-current-smoke.log: scratch remaining=False; permission errors=False; duplicate-cleanup tripwire error=False
+gnu-failure-cleanup.log: scratch remaining=False; permission errors=False; duplicate-cleanup tripwire error=False
+gnu-baseline-smoke.log: scratch remaining=True; permission errors=True; duplicate-cleanup tripwire error=False
+pending-baseline-smoke.log: scratch remaining=True; permission errors=True; duplicate-cleanup tripwire error=True
+pending-current-smoke.log: scratch remaining=False; permission errors=False; duplicate-cleanup tripwire error=False
+All owned smoke and preparation-refusal lab sessions absent after teardown; default session remains running.

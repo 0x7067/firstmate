@@ -1,0 +1,11 @@
+{
+  "labs": [],
+  "default": [
+    {
+      "name": "default",
+      "default": true,
+      "running": true,
+      "socket_path": "/home/denguinho/.config/herdr/herdr.sock"
+    }
+  ]
+}
