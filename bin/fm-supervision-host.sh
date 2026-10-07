@@ -138,9 +138,9 @@
 # engine turn. It also reads the record of a successor a pass-through left for
 # main: while that arm still runs under its recorded identity, the first cycle
 # without --restart requests a take-over rather than an ordinary attach.
-# Activation removes the
-# record only once that identity is no longer alive, so a later host retries a
-# take-over that left it running.
+# Activation removes a record whose arm identity is no longer alive; the
+# arm's --take-over header owns bounded settlement of a live record and retries
+# after an interrupted attempt.
 #
 # STATE (all under state/, owned here): .supervision-host (this host's pid and
 # the processes it runs), .supervision-host-engine (the engine conversation:
@@ -149,8 +149,10 @@
 # report scope and the reports it recorded), .supervision-host-prompt and
 # .supervision-host-wake (the prompt and wake text of the current turn),
 # .supervision-host-mirror (the dialog-mirror feed while an attended wake is
-# rendered), .supervision-host-left (the pid and identity of the successor arm a
-# pass-through left running for main, until that arm is gone),
+# rendered), .supervision-host-left (one tab-separated line: successor arm pid,
+# arm identity, watcher pid, locked watcher identity, and status-line origin
+# started or attached; detach_successor verifies persistence before relinquishing
+# the cycle for main),
 # .supervision-host-health (the latch: errors, cooldown, and probe time, keyed
 # to the main session, engine, and model), and .supervision-host.log (a bounded
 # ledger of where every close went, with each engine turn's usage and
@@ -677,7 +679,7 @@ start_successor() {  # <predecessor-arm-pid>
 
 # Record the successor for the next host to take over, then drop it from this
 # host's cleanup without stopping it. A successor whose record does not read
-# back as a regular file holding exactly its pid and identity stays tracked,
+# back as a regular file holding exactly the STATE record above stays tracked,
 # so the cleanup stops it and main's next turn end arms a fresh cycle; that
 # returns 1. The shell signals background jobs when it exits, and this arm's
 # handler would then stop the watcher, so disown it first. The capture file

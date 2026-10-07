@@ -71,17 +71,21 @@
 # --take-over <arm-pid>: own the cycle that arm <arm-pid> owns, for an owner
 # that left a successor cycle running through main's turn and now parks again
 # (bin/fm-supervision-host.sh). Only when this home's healthy watcher is that
-# arm's own child or matches the host's recorded arm and watcher identities,
-# it stops that watcher by its locked identity: a cycle that
+# arm's own child, or matches the host's recorded live arm identity and locked
+# watcher identity with origin=started, it stops that watcher by its locked
+# identity: a cycle that
 # delivered a reason before the stop landed reports it exactly as an attached
 # arm would, and otherwise this arm owns a fresh cycle as a plain arm does.
 # Recovery restoration follows docs/watcher-continuity.md "Generation reuse";
 # an unconfirmed stop leaves downtime for the fresh cycle's recovery check.
-# Any other watcher, or one that outlives the stop,
-# is attached to exactly as a plain arm attaches.
-# The supervision host records the arm and watcher identities before leaving
-# the cycle for main, so a later park can prove ownership even when the OS
-# briefly reports the watcher's parent as the orphan reaper.
+# Ownership and stop attempts are bounded to five tries, spaced 0.2s apart.
+# If none completes, the arm clears the unchanged left-cycle record for the
+# requested arm, then follows ordinary arming (attaching if a watcher remains).
+# An interrupted attempt leaves the record available for the next park.
+# Recorded origin=attached or missing origin never proves ownership: an attached
+# arm cannot confirm its watcher's TERM through a child-exit ledger row.
+# The recorded-identity fallback covers a transient parent lookup miss; see
+# tests/fm-supervision-host.test.sh and tests/fm-watch-arm.test.sh for regressions.
 #
 # --stop: the same home-scoped stop without re-arming, for an owner that ends
 # its own supervision cycle on purpose (the supervision host's park boundary,
