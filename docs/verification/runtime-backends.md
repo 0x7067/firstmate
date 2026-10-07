@@ -1239,7 +1239,7 @@ The pre-Enter payload proof then judged the typed command unsent, pressed Ctrl+U
 
 The fix captures the FULL VISIBLE VIEWPORT for every herdr adapter composer read (`pane read --source visible [--format ansi]`, `fm_backend_herdr_composer_state` and `fm_backend_herdr_composer_content`): the composer is by definition inside the viewport, and the viewport is the one bound that always contains it.
 The shared inbox pending-line confirmation read (`bin/fm-task-inbox-lib.sh`) stays a bounded tail on every backend, herdr included; its payloads are task lines, not slash commands, so the popup shape does not arise there.
-The popup rows sit below the composer's closing rule, which is a structural edge row, so the shared classifier still selects only the composer and the menu rows never read as typed text.
+In this Claude Code 2.1.283 capture, the popup rows sit below the composer's closing rule without a same-glyph selected entry, so the shared classifier selects only the composer and the menu rows do not read as typed text.
 Verified live in the lab: with the popup up the state read answers `pending` (previously `empty`) and the payload proof returns `/exit` (previously empty), the submit presses Enter, and the Claude process exits, leaving the shell prompt.
 Growing the window only adds rows above the composer, so the bottom-most-shape selection, the footer zone, and every previously passing verdict are unchanged.
 
@@ -1268,9 +1268,9 @@ Measured 2026-10-07 against Herdr 0.9.3 and Claude Code 2.1.293 in an isolated `
 Claude Code 2.1.293 marks the popup's selected entry with the composer's own glyph, directly below the composer's closing rule (`  ❯ /exit      Exit the CLI`).
 That row read as a lower live composer, so the cursorless selection took it and every popup row joined the payload proof (`/exit Exit the CLI /context ...`).
 The proof refused the typed `/exit`, cleared it, and reported `send-failed`, so `bin/fm-control.sh` exit and relaunch refused every Claude worker on Herdr.
-The shared classifier now recognizes the popup as one command table under an envelope holding a slash draft: one shared command column, one shared description column, exactly one glyph-marked entry, and continuation rows starting at the description column.
-A recognized popup is furniture of the envelope above it, so the proof reads only the composer's own row; a partial draft such as `/exi` under a popup that selects `/exit` is still refused.
-Any row that breaks the table keeps the old reading, and the verdict stays `pending` either way because the envelope holds a non-empty slash draft.
+The popup recognition contract is owned by `_fm_composer_slash_popup_last` in [`bin/fm-composer-lib.sh`](../../bin/fm-composer-lib.sh).
+The portable regressions below extract `/exit` from the recorded composer and `/exi` from a mutated partial draft even when the popup selects `/exit`; the Herdr submit proof refuses and clears the partial draft.
+Misaligned continuation rows, two selected entries, trailing activity, and a non-slash draft retain popup text in the extracted content, so they cannot satisfy the strict `/exit` payload proof.
 The portable fixture is a real styled capture, `tests/captures/claude-code-v2.1.293/slash-popup-exit.ansi`.
 
 ```sh
