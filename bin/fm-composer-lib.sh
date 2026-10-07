@@ -1086,7 +1086,7 @@ _fm_composer_titled_bottom_ok() {  # <family> <bottom-inner> <top-spaces>
   esac
   title=${inner//"$dash"/}
   fm_composer_normalize_trim_var title
-  if [[ "$title" =~ ^[0-9]+([.][0-9]+)?s[[:space:]]·[[:space:]][A-Za-z0-9._/-]+[[:space:]]·[[:space:]](low|medium|high|xhigh)$ ]]; then
+  if [ "$family" = rounded ] && [[ "$title" =~ ^[0-9]+([.][0-9]+)?s[[:space:]]·[[:space:]][A-Za-z0-9._/-]+[[:space:]]·[[:space:]](low|medium|high|xhigh|max)$ ]]; then
     pi_title=1
   fi
   spaces=${inner//"$dash"/ }
@@ -1128,14 +1128,8 @@ _fm_composer_titled_bottom_ok() {  # <family> <bottom-inner> <top-spaces>
 # glyph. Accept only the explicit `─ ⎇ <branch> ─...` shape, and return a
 # column-preserving blank row for the existing content-geometry proof.
 _fm_composer_titled_top_spaces() {  # <family> <top-inner> -> spaces
-  local family=$1 inner=$2 dash rest branch spaces
-  case "$family" in
-    rounded|light) dash='─' ;;
-    double) dash='═' ;;
-    heavy) dash='━' ;;
-    ascii) dash='-' ;;
-    *) return 1 ;;
-  esac
+  local family=$1 inner=$2 dash='─' rest branch spaces
+  [ "$family" = rounded ] || return 1
   case "$inner" in
     "$dash ⎇ "*) rest=${inner#"$dash ⎇ "} ;;
     *) return 1 ;;
