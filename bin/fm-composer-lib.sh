@@ -960,7 +960,14 @@ _fm_composer_scan_screen() {  # <plain-screen> <cursor-or-empty> [extract-wrap]
         ascii) top_inner=${top_inner#+}; top_inner=${top_inner%+}; top_spaces=${top_inner//-/ } ;;
       esac
       case "$top_spaces" in
-        *[![:space:]]*) geometry_check=0; geometry_ambiguous=1 ;;
+        *[![:space:]]*)
+          if [ "$kind" = top ] && top_spaces=$(_fm_composer_titled_top_spaces "$family" "$top_inner"); then
+            :
+          else
+            geometry_check=0
+            geometry_ambiguous=1
+          fi
+          ;;
       esac
     elif [ "$kind" = bottom ] || { [ "$kind" = ascii ] && [ "$top" -ge 0 ]; }; then
       if [ "$top" -ge 0 ] && [ "$family" = "$current_family" ] \
@@ -1064,7 +1071,7 @@ EOF
 # inner (corners already stripped) still starts and ends with the family's own
 # rule glyph, so the title is embedded IN the rule rather than replacing it.
 _fm_composer_titled_bottom_ok() {  # <family> <bottom-inner> <top-spaces>
-  local family=$1 inner=$2 expected=$3 dash spaces title effort model
+  local family=$1 inner=$2 expected=$3 dash spaces title effort model pi_title=0
   fm_composer_normalize_trim_var inner
   case "$family" in
     rounded|light) dash='─' ;;
@@ -1077,8 +1084,16 @@ _fm_composer_titled_bottom_ok() {  # <family> <bottom-inner> <top-spaces>
     "$dash"*"$dash") ;;
     *) return 1 ;;
   esac
+  title=${inner//"$dash"/}
+  fm_composer_normalize_trim_var title
+  if [[ "$title" =~ ^[0-9]+([.][0-9]+)?s[[:space:]]·[[:space:]][A-Za-z0-9._/-]+[[:space:]]·[[:space:]](low|medium|high|xhigh)$ ]]; then
+    pi_title=1
+  fi
   spaces=${inner//"$dash"/ }
   spaces=$(printf '%s' "$spaces" | LC_ALL=C sed 's/[!-~]/ /g')
+  if [ "$pi_title" = 1 ]; then
+    spaces=${spaces//·/ }
+  fi
   case "$spaces" in
     *[![:space:]]*) return 1 ;;
   esac
@@ -1107,6 +1122,40 @@ _fm_composer_titled_bottom_ok() {  # <family> <bottom-inner> <top-spaces>
   [ -n "$model" ] || return 1
   case "$model" in *[!A-Za-z0-9._-]*) return 1 ;; esac
   return 0
+}
+
+# A Pi 1.0.4 top border includes its current git branch after the first rule
+# glyph. Accept only the explicit `─ ⎇ <branch> ─...` shape, and return a
+# column-preserving blank row for the existing content-geometry proof.
+_fm_composer_titled_top_spaces() {  # <family> <top-inner> -> spaces
+  local family=$1 inner=$2 dash rest branch spaces
+  case "$family" in
+    rounded|light) dash='─' ;;
+    double) dash='═' ;;
+    heavy) dash='━' ;;
+    ascii) dash='-' ;;
+    *) return 1 ;;
+  esac
+  case "$inner" in
+    "$dash ⎇ "*) rest=${inner#"$dash ⎇ "} ;;
+    *) return 1 ;;
+  esac
+  branch=${rest%%" $dash"*}
+  [ -n "$branch" ] || return 1
+  case "$branch" in
+    detached) ;;
+    [A-Za-z0-9]*) ;;
+    *) return 1 ;;
+  esac
+  case "$branch" in *[!A-Za-z0-9._/-]*) return 1 ;; esac
+  rest=${rest#"$branch $dash"}
+  [ -n "$rest" ] || return 1
+  [ -z "${rest//"$dash"/}" ] || return 1
+  spaces=${inner//"$dash"/ }
+  spaces=${spaces//⎇/ }
+  spaces=$(printf '%s' "$spaces" | LC_ALL=C sed 's/[!-~]/ /g')
+  case "$spaces" in *[![:space:]]*) return 1 ;; esac
+  printf '%s' "$spaces"
 }
 
 # fm_composer_row_has_edge: 0 when the trimmed row starts or ends with a
