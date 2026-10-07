@@ -1123,6 +1123,8 @@ test_take_over_attaches_to_a_cycle_the_named_arm_does_not_own() {
   FM_HOME="$dir" start_seed_watcher "$state" "$fakebin" "$dir/watch.out"
   sleep 60 &
   other=$!
+  printf '%s\t%s\t%s\t%s\n' "$other" "$(fm_test_pid_identity "$other")" 99999 missing \
+    > "$state/.supervision-host-left"
   PATH="$fakebin:$PATH" FM_HOME="$dir" FM_STATE_OVERRIDE="$state" "$WATCH_ARM" --take-over 2>/dev/null
   status=$?
   expect_code 2 "$status" "--take-over without an arm pid must be refused"
@@ -1131,6 +1133,8 @@ test_take_over_attaches_to_a_cycle_the_named_arm_does_not_own() {
   ARM_PID=$!
   wait_for_file_text "$armout" "watcher: attached pid=$SEED_PID" \
     || fail "--take-over of a cycle the named arm does not own did not attach: $(cat "$armout")"
+  [ ! -e "$state/.supervision-host-left" ] \
+    || fail "--take-over retried an unprovable left-cycle record without settling it"
   sleep 1
   is_live_non_zombie "$SEED_PID" || fail "--take-over stopped a watcher the named arm does not own"
   [ "$(cat "$state/.watch.lock/pid" 2>/dev/null)" = "$SEED_PID" ] || fail "--take-over moved a lock it does not own"

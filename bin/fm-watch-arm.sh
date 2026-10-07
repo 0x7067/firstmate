@@ -71,13 +71,17 @@
 # --take-over <arm-pid>: own the cycle that arm <arm-pid> owns, for an owner
 # that left a successor cycle running through main's turn and now parks again
 # (bin/fm-supervision-host.sh). Only when this home's healthy watcher is that
-# arm's own child, it stops that watcher by its locked identity: a cycle that
+# arm's own child or matches the host's recorded arm and watcher identities,
+# it stops that watcher by its locked identity: a cycle that
 # delivered a reason before the stop landed reports it exactly as an attached
 # arm would, and otherwise this arm owns a fresh cycle as a plain arm does.
 # Recovery restoration follows docs/watcher-continuity.md "Generation reuse";
 # an unconfirmed stop leaves downtime for the fresh cycle's recovery check.
 # Any other watcher, or one that outlives the stop,
 # is attached to exactly as a plain arm attaches.
+# The supervision host records the arm and watcher identities before leaving
+# the cycle for main, so a later park can prove ownership even when the OS
+# briefly reports the watcher's parent as the orphan reaper.
 #
 # --stop: the same home-scoped stop without re-arming, for an owner that ends
 # its own supervision cycle on purpose (the supervision host's park boundary,
@@ -596,15 +600,48 @@ take_over_cycle() {  # <watcher-pid> <identity>
   return 0
 }
 
+take_over_owner_matches() {  # <watcher-pid> <watcher-identity>
+  local record_arm record_identity record_watcher record_watcher_identity
+  if [ "$(ps -o ppid= -p "$1" 2>/dev/null | tr -d ' ')" = "$take_over_arm_pid" ]; then
+    return 0
+  fi
+  [ -f "$STATE/.supervision-host-left" ] \
+    && [ ! -L "$STATE/.supervision-host-left" ] || return 1
+  IFS=$'\t' read -r record_arm record_identity record_watcher record_watcher_identity \
+    < "$STATE/.supervision-host-left" || return 1
+  [ "$record_arm" = "$take_over_arm_pid" ] \
+    && [ -n "$record_identity" ] \
+    && [ "$(fm_pid_identity "$record_arm" 2>/dev/null || true)" = "$record_identity" ] \
+    && [ "$record_watcher" = "$1" ] \
+    && [ "$record_watcher_identity" = "$2" ]
+}
+
 TAKEN_OVER=0
 if [ "$mode" = take-over ]; then
   mode=arm
-  if healthy_watcher \
-    && [ "$(ps -o ppid= -p "$HEALTHY_PID" 2>/dev/null | tr -d ' ')" = "$take_over_arm_pid" ]; then
-    take_over_cycle "$HEALTHY_PID" "$HEALTHY_IDENTITY"
-    case $? in
-      0) TAKEN_OVER=1 ;;
-      3) exit 0 ;;
+  take_over_attempt=0
+  while [ "$take_over_attempt" -lt 5 ]; do
+    if healthy_watcher && take_over_owner_matches "$HEALTHY_PID" "$HEALTHY_IDENTITY"; then
+      take_over_cycle "$HEALTHY_PID" "$HEALTHY_IDENTITY"
+      case $? in
+        0) TAKEN_OVER=1; break ;;
+        3) exit 0 ;;
+      esac
+    fi
+    take_over_attempt=$((take_over_attempt + 1))
+    [ "$take_over_attempt" -lt 5 ] || break
+    sleep 0.2
+  done
+  if [ "$TAKEN_OVER" -eq 0 ]; then
+    # A host may retry an interrupted take-over, but an ownership mismatch is
+    # settled after this bound. The next park must not repeat this same stale
+    # hand-over request after the attached cycle closes without a wake.
+    left_record=$(cat "$STATE/.supervision-host-left" 2>/dev/null || true)
+    case "$left_record" in
+      "$take_over_arm_pid"$'\t'*)
+        [ "$(cat "$STATE/.supervision-host-left" 2>/dev/null || true)" != "$left_record" ] \
+          || rm -f "$STATE/.supervision-host-left" 2>/dev/null || true
+        ;;
     esac
   fi
 fi

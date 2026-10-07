@@ -382,7 +382,7 @@ activate() {
   # once it does not.
   if [ -f "$LEFT_RECORD" ]; then
     pid='' identity=''
-    IFS="$(printf '\t')" read -r pid identity < "$LEFT_RECORD" || true
+    IFS="$(printf '\t')" read -r pid identity _ < "$LEFT_RECORD" || true
     if fm_pid_alive "$pid" && [ -n "$identity" ] && [ "$(identity_of "$pid")" = "$identity" ]; then
       LEFT_ARM=$pid
     else
@@ -680,14 +680,20 @@ start_successor() {  # <predecessor-arm-pid>
 # stays tracked so the EXIT trap unlinks it; the arm already holds that
 # descriptor and keeps waiting on the watcher.
 detach_successor() {
-  local identity tmp=
+  local identity watcher_identity tmp='' record
   [ -n "${SUCCESSOR_PID:-}" ] || return 0
   identity=$(identity_of "$SUCCESSOR_PID")
-  if [ -z "$identity" ] || ! tmp=$(mktemp "$LEFT_RECORD.tmp.XXXXXX" 2>/dev/null) \
-    || ! printf '%s\t%s\n' "$SUCCESSOR_PID" "$identity" > "$tmp" 2>/dev/null \
+  watcher_identity=
+  if fm_watcher_lock_matches_pid "$STATE" "$SCRIPT_DIR/fm-watch.sh" "$SUCCESSOR_WATCHER" "$FM_HOME"; then
+    watcher_identity=$FM_WATCHER_MATCHED_IDENTITY
+  fi
+  record=$(printf '%s\t%s\t%s\t%s' "$SUCCESSOR_PID" "$identity" "$SUCCESSOR_WATCHER" "$watcher_identity")
+  if [ -z "$identity" ] || [ -z "$watcher_identity" ] \
+    || ! tmp=$(mktemp "$LEFT_RECORD.tmp.XXXXXX" 2>/dev/null) \
+    || ! printf '%s\n' "$record" > "$tmp" 2>/dev/null \
     || ! mv -f "$tmp" "$LEFT_RECORD" 2>/dev/null \
     || [ -L "$LEFT_RECORD" ] || [ ! -f "$LEFT_RECORD" ] \
-    || [ "$(cat "$LEFT_RECORD" 2>/dev/null)" != "$SUCCESSOR_PID"$'\t'"$identity" ]; then
+    || [ "$(cat "$LEFT_RECORD" 2>/dev/null)" != "$record" ]; then
     [ -z "$tmp" ] || rm -f "$tmp" "$LEFT_RECORD/${tmp##*/}" 2>/dev/null || true
     log_line "pass-through	successor-unrecorded	$(printf '%s\n' "$REASON" | head -n 1)"
     return 1
