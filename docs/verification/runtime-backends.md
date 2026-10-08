@@ -1245,8 +1245,7 @@ The pre-Enter payload proof then judged the typed command unsent, pressed Ctrl+U
 
 The fix captures the FULL VISIBLE VIEWPORT for every herdr adapter composer read (`pane read --source visible [--format ansi]`, `fm_backend_herdr_composer_state` and `fm_backend_herdr_composer_content`): the composer is by definition inside the viewport, and the viewport is the one bound that always contains it.
 The shared inbox pending-line confirmation read (`bin/fm-task-inbox-lib.sh`) stays a bounded tail on every backend, herdr included; its payloads are task lines, not slash commands, so the popup shape does not arise there.
-Claude's selected completion row can repeat the `❯` prompt glyph below the closing composer rule, so the shared classifier excludes it as a newer draft only when it sits immediately below a `❯` composer, has the two-space-indented slash-command-and-description shape, and is followed by a four-space-indented slash-menu row.
-A newer indented slash draft without that menu structure remains selectable, pinned by `test_composer_content_keeps_a_newer_indented_slash_draft` in `tests/fm-backend-herdr.test.sh`.
+The popup rows sit below the composer's closing rule, which is a structural edge row, so the shared classifier still selects only the composer and the menu rows never read as typed text.
 Verified live in the lab: with the popup up the state read answers `pending` (previously `empty`) and the payload proof returns `/exit` (previously empty), the submit presses Enter, and the Claude process exits, leaving the shell prompt.
 Growing the window only adds rows above the composer, so the bottom-most-shape selection, the footer zone, and every previously passing verdict are unchanged.
 
