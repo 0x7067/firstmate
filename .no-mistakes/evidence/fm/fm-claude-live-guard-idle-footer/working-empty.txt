@@ -13,7 +13,11 @@ ble.sh: modified USER=denguinho
 ▎ With great power comes great `sudo`.
   1 more notice hidden
 
+❯ Reply with exactly BOUNDARYPONG12658 and nothing else.
+
+✽ Prestidigitating…
+
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-❯ DO NOT SUBMIT: pending draft boundary
+❯
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+  ⏸ plan mode on (shift+tab to cycle) · esc to interrupt · ← for agents                  Ctrl+Y to paste deleted text

@@ -14,6 +14,7 @@ ble.sh: modified USER=denguinho
   1 more notice hidden
 
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-❯ DO NOT SUBMIT: pending draft boundary
+❯ /newer
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+    /fewer-permission-prompts                      Scan your transcripts for common read-only Bash and MCP tool
+                                                   calls, then add a prioritized allowlist to project .claude/settin…

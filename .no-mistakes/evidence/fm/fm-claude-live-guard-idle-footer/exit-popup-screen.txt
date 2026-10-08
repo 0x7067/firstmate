@@ -1,0 +1,27 @@
+❯ Reply with exactly FMHERDRPONG2349288_3628 and nothing else.
+
+  Thought for 5s (ctrl+o to expand)
+
+● FMHERDRPONG2349288_3628
+
+✻ Cooked for 5s · done 12:26 AM
+
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2349288_24521 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+  
+● FMHERDROPPONG2349288_24521
+
+✻ Cogitated for 6s · done 12:26 AM
+  
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ /exit
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ❯ /exit                                          Exit the CLI                                    
+    /context                                       Visualize current context usage as a colored grid
+    /usage-credits                                 Configure usage credits or request them from your admin when you
+                                                   hit a limit
+    /ravn-core:principle-guard-the-context-window  (ravn-core) Apply when context is filling up: large outputs, long
+                                                   files, repeated reads, fan-out planning. Route bulk to subagents;…
+    /quiet                                         Enter quiet supervision mode when the captain invokes /quiet or
+                                                   asks for quiet mode, quiet-while-present, or fewer routine wake t…

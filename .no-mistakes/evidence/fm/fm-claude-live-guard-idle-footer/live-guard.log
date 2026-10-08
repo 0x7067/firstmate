@@ -1,2 +1,3 @@
-fm-herdr-lab: lab viewer did not become the foreground client of 'fm-lab-herdr-submit-con-2656889-9188' within 5 seconds (last reason: no_foreground_client)
-not ok - viewer start failed
+ok - live Herdr submit confirm: Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3 reports empty and renders the requested reply in isolated session fm-lab-herdr-submit-con-2838684-31130
+ok - live Herdr submit confirm: Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3 submits a U+2063 away-supervisor payload whose read-back drops the mark
+ok - live Herdr submit confirm: Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3 proves and submits a typed /exit behind its command popup

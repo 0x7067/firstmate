@@ -1,0 +1,1605 @@
+
+CALL name herdr-submit-confirm-live
+fm-lab-herdr-submit-con-2287041-826
+
+CALL provision fm-lab-herdr-submit-con-2287041-826
+
+
+CALL run fm-lab-herdr-submit-con-2287041-826 workspace create --cwd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ --label fm-submitlive --no-focus
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d49436f66781","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"fm-submitlive","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane run w1:p1 env\ -u\ FM_ROOT_OVERRIDE\ -u\ FM_STATE_OVERRIDE\ -u\ FM_DATA_OVERRIDE\ -u\ FM_CONFIG_OVERRIDE\ -u\ FM_PROJECTS_OVERRIDE\ FM_HOME=\'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home\'\ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false\ CLAUDE_CODE_SEND_FEEDBACK=0\ claude\ --dangerously-skip-permissions\ --settings\ \'\{\"feedbackDrafts\":\"off\"\}\'
+
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL run fm-lab-herdr-submit-con-2287041-826 pane read w1:p1 --source visible
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDraf
+ts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings '{"feedbackDr
+afts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ I'm gonna make this PR an offer it can't refuse.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+CALL teardown fm-lab-herdr-submit-con-2287041-826
+

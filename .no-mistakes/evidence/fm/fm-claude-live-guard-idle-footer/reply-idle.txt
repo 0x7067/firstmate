@@ -13,7 +13,15 @@ ble.sh: modified USER=denguinho
 ▎ With great power comes great `sudo`.
   1 more notice hidden
 
+❯ Reply with exactly BOUNDARYPONG12658 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● BOUNDARYPONG12658
+
+✻ Cogitated for 3s · done 12:35 AM
+
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-❯ DO NOT SUBMIT: pending draft boundary
+❯
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+  ⏸ plan mode on (shift+tab to cycle) · ← for agents                                               ◐ medium · /effort

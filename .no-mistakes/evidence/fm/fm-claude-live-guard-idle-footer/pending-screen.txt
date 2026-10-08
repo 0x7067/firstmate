@@ -1,19 +1,23 @@
-CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"unusedDisableAllHooks":true}'
 ble.sh: insane environment: $USER is empty.  Please consider checking the
   terminal's settings or setting export USER=$(id -un) in your .bash_profile.
 ble.sh: modified USER=denguinho
 
 01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
-❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"unusedDisableAllHooks":true}'
  ▐▛███▛█   Claude Code v2.1.293
 ▝▜██████▀  Opus 5.5 · Claude Team
  ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
 
 ▎ Message from Ravn_Muninn:
-▎ With great power comes great `sudo`.
+▎ Not great, not terrible.
   1 more notice hidden
 
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-❯ DO NOT SUBMIT: pending draft boundary
+❯ Reply with exactly FMBOUNDARYPONG and nothing else.
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort

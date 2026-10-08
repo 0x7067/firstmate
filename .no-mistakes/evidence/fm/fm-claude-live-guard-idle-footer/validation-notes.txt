@@ -1,0 +1,9 @@
+Claude 2.1.293, Herdr 0.9.3.
+Base guard (2ce57d0): exit 1, expected reproduction of never-rendered-idle-composer timeout with current auto-mode footer.
+Current live guard: exit 0; exact reply, U+2063 operational reply, and actual Claude exit verified.
+Boundary driver: exit 0; auto/manual/accept-edits/plan idle empty composers accepted; typed regular and slash drafts refused; working+empty refused; real folder-trust prompt pending/unknown refused without accepting trust.
+Focused backend selection: exit 0; popup classifier, popup submit, newer indented draft, grey slash-command proof, and U+2063 payload tests.
+Backend test file initial run failed because the host multicall coreutils sleep refuses invocation under the fixture's pi symlink. A standalone nanosleep binary built from local-sleep.c using cc was placed first on PATH. The backend test file then exited 0. No source edits needed.
+Every named Herdr lab was torn down through fm-herdr-lab.sh with successful default-session tripwire verification.
+Visual artifact is a rendered HTML terminal replay and its browser screenshot, not a native Herdr screenshot. Initial screenshots selected about:blank; passing identical explicit session/profile options on each browser command corrected capture.
+All temporary scripts, binaries, homes, browser profiles, fixtures, and lab-helper state removed. No tracked source changes.

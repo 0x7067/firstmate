@@ -1,0 +1,5 @@
+{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}
+{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}
+Idle composer: native=idle composer=empty
+Unsubmitted text: composer=pending ready=false
+During inference: native=working composer=empty ready=false

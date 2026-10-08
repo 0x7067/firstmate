@@ -1,0 +1,24 @@
+claude --permission-mode auto
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+untrusted main
+❯ claude --permission-mode auto
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ Accessing workspace:
+
+ /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.test-live/untrusted
+
+ Quick safety check: Is this a project you created or one you trust? (Like your own code, a well-known open source
+ project, or work from your team). If not, take a moment to review what's in this folder first.
+
+ Claude Code'll be able to read, edit, and execute files here.
+
+ Security guide
+
+ ❯ No, exit
+   Yes, I trust this folder
+
+ Enter to confirm · Esc to cancel

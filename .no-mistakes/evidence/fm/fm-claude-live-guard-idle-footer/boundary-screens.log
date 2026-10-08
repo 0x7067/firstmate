@@ -1,0 +1,434 @@
+
+auto-idle: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ To infinity and beyond the rate limit!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+pending-draft: native=idle composer=pending
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ To infinity and beyond the rate limit!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ DO NOT SUBMIT: pending draft boundary
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+
+auto-idle: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Here's looking at you, kid.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+pending-draft: native=idle composer=pending
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Here's looking at you, kid.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ DO NOT SUBMIT: pending draft boundary
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+
+mode-1: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Here's looking at you, kid.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏸ manual mode on · ? for shortcuts · ← for agents                                      Ctrl+Y to paste deleted text
+
+mode-2: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Here's looking at you, kid.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ accept edits on (shift+tab to cycle) · ← for agents                                 Ctrl+Y to paste deleted text
+
+mode-3: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Here's looking at you, kid.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏸ plan mode on (shift+tab to cycle) · ← for agents                                     Ctrl+Y to paste deleted text
+
+working-empty: native=working composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Here's looking at you, kid.
+  1 more notice hidden
+
+❯ Reply with exactly BOUNDARYPONG25618 and nothing else.
+
+✻ Recursively improving… (running UserPromptSubmit hooks… 1/2 · 0s)
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏸ plan mode on (shift+tab to cycle) · esc to interrupt · ← for agents                  Ctrl+Y to paste deleted text
+
+reply-idle: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Here's looking at you, kid.
+  1 more notice hidden
+
+❯ Reply with exactly BOUNDARYPONG25618 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● BOUNDARYPONG25618
+
+✻ Churned for 4s · done 12:34 AM
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏸ plan mode on (shift+tab to cycle) · ← for agents                                               ◐ medium · /effort
+
+folder-trust: native=unknown composer=pending
+claude --permission-mode auto
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+untrusted main
+❯ claude --permission-mode auto
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ Accessing workspace:
+
+ /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.test-live/untrusted
+
+ Quick safety check: Is this a project you created or one you trust? (Like your own code, a well-known open source
+ project, or work from your team). If not, take a moment to review what's in this folder first.
+
+ Claude Code'll be able to read, edit, and execute files here.
+
+ Security guide
+
+ ❯ No, exit
+   Yes, I trust this folder
+
+ Enter to confirm · Esc to cancel
+
+auto-idle: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ With great power comes great `sudo`.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+pending-draft: native=idle composer=pending
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ With great power comes great `sudo`.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ DO NOT SUBMIT: pending draft boundary
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+
+slash-draft: native=idle composer=pending
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ With great power comes great `sudo`.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ /newer
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    /fewer-permission-prompts                      Scan your transcripts for common read-only Bash and MCP tool
+                                                   calls, then add a prioritized allowlist to project .claude/settin…
+
+mode-1: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ With great power comes great `sudo`.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏸ manual mode on · ? for shortcuts · ← for agents                                      Ctrl+Y to paste deleted text
+
+mode-2: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ With great power comes great `sudo`.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ accept edits on (shift+tab to cycle) · ← for agents                                 Ctrl+Y to paste deleted text
+
+mode-3: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ With great power comes great `sudo`.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏸ plan mode on (shift+tab to cycle) · ← for agents                                     Ctrl+Y to paste deleted text
+
+working-empty: native=working composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ With great power comes great `sudo`.
+  1 more notice hidden
+
+❯ Reply with exactly BOUNDARYPONG12658 and nothing else.
+
+✽ Prestidigitating…
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏸ plan mode on (shift+tab to cycle) · esc to interrupt · ← for agents                  Ctrl+Y to paste deleted text
+
+reply-idle: native=idle composer=empty
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ With great power comes great `sudo`.
+  1 more notice hidden
+
+❯ Reply with exactly BOUNDARYPONG12658 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● BOUNDARYPONG12658
+
+✻ Cogitated for 3s · done 12:35 AM
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏸ plan mode on (shift+tab to cycle) · ← for agents                                               ◐ medium · /effort
+
+folder-trust: native=unknown composer=pending
+claude --permission-mode auto
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+untrusted main
+❯ claude --permission-mode auto
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ Accessing workspace:
+
+ /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.test-live/untrusted
+
+ Quick safety check: Is this a project you created or one you trust? (Like your own code, a well-known open source
+ project, or work from your team). If not, take a moment to review what's in this folder first.
+
+ Claude Code'll be able to read, edit, and execute files here.
+
+ Security guide
+
+ ❯ No, exit
+   Yes, I trust this folder
+
+ Enter to confirm · Esc to cancel

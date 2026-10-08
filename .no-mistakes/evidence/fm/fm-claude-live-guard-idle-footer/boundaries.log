@@ -1,0 +1,7 @@
+PASS: current auto-mode output is idle/empty while the former footer predicate rejects it
+PASS: an idle agent with a typed draft cannot satisfy readiness
+PASS: a slash draft remains pending and its exact text survives composer extraction
+PASS: three permission-mode cycles preserve idle empty readiness
+PASS: a real working turn cannot satisfy readiness even after its composer clears
+PASS: boundary-session /exit submission returned empty
+PASS: the real folder-trust dialog is not an idle empty composer; no trust setting was changed

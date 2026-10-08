@@ -1,0 +1,28 @@
+env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
+'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
+LE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"disableAllHooks":true}'
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+trust-root main
+❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
+E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
+ABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"disableAllHooks":true}'
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ Accessing workspace:
+
+ /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/trust-root
+
+ Quick safety check: Is this a project you created or one you trust? (Like your own code, a well-known open source
+ project, or work from your team). If not, take a moment to review what's in this folder first.
+
+ Claude Code'll be able to read, edit, and execute files here.
+
+ Security guide
+
+ ❯ No, exit
+   Yes, I trust this folder
+
+ Enter to confirm · Esc to cancel

@@ -1,0 +1,2672 @@
+
+COMMAND name herdr-submit-confirm-live
+fm-lab-herdr-submit-con-2838684-31130
+
+exit=0
+
+COMMAND provision fm-lab-herdr-submit-con-2838684-31130
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 workspace create --cwd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ --label fm-submitlive --no-focus
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"fm-submitlive","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane run w1:p1 CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false\ CLAUDE_CODE_SEND_FEEDBACK=0\ claude\ --dangerously-skip-permissions\ --settings\ \'\{\"feedbackDrafts\":\"off\"\}\'
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+
+exit=1
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":0,"state_change_seq":0,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":1,"state_change_seq":0,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Claude Code","terminal_title_stripped":"Claude Code","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":1,"state_change_seq":0,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Claude Code","terminal_title_stripped":"Claude Code","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":1,"state_change_seq":1,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Claude Code","terminal_title_stripped":"Claude Code","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+[0m[1m[38;2;122;162;247m01M4CE93TQQAHQD97QWA2QR4XZ[0m [0m[38;2;187;154;247mHEAD[0m [0m[38;2;225;225;225m?[0m 
+[0m[1m[38;2;187;154;247m❯[0m [0m[38;5;34mCLAUDE_CODE_ENABLE_PROMPT_SUGGESTION[0m[38;2;125;207;255m=[0m[38;2;200;200;200mfalse [0m[38;5;34mCLAUDE_CODE_SEND_FEEDBACK[0m[38;2;125;207;255m=[0m[38;2;200;200;200m0 [0m[38;2;122;162;247mclaude[0m[38;2;200;200;200m [0m[38;5;6m--dangerously-skip-permissions[0m[38;2;200;200;200m [0m[38;5;6m--settin[0m
+[0m[38;5;6mgs[0m[38;2;200;200;200m [0m[1m[38;2;158;206;106m'[0m[38;2;158;206;106m{"feedbackDrafts":"off"}[0m[1m[38;2;158;206;106m'[0m
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":1,"state_change_seq":1,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Claude Code","terminal_title_stripped":"Claude Code","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":1,"state_change_seq":1,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Claude Code","terminal_title_stripped":"Claude Code","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+[0m[1m[38;2;122;162;247m01M4CE93TQQAHQD97QWA2QR4XZ[0m [0m[38;2;187;154;247mHEAD[0m [0m[38;2;225;225;225m?[0m 
+[0m[1m[38;2;187;154;247m❯[0m [0m[38;5;34mCLAUDE_CODE_ENABLE_PROMPT_SUGGESTION[0m[38;2;125;207;255m=[0m[38;2;200;200;200mfalse [0m[38;5;34mCLAUDE_CODE_SEND_FEEDBACK[0m[38;2;125;207;255m=[0m[38;2;200;200;200m0 [0m[38;2;122;162;247mclaude[0m[38;2;200;200;200m [0m[38;5;6m--dangerously-skip-permissions[0m[38;2;200;200;200m [0m[38;5;6m--settin[0m
+[0m[38;5;6mgs[0m[38;2;200;200;200m [0m[1m[38;2;158;206;106m'[0m[38;2;158;206;106m{"feedbackDrafts":"off"}[0m[1m[38;2;158;206;106m'[0m
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane send-text w1:p1 Reply\ with\ exactly\ FMHERDRPONG2838491_29044\ and\ nothing\ else.
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+[0m[1m[38;2;122;162;247m01M4CE93TQQAHQD97QWA2QR4XZ[0m [0m[38;2;187;154;247mHEAD[0m [0m[38;2;225;225;225m?[0m 
+[0m[1m[38;2;187;154;247m❯[0m [0m[38;5;34mCLAUDE_CODE_ENABLE_PROMPT_SUGGESTION[0m[38;2;125;207;255m=[0m[38;2;200;200;200mfalse [0m[38;5;34mCLAUDE_CODE_SEND_FEEDBACK[0m[38;2;125;207;255m=[0m[38;2;200;200;200m0 [0m[38;2;122;162;247mclaude[0m[38;2;200;200;200m [0m[38;5;6m--dangerously-skip-permissions[0m[38;2;200;200;200m [0m[38;5;6m--settin[0m
+[0m[38;5;6mgs[0m[38;2;200;200;200m [0m[1m[38;2;158;206;106m'[0m[38;2;158;206;106m{"feedbackDrafts":"off"}[0m[1m[38;2;158;206;106m'[0m
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)                               Bypass permissions mode was disabled by settings
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":1,"state_change_seq":1,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Claude Code","terminal_title_stripped":"Claude Code","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane send-keys w1:p1 enter
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":1,"state_change_seq":1,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"◐ Claude Code","terminal_title_stripped":"Claude Code","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"working","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":1,"state_change_seq":2,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"◐ Claude Code","terminal_title_stripped":"Claude Code","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+✶ Have you tried turning it off and on again?… (running SessionStart hooks… 3/4 · 0s)
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+                                                                     Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+✶ Have you tried turning it off and on again?… (running SessionStart hooks… 3/4 · 1s)
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+                                                                     Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+* Have you tried turning it off and on again?… (running SessionStart hooks… 3/4 · 2s)
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+                                                                     Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+✶ Have you tried turning it off and on again?… (running SessionStart hooks… 3/4 · 3s)
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+                                                                     Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+* Have you tried turning it off and on again?… (running SessionStart hooks… 3/4 · 4s)
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+                                                                     Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+✻ Have you tried turning it off and on again?…
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents                           ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+· Have you tried turning it off and on again?…
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents                           ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+✽ Sock-hopping… (7s · thinking)
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents                           ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+· Sock-hopping… (running Stop hooks… 4/6 · 8s · ↓ 25 tokens · thought for 2s)
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents                           ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"working","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":2,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"◐ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+[0m[1m[38;2;122;162;247m01M4CE93TQQAHQD97QWA2QR4XZ[0m [0m[38;2;187;154;247mHEAD[0m [0m[38;2;225;225;225m?[0m 
+[0m[1m[38;2;187;154;247m❯[0m [0m[38;5;34mCLAUDE_CODE_ENABLE_PROMPT_SUGGESTION[0m[38;2;125;207;255m=[0m[38;2;200;200;200mfalse [0m[38;5;34mCLAUDE_CODE_SEND_FEEDBACK[0m[38;2;125;207;255m=[0m[38;2;200;200;200m0 [0m[38;2;122;162;247mclaude[0m[38;2;200;200;200m [0m[38;5;6m--dangerously-skip-permissions[0m[38;2;200;200;200m [0m[38;5;6m--settin[0m
+[0m[38;5;6mgs[0m[38;2;200;200;200m [0m[1m[38;2;158;206;106m'[0m[38;2;158;206;106m{"feedbackDrafts":"off"}[0m[1m[38;2;158;206;106m'[0m
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane send-text w1:p1 ⁣FIRSTMATE_OP:\ v1\ away-supervisor:\ Reply\ with\ exactly\ FMHERDROPPONG2838491_9012\ and\ nothing\ else.
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+[0m[1m[38;2;122;162;247m01M4CE93TQQAHQD97QWA2QR4XZ[0m [0m[38;2;187;154;247mHEAD[0m [0m[38;2;225;225;225m?[0m 
+[0m[1m[38;2;187;154;247m❯[0m [0m[38;5;34mCLAUDE_CODE_ENABLE_PROMPT_SUGGESTION[0m[38;2;125;207;255m=[0m[38;2;200;200;200mfalse [0m[38;5;34mCLAUDE_CODE_SEND_FEEDBACK[0m[38;2;125;207;255m=[0m[38;2;200;200;200m0 [0m[38;2;122;162;247mclaude[0m[38;2;200;200;200m [0m[38;5;6m--dangerously-skip-permissions[0m[38;2;200;200;200m [0m[38;5;6m--settin[0m
+[0m[38;5;6mgs[0m[38;2;200;200;200m [0m[1m[38;2;158;206;106m'[0m[38;2;158;206;106m{"feedbackDrafts":"off"}[0m[1m[38;2;158;206;106m'[0m
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane send-keys w1:p1 enter
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle)                 Removed 1 invisible character · review and press Enter to send
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane send-keys w1:p1 enter
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":3,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":3,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"working","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":4,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"◑ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+
+✻ Incubating… (running UserPromptSubmit hooks… 1/2 · 0s)
+  ⎿  Tip: Use /statusline to set up a custom status line that will display beneath the input box
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+                                                       Removed 1 invisible character · review and press Enter to send
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+
+✢ Incubating… (1s · thinking)
+  ⎿  Tip: Use /statusline to set up a custom status line that will display beneath the input box
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+                                                       Removed 1 invisible character · review and press Enter to send
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+
+✽ Incubating… (2s · thinking)
+  ⎿  Tip: Use /statusline to set up a custom status line that will display beneath the input box
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+                                                       Removed 1 invisible character · review and press Enter to send
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+
+· Incubating… (3s · thinking)
+  ⎿  Tip: Use /statusline to set up a custom status line that will display beneath the input box
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+                                                       Removed 1 invisible character · review and press Enter to send
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source recent --lines 200
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+
+  Thought for 4s (ctrl+o to expand)
+
+● FMHERDROPPONG2838491_9012
+
+✽ Incubating… (running Stop hooks… 4/6 · 4s · ↓ 50 tokens · thought for 3s)
+  ⎿  Tip: Use /statusline to set up a custom status line that will display beneath the input box
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents                           ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"working","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":4,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"◑ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"working","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":4,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"◐ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"working","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":4,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"◑ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Do or do not. There is no try.
+  1 more notice hidden
+
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+
+  Thought for 4s (ctrl+o to expand)
+  
+● FMHERDROPPONG2838491_9012
+  
+✻ Cogitated for 7s · done 12:32 AM
+  
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane send-text w1:p1 /exit
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+❯ Reply with exactly FMHERDRPONG2838491_29044 and nothing else.
+
+  Thought for 3s (ctrl+o to expand)
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+
+  Thought for 4s (ctrl+o to expand)
+  
+● FMHERDROPPONG2838491_9012
+  
+✻ Cogitated for 7s · done 12:32 AM
+  
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ /exit
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ❯ /exit                                          Exit the CLI                                    
+    /context                                       Visualize current context usage as a colored grid
+    /usage-credits                                 Configure usage credits or request them from your admin when you
+                                                   hit a limit
+    /ravn-core:principle-guard-the-context-window  (ravn-core) Apply when context is filling up: large outputs, long
+                                                   files, repeated reads, fan-out planning. Route bulk to subagents;…
+    /quiet                                         Enter quiet supervision mode when the captain invokes /quiet or
+                                                   asks for quiet mode, quiet-while-present, or fewer routine wake t…
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":2,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","terminal_title":"✳ Exact token echo test","terminal_title_stripped":"Exact token echo test","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane send-keys w1:p1 enter
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":3,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":3,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":3,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":3,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":3,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":3,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+
+● FMHERDRPONG2838491_29044
+
+✻ Baked for 8s · done 12:32 AM
+
+❯ FIRSTMATE_OP: v1 away-supervisor: Reply with exactly FMHERDROPPONG2838491_9012 and nothing else.
+
+  Thought for 4s (ctrl+o to expand)
+  
+● FMHERDROPPONG2838491_9012
+  
+✻ Cogitated for 7s · done 12:32 AM
+  
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ /exit
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ❯ /exit                                          Exit the CLI                                    
+    /context                                       Visualize current context usage as a colored grid
+    /usage-credits                                 Configure usage credits or request them from your admin when you
+                                                   hit a limit
+    /ravn-core:principle-guard-the-context-window  (ravn-core) Apply when context is filling up: large outputs, long
+                                                   files, repeated reads, fan-out planning. Route bulk to subagents;…
+    /quiet                                         Enter quiet supervision mode when the captain invokes /quiet or
+                                                   asks for quiet mode, quiet-while-present, or fewer routine wake t…
+
+
+
+
+
+
+
+
+
+
+
+
+
+Resume this session with:
+claude --resume 8b8cb709-1a0b-472b-b43e-1703382c6b78
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":3,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane send-keys w1:p1 enter
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":3,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+{"id":"cli:agent:get","result":{"agent":{"agent":"claude","agent_status":"idle","completion_seq":5,"cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":3,"state_change_seq":5,"tab_id":"w1:t1","terminal_id":"term_65d495e1e30001","workspace_id":"w1"},"type":"agent_info"}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+
+exit=1
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+
+exit=1
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+
+exit=1
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+
+exit=1
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 status --json
+{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-herdr-submit-con-2838684-31130"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-herdr-submit-con-2838684-31130/herdr.sock","session":"fm-lab-herdr-submit-con-2838684-31130","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 pane read w1:p1 --source visible --format ansi
+  Thought for 4s (ctrl+o to expand)
+  
+● FMHERDROPPONG2838491_9012
+  
+✻ Cogitated for 7s · done 12:32 AM
+  
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ /exit
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ❯ /exit                                          Exit the CLI                                    
+    /context                                       Visualize current context usage as a colored grid
+    /usage-credits                                 Configure usage credits or request them from your admin when you
+                                                   hit a limit
+    /ravn-core:principle-guard-the-context-window  (ravn-core) Apply when context is filling up: large outputs, long
+                                                   files, repeated reads, fan-out planning. Route bulk to subagents;…
+    /quiet                                         Enter quiet supervision mode when the captain invokes /quiet or
+                                                   asks for quiet mode, quiet-while-present, or fewer routine wake t…
+
+
+
+
+
+
+
+
+
+
+
+
+
+Resume this session with:
+claude --resume 8b8cb709-1a0b-472b-b43e-1703382c6b78
+
+[0m[38;5;12m[ble: elapsed 25.412s (CPU 69.4%)][0m CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dang
+
+[0m[1m[38;2;122;162;247m01M4CE93TQQAHQD97QWA2QR4XZ[0m [0m[38;2;187;154;247mHEAD[0m [0m[38;2;225;225;225m?[0m [0m[38;2;154;154;154m25s[0m 
+[0m[1m[38;2;187;154;247m❯[0m 
+
+[0m[1m[38;2;122;162;247m01M4CE93TQQAHQD97QWA2QR4XZ[0m [0m[38;2;187;154;247mHEAD[0m [0m[38;2;225;225;225m?[0m 
+[0m[1m[38;2;187;154;247m❯[0m 
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2838684-31130 agent get w1:p1
+
+exit=1
+
+COMMAND teardown fm-lab-herdr-submit-con-2838684-31130
+
+exit=0
+
+COMMAND name herdr-submit-confirm-live
+fm-lab-herdr-submit-con-2941334-17851
+
+exit=0
+
+COMMAND provision fm-lab-herdr-submit-con-2941334-17851
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 workspace create --cwd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ --label fm-submitlive --no-focus
+{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d49619ed3ad1","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"fm-submitlive","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane run w1:p1 CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false\ CLAUDE_CODE_SEND_FEEDBACK=0\ claude\ --dangerously-skip-permissions\ --settings\ \'\{\"feedbackDrafts\":\"off\"\}\'
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                              ◐ medium · /effort
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND run fm-lab-herdr-submit-con-2941334-17851 pane read w1:p1 --source visible
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
+
+01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.293
+▝▜██████▀  Opus 5.5 · Claude Team
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+
+▎ Message from Ravn_Muninn:
+▎ Say 'hello' to my little friend!
+  1 more notice hidden
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+exit=0
+
+COMMAND teardown fm-lab-herdr-submit-con-2941334-17851
+
+exit=0
