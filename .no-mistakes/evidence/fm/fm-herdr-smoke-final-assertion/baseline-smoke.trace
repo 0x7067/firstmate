@@ -1,0 +1,2371 @@
++ set -u
+++ dirname tests/.validation-baseline.test.sh
++ . tests/lib.sh
+++ '[' -n '' ']'
+++ FM_TEST_LIB_SOURCED=1
+++ umask 022
++++ dirname tests/lib.sh
+++ . tests/git-config-helpers.sh
++++ export GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1
++++ GIT_CONFIG_GLOBAL=/dev/null
++++ GIT_CONFIG_NOSYSTEM=1
+++ export FM_GATE_REFUSE_BYPASS=1
+++ FM_GATE_REFUSE_BYPASS=1
+++ export FM_TEST_SEAM=1
+++ FM_TEST_SEAM=1
+++ unset FM_TASK_ID
+++ unset TASKS_AXI_FILE TASKS_AXI_BACKEND
+++++ dirname tests/lib.sh
++++ cd tests/..
++++ pwd
+++ ROOT=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4
++++ fm_test_tmpdir
++++ local base=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp physical
++++ base=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
++++ '[' -n /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp ']'
++++ case "$base" in
+++++ CDPATH=
+++++ cd -- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
+++++ pwd -P
++++ case "$base" in
++++ physical=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
++++ base=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
++++ '[' -e /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.git ']'
++++ printf '%s\n' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
+++ FM_TEST_TMPDIR=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
+++ FM_TEST_CLEANUP_DIRS=()
++++ mktemp /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-cleanup.4164297.XXXXXX
+++ FM_TEST_CLEANUP_REGISTRY=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-cleanup.4164297.6Lj58Z
++++ fm_test_pid_identity 4164297
++++ local pid=4164297
++++ FM_STATE_OVERRIDE=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
++++ bash -c '. "$1"; fm_pid_identity "$2"' _ /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-wake-lib.sh 4164297
+++ FM_TEST_OWNER_IDENTITY='linux-starttime=25355514 cmdline-hex=62617368002d780074657374732f2e76616c69646174696f6e2d626173656c696e652e746573742e736800'
++++ mktemp /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-procevent.4164297.XXXXXX
+++ FM_TEST_PROCEVENT_REGISTRY=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-procevent.4164297.6E4lT6
++++ mktemp /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-watcher.4164297.XXXXXX
+++ FM_TEST_WATCHER_REGISTRY=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-watcher.4164297.wEW1ta
+++ FM_TEST_STUB_MAX_BLOCK_SECONDS=120
+++ export FM_TEST_STUB_MAX_BLOCK_SECONDS
+++ trap fm_test_cleanup EXIT
+++ trap 'fm_test_cleanup; exit 130' INT
+++ trap 'fm_test_cleanup; exit 143' TERM
+++ trap 'fm_test_cleanup; exit 129' HUP
+++ trap 'fm_test_cleanup; exit 131' QUIT
+++ FM_TEST_ORPHAN_MAX_AGE_SECONDS=3600
+++ '[' 0 '!=' 1 ']'
+++ fm_test_reap_orphans
+++ local marker dir mtime now owner_pid owner_identity current_identity
++++ date +%s
+++ now=1791426463
+++ for marker in "$FM_TEST_TMPDIR"/fm-*/.fm-test-fixture
+++ '[' -e '/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-*/.fm-test-fixture' ']'
+++ continue
++ command -v herdr
++ command -v jq
++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/tests/herdr-test-safety.sh
+++ set -u
++++ dirname /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/tests/herdr-test-safety.sh
+++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/tests/git-config-helpers.sh
++++ export GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1
++++ GIT_CONFIG_GLOBAL=/dev/null
++++ GIT_CONFIG_NOSYSTEM=1
+++ export FM_GATE_REFUSE_BYPASS=1
+++ FM_GATE_REFUSE_BYPASS=1
+++++ dirname /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/tests/herdr-test-safety.sh
++++ cd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/tests/..
++++ pwd
+++ HERDR_TEST_SAFETY_DIR=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4
+++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-herdr-lab.sh
++++ set -u
++++ readonly fm_herdr_lab_viewer_timeout_seconds=5
++++ fm_herdr_lab_viewer_timeout_seconds=5
++++ readonly fm_herdr_lab_viewer_launcher_grace_seconds=6
++++ fm_herdr_lab_viewer_launcher_grace_seconds=6
++++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-herdr-lab.sh = tests/.validation-baseline.test.sh ']'
++ herdr_forget_inherited_pane
++ unset HERDR_ENV HERDR_PANE_ID HERDR_TAB_ID HERDR_WORKSPACE_ID HERDR_SOCKET_PATH HERDR_SESSION
+++ fm_test_tmproot fm-control-herdr-standin
+++ local prefix=fm-control-herdr-standin root tmp_base
++++ fm_test_tmpdir
++++ local base=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp physical
++++ base=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
++++ '[' -n /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp ']'
++++ case "$base" in
+++++ CDPATH=
+++++ cd -- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
+++++ pwd -P
++++ case "$base" in
++++ physical=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
++++ base=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
++++ '[' -e /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.git ']'
++++ printf '%s\n' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
+++ tmp_base=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
+++ tmp_base=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp
++++ mktemp -d /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.XXXXXX
+++ root=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
++++ cd -P -- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
++++ pwd -P
+++ root=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
+++ printf '%s\n%s\n' 4164297 'linux-starttime=25355514 cmdline-hex=62617368002d780074657374732f2e76616c69646174696f6e2d626173656c696e652e746573742e736800'
+++ printf '%s\n' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
+++ printf '%s\n' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
++ STANDIN_DIR=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
+++ fm_agent_standin /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
+++ local dir=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1 cc_bin sleep_bin
+++ mkdir -p /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
++++ command -v cc
+++ cc_bin=/usr/bin/cc
+++ '[' -n /usr/bin/cc ']'
+++ printf '%s\n' '#include <unistd.h>' 'int main(void){int i;for(i=0;i<600;i++)sleep(1);return 0;}'
+++ /usr/bin/cc -o /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1/standin /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1/standin.c
+++ fm_agent_standin_alive /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1/standin
+++ local pid
+++ pid=4164340
+++ sleep 0.2
+++ /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1/standin 60
+++ kill -0 4164340
+++ kill 4164340
+++ wait 4164340
+++ true
+++ printf '%s\n' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1/standin
+++ return 0
++ STANDIN_BIN=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1/standin
++ SESSION=fm-lab-control-smoke-4164297
++ export HERDR_SESSION=fm-lab-control-smoke-4164297
++ HERDR_SESSION=fm-lab-control-smoke-4164297
++ SCRATCH=
++ trap cleanup_all EXIT
++ fm_herdr_lab_prepare fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 sessions state_dir tripwire
++ fm_herdr_lab_validate_name fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297
++ [[ fm-lab-control-smoke-4164297 =~ ^fm-lab-[a-zA-Z0-9][a-zA-Z0-9_-]*$ ]]
++ return 0
++ command -v herdr
++ command -v jq
+++ fm_herdr_lab_session_list fm-lab-control-smoke-4164297
+++ fm_herdr_lab_raw fm-lab-control-smoke-4164297 session list --json
+++ local name=fm-lab-control-smoke-4164297 i
+++ shift
+++ args=('session' 'list' '--json')
+++ local -a args
+++ (( i = 0 ))
+++ (( i < 3 ))
+++ '[' session = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' list = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' --json = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++ herdr session list --json --session fm-lab-control-smoke-4164297
++ sessions='{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
++ printf %s '{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
++ jq -e --arg name fm-lab-control-smoke-4164297 '.sessions[]? | select(.name == $name)'
+++ fm_herdr_lab_state_dir
+++ printf %s /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
++ state_dir=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
+++ fm_herdr_lab_tripwire_path fm-lab-control-smoke-4164297
++++ fm_herdr_lab_state_dir
++++ printf %s /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
+++ printf %s/%s.fleet-state.json /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state fm-lab-control-smoke-4164297
++ tripwire=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json
++ mkdir -p /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
++ '[' '!' -e /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json ']'
++ fm_herdr_lab_fleet_state fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 sessions snapshot
+++ fm_herdr_lab_session_list fm-lab-control-smoke-4164297
+++ fm_herdr_lab_raw fm-lab-control-smoke-4164297 session list --json
+++ local name=fm-lab-control-smoke-4164297 i
+++ shift
+++ args=('session' 'list' '--json')
+++ local -a args
+++ (( i = 0 ))
+++ (( i < 3 ))
+++ '[' session = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' list = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' --json = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++ herdr session list --json --session fm-lab-control-smoke-4164297
++ sessions='{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
+++ printf %s '{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
+++ jq -c $'\n    [.sessions[]? | select(.default == true)]\n    | if length == 1 and .[0].name == "default" and .[0].running == true\n      then .[0] | {name, default, running, socket_path}\n      else empty\n      end\n  '
++ snapshot='{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}'
++ '[' -n '{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}' ']'
++ printf '%s\n' '{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}'
+++ mktemp -d /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.XXXXXX
++ SCRATCH=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa
+++ cd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa
+++ pwd
++ SCRATCH=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa
++ HOME_DIR=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/home
++ mkdir -p /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/home/state /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/home/data/hsmoke
++ cat
++ PROJ=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj
++ WT=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt
++ mkdir -p /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj
++ git -C /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj init -q
++ printf '# proj\n'
++ git -C /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj add README.md
++ git -C /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj -c 'user.name=Firstmate Tests' -c user.email=tests@example.invalid commit -qm initial
++ git -C /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj worktree add --quiet -b hsmoke /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt
+++ cd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj
+++ pwd -P
++ PROJ_REAL=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj
+++ cd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt
+++ pwd -P
++ WT_REAL=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt
++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-backend.sh
+++ FM_BACKEND_SCRIPT=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-backend.sh
+++++ dirname /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-backend.sh
++++ cd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin
++++ pwd
+++ FM_BACKEND_LIB_DIR=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin
+++ unset FM_BACKEND_SCRIPT
++++ cd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/..
++++ pwd
+++ FM_BACKEND_DEFAULT_ROOT=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4
+++ FM_ROOT=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4
+++ FM_HOME=/data/development/fm-homes/apps-and-bots
+++ FM_BACKEND_CONFIG_DIR=/data/development/fm-homes/apps-and-bots/config
+++ FM_BACKEND_KNOWN='tmux herdr zellij orca cmux'
+++ FM_BACKEND_SPAWN='tmux herdr zellij orca cmux'
+++ FM_BACKEND_CMUX_BUNDLE_ID=com.cmuxterm.app
+++ FM_BACKEND_VISIBLE_CAPTURE='tmux herdr zellij'
++ fm_backend_source herdr
++ local name=herdr adapter rel sibling
++ fm_backend_validate herdr
++ local name=herdr
++ fm_backend_is_known herdr
++ fm_backend_list_contains 'tmux herdr zellij orca cmux' herdr
++ local 'list=tmux herdr zellij orca cmux' name=herdr
++ case "$name" in
++ case " $list " in
++ return 0
++ return 0
++ adapter=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh
++ case "$name" in
++ set -- fm-composer-lib.sh fm-transition-lib.sh fm-agent-process-lib.sh fm-session-lock-lib.sh fm-gemini-lib.sh
++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh ']'
++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh ']'
++ for rel in "$@"
++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh
++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh ']'
++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh ']'
++ for rel in "$@"
++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh
++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh ']'
++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh ']'
++ for rel in "$@"
++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh
++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh ']'
++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh ']'
++ for rel in "$@"
++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh
++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh ']'
++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh ']'
++ for rel in "$@"
++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh
++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh ']'
++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh ']'
++ case "$name" in
++ '[' -z '' ']'
++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh
++++ d=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends
++++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh ']'
++++ cd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/../..
++++ pwd
+++ FM_BACKEND_HERDR_ROOT=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4
+++ FM_ROOT=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4
+++ FM_HOME=/data/development/fm-homes/apps-and-bots
+++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh
++++ FM_COMPOSER_UNICODE_SPACES=()
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0302\0205'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0302\0240'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0341\0232\0200'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0200'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0201'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0202'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0203'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0204'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0205'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0206'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0207'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0210'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0211'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0212'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0250'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0251'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0200\0257'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0342\0201\0237'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ for _fm_composer_space_octal in '\0302\0205' '\0302\0240' '\0341\0232\0200' '\0342\0200\0200' '\0342\0200\0201' '\0342\0200\0202' '\0342\0200\0203' '\0342\0200\0204' '\0342\0200\0205' '\0342\0200\0206' '\0342\0200\0207' '\0342\0200\0210' '\0342\0200\0211' '\0342\0200\0212' '\0342\0200\0250' '\0342\0200\0251' '\0342\0200\0257' '\0342\0201\0237' '\0343\0200\0200'
++++ printf -v _fm_composer_space_utf8 %b '\0343\0200\0200'
++++ FM_COMPOSER_UNICODE_SPACES+=("$_fm_composer_space_utf8")
++++ unset -v _fm_composer_space_octal _fm_composer_space_utf8
++++ FM_DELIVERY_BUSY_REGEX_DEFAULT='esc (to )?interrupt|Working(\.\.\.|…)|Ctrl\+c:cancel|ctrl\+c to stop|esc[[:space:]]+to[[:space:]]+cancel|esc twice to interrupt|^[[:space:]]*❭ Guide Devin while it works$'
++++ FM_DELIVERY_CLAUDE_BUSY_REGEX_DEFAULT='esc to interrupt|…[[:space:]]+\([0-9]+[smh]'
++++ FM_DELIVERY_DEVIN_BUSY_REGEX_DEFAULT='esc twice to interrupt|^[[:space:]]*❭ Guide Devin while it works$'
++++ FM_DELIVERY_CODEX_BUSY_REGEX_DEFAULT='esc to interrupt'
++++ FM_DELIVERY_OPENCODE_BUSY_REGEX_DEFAULT='esc interrupt'
++++ FM_DELIVERY_PI_BUSY_REGEX_DEFAULT='Working\.\.\.'
++++ FM_OMP_SPINNER_FRAMES_RE='(⠋|⠙|⠹|⠸|⠼|⠴|⠦|⠧|⠇|⠏|⣾|⣽|⣻|⢿|⡿|⣟|⣯|⣷)'
++++ FM_DELIVERY_OMP_BUSY_REGEX_DEFAULT='Working…|^[[:space:]]*(⠋|⠙|⠹|⠸|⠼|⠴|⠦|⠧|⠇|⠏|⣾|⣽|⣻|⢿|⡿|⣟|⣯|⣷)[[:space:]]+[0-9]+[smh]'
++++ FM_DELIVERY_GROK_BUSY_REGEX_DEFAULT='Ctrl\+c:cancel'
++++ FM_DELIVERY_CURSOR_BUSY_REGEX_DEFAULT='ctrl\+c to stop'
++++ FM_DELIVERY_AGY_BUSY_REGEX_DEFAULT='esc[[:space:]]+to[[:space:]]+cancel'
++++ FM_DELIVERY_KIMI_BUSY_REGEX_DEFAULT='^[[:space:]]*(🌑|🌒|🌓|🌔|🌕|🌖|🌗|🌘)[[:space:]]+·[[:space:]]+'
+++++ printf '%s\n' ❯ › ⟩ → ❭
++++ FM_COMPOSER_AGENT_PROMPT_GLYPHS=$'❯\n›\n⟩\n→\n❭'
+++++ printf '%s\n' '>' '$' % '#'
++++ FM_COMPOSER_SHELL_PROMPT_GLYPHS=$'>\n$\n%\n#'
++++ FM_COMPOSER_IDLE_RE_DEFAULT='^Type a message\.\.\.$|^Ask anything(\.\.\.|…)|^Plan, search, build anything$|^Add a follow-up$|^Ask Devin to build features, fix bugs, or work on your code$'
++++ FM_COMPOSER_LEFTBAR_FOOTER_RE_DEFAULT='^(Build|Plan)[[:space:]]+·[[:space:]]+'
++++ FM_COMPOSER_MODE_HINT_RE_DEFAULT='^[[:space:]]*(⏵|⏸)'
++++ FM_COMPOSER_OMP_STATUS_RE_DEFAULT='^[[:space:]]*(π|󰵗)[[:space:]]+·[[:space:]]|^[[:space:]]*(⠋|⠙|⠹|⠸|⠼|⠴|⠦|⠧|⠇|⠏|⣾|⣽|⣻|⢿|⡿|⣟|⣯|⣷)[[:space:]]+[0-9]+[smh]([[:space:]]|$)|[[:space:]]·[[:space:]].*[0-9]+(\.[0-9]+)?%/[0-9]+K'
++++ FM_COMPOSER_PI_STATUS_RE_DEFAULT='^\$[0-9]+(\.[0-9]+)?([[:space:]]|$)'
++++ FM_COMPOSER_CAPTURE_LINES=20
++++ FM_COMPOSER_PI_MAX_LINES=8
++++ FM_COMPOSER_GROK_TITLE_OVERHANG=3
+++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh
++++ FM_TRANSITION_FIELD_SEP=$'\t'
+++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh
++++ _FM_AGENT_PROCESS_LIB_DIR=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin
++++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh ']'
++++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh
+++++ _FM_SESSION_LOCK_LIB_DIR=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin
+++++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh ']'
+++++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-cursor-lib.sh
++++++ FM_CURSOR_PROBE_TIMEOUT=10
+++++ unset _FM_SESSION_LOCK_LIB_DIR
+++++ FM_HARNESS_RE='claude|codex|opencode|grok|kimi|^pi$|^pi-signed$|^omp$'
+++++ FM_HARNESS_NAMES=(claude codex opencode grok kimi pi-signed pi omp)
+++++ FM_HARNESS_IS_CLAUDE=0
+++++ FM_SESSION_LOCK_FOREIGN_OWNER_PID=
+++++ FM_LOCK_INSPECT_STATE=unknown
+++++ FM_LOCK_INSPECT_PID=
+++++ FM_LOCK_INSPECT_LIVE_HARNESS=unknown
++++ . /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh
++++ unset _FM_AGENT_PROCESS_LIB_DIR
+++ FM_BACKEND_HERDR_MIN_PROTOCOL=14
+++ FM_BACKEND_HERDR_MIN_EVENTS_PROTOCOL=16
+++ FM_BACKEND_HERDR_MIN_WORKSPACE_MOVE_PROTOCOL=16
+++ FM_BACKEND_HERDR_MIN_PRESENTATION_PROTOCOL=19
+++ FM_BACKEND_HERDR_MIN_PRESENTATION_VERSION=0.8.0
+++ FM_BACKEND_HERDR_PRESENTATION_FLOOR_MARKER_PREFIX=.herdr-presentation-floor-
+++ FM_BACKEND_HERDR_ESCALATED_PREFIX=.herdr-escalated-
+++ FM_BACKEND_HERDR_SECONDMATE_MARKER=.fm-secondmate-home
+++ FM_BACKEND_HERDR_PRESENTATION_JOURNAL_SUFFIX=.herdr-presentation
+++ FM_BACKEND_HERDR_PRESENTATION_CONFIG=herdr-presentation-spaces
+++ FM_BACKEND_HERDR_SUBMIT_POLLS=6
+++ FM_BACKEND_HERDR_SUBMIT_MIN_SLEEP=0.6
++ _FM_BACKEND_HERDR_SOURCED=1
+++ fm_backend_herdr_container_ensure /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt
+++ local cwd=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt relationship=launcher-home session= label status
+++ fm_backend_herdr_version_check
+++ fm_backend_herdr_tool_check
+++ command -v herdr
+++ command -v jq
+++ return 0
+++ local status protocol version
++++ herdr status --json
+++ status='{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-control-smoke-4164297"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock","session":"fm-lab-control-smoke-4164297","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}'
++++ printf %s '{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-control-smoke-4164297"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock","session":"fm-lab-control-smoke-4164297","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}'
++++ jq -r '.client.protocol // empty'
+++ protocol=22
++++ printf %s '{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-control-smoke-4164297"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock","session":"fm-lab-control-smoke-4164297","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}'
++++ jq -r '.client.version // empty'
+++ version=0.9.3
+++ case "$protocol" in
+++ '[' 22 -lt 14 ']'
+++ return 0
+++ '[' -n '' ']'
++++ fm_backend_herdr_session
++++ printf %s fm-lab-control-smoke-4164297
+++ session=fm-lab-control-smoke-4164297
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ jq -r '.server.running // false'
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=false
+++ '[' false = true ']'
+++ unset FM_HOME FM_ROOT_OVERRIDE FM_STATE_OVERRIDE FM_DATA_OVERRIDE FM_PROJECTS_OVERRIDE FM_CONFIG_OVERRIDE CURSOR_AGENT CURSOR_INVOKED_AS CLAUDECODE PI_CODING_AGENT FM_PI_HARNESS GROK_AGENT FM_SUPERVISION_MODEL
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 server
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' server = server ']'
+++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++ herdr server --session fm-lab-control-smoke-4164297
++++ seq 1 20
+++ for i in $(seq 1 20)
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ jq -r '.server.running // false'
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_workspace_ensure fm-lab-control-smoke-4164297 /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt launcher-home
+++ local session=fm-lab-control-smoke-4164297 cwd=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt relationship=launcher-home wsid out label matches count status
+++ FM_BACKEND_HERDR_WS_ID=
+++ FM_BACKEND_HERDR_WS_SEEDED_TAB_ID=
+++ '[' launcher-home = launcher-home ']'
+++ fm_backend_herdr_launcher_identity fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 pane= claimed_session claimed_socket session_socket
+++ local pane_out tab_out list tab workspace
+++ FM_BACKEND_HERDR_LAUNCHER_PANE_ID=
+++ FM_BACKEND_HERDR_LAUNCHER_TAB_ID=
+++ FM_BACKEND_HERDR_LAUNCHER_WORKSPACE_ID=
+++ '[' -n '' ']'
+++ return 2
+++ status=2
+++ case "$status" in
++++ fm_backend_herdr_workspace_label
++++ local marker=/data/development/fm-homes/apps-and-bots/.fm-secondmate-home id
++++ '[' -f /data/development/fm-homes/apps-and-bots/.fm-secondmate-home ']'
+++++ tr -d '[:space:]'
++++ id=apps-and-bots
++++ '[' -n apps-and-bots ']'
++++ printf 2ndmate-%s apps-and-bots
++++ return 0
+++ case "$status" in
+++ label=2ndmate-apps-and-bots
++++ fm_backend_herdr_workspace_find_all fm-lab-control-smoke-4164297
++++ local session=fm-lab-control-smoke-4164297 label list
+++++ fm_backend_herdr_workspace_label
+++++ local marker=/data/development/fm-homes/apps-and-bots/.fm-secondmate-home id
+++++ '[' -f /data/development/fm-homes/apps-and-bots/.fm-secondmate-home ']'
++++++ tr -d '[:space:]'
+++++ id=apps-and-bots
+++++ '[' -n apps-and-bots ']'
+++++ printf 2ndmate-%s apps-and-bots
+++++ return 0
++++ label=2ndmate-apps-and-bots
+++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 workspace list
+++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++++ shift
+++++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++++ '[' workspace = server ']'
+++++ failed_bin=herdr
++++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++++ herdr workspace list --session fm-lab-control-smoke-4164297
+++++ err=
+++++ '[' 0 -ne 0 ']'
+++++ '[' -z '' ']'
+++++ return 0
++++ list='{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[]}}'
++++ printf %s '{"id":"cli:workspace:list","result":{"type":"workspace_list","workspaces":[]}}'
++++ jq -r --arg want 2ndmate-apps-and-bots '.result.workspaces[]? | select(.label == $want) | .workspace_id'
+++ matches=
++++ printf %s ''
++++ grep -c '[^[:space:]]'
++++ true
+++ count=0
+++ '[' 0 -gt 1 ']'
+++ wsid=
+++ '[' -n '' ']'
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 workspace create --cwd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt --label 2ndmate-apps-and-bots --no-focus
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' workspace = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr workspace create --cwd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt --label 2ndmate-apps-and-bots --no-focus --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ out='{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d4afa06f8e01","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"2ndmate-apps-and-bots","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}'
++++ printf %s '{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d4afa06f8e01","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"2ndmate-apps-and-bots","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}'
++++ jq -r '.result.workspace.workspace_id // empty'
+++ wsid=w1
+++ '[' -n w1 ']'
+++ FM_BACKEND_HERDR_WS_ID=w1
++++ printf %s '{"id":"cli:workspace:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d4afa06f8e01","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},"type":"workspace_created","workspace":{"active_tab_id":"w1:t1","agent_status":"unknown","focused":true,"label":"2ndmate-apps-and-bots","number":1,"pane_count":1,"tab_count":1,"workspace_id":"w1"}}}'
++++ jq -r '.result.tab.tab_id // empty'
+++ FM_BACKEND_HERDR_WS_SEEDED_TAB_ID=w1:t1
+++ printf %s w1
+++ status=0
+++ '[' 0 -ne 3 ']'
+++ '[' 0 -ne 0 ']'
+++ '[' -z w1 ']'
+++ printf '%s:%s\t%s' fm-lab-control-smoke-4164297 w1 w1:t1
++ CONTAINER_RAW=$'fm-lab-control-smoke-4164297:w1\tw1:t1'
++ CONTAINER=fm-lab-control-smoke-4164297:w1
++ SEEDED_TAB_ID=w1:t1
++ WORKSPACE_ID=w1
+++ fm_backend_herdr_create_task fm-lab-control-smoke-4164297:w1 fm-hsmoke /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt w1:t1
+++ local container=fm-lab-control-smoke-4164297:w1 label=fm-hsmoke cwd=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt seeded_tab_id=w1:t1 session wsid list dup_tabs dup dup_pane dup_tab_ids out tab_id pane_id remaining_dup_tabs
+++ session=fm-lab-control-smoke-4164297
+++ wsid=w1
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 tab list --workspace w1
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' tab = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr tab list --workspace w1 --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ list='{"id":"cli:tab:list","result":{"tabs":[{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"}],"type":"tab_list"}}'
++++ printf %s '{"id":"cli:tab:list","result":{"tabs":[{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"}],"type":"tab_list"}}'
++++ jq -r --arg want fm-hsmoke 'if (.result.tabs | type) == "array" then .result.tabs[] | select(.label == $want) | .tab_id else error("missing result.tabs") end'
+++ dup_tabs=
+++ dup_tab_ids=
+++ '[' -n '' ']'
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 tab create --workspace w1 --cwd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt --label fm-hsmoke --no-focus
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' tab = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr tab create --workspace w1 --cwd /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt --label fm-hsmoke --no-focus --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ out='{"id":"cli:tab:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":false,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d4afa0794282","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":false,"label":"fm-hsmoke","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"},"type":"tab_created"}}'
++++ printf %s '{"id":"cli:tab:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":false,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d4afa0794282","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":false,"label":"fm-hsmoke","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"},"type":"tab_created"}}'
++++ jq -r '.result.tab.tab_id // empty'
+++ tab_id=w1:t2
++++ printf %s '{"id":"cli:tab:create","result":{"root_pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":false,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d4afa0794282","workspace_id":"w1"},"tab":{"agent_status":"unknown","focused":false,"label":"fm-hsmoke","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"},"type":"tab_created"}}'
++++ jq -r '.result.root_pane.pane_id // empty'
+++ pane_id=w1:p2
+++ '[' -z w1:t2 ']'
+++ '[' -z w1:p2 ']'
+++ '[' -z w1:t1 ']'
+++ fm_backend_herdr_workspace_prune_seeded_default_tab fm-lab-control-smoke-4164297 w1 w1:t1
+++ local session=fm-lab-control-smoke-4164297 wsid=w1 tab_id=w1:t1 close_mode=direct tabs tab_count current_label pane_id agent_out agent_status
+++ '[' -n w1:t1 ']'
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 tab list --workspace w1
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' tab = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr tab list --workspace w1 --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ tabs='{"id":"cli:tab:list","result":{"tabs":[{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},{"agent_status":"unknown","focused":false,"label":"fm-hsmoke","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"}],"type":"tab_list"}}'
++++ printf %s '{"id":"cli:tab:list","result":{"tabs":[{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},{"agent_status":"unknown","focused":false,"label":"fm-hsmoke","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"}],"type":"tab_list"}}'
++++ jq -r '.result.tabs? // [] | length'
+++ tab_count=2
+++ case "$tab_count" in
++++ printf %s '{"id":"cli:tab:list","result":{"tabs":[{"agent_status":"unknown","focused":true,"label":"1","number":1,"pane_count":1,"tab_id":"w1:t1","workspace_id":"w1"},{"agent_status":"unknown","focused":false,"label":"fm-hsmoke","number":2,"pane_count":1,"tab_id":"w1:t2","workspace_id":"w1"}],"type":"tab_list"}}'
+++ case "$tab_count" in
++++ jq -r --arg t w1:t1 '.result.tabs[]? | select(.tab_id == $t) | .label'
+++ case "$tab_count" in
+++ case "$tab_count" in
+++ current_label=1
+++ '[' 1 = 1 ']'
++++ fm_backend_herdr_pane_for_tab fm-lab-control-smoke-4164297 w1 w1:t1
++++ local session=fm-lab-control-smoke-4164297 wsid=w1 tab_id=w1:t1 panes
+++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane list --workspace w1
+++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++++ shift
+++++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++++ '[' pane = server ']'
+++++ failed_bin=herdr
++++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++++ herdr pane list --workspace w1 --session fm-lab-control-smoke-4164297
+++++ err=
+++++ '[' 0 -ne 0 ']'
+++++ '[' -z '' ']'
+++++ return 0
++++ panes='{"id":"cli:pane:list","result":{"panes":[{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d4afa06f8e01","workspace_id":"w1"},{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":false,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d4afa0794282","workspace_id":"w1"}],"type":"pane_list"}}'
++++ printf %s '{"id":"cli:pane:list","result":{"panes":[{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p1","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t1","terminal_id":"term_65d4afa06f8e01","workspace_id":"w1"},{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":false,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d4afa0794282","workspace_id":"w1"}],"type":"pane_list"}}'
++++ jq -r --arg tab w1:t1 '.result.panes[]? | select(.tab_id == $tab) | .pane_id'
++++ head -1
+++ pane_id=w1:p1
+++ '[' -n w1:p1 ']'
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 agent get w1:p1
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' agent = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr agent get w1:p1 --session fm-lab-control-smoke-4164297
++++ err='{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}'
++++ rc=1
++++ '[' 1 -ne 0 ']'
++++ case "$err" in
++++ '[' -z '{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}' ']'
++++ printf '%s\n' '{"error":{"code":"agent_not_found","message":"agent target w1:p1 not found"},"id":"cli:agent:get"}'
++++ return 1
+++ agent_out=
++++ printf %s ''
++++ jq -r '.result.agent.agent_status // empty'
+++ agent_status=
+++ '[' '' = working ']'
+++ '[' direct = focus-preserving ']'
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane close w1:p1
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane close w1:p1 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
+++ '[' -n '' ']'
+++ printf '%s %s' w1:t2 w1:p2
++ TASK_IDS='w1:t2 w1:p2'
++ read -r TAB_ID PANE_ID
++ '[' -n w1:t2 ']'
++ '[' -n w1:p2 ']'
++ echo window=fm-lab-control-smoke-4164297:w1:p2
++ echo endpoint_task_id=hsmoke
++ echo worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt
++ echo project=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj
++ echo harness=claude
++ echo kind=ship
++ echo mode=no-mistakes
++ echo yolo=off
++ echo model=default
++ echo effort=default
++ echo backend=herdr
++ echo herdr_session=fm-lab-control-smoke-4164297
++ echo herdr_workspace_id=w1
++ echo herdr_tab_id=w1:t2
++ echo herdr_pane_id=w1:p2
+++ run_control hsmoke exit
+++ env FM_HOME=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/home HERDR_SESSION=fm-lab-control-smoke-4164297 FM_SPAWN_NO_GUARD=1 FM_CONTROL_POLL=0.2 FM_CONTROL_EXIT_WAIT=2 /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-control.sh hsmoke exit
++ OUT='already-stopped hsmoke harness=claude backend=herdr endpoint=fm-lab-control-smoke-4164297:w1:p2 worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt'
++ case "$OUT" in
++ :
++ pass 'real herdr: exit on a pane with no registered agent is idempotent success'
++ printf 'ok - %s\n' 'real herdr: exit on a pane with no registered agent is idempotent success'
+++ herdr --version
+++ head -1
++ HERDR_VERSION='herdr 0.9.3'
++ HERDR_VERSION=0.9.3
+++ fm_backend_agent_state herdr fm-lab-control-smoke-4164297:w1:p2
+++ local backend=herdr target=fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_source herdr
+++ local name=herdr adapter rel sibling
+++ fm_backend_validate herdr
+++ local name=herdr
+++ fm_backend_is_known herdr
+++ fm_backend_list_contains 'tmux herdr zellij orca cmux' herdr
+++ local 'list=tmux herdr zellij orca cmux' name=herdr
+++ case "$name" in
+++ case " $list " in
+++ return 0
+++ return 0
+++ adapter=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh
+++ case "$name" in
+++ set -- fm-composer-lib.sh fm-transition-lib.sh fm-agent-process-lib.sh fm-session-lock-lib.sh fm-gemini-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh ']'
+++ case "$name" in
+++ '[' -z 1 ']'
+++ case "$backend" in
+++ fm_backend_herdr_agent_state fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ case "$(fm_backend_herdr_pane_agent_state "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE")" in
++++ fm_backend_herdr_pane_agent_state fm-lab-control-smoke-4164297 w1:p2
++++ local session=fm-lab-control-smoke-4164297 pane_id=w1:p2 out code presence status
+++++ fm_backend_herdr_pane_presence_state fm-lab-control-smoke-4164297 w1:p2
+++++ local session=fm-lab-control-smoke-4164297 pane_id=w1:p2 out code pid
++++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
++++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++++ shift
++++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++++ '[' pane = server ']'
++++++ failed_bin=herdr
+++++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
++++++ err=
++++++ '[' 0 -ne 0 ']'
++++++ '[' -z '' ']'
++++++ return 0
+++++ out='{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d4afa0794282","workspace_id":"w1"},"type":"pane_info"}}'
++++++ printf %s '{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d4afa0794282","workspace_id":"w1"},"type":"pane_info"}}'
++++++ jq -r '.error.code // empty'
+++++ code=
+++++ '[' -n '' ']'
++++++ printf %s '{"id":"cli:pane:get","result":{"pane":{"agent_status":"unknown","cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","focused":true,"foreground_cwd":"/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt","pane_id":"w1:p2","revision":0,"scroll":{"max_offset_from_bottom":0,"offset_from_bottom":0,"viewport_rows":40},"tab_id":"w1:t2","terminal_id":"term_65d4afa0794282","workspace_id":"w1"},"type":"pane_info"}}'
++++++ jq -r '.result.pane.pane_id // empty'
+++++ pid=w1:p2
+++++ '[' w1:p2 = w1:p2 ']'
+++++ printf present
++++ presence=present
++++ '[' present '!=' present ']'
+++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 agent get w1:p2
+++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++++ shift
+++++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++++ '[' agent = server ']'
+++++ failed_bin=herdr
++++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++++ herdr agent get w1:p2 --session fm-lab-control-smoke-4164297
+++++ err='{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}'
+++++ rc=1
+++++ '[' 1 -ne 0 ']'
+++++ case "$err" in
+++++ '[' -z '{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}' ']'
+++++ printf '%s\n' '{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}'
+++++ return 1
++++ out='{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}'
+++++ printf %s '{"error":{"code":"agent_not_found","message":"agent target w1:p2 not found"},"id":"cli:agent:get"}'
+++++ jq -r '.error.code // empty'
++++ code=agent_not_found
++++ '[' -n agent_not_found ']'
++++ '[' agent_not_found = agent_not_found ']'
++++ printf no-agent
++++ return 0
+++ case "$(fm_backend_herdr_pane_agent_state "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE")" in
+++ printf dead
++ STATE=dead
++ '[' dead = dead ']'
+++ fm_backend_herdr_server_running_state fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 status
+++ command -v jq
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ status='{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-control-smoke-4164297"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock","session":"fm-lab-control-smoke-4164297","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}'
+++ printf %s '{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-control-smoke-4164297"},"server":{"status":"running","running":true,"version":"0.9.3","protocol":22,"capabilities":{"live_handoff":true,"detached_server_daemon":false,"endpoint_protocol_generation":1,"surface_interest":true,"health_check":true,"ssh_agent_registration":true},"compatible":true,"endpoint_compatible":true,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock","session":"fm-lab-control-smoke-4164297","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}'
+++ jq -r $'\n    if .server.running == true then "running"\n    elif .server.running == false then "stopped"\n    else "unknown"\n    end\n  '
++ '[' running = running ']'
+++ fm_backend_herdr_server_running_state fm-lab-never-started-4164297
+++ local session=fm-lab-never-started-4164297 status
+++ command -v jq
++++ fm_backend_herdr_cli fm-lab-never-started-4164297 status --json
++++ local session=fm-lab-never-started-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-never-started-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-never-started-4164297
+++++ herdr status --json --session fm-lab-never-started-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ status='{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-never-started-4164297"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-never-started-4164297/herdr.sock","session":"fm-lab-never-started-4164297","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}'
+++ printf %s '{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-never-started-4164297"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-never-started-4164297/herdr.sock","session":"fm-lab-never-started-4164297","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}'
+++ jq -r $'\n    if .server.running == true then "running"\n    elif .server.running == false then "stopped"\n    else "unknown"\n    end\n  '
++ '[' stopped = stopped ']'
+++ fm_backend_agent_state herdr fm-lab-never-started-4164297:w1:p2
+++ local backend=herdr target=fm-lab-never-started-4164297:w1:p2
+++ fm_backend_source herdr
+++ local name=herdr adapter rel sibling
+++ fm_backend_validate herdr
+++ local name=herdr
+++ fm_backend_is_known herdr
+++ fm_backend_list_contains 'tmux herdr zellij orca cmux' herdr
+++ local 'list=tmux herdr zellij orca cmux' name=herdr
+++ case "$name" in
+++ case " $list " in
+++ return 0
+++ return 0
+++ adapter=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh
+++ case "$name" in
+++ set -- fm-composer-lib.sh fm-transition-lib.sh fm-agent-process-lib.sh fm-session-lock-lib.sh fm-gemini-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh ']'
+++ case "$name" in
+++ '[' -z 1 ']'
+++ case "$backend" in
+++ fm_backend_herdr_agent_state fm-lab-never-started-4164297:w1:p2
+++ local target=fm-lab-never-started-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-never-started-4164297:w1:p2
+++ local target=fm-lab-never-started-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-never-started-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-never-started-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-never-started-4164297:w1:p2 ']'
+++ case "$(fm_backend_herdr_pane_agent_state "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE")" in
++++ fm_backend_herdr_pane_agent_state fm-lab-never-started-4164297 w1:p2
++++ local session=fm-lab-never-started-4164297 pane_id=w1:p2 out code presence status
+++++ fm_backend_herdr_pane_presence_state fm-lab-never-started-4164297 w1:p2
+++++ local session=fm-lab-never-started-4164297 pane_id=w1:p2 out code pid
++++++ fm_backend_herdr_cli fm-lab-never-started-4164297 pane get w1:p2
++++++ local session=fm-lab-never-started-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++++ shift
++++++ '[' '' = fm-lab-never-started-4164297 ']'
++++++ '[' pane = server ']'
++++++ failed_bin=herdr
+++++++ HERDR_SESSION=fm-lab-never-started-4164297
+++++++ herdr pane get w1:p2 --session fm-lab-never-started-4164297
++++++ err='{"id":"cli:pane:get","error":{"code":"server_not_running","message":"no herdr server is running at /home/denguinho/.config/herdr/sessions/fm-lab-never-started-4164297/herdr.sock; run `herdr session attach fm-lab-never-started-4164297` to start or attach it"}}'
++++++ rc=1
++++++ '[' 1 -ne 0 ']'
++++++ case "$err" in
++++++ '[' -z '{"id":"cli:pane:get","error":{"code":"server_not_running","message":"no herdr server is running at /home/denguinho/.config/herdr/sessions/fm-lab-never-started-4164297/herdr.sock; run `herdr session attach fm-lab-never-started-4164297` to start or attach it"}}' ']'
++++++ printf '%s\n' '{"id":"cli:pane:get","error":{"code":"server_not_running","message":"no herdr server is running at /home/denguinho/.config/herdr/sessions/fm-lab-never-started-4164297/herdr.sock; run `herdr session attach fm-lab-never-started-4164297` to start or attach it"}}'
++++++ return 1
+++++ out='{"id":"cli:pane:get","error":{"code":"server_not_running","message":"no herdr server is running at /home/denguinho/.config/herdr/sessions/fm-lab-never-started-4164297/herdr.sock; run `herdr session attach fm-lab-never-started-4164297` to start or attach it"}}'
++++++ printf %s '{"id":"cli:pane:get","error":{"code":"server_not_running","message":"no herdr server is running at /home/denguinho/.config/herdr/sessions/fm-lab-never-started-4164297/herdr.sock; run `herdr session attach fm-lab-never-started-4164297` to start or attach it"}}'
++++++ jq -r '.error.code // empty'
+++++ code=server_not_running
+++++ '[' -n server_not_running ']'
+++++ '[' server_not_running = pane_not_found ']'
+++++ printf unknown
+++++ return 0
++++ presence=unknown
++++ '[' unknown '!=' present ']'
++++ case "$presence" in
++++ printf %s unknown
++++ return 0
+++ case "$(fm_backend_herdr_pane_agent_state "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE")" in
+++ case "$(fm_backend_herdr_server_running_state "$FM_BACKEND_HERDR_SESSION")" in
++++ fm_backend_herdr_server_running_state fm-lab-never-started-4164297
++++ local session=fm-lab-never-started-4164297 status
++++ command -v jq
+++++ fm_backend_herdr_cli fm-lab-never-started-4164297 status --json
+++++ local session=fm-lab-never-started-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++++ shift
+++++ '[' '' = fm-lab-never-started-4164297 ']'
+++++ '[' status = server ']'
+++++ failed_bin=herdr
++++++ HERDR_SESSION=fm-lab-never-started-4164297
++++++ herdr status --json --session fm-lab-never-started-4164297
+++++ err=
+++++ '[' 0 -ne 0 ']'
+++++ '[' -z '' ']'
+++++ return 0
++++ status='{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-never-started-4164297"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-never-started-4164297/herdr.sock","session":"fm-lab-never-started-4164297","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}'
++++ printf %s '{"client":{"version":"0.9.3","channel":"stable","protocol":22,"endpoint_protocol_generation":1,"endpoint_capabilities":["surface_interest","presentation_effects_fence","health_check"],"remote_host_bridge":true,"remote_bridge_idle_timeout":true,"binary":"/home/denguinho/.local/bin/herdr","session":"fm-lab-never-started-4164297"},"server":{"status":"not_running","running":false,"version":null,"protocol":null,"capabilities":null,"compatible":null,"endpoint_compatible":null,"socket":"/home/denguinho/.config/herdr/sessions/fm-lab-never-started-4164297/herdr.sock","session":"fm-lab-never-started-4164297","restart_needed":false,"server_binary_stale":false},"update":{"restart_needed":false,"server_binary_stale":false}}'
++++ jq -r $'\n    if .server.running == true then "running"\n    elif .server.running == false then "stopped"\n    else "unknown"\n    end\n  '
+++ case "$(fm_backend_herdr_pane_agent_state "$FM_BACKEND_HERDR_SESSION" "$FM_BACKEND_HERDR_PANE")" in
+++ case "$(fm_backend_herdr_server_running_state "$FM_BACKEND_HERDR_SESSION")" in
+++ printf missing
++ '[' missing = missing ']'
+++ fm_backend_agent_state herdr no-separator-here
+++ local backend=herdr target=no-separator-here
+++ fm_backend_source herdr
+++ local name=herdr adapter rel sibling
+++ fm_backend_validate herdr
+++ local name=herdr
+++ fm_backend_is_known herdr
+++ fm_backend_list_contains 'tmux herdr zellij orca cmux' herdr
+++ local 'list=tmux herdr zellij orca cmux' name=herdr
+++ case "$name" in
+++ case " $list " in
+++ return 0
+++ return 0
+++ adapter=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh
+++ case "$name" in
+++ set -- fm-composer-lib.sh fm-transition-lib.sh fm-agent-process-lib.sh fm-session-lock-lib.sh fm-gemini-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/backends/herdr.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-composer-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-transition-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-agent-process-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-session-lock-lib.sh ']'
+++ for rel in "$@"
+++ sibling=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh
+++ fm_backend_source_readable /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh
+++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh ']'
+++ '[' -r /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/bin/fm-gemini-lib.sh ']'
+++ case "$name" in
+++ '[' -z 1 ']'
+++ case "$backend" in
+++ fm_backend_herdr_agent_state no-separator-here
+++ local target=no-separator-here
+++ fm_backend_herdr_parse_target no-separator-here
+++ local target=no-separator-here
+++ FM_BACKEND_HERDR_SESSION=no-separator-here
+++ FM_BACKEND_HERDR_PANE=no-separator-here
+++ '[' -n no-separator-here ']'
+++ '[' -n no-separator-here ']'
+++ '[' no-separator-here '!=' no-separator-here ']'
+++ printf unreadable
+++ return 0
++ '[' unreadable = unreadable ']'
++ pass 'real herdr 0.9.3: a gone session reads recoverable while a live pane and a malformed target do not'
++ printf 'ok - %s\n' 'real herdr 0.9.3: a gone session reads recoverable while a live pane and a malformed target do not'
++ FAKEBIN=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/fakebin
++ mkdir -p /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/fakebin
++ cat
++ chmod +x /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/fakebin/codex
++ printf -v FAKEBIN_Q %q /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/fakebin
++ printf -v PROJ_Q %q /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj
++ fm_backend_herdr_send_text_line fm-lab-control-smoke-4164297:w1:p2 'export PATH=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/fakebin:$PATH'
++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
++ local target=fm-lab-control-smoke-4164297:w1:p2
++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
++ FM_BACKEND_HERDR_PANE=w1:p2
++ '[' -n fm-lab-control-smoke-4164297 ']'
++ '[' -n w1:p2 ']'
++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
++ local session=fm-lab-control-smoke-4164297 running out i
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ jq -r '.server.running // false'
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' status = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr status --json --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ running=true
++ '[' true = true ']'
++ return 0
++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane run w1:p2 'export PATH=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/fakebin:$PATH'
++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++ shift
++ '[' '' = fm-lab-control-smoke-4164297 ']'
++ '[' pane = server ']'
++ failed_bin=herdr
+++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++ herdr pane run w1:p2 'export PATH=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/fakebin:$PATH' --session fm-lab-control-smoke-4164297
++ err=
++ '[' 0 -ne 0 ']'
++ '[' -z '' ']'
++ return 0
++ fm_backend_herdr_send_text_line fm-lab-control-smoke-4164297:w1:p2 'cd -- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj'
++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
++ local target=fm-lab-control-smoke-4164297:w1:p2
++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
++ FM_BACKEND_HERDR_PANE=w1:p2
++ '[' -n fm-lab-control-smoke-4164297 ']'
++ '[' -n w1:p2 ']'
++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
++ local session=fm-lab-control-smoke-4164297 running out i
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ jq -r '.server.running // false'
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' status = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr status --json --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ running=true
++ '[' true = true ']'
++ return 0
++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane run w1:p2 'cd -- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj'
++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++ shift
++ '[' '' = fm-lab-control-smoke-4164297 ']'
++ '[' pane = server ']'
++ failed_bin=herdr
+++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++ herdr pane run w1:p2 'cd -- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj' --session fm-lab-control-smoke-4164297
++ err=
++ '[' 0 -ne 0 ']'
++ '[' -z '' ']'
++ return 0
+++ seq 1 20
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
++++ jq -r '.server.running // false'
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ jq -r '.server.running // false'
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ jq -r '.server.running // false'
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ jq -r '.server.running // false'
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ jq -r '.server.running // false'
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ jq -r '.server.running // false'
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
+++ jq -r '.result.pane.foreground_cwd // empty'
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ jq -r '.server.running // false'
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ jq -r '.server.running // false'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ jq -r '.server.running // false'
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ jq -r '.server.running // false'
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
++++ jq -r '.server.running // false'
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
+++ jq -r '.result.pane.foreground_cwd // empty'
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ jq -r '.server.running // false'
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ jq -r '.server.running // false'
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ jq -r '.server.running // false'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
++++ jq -r '.server.running // false'
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ jq -r '.server.running // false'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ jq -r '.server.running // false'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ jq -r '.server.running // false'
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
++++ jq -r '.server.running // false'
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
++ for _ in $(seq 1 20)
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ failed_bin=herdr
++++ jq -r '.server.running // false'
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt '!=' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ sleep 0.1
+++ fm_backend_herdr_current_path fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_target_ready fm-lab-control-smoke-4164297:w1:p2
+++ fm_backend_herdr_parse_target fm-lab-control-smoke-4164297:w1:p2
+++ local target=fm-lab-control-smoke-4164297:w1:p2
+++ FM_BACKEND_HERDR_SESSION=fm-lab-control-smoke-4164297
+++ FM_BACKEND_HERDR_PANE=w1:p2
+++ '[' -n fm-lab-control-smoke-4164297 ']'
+++ '[' -n w1:p2 ']'
+++ '[' w1:p2 '!=' fm-lab-control-smoke-4164297:w1:p2 ']'
+++ fm_backend_herdr_server_ensure fm-lab-control-smoke-4164297
+++ local session=fm-lab-control-smoke-4164297 running out i
++++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 status --json
++++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
++++ shift
++++ '[' '' = fm-lab-control-smoke-4164297 ']'
++++ '[' status = server ']'
++++ jq -r '.server.running // false'
++++ failed_bin=herdr
+++++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++++ herdr status --json --session fm-lab-control-smoke-4164297
++++ err=
++++ '[' 0 -ne 0 ']'
++++ '[' -z '' ']'
++++ return 0
+++ running=true
+++ '[' true = true ']'
+++ return 0
+++ fm_backend_herdr_cli fm-lab-control-smoke-4164297 pane get w1:p2
+++ jq -r '.result.pane.foreground_cwd // empty'
+++ local session=fm-lab-control-smoke-4164297 rc=0 err failed_bin selected_bin client_bin=herdr
+++ shift
+++ '[' '' = fm-lab-control-smoke-4164297 ']'
+++ '[' pane = server ']'
+++ failed_bin=herdr
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr pane get w1:p2 --session fm-lab-control-smoke-4164297
+++ err=
+++ '[' 0 -ne 0 ']'
+++ '[' -z '' ']'
+++ return 0
++ '[' /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/wt = /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa/proj ']'
++ fail 'the real Herdr pane did not drift out of its recorded worktree'
++ printf 'not ok - %s\n' 'the real Herdr pane did not drift out of its recorded worktree'
++ cleanup_all
++ '[' -n /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa ']'
++ rm -rf /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa
++ herdr_safe_stop_and_delete fm-lab-control-smoke-4164297
++ fm_herdr_lab_teardown fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 tripwire sessions delete_status=0
++ fm_herdr_lab_validate_name fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297
++ [[ fm-lab-control-smoke-4164297 =~ ^fm-lab-[a-zA-Z0-9][a-zA-Z0-9_-]*$ ]]
++ return 0
+++ fm_herdr_lab_tripwire_path fm-lab-control-smoke-4164297
++++ fm_herdr_lab_state_dir
++++ printf %s /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
+++ printf %s/%s.fleet-state.json /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state fm-lab-control-smoke-4164297
++ tripwire=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json ']'
++ fm_herdr_lab_viewer_stop fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 record log role waited attempt reason timeout=5
++ fm_herdr_lab_validate_name fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297
++ [[ fm-lab-control-smoke-4164297 =~ ^fm-lab-[a-zA-Z0-9][a-zA-Z0-9_-]*$ ]]
++ return 0
+++ fm_herdr_lab_viewer_record_path fm-lab-control-smoke-4164297
++++ fm_herdr_lab_state_dir
++++ printf %s /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
+++ printf %s/%s.viewer /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state fm-lab-control-smoke-4164297
++ record=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.viewer
+++ fm_herdr_lab_viewer_log_path fm-lab-control-smoke-4164297
++++ fm_herdr_lab_state_dir
++++ printf %s /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
+++ printf %s/%s.viewer.log /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state fm-lab-control-smoke-4164297
++ log=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.viewer.log
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.viewer ']'
++ return 0
+++ fm_herdr_lab_session_list fm-lab-control-smoke-4164297
+++ fm_herdr_lab_raw fm-lab-control-smoke-4164297 session list --json
+++ local name=fm-lab-control-smoke-4164297 i
+++ shift
+++ args=('session' 'list' '--json')
+++ local -a args
+++ (( i = 0 ))
+++ (( i < 3 ))
+++ '[' session = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' list = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' --json = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++ herdr session list --json --session fm-lab-control-smoke-4164297
++ sessions='{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-lab-control-smoke-4164297","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297","socket_path":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
++ printf %s '{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-lab-control-smoke-4164297","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297","socket_path":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
++ jq -e --arg name fm-lab-control-smoke-4164297 '.sessions[]? | select(.name == $name)'
++ fm_herdr_lab_stop fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 tripwire
++ fm_herdr_lab_validate_name fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297
++ [[ fm-lab-control-smoke-4164297 =~ ^fm-lab-[a-zA-Z0-9][a-zA-Z0-9_-]*$ ]]
++ return 0
+++ fm_herdr_lab_tripwire_path fm-lab-control-smoke-4164297
++++ fm_herdr_lab_state_dir
++++ printf %s /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
+++ printf %s/%s.fleet-state.json /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state fm-lab-control-smoke-4164297
++ tripwire=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json ']'
++ fm_herdr_lab_refuse_if_default fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 info flag
++ fm_herdr_lab_validate_name fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297
++ [[ fm-lab-control-smoke-4164297 =~ ^fm-lab-[a-zA-Z0-9][a-zA-Z0-9_-]*$ ]]
++ return 0
+++ fm_herdr_lab_session_list fm-lab-control-smoke-4164297
+++ fm_herdr_lab_raw fm-lab-control-smoke-4164297 session list --json
+++ local name=fm-lab-control-smoke-4164297 i
+++ shift
+++ args=('session' 'list' '--json')
+++ local -a args
+++ (( i = 0 ))
+++ (( i < 3 ))
+++ '[' session = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' list = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' --json = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++ herdr session list --json --session fm-lab-control-smoke-4164297
++ info='{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-lab-control-smoke-4164297","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297","socket_path":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
+++ printf %s '{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-lab-control-smoke-4164297","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297","socket_path":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
+++ jq -r --arg name fm-lab-control-smoke-4164297 '.sessions[]? | select(.name == $name) | .default'
++ flag=false
++ '[' false = false ']'
++ return 0
++ fm_herdr_lab_raw fm-lab-control-smoke-4164297 session stop fm-lab-control-smoke-4164297 --json
++ local name=fm-lab-control-smoke-4164297 i
++ shift
++ args=('session' 'stop' 'fm-lab-control-smoke-4164297' '--json')
++ local -a args
++ (( i = 0 ))
++ (( i < 4 ))
++ '[' session = -- ']'
++ continue
++ (( i++ ))
++ (( i < 4 ))
++ '[' stop = -- ']'
++ continue
++ (( i++ ))
++ (( i < 4 ))
++ '[' fm-lab-control-smoke-4164297 = -- ']'
++ continue
++ (( i++ ))
++ (( i < 4 ))
++ '[' --json = -- ']'
++ continue
++ (( i++ ))
++ (( i < 4 ))
++ HERDR_SESSION=fm-lab-control-smoke-4164297
++ herdr session stop fm-lab-control-smoke-4164297 --json --session fm-lab-control-smoke-4164297
+++ return 0
++ sleep 0.5
++ fm_herdr_lab_refuse_if_default fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 info flag
++ fm_herdr_lab_validate_name fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297
++ [[ fm-lab-control-smoke-4164297 =~ ^fm-lab-[a-zA-Z0-9][a-zA-Z0-9_-]*$ ]]
++ return 0
+++ fm_herdr_lab_session_list fm-lab-control-smoke-4164297
+++ fm_herdr_lab_raw fm-lab-control-smoke-4164297 session list --json
+++ local name=fm-lab-control-smoke-4164297 i
+++ shift
+++ args=('session' 'list' '--json')
+++ local -a args
+++ (( i = 0 ))
+++ (( i < 3 ))
+++ '[' session = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' list = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' --json = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++ herdr session list --json --session fm-lab-control-smoke-4164297
++ info='{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-lab-control-smoke-4164297","running":false,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297","socket_path":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
+++ printf %s '{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-lab-control-smoke-4164297","running":false,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297","socket_path":"/home/denguinho/.config/herdr/sessions/fm-lab-control-smoke-4164297/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
+++ jq -r --arg name fm-lab-control-smoke-4164297 '.sessions[]? | select(.name == $name) | .default'
++ flag=false
++ '[' false = false ']'
++ return 0
++ fm_herdr_lab_raw fm-lab-control-smoke-4164297 session delete fm-lab-control-smoke-4164297 --json
++ local name=fm-lab-control-smoke-4164297 i
++ shift
++ args=('session' 'delete' 'fm-lab-control-smoke-4164297' '--json')
++ local -a args
++ (( i = 0 ))
++ (( i < 4 ))
++ '[' session = -- ']'
++ continue
++ (( i++ ))
++ (( i < 4 ))
++ '[' delete = -- ']'
++ continue
++ (( i++ ))
++ (( i < 4 ))
++ '[' fm-lab-control-smoke-4164297 = -- ']'
++ continue
++ (( i++ ))
++ (( i < 4 ))
++ '[' --json = -- ']'
++ continue
++ (( i++ ))
++ (( i < 4 ))
++ HERDR_SESSION=fm-lab-control-smoke-4164297
++ herdr session delete fm-lab-control-smoke-4164297 --json --session fm-lab-control-smoke-4164297
+++ fm_herdr_lab_session_list fm-lab-control-smoke-4164297
+++ fm_herdr_lab_raw fm-lab-control-smoke-4164297 session list --json
+++ local name=fm-lab-control-smoke-4164297 i
+++ shift
+++ args=('session' 'list' '--json')
+++ local -a args
+++ (( i = 0 ))
+++ (( i < 3 ))
+++ '[' session = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' list = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ '[' --json = -- ']'
+++ continue
+++ (( i++ ))
+++ (( i < 3 ))
+++ HERDR_SESSION=fm-lab-control-smoke-4164297
+++ herdr session list --json --session fm-lab-control-smoke-4164297
++ sessions='{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
++ printf %s '{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
++ jq -e --arg name fm-lab-control-smoke-4164297 '.sessions[]? | select(.name == $name)'
++ fm_herdr_lab_verify_tripwire fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 tripwire
++ fm_herdr_lab_check_tripwire fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 tripwire before after
+++ fm_herdr_lab_tripwire_path fm-lab-control-smoke-4164297
++++ fm_herdr_lab_state_dir
++++ printf %s /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
+++ printf %s/%s.fleet-state.json /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state fm-lab-control-smoke-4164297
++ tripwire=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json ']'
+++ cat /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json
++ before='{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}'
+++ fm_herdr_lab_fleet_state fm-lab-control-smoke-4164297
+++ local name=fm-lab-control-smoke-4164297 sessions snapshot
++++ fm_herdr_lab_session_list fm-lab-control-smoke-4164297
++++ fm_herdr_lab_raw fm-lab-control-smoke-4164297 session list --json
++++ local name=fm-lab-control-smoke-4164297 i
++++ shift
++++ args=('session' 'list' '--json')
++++ local -a args
++++ (( i = 0 ))
++++ (( i < 3 ))
++++ '[' session = -- ']'
++++ continue
++++ (( i++ ))
++++ (( i < 3 ))
++++ '[' list = -- ']'
++++ continue
++++ (( i++ ))
++++ (( i < 3 ))
++++ '[' --json = -- ']'
++++ continue
++++ (( i++ ))
++++ (( i < 3 ))
++++ HERDR_SESSION=fm-lab-control-smoke-4164297
++++ herdr session list --json --session fm-lab-control-smoke-4164297
+++ sessions='{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
++++ printf %s '{"sessions":[{"default":true,"name":"default","running":true,"session_dir":"/home/denguinho/.config/herdr","socket_path":"/home/denguinho/.config/herdr/herdr.sock"},{"default":false,"name":"fm-remote","running":true,"session_dir":"/home/denguinho/.config/herdr/sessions/fm-remote","socket_path":"/home/denguinho/.config/herdr/sessions/fm-remote/herdr.sock"}]}'
++++ jq -c $'\n    [.sessions[]? | select(.default == true)]\n    | if length == 1 and .[0].name == "default" and .[0].running == true\n      then .[0] | {name, default, running, socket_path}\n      else empty\n      end\n  '
+++ snapshot='{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}'
+++ '[' -n '{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}' ']'
+++ printf '%s\n' '{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}'
++ after='{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}'
++ '[' '{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}' = '{"name":"default","default":true,"running":true,"socket_path":"/home/denguinho/.config/herdr/herdr.sock"}' ']'
+++ fm_herdr_lab_tripwire_path fm-lab-control-smoke-4164297
++++ fm_herdr_lab_state_dir
++++ printf %s /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
+++ printf %s/%s.fleet-state.json /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state fm-lab-control-smoke-4164297
++ tripwire=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json
++ rm -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json
++ fm_test_cleanup
++ local d
++ fm_test_reap_watchers
++ local state lock_home $'seen=\n'
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-watcher.4164297.wEW1ta ']'
++ IFS=
++ read -r state
++ rm -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-watcher.4164297.wEW1ta
++ fm_test_reap_procevent_homes
++ local home claim_root $'seen=\n'
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-procevent.4164297.6E4lT6 ']'
++ IFS=$'\t'
++ read -r home claim_root
++ rm -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-procevent.4164297.6E4lT6
++ for d in "${FM_TEST_CLEANUP_DIRS[@]:-}"
++ '[' -n '' ']'
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-cleanup.4164297.6Lj58Z ']'
++ IFS=
++ read -r d
++ '[' -n /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1 ']'
++ fm_test_remove_tree /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
++ local dir=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
++ '[' -d /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1 ']'
++ '[' '!' -L /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1 ']'
++ find /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1 -type d -exec chmod u+rwx '{}' +
++ rm -rf /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr-standin.E7X1h1
++ IFS=
++ read -r d
++ rm -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-cleanup.4164297.6Lj58Z
++ exit 1
++ cleanup_all
++ '[' -n /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa ']'
++ rm -rf /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-herdr.MFbbLa
++ herdr_safe_stop_and_delete fm-lab-control-smoke-4164297
++ fm_herdr_lab_teardown fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297 tripwire sessions delete_status=0
++ fm_herdr_lab_validate_name fm-lab-control-smoke-4164297
++ local name=fm-lab-control-smoke-4164297
++ [[ fm-lab-control-smoke-4164297 =~ ^fm-lab-[a-zA-Z0-9][a-zA-Z0-9_-]*$ ]]
++ return 0
+++ fm_herdr_lab_tripwire_path fm-lab-control-smoke-4164297
++++ fm_herdr_lab_state_dir
++++ printf %s /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state
+++ printf %s/%s.fleet-state.json /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state fm-lab-control-smoke-4164297
++ tripwire=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/lab-state/fm-lab-control-smoke-4164297.fleet-state.json ']'
++ fm_herdr_lab_error 'missing fleet-state tripwire for '\''fm-lab-control-smoke-4164297'\''; refusing destructive calls'
++ echo 'fm-herdr-lab: missing fleet-state tripwire for '\''fm-lab-control-smoke-4164297'\''; refusing destructive calls'
++ return 1
++ fm_test_cleanup
++ local d
++ fm_test_reap_watchers
++ local state lock_home $'seen=\n'
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-watcher.4164297.wEW1ta ']'
++ return 0
++ fm_test_reap_procevent_homes
++ local home claim_root $'seen=\n'
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-procevent.4164297.6E4lT6 ']'
++ return 0
++ for d in "${FM_TEST_CLEANUP_DIRS[@]:-}"
++ '[' -n '' ']'
++ '[' -f /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/.fm-test-cleanup.4164297.6Lj58Z ']'

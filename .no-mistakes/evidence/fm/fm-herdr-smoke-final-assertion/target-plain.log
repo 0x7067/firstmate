@@ -1,4 +1,3 @@
 ok - real herdr: exit on a pane with no registered agent is idempotent success
 ok - real herdr 0.9.3: a gone session reads recoverable while a live pane and a malformed target do not
 not ok - the real Herdr pane did not drift out of its recorded worktree
-fm-herdr-lab: missing fleet-state tripwire for 'fm-lab-control-smoke-4164297'; refusing destructive calls

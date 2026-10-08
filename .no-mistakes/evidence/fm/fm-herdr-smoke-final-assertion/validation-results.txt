@@ -1,0 +1,17 @@
+Herdr 0.9.3; isolated named labs; clean Bash launchers skip host ble.sh startup.
+Default shell retained commands in MULTILINE mode; clean launchers are disposable worktree fixtures.
+target-clean-shell: exit=0; cleanup calls=1; scratch removed=True; named lab absent=True
+  'error: task hsmoke'\''s composer state is '\''unknown'\'', not proven empty; refusing to type the /exit exit command because it could concatenate onto existing text. Clear the composer, then retry '\''exit'\'''
+target-unknown: exit=0; cleanup calls=1; scratch removed=True; named lab absent=True
+  'error: task hsmoke'\''s composer state is '\''unknown'\'', not proven empty; refusing to type the /exit exit command because it could concatenate onto existing text. Clear the composer, then retry '\''exit'\'''
+target-pending: exit=0; cleanup calls=1; scratch removed=True; named lab absent=True
+  'error: task hsmoke'\''s composer visibly holds pending text; refusing to type the /exit exit command because it would concatenate onto that text. Clear or submit the pending text, then retry '\''exit'\'''
+forced-failure: exit=1; cleanup calls=1; scratch removed=True; named lab absent=True
+  'error: task hsmoke'\''s composer state is '\''unknown'\'', not proven empty; refusing to type the /exit exit command because it could concatenate onto existing text. Clear the composer, then retry '\''exit'\'''
+forced-pending: exit=1; cleanup calls=1; scratch removed=True; named lab absent=True
+  'error: task hsmoke'\''s composer visibly holds pending text; refusing to type the /exit exit command because it would concatenate onto that text. Clear or submit the pending text, then retry '\''exit'\'''
+baseline-clean-shell: exit=0 (implicit); cleanup calls=1; scratch removed=False; named lab absent=True
+  'error: task hsmoke'\''s composer state is '\''unknown'\'', not proven empty; refusing to type the /exit exit command because it could concatenate onto existing text. Clear the composer, then retry '\''exit'\'''
+baseline-pending: exit=1; cleanup calls=2; scratch removed=False; named lab absent=True
+  'error: task hsmoke'\''s composer visibly holds pending text; refusing to type the /exit exit command because it would concatenate onto that text. Clear or submit the pending text, then retry '\''exit'\'''
+All transient worktree fixtures, including baseline scratch leaks, removed.

@@ -1,0 +1,13 @@
+ok - real herdr: exit on a pane with no registered agent is idempotent success
+ok - real herdr 0.9.3: a gone session reads recoverable while a live pane and a malformed target do not
+ble.sh: insane environment: $USER is empty.  Please consider checking the
+  terminal's settings or setting export USER=$(id -un) in your .bash_profile.
+ble.sh: modified USER=denguinho
+
+[0m[1m[38;2;122;162;247mwt[0m [0m[38;2;187;154;247mhsmoke[0m  
+[0m[1m[38;2;187;154;247m❯[0m [0m[38;2;125;207;255mexport[0m[38;2;200;200;200m [0m[1m[38;5;200mPATH[0m[38;2;125;207;255m=[0m[1m[38;2;122;162;247m/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-con[0m
+[0m[1m[38;2;122;162;247mtrol-herdr.Sh9ir7/fakebin[0m[38;2;200;200;200m:[0m[38;2;187;154;247m$[0m[1m[38;5;200mPATH[0m
+[0m[38;2;122;162;247mcd[0m[38;2;200;200;200m [0m[38;5;6m--[0m[38;2;200;200;200m [0m[1m[38;2;122;162;247m/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC4DB4PQYDEQ0663SAJJF4/.test-validation/tmp/fm-control-her[0m
+[0m[1m[38;2;122;162;247mdr.Sh9ir7/proj[0m
+
+[0m[1m-- MULTILINE --[0m ([0m[38;5;5mRET[0m or [0m[38;5;5mC-m[0m: insert a newline, [0m[38;5;5mC-j[0m: run)not ok - the real Herdr pane did not drift out of its recorded worktree
