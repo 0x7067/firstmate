@@ -716,7 +716,7 @@ ok - host mirror live: 2 harness(es) proved their writers
 ```
 
 On 2026-10-07, the Claude path passed again on Linux 7.0.0-34-generic x86_64 with Claude Code 2.1.293 (`haiku`) and a managed policy that displayed `auto mode on` at its idle composer.
-The guard ran in its private tmux socket and required both the Claude-scoped idle read and an empty composer before submitting its prompt.
+The guard ran in its private tmux socket and required both an idle verdict from the Claude-scoped rendered busy-state check and an empty composer before submitting its prompt.
 
 ```text
 $ FM_HOST_MIRROR_LIVE_E2E=1 FM_HOST_MIRROR_LIVE_HARNESSES=claude bash tests/fm-host-mirror-live-e2e.test.sh
