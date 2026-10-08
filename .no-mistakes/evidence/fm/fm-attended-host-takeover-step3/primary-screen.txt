@@ -1,0 +1,50 @@
+
+  Thought for 2s (ctrl+o to expand)
+
+● Bash(bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2690359.1791463434.xvnkmZ)
+  ⎿  (No output)
+  ⎿  Allowed by auto mode classifier
+
+● ACKED
+
+✻ Churned for 8s · done 12:44 PM
+
+● Stop hook feedback
+
+● Bash(bin/fm-wake-drain.sh)
+  ⎿  1791463449 6       signal  demo.status     needs-decision: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DRDKV6TQ5XK252Q4J4C5TR/.test-tmp/fm-sh-attended-live.qj6Rr7/positive/fm/state/demo.status
+     WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 6 --recovery-generation 2709593.1791463449.j8GoTu
+     wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: needs-decision [at=1791463448] [key=lab-e2]: pick region east or west
+     … +5 lines (ctrl+o to expand)
+  ⎿  Allowed by auto mode classifier
+
+● Bash(bin/fm-wake-drain.sh --ack-through 6 --recovery-generation 2709593.1791463449.j8GoTu)
+  ⎿  (No output)
+  ⎿  Allowed by auto mode classifier
+
+● ACKED
+
+✻ Worked for 6s · done 12:44 PM
+
+● Stop hook feedback
+
+● Bash(bin/fm-wake-drain.sh)
+  ⎿  1791463462 7       check   procevent:remote-reply-labremote:1      check: procevent remote-reply remote-reply-labremote 1
+     1791463463 9       signal  labremote.status        needs-decision:
+     /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DRDKV6TQ5XK252Q4J4C5TR/.test-tmp/fm-sh-attended-live.qj6Rr7/positive/fm/state/labremote.status
+     WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 9 --recovery-generation 2751720.1791463463.Hs94Um
+     … +7 lines (ctrl+o to expand)
+  ⎿  Allowed by auto mode classifier
+
+● Bash(bin/fm-wake-drain.sh --ack-through 9 --recovery-generation 2751720.1791463463.Hs94Um)
+  ⎿  (No output)
+  ⎿  Allowed by auto mode classifier
+
+· Noting that it's worth noting… (5s · ↓ 192 tokens)
+  ⎿  Tip: Use /permissions to pre-approve and pre-deny bash, edit, and MCP tools
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+

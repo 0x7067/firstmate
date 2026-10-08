@@ -1,0 +1,26 @@
+skip: control: set FM_SUPERVISION_HOST_ATTENDED_LIVE_CONTROL_REF to a pre-fix ref to run the negative control
+warning: adding embedded git repository: .test-tmp/fm-sh-attended-live.qj6Rr7/positive/fm
+hint: You've added another git repository inside your current repository.
+hint: Clones of the outer repository will not contain the contents of
+hint: the embedded repository and will not know how to obtain it.
+hint: If you meant to add a submodule, use:
+hint:
+hint: 	git submodule add <url> .test-tmp/fm-sh-attended-live.qj6Rr7/positive/fm
+hint:
+hint: If you added this path by mistake, you can remove it from the
+hint: index with:
+hint:
+hint: 	git rm --cached .test-tmp/fm-sh-attended-live.qj6Rr7/positive/fm
+hint:
+hint: See "git help submodule" for more information.
+hint: Disable this message with "git config set advice.addEmbeddedRepo false"
+# 12:44:08 positive step 1: primary idle (claude pid 2689950, 2.1.294 (Claude Code), model haiku); tracked Stop hook registered; config/supervision-host present; host pid 2715299 parked on watcher 2715620; listener runner 2716115; captain prompts so far: 1
+# 12:44:08 positive transcript: /home/denguinho/.claude/projects/-home-denguinho--no-mistakes-worktrees-159e9a668321-01M4DRDKV6TQ5XK252Q4J4C5TR--test-tmp-fm-sh-attended-live-qZKcKT-positive-fm/71a73d5f-c2a8-44d7-acbb-cee60cd3bd83.jsonl
+# 12:44:08 positive step 2: event 1 appended at 1791463448 (demo.status needs-decision)
+# 12:44:10 positive step 2: host log: 1791463450	pass-through	attended	main-only
+# 12:44:10 positive step 2: successor watcher pid 2721703 alive; ledger: epoch=1 owner_pid=2714414 outcome=arming updated_at=1791463447; marker: pending:downtime:2715620.1791463449.VInVs6
+# 12:44:17 positive step 2: rewake delivered at 1791463451 (Stop hook exited 2 with the banner); ledger: epoch=1 owner_pid=2714414 outcome=rewake updated_at=1791463451 session_pid=2689950 recovery_generation=2715620.1791463449.VInVs6
+# 12:44:17 positive step 2: primary turn ran: bin/fm-wake-drain.sh;bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2715620.1791463449.VInVs6;
+# 12:44:18 positive step 3: turn end re-armed: 1791463458	start	gen=host-2738950-1791463458; still following successor 2721703
+# 12:44:21 positive step 3: event 2 appended at 1791463461
+not ok - positive: the arm following successor 2721703 did not deliver its close on event 2: arm_pid=2740009	watcher_pid=2721703	origin=attached	started_at=1791463459	ended_at=1791463459	exit_code=unknown	signal=unknown	reason=taken-over	beacon_age=1	lock_before=pid:2721703|identity:linux-starttime=29054197 cmdline-hex=62617368002f686f6d652f64656e6775696e686f2f2e6e6f2d6d697374616b65732f776f726b74726565732f3135396539613636383332312f30314d344452444b5636545135584b32353251344a34433554522f2e746573742d746d702f666d2d73682d617474656e6465642d6c6976652e715a4b634b542f706f7369746976652f666d2f62696e2f666d2d77617463682e736800	lock_after=pid:none|identity:none	successor=started:2740704

@@ -1,0 +1,8 @@
+1791463433	start	gen=host-2689955-1791463432	primary=claude
+1791463435	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DRDKV6TQ5XK252Q4J4C5TR/.test-tmp/fm-sh-attended-live.qj6Rr7/positive/fm/state/demo.status /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DRDKV6TQ5XK252Q4J4C5TR/.test-tmp/fm-sh-attended-live.qj6Rr7/positive/fm/state/demo2.status
+1791463444	start	gen=host-2708007-1791463444	primary=claude
+1791463444	take-over	arm=2694410
+1791463450	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DRDKV6TQ5XK252Q4J4C5TR/.test-tmp/fm-sh-attended-live.qj6Rr7/positive/fm/state/demo.status
+1791463457	start	gen=host-2735386-1791463457	primary=claude
+1791463457	take-over	arm=2721147
+1791463462	pass-through	attended	main-only	check: process-event result captured: procevent:remote-reply-labremote:1

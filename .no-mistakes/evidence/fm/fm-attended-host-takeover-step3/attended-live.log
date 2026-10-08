@@ -1,0 +1,13 @@
+skip: control: set FM_SUPERVISION_HOST_ATTENDED_LIVE_CONTROL_REF to a pre-fix ref to run the negative control
+# 12:42:02 positive step 1: primary idle (claude pid 2564799, 2.1.294 (Claude Code), model haiku); tracked Stop hook registered; config/supervision-host present; host pid 2578924 parked on watcher 2579262; listener runner 2579685; captain prompts so far: 1
+# 12:42:02 positive transcript: /home/denguinho/.claude/projects/-home-denguinho--no-mistakes-worktrees-159e9a668321-01M4DRDKV6TQ5XK252Q4J4C5TR--test-tmp-fm-sh-attended-live-W1KFbc-positive-fm/157a688b-5c31-412c-88ab-c0e792fe3afc.jsonl
+# 12:42:02 positive step 2: event 1 appended at 1791463322 (demo.status needs-decision)
+# 12:42:04 positive step 2: host log: 1791463324	pass-through	attended	main-only
+# 12:42:04 positive step 2: successor watcher pid 2582819 alive; ledger: epoch=1 owner_pid=2578496 outcome=arming updated_at=1791463321; marker: announced:downtime:2579262.1791463323.htMlNn
+# 12:42:10 positive step 2: rewake delivered at 1791463325 (Stop hook exited 2 with the banner); ledger: epoch=1 owner_pid=2578496 outcome=rewake updated_at=1791463324 session_pid=2564799 recovery_generation=2579262.1791463323.htMlNn
+# 12:42:10 positive step 2: primary turn ran: bin/fm-wake-drain.sh;bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2579262.1791463323.htMlNn;
+# 12:42:12 positive step 3: turn end re-armed: 1791463331	start	gen=host-2592070-1791463331; took over successor 2582819 (arm_pid=2592341 reason=taken-over); host owns watcher 2593035
+# 12:42:15 positive step 3: event 2 appended at 1791463335
+# 12:42:22 positive step 3/4: owned watcher 2593035 closed: arm_pid=2592341 watcher_pid=2593035 origin=started started_at=1791463332 ended_at=1791463336 exit_code=0 signal=none reason=actionable-signal
+# 12:42:22 positive step 3/4: its close was delivered: rewake at 1791463337; host log: 1791463336	pass-through	attended	main-only
+# 12:42:27 positive step 4: event 3 appended to the stand-in remote log at 1791463347

@@ -1,0 +1,7 @@
+1791463321	start	gen=host-2578924-1791463321	primary=claude
+1791463324	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DRDKV6TQ5XK252Q4J4C5TR/.test-tmp/fm-sh-attended-live.W1KFbc/positive/fm/state/demo.status /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DRDKV6TQ5XK252Q4J4C5TR/.test-tmp/fm-sh-attended-live.W1KFbc/positive/fm/state/demo2.status
+1791463331	start	gen=host-2592070-1791463331	primary=claude
+1791463331	take-over	arm=2582785
+1791463336	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DRDKV6TQ5XK252Q4J4C5TR/.test-tmp/fm-sh-attended-live.W1KFbc/positive/fm/state/demo.status
+1791463344	start	gen=host-2607413-1791463344	primary=claude
+1791463344	take-over	arm=2599638
