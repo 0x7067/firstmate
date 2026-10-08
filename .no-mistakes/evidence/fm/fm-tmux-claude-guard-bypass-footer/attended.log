@@ -1,0 +1,4 @@
+skip: control: set FM_SUPERVISION_HOST_ATTENDED_LIVE_CONTROL_REF to a pre-fix ref to run the negative control
+error: '.test-labs/fm-host-mirror-live.W7ZMJS/claude/' does not have a commit checked out
+error: unable to index file '.test-labs/fm-host-mirror-live.W7ZMJS/claude/'
+fatal: adding files failed

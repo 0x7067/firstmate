@@ -1,0 +1,50 @@
+
+● Stop hook feedback
+
+● Bash(bin/fm-wake-drain.sh)
+  ⎿  1791423926 3       signal  demo.status     needs-decision: /tmp/fm-sh-attended-live.R96oY0/positive/fm/state/demo.status /tmp/fm-sh-attended-live.R96oY0/positive/fm/state/demo2.status
+     1791423926 4       signal  demo2.status    signal: /tmp/fm-sh-attended-live.R96oY0/positive/fm/state/demo.status /tmp/fm-sh-attended-live.R96oY0/positive/fm/state/demo2.status
+     WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2251992.1791423926.L6dhoi
+     … +5 lines (ctrl+o to expand)
+  ⎿  Allowed by auto mode classifier
+
+  Thought for 1s (ctrl+o to expand)
+
+● Bash(bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2251992.1791423926.L6dhoi)
+  ⎿  (No output)
+  ⎿  Allowed by auto mode classifier
+
+● ACKED
+
+✻ Cogitated for 6s · done 1:45 AM
+
+● Stop hook feedback
+
+● Bash(bin/fm-wake-drain.sh)
+  ⎿  1791423939 6       signal  demo.status     needs-decision: /tmp/fm-sh-attended-live.R96oY0/positive/fm/state/demo.status
+     WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 6 --recovery-generation 2264107.1791423939.LY36wu
+     wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: needs-decision [at=1791423938] [key=lab-e2]: pick region east or west
+     … +5 lines (ctrl+o to expand)
+  ⎿  Allowed by auto mode classifier
+
+● Bash(bin/fm-wake-drain.sh --ack-through 6 --recovery-generation 2264107.1791423939.LY36wu)
+  ⎿  (No output)
+  ⎿  Allowed by auto mode classifier
+
+● ACKED
+
+✻ Worked for 5s · done 1:45 AM
+
+● Stop hook feedback
+
+  Bash(bin/fm-wake-drain.sh)
+  ⎿  Running…
+
+· Propagating… (2s · ↓ 20 tokens)
+  ⎿  Tip: Use /voice to enable push-to-talk dictation
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents
+

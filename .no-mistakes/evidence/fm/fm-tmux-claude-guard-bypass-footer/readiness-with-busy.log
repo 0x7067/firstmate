@@ -1,0 +1,16 @@
+/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CHW5YHGMARGX7629WDRE4A/.no-mistakes/test-labs/primary.Wdz1jY
+busy=unknown composer=unknown
+busy=idle composer=empty
+busy=idle composer=empty
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                                                                                       ◐ medium · /effort
+PASS auto-mode idle empty composer accepted
+busy=idle composer=pending
+PASS pending draft rejected
+busy=idle composer=empty
+PASS clearing draft restores readiness
+busy=idle composer=pending
+busy=busy composer=empty
+busy=busy composer=empty
+PASS active turn with empty composer rejected
+busy=unknown composer=unknown
+PASS missing pane rejected as unknown

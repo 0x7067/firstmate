@@ -1,0 +1,5 @@
+1791423067	start	gen=host-1390112-1791423067	primary=claude
+1791423070	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CHW5YHGMARGX7629WDRE4A/.no-mistakes/test-labs/fm-sh-attended-live.wBe7QH/positive/fm/state/demo.status /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CHW5YHGMARGX7629WDRE4A/.no-mistakes/test-labs/fm-sh-attended-live.wBe7QH/positive/fm/state/demo2.status
+1791423078	start	gen=host-1404424-1791423078	primary=claude
+1791423078	take-over	arm=1395038
+1791423084	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CHW5YHGMARGX7629WDRE4A/.no-mistakes/test-labs/fm-sh-attended-live.wBe7QH/positive/fm/state/demo.status

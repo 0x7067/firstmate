@@ -1,0 +1,6 @@
+busy=idle composer=empty
+busy=idle composer=pending
+PASS: pending input blocks readiness
+busy=idle composer=empty
+busy=busy composer=empty
+PASS: active Claude turn blocks readiness

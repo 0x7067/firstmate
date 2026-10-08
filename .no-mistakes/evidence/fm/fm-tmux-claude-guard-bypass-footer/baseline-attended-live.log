@@ -1,0 +1,11 @@
+skip: control: set FM_SUPERVISION_HOST_ATTENDED_LIVE_CONTROL_REF to a pre-fix ref to run the negative control
+not ok - positive: Claude never reached its composer
+--- host log
+
+--- cycle exits
+
+--- queue
+
+--- ledger: 
+--- marker: 
+--- screen

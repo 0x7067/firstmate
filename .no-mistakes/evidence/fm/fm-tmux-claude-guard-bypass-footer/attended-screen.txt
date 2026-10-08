@@ -1,0 +1,50 @@
+  run bin/fm-watch-arm.sh, and never use any other tool.
+
+  Thought for 2s (ctrl+o to expand)
+
+● READY
+
+✻ Cogitated for 3s · done 1:41 AM
+
+● Stop hook feedback
+
+● Bash(bin/fm-wake-drain.sh)
+  ⎿  1791423721 3       signal  demo.status     needs-decision: /tmp/fm-sh-attended-live.yaPBai/positive/fm/state/demo.status /tmp/fm-sh-attended-live.yaPBai/positive/fm/state/demo2.status
+     1791423721 4       signal  demo2.status    signal: /tmp/fm-sh-attended-live.yaPBai/positive/fm/state/demo.status /tmp/fm-sh-attended-live.yaPBai/positive/fm/state/demo2.status
+     WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2016980.1791423721.ibonu3
+     … +5 lines (ctrl+o to expand)
+  ⎿  Allowed by auto mode classifier
+
+  Thought for 3s (ctrl+o to expand)
+
+● Bash(bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2016980.1791423721.ibonu3)
+  ⎿  (No output)
+  ⎿  Allowed by auto mode classifier
+
+● ACKED
+
+✻ Cogitated for 9s · done 1:42 AM
+
+● Stop hook feedback
+
+● Bash(bin/fm-wake-drain.sh)
+  ⎿  1791423737 6       signal  demo.status     needs-decision: /tmp/fm-sh-attended-live.yaPBai/positive/fm/state/demo.status
+     WAKE_ACK_REQUIRED: after handling completes run bin/fm-wake-drain.sh --ack-through 6 --recovery-generation 2043708.1791423737.Kaiydv
+     wake annotation: latest wake-EVENT observed at drain, not current state: demo.status: needs-decision [at=1791423736] [key=lab-e2]: pick region east or west
+     … +5 lines (ctrl+o to expand)
+  ⎿  Allowed by auto mode classifier
+
+● Bash(bin/fm-wake-drain.sh --ack-through 6 --recovery-generation 2043708.1791423737.Kaiydv)
+  ⎿  (No output)
+  ⎿  Allowed by auto mode classifier
+
+● ACKED
+
+✻ Cooked for 7s · done 1:42 AM
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents
+
+

@@ -1,0 +1,7 @@
+not ok - claude 2.1.293 (Claude Code): never reached an idle empty composer (last readiness: busy=idle composer=pending; last screen: ▎ Why so serious? It's just a hotfix.
+  1 more notice hidden
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ unsent captain draft
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ⏵⏵ auto mode on (shift+tab to cycle))
+observed exit=1 (expected 1 for pending composer)

@@ -1,0 +1,11 @@
+skip: control: set FM_SUPERVISION_HOST_ATTENDED_LIVE_CONTROL_REF to a pre-fix ref to run the negative control
+# 01:30:03 positive step 1: primary idle (claude pid 1308406, 2.1.293 (Claude Code), model haiku); tracked Stop hook registered; config/supervision-host present; host pid 1321730 parked on watcher 1322105; listener runner 1322605; captain prompts so far: 1
+# 01:30:03 positive transcript: /home/denguinho/.claude/projects/-home-denguinho--no-mistakes-worktrees-159e9a668321-01M4CHW5YHGMARGX7629WDRE4A--no-mistakes-test-labs-fm-sh-attended-live-RGy7FT-positive-fm/b9126df3-d9c2-4b8f-bda2-ee324645d3af.jsonl
+# 01:30:03 positive step 2: event 1 appended at 1791423003 (demo.status needs-decision)
+# 01:30:05 positive step 2: host log: 1791423005	pass-through	attended	main-only
+# 01:30:05 positive step 2: successor watcher pid 1325520 alive; ledger: epoch=1 owner_pid=1321298 outcome=arming updated_at=1791423002; marker: pending:downtime:1322105.1791423004.7JGply
+# 01:30:11 positive step 2: rewake delivered at 1791423006 (Stop hook exited 2 with the banner); ledger: epoch=1 owner_pid=1321298 outcome=rewake updated_at=1791423006 session_pid=1308406 recovery_generation=1322105.1791423004.7JGply
+# 01:30:11 positive step 2: primary turn ran: bin/fm-wake-drain.sh;bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 1322105.1791423004.7JGply;
+# 01:30:12 positive step 3: turn end re-armed: 1791423003	start	gen=host-1321730-1791423002; still following successor 1325520
+# 01:30:15 positive step 3: event 2 appended at 1791423015
+not ok - positive: the arm following successor 1325520 did not deliver its close on event 2: arm_pid=1336011	watcher_pid=1325520	origin=attached	started_at=1791423012	ended_at=1791423013	exit_code=unknown	signal=unknown	reason=taken-over	beacon_age=2	lock_before=pid:1325520|identity:linux-starttime=25009693 cmdline-hex=62617368002f686f6d652f64656e6775696e686f2f2e6e6f2d6d697374616b65732f776f726b74726565732f3135396539613636383332312f30314d34434857355948474d41524758373632395744524534412f2e6e6f2d6d697374616b65732f746573742d6c6162732f666d2d73682d617474656e6465642d6c6976652e5247793746542f706f7369746976652f666d2f62696e2f666d2d77617463682e736800	lock_after=pid:none|identity:none	successor=started:1336521
