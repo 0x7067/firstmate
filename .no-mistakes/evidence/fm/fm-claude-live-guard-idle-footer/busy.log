@@ -1,0 +1,3 @@
+initial native=idle composer=empty
+emptysample native=working composer=empty
+BUSY native=working composer=empty; native status rejects readiness

@@ -1,23 +1,25 @@
-CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --permission-mode auto --settings '{"feed
+backDrafts":"off"}'
 ble.sh: insane environment: $USER is empty.  Please consider checking the
   terminal's settings or setting export USER=$(id -un) in your .bash_profile.
 ble.sh: modified USER=denguinho
 
-01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
-❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"feedbackDrafts":"off"}'
- ▐▛███▛█   Claude Code v2.1.293
+fresh-repo-final main
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --permission-mode auto --settings '{"fe
+edbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.294
 ▝▜██████▀  Opus 5.5 · Claude Team
- ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS/.test-tmp/fresh-repo-final
 
 ▎ Message from Ravn_Muninn:
-▎ With great power comes great `sudo`.
+▎ Say hello to my little lint error.
   1 more notice hidden
 
-❯ Reply with exactly BOUNDARYPONG12658 and nothing else.
+❯ Think carefully about the sum of all integers from 1 to 100000, then reply with just that sum. Do not use any tools.
 
-✽ Prestidigitating…
+· Inferring…
 
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ❯
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  ⏸ plan mode on (shift+tab to cycle) · esc to interrupt · ← for agents                  Ctrl+Y to paste deleted text
+  ⏸ manual mode on · esc to interrupt · ← for agents                                     Ctrl+Y to paste deleted text

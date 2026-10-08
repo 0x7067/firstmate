@@ -1,12 +1,12 @@
-CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
- '{"feedbackDrafts":"off"}'
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --permission-mode auto --settings '{"feed
+backDrafts":"off"}'
 ble.sh: insane environment: $USER is empty.  Please consider checking the
   terminal's settings or setting export USER=$(id -un) in your .bash_profile.
 ble.sh: modified USER=denguinho
 
-project master
-❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
-gs '{"feedbackDrafts":"off"}'
+fresh-repo-final main
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --permission-mode auto --settings '{"fe
+edbackDrafts":"off"}'
 
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   Allow external CLAUDE.md file imports?
@@ -15,7 +15,7 @@ gs '{"feedbackDrafts":"off"}'
   third-party repositories.
 
   External imports:
-    /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4C8JJK1KHES4SVA7117BP53/AGENTS.md
+    /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS/AGENTS.md
 
   Important: Only use Claude Code with files you trust. Accessing untrusted files may pose security risks
   https://code.claude.com/docs/en/security

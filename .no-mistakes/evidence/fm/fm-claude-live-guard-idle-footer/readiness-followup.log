@@ -1,0 +1,12 @@
+after-trust native= composer=unknown ready=no
+after-trust native=unknown composer=pending ready=no
+after-trust native=unknown composer=empty ready=no
+after-trust native=unknown composer=empty ready=no
+after-trust native=unknown composer=empty ready=no
+after-trust native=idle composer=empty ready=yes
+pending-draft native=idle composer=pending ready=no
+cleared-draft native=idle composer=empty ready=yes
+cycled-mode native=idle composer=empty ready=yes
+working-request-submit=empty
+in-turn native=working composer=empty ready=no
+PASS: trust, auto readiness, old timeout, pending draft, cleared draft, permission cycling, working rejection

@@ -1,0 +1,2 @@
+TRUST native=unknown composer=pending; requires idle/done AND empty
+READY after trust native=idle composer=empty

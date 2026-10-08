@@ -1,21 +1,25 @@
-CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --permission-mode auto --settings '{"feed
-backDrafts":"off"}'
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
 ble.sh: insane environment: $USER is empty.  Please consider checking the
   terminal's settings or setting export USER=$(id -un) in your .bash_profile.
 ble.sh: modified USER=denguinho
 
-fresh-repo-final main
-❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --permission-mode auto --settings '{"fe
-edbackDrafts":"off"}'
+01M4DK7C9KE09JXBG0DQVT0PRS/.test-tmp/fresh-project HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
  ▐▛███▛█   Claude Code v2.1.294
 ▝▜██████▀  Opus 5.5 · Claude Team
- ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS/.test-tmp/fresh-repo-final
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS/.test-tmp/fresh-project
 
 ▎ Message from Ravn_Muninn:
-▎ Say hello to my little lint error.
+▎ Talk is cheap. Show me the diff.
   1 more notice hidden
 
+❯ Write the integers from 1 to 800, each on a separate line. Do not use tools.
+
+✽ Calculating…
+
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-❯ DO NOT SUBMIT: retained draft
+❯
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+  ⏵⏵ auto mode on (shift+tab to cycle) · esc to interrupt · ← for agents                 Ctrl+Y to paste deleted text

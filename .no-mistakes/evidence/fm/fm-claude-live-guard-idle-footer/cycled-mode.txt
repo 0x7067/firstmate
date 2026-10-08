@@ -16,6 +16,6 @@ edbackDrafts":"off"}'
   1 more notice hidden
 
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-❯ DO NOT SUBMIT: retained draft
+❯
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+  ⏸ manual mode on · ? for shortcuts · ← for agents                                      Ctrl+Y to paste deleted text

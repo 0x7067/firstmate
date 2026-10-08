@@ -1,18 +1,17 @@
-CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
- '{"feedbackDrafts":"off"}'
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --permission-mode auto --settings '{"feed
+backDrafts":"off"}'
 ble.sh: insane environment: $USER is empty.  Please consider checking the
   terminal's settings or setting export USER=$(id -un) in your .bash_profile.
 ble.sh: modified USER=denguinho
 
-project master
-❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
-gs '{"feedbackDrafts":"off"}'
+fresh-repo-final main
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --permission-mode auto --settings '{"fe
+edbackDrafts":"off"}'
 
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
  Accessing workspace:
 
- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4C8JJK1KHES4SVA7117BP53/.live-lab/tmp/fm-herdr-submit-confirm-
- live.GQj9m3/project
+ /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS/.test-tmp/fresh-repo-final
 
  Quick safety check: Is this a project you created or one you trust? (Like your own code, a well-known open source
  project, or work from your team). If not, take a moment to review what's in this folder first.

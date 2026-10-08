@@ -4,18 +4,23 @@ ble.sh: insane environment: $USER is empty.  Please consider checking the
   terminal's settings or setting export USER=$(id -un) in your .bash_profile.
 ble.sh: modified USER=denguinho
 
-01M4DK7C9KE09JXBG0DQVT0PRS HEAD ?
+01M4DK7C9KE09JXBG0DQVT0PRS/.test-tmp/fresh-project HEAD ?
 ❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
 gs '{"feedbackDrafts":"off"}'
- ▐▛███▛█   Claude Code v2.1.294
-▝▜██████▀  Opus 5.5 · Claude Team
- ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS
-
-▎ Message from Ravn_Muninn:
-▎ May the Force be with you.
-  1 more notice hidden
 
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-❯
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents                Bypass permissions mode was disabled by settings
+  Allow external CLAUDE.md file imports?
+
+  This project's CLAUDE.md or .claude/rules imports files outside the current working directory. Never allow this for
+  third-party repositories.
+
+  External imports:
+    /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS/AGENTS.md
+
+  Important: Only use Claude Code with files you trust. Accessing untrusted files may pose security risks
+  https://code.claude.com/docs/en/security
+
+  ❯ No, disable external imports
+    Yes, allow external imports
+
+  Enter to confirm · Esc to cancel

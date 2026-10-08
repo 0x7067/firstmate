@@ -9,19 +9,18 @@ fm-herdr-submit-confirm-live.gCy3Sc master ?
 "feedbackDrafts":"off"}'
 
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
- Accessing workspace:
+  Allow external CLAUDE.md file imports?
 
- /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS/.live-test-tmp/fm-herdr-submit-confirm
- -live.gCy3Sc
+  This project's CLAUDE.md or .claude/rules imports files outside the current working directory. Never allow this for
+  third-party repositories.
 
- Quick safety check: Is this a project you created or one you trust? (Like your own code, a well-known open source
- project, or work from your team). If not, take a moment to review what's in this folder first.
+  External imports:
+    /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS/AGENTS.md
 
- Claude Code'll be able to read, edit, and execute files here.
+  Important: Only use Claude Code with files you trust. Accessing untrusted files may pose security risks
+  https://code.claude.com/docs/en/security
 
- Security guide
+  ❯ No, disable external imports
+    Yes, allow external imports
 
- ❯ No, exit
-   Yes, I trust this folder
-
- Enter to confirm · Esc to cancel
+  Enter to confirm · Esc to cancel

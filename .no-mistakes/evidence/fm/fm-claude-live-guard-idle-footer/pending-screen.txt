@@ -1,23 +1,21 @@
-env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOME=
-'/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_ENAB
-LE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"unusedDisableAllHooks":true}'
+CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settings
+ '{"feedbackDrafts":"off"}'
 ble.sh: insane environment: $USER is empty.  Please consider checking the
   terminal's settings or setting export USER=$(id -un) in your .bash_profile.
 ble.sh: modified USER=denguinho
 
-01M4CE93TQQAHQD97QWA2QR4XZ HEAD ?
-❯ env -u FM_ROOT_OVERRIDE -u FM_STATE_OVERRIDE -u FM_DATA_OVERRIDE -u FM_CONFIG_OVERRIDE -u FM_PROJECTS_OVERRIDE FM_HOM
-E='/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ/.live-validation/home' CLAUDE_CODE_EN
-ABLE_PROMPT_SUGGESTION=false claude --permission-mode auto --settings '{"unusedDisableAllHooks":true}'
- ▐▛███▛█   Claude Code v2.1.293
+01M4DK7C9KE09JXBG0DQVT0PRS HEAD ?
+❯ CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false CLAUDE_CODE_SEND_FEEDBACK=0 claude --dangerously-skip-permissions --settin
+gs '{"feedbackDrafts":"off"}'
+ ▐▛███▛█   Claude Code v2.1.294
 ▝▜██████▀  Opus 5.5 · Claude Team
- ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4CE93TQQAHQD97QWA2QR4XZ
+ ▝▝   ▝▝   ~/.no-mistakes/worktrees/159e9a668321/01M4DK7C9KE09JXBG0DQVT0PRS
 
 ▎ Message from Ravn_Muninn:
-▎ Not great, not terrible.
+▎ May the Force be with you.
   1 more notice hidden
 
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-❯ Reply with exactly FMBOUNDARYPONG and nothing else.
+❯ DO NOT SUBMIT THIS PENDING INPUT
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  ⏵⏵ auto mode on (shift+tab to cycle)                                                             ◐ medium · /effort
+  ⏵⏵ auto mode on (shift+tab to cycle)                               Bypass permissions mode was disabled by settings

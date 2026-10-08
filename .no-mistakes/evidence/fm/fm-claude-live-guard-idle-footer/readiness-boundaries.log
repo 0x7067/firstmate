@@ -1,0 +1,12 @@
+native= composer=unknown ready=no
+native=unknown composer=pending ready=no
+native=unknown composer=empty ready=no
+native=unknown composer=empty ready=no
+native=unknown composer=empty ready=no
+native=idle composer=empty ready=yes
+native=idle composer=empty ready=yes
+ok - actual idle empty auto-mode composer fails the former footer requirement
+ok - pending text rejected even with native idle
+native=idle composer=pending ready=no
+native=working composer=empty ready=no
+ok - working agent rejected even when composer is empty
