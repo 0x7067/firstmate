@@ -1,0 +1,12 @@
+Testing tests/fm-host-mirror-live-e2e.test.sh readiness interface
+idle auto-mode composer: busy=idle composer=empty
+unsent draft rejected: busy=idle composer=pending
+cleared draft accepted: busy=idle composer=empty
+missing pane rejected: busy=unknown composer=unknown
+active model turn rejected: busy=busy composer=empty
+Testing tests/fm-supervision-host-attended-live-e2e.test.sh readiness interface
+idle auto-mode composer: busy=idle composer=empty
+unsent draft rejected: busy=idle composer=pending
+cleared draft accepted: busy=idle composer=empty
+missing pane rejected: busy=unknown composer=unknown
+active model turn rejected: busy=busy composer=unknown

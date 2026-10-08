@@ -1,0 +1,9 @@
+tests/fm-host-mirror-live-e2e.test.sh target=primary: busy=idle composer=empty exit=0
+tests/fm-supervision-host-attended-live-e2e.test.sh target=primary: busy=idle composer=empty exit=0
+tests/fm-host-mirror-live-e2e.test.sh target=primary: busy=idle composer=pending exit=1
+tests/fm-supervision-host-attended-live-e2e.test.sh target=primary: busy=idle composer=pending exit=1
+tests/fm-host-mirror-live-e2e.test.sh target=primary: busy=idle composer=empty exit=0
+tests/fm-host-mirror-live-e2e.test.sh target=missing: busy=unknown composer=unknown exit=1
+tests/fm-supervision-host-attended-live-e2e.test.sh target=primary: busy=idle composer=empty exit=0
+tests/fm-supervision-host-attended-live-e2e.test.sh target=missing: busy=unknown composer=unknown exit=1
+FAIL: no actual busy state observed

@@ -1,0 +1,6 @@
+{"seq":1,"epoch":1791419658,"key":"2970501:3720645487:3362563990","id":"4577ce81-6261-4ce0-a795-d735644f7b13","tag":"captain","text":"This is an isolated Firstmate test lab, not a real fleet. Reply with exactly READY now and use no tools. Later, whenever a \"Stop hook feedback\" message wakes you, do exactly this and nothing else: run `bin/fm-wake-drain.sh` once with the Bash tool, then run the exact `bin/fm-wake-drain.sh --ack-through ...` command that its WAKE_ACK_REQUIRED line prints, then reply with exactly ACKED. Never run any other command, never run bin/fm-watch-arm.sh, and never use any other tool."}
+{"seq":2,"epoch":1791419660,"key":"2970501:3720645487:3362563990","id":"4577ce81-6261-4ce0-a795-d735644f7b13","tag":"main","text":"READY"}
+{"seq":3,"epoch":1791419670,"key":"2970501:3720645487:3362563990","id":"ca7db558-4e85-4342-8cbd-18baab7fe1f8","tag":"main","text":"ACKED"}
+{"seq":4,"epoch":1791419682,"key":"2970501:3720645487:3362563990","id":"bdd51185-0417-4241-996d-dd2c4748baf8","tag":"main","text":"ACKED"}
+{"seq":5,"epoch":1791419695,"key":"2970501:3720645487:3362563990","id":"58b4e4db-c1c3-434a-9bf3-e3ea4986ac9a","tag":"main","text":"ACKED"}
+{"seq":6,"epoch":1791419709,"key":"2970501:3720645487:3362563990","id":"dfd039c4-121e-46d2-880b-c97770063cda","tag":"main","text":"ACKED"}

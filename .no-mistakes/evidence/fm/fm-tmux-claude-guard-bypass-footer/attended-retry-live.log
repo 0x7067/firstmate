@@ -1,0 +1,19 @@
+skip: control: set FM_SUPERVISION_HOST_ATTENDED_LIVE_CONTROL_REF to a pre-fix ref to run the negative control
+
+
+
+
+
+
+
+# 00:25:41 positive step 1: primary idle (claude pid 2301521, 2.1.293 (Claude Code), model haiku); tracked Stop hook registered; config/supervision-host present; host pid 2314075 parked on watcher 2315013; listener runner 2315496; captain prompts so far: 1
+# 00:25:41 positive transcript: /home/denguinho/.claude/projects/-home-denguinho--no-mistakes-worktrees-159e9a668321-01M4CC93HSD5MTCYJ23NN11EX3--live-test-tmp-fm-sh-attended-live-XaRY2N-positive-fm/ac073efc-2f61-4a91-8e7b-d63a9bc7cda5.jsonl
+# 00:25:41 positive step 2: event 1 appended at 1791419141 (demo.status needs-decision)
+# 00:25:42 positive step 2: host log: 1791419142	pass-through	attended	main-only
+# 00:25:43 positive step 2: successor watcher pid 2319780 alive; ledger: epoch=1 owner_pid=2313183 outcome=arming updated_at=1791419140; marker: announced:downtime:2315013.1791419141.CCw2yA
+# 00:25:48 positive step 2: rewake delivered at 1791419143 (Stop hook exited 2 with the banner); ledger: epoch=1 owner_pid=2313183 outcome=rewake updated_at=1791419143 session_pid=2301521 recovery_generation=2315013.1791419141.CCw2yA
+# 00:25:48 positive step 2: primary turn ran: bin/fm-wake-drain.sh;bin/fm-wake-drain.sh --ack-through 4 --recovery-generation 2315013.1791419141.CCw2yA;
+# 00:25:49 positive step 3: turn end re-armed: 1791419149	start	gen=host-2328348-1791419149; still following successor 2319780
+# 00:25:52 positive step 3: event 2 appended at 1791419152
+not ok - positive: the arm following successor 2319780 did not deliver its close on event 2: arm_pid=2329126	watcher_pid=2319780	origin=attached	started_at=1791419149	ended_at=1791419149	exit_code=unknown	signal=unknown	reason=taken-over	beacon_age=0	lock_before=pid:2319780|identity:linux-starttime=24623441 cmdline-hex=62617368002f686f6d652f64656e6775696e686f2f2e6e6f2d6d697374616b65732f776f726b74726565732f3135396539613636383332312f30314d3443433933485344354d5443594a32334e4e31314558332f2e6c6976652d746573742d746d702f666d2d73682d617474656e6465642d6c6976652e58615259324e2f706f7369746976652f666d2f62696e2f666d2d77617463682e736800	lock_after=pid:none|identity:none	successor=started:2329916
+Boundary: retained disposable Claude transcript at /home/denguinho/.claude/projects/-home-denguinho--no-mistakes-worktrees-159e9a668321-01M4CC93HSD5MTCYJ23NN11EX3--live-test-tmp-fm-sh-attended-live-XaRY2N-positive-fm

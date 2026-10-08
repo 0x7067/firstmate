@@ -1,0 +1,12 @@
+1791419660	start	gen=host-2987618-1791419660	primary=claude
+1791419662	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC93HSD5MTCYJ23NN11EX3/.no-mistakes/live-tmp/fm-sh-attended-live.Y8gNSs/positive/fm/state/demo.status /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC93HSD5MTCYJ23NN11EX3/.no-mistakes/live-tmp/fm-sh-attended-live.Y8gNSs/positive/fm/state/demo2.status
+1791419671	start	gen=host-3001768-1791419670	primary=claude
+1791419671	take-over	arm=2992484
+1791419676	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC93HSD5MTCYJ23NN11EX3/.no-mistakes/live-tmp/fm-sh-attended-live.Y8gNSs/positive/fm/state/demo.status
+1791419683	start	gen=host-3029354-1791419682	primary=claude
+1791419683	take-over	arm=3014013
+1791419688	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC93HSD5MTCYJ23NN11EX3/.no-mistakes/live-tmp/fm-sh-attended-live.Y8gNSs/positive/fm/state/labremote.status
+1791419696	start	gen=host-3055216-1791419695	primary=claude
+1791419696	take-over	arm=3043179
+1791419703	pass-through	attended	main-only	signal: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4CC93HSD5MTCYJ23NN11EX3/.no-mistakes/live-tmp/fm-sh-attended-live.Y8gNSs/positive/fm/state/demo2.status
+1791419710	start	gen=host-3088425-1791419709	primary=claude
