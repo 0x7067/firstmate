@@ -1228,12 +1228,15 @@ Measured 2026-10-07 against Herdr 0.9.3 and Claude Code 2.1.293 on a host whose 
 A wait keyed on the `bypass permissions on` footer timed out on that idle, empty composer and failed with `never rendered an idle composer in the lab pane`.
 In the same lab, Claude's folder-trust prompt read `pending` while Herdr reported the agent `unknown` and then `blocked`, and a mid-turn pane read `empty` with native `working`, so neither passes the ready wait.
 
-Observed 2026-10-07:
+Observed 2026-10-07 for the first two scenarios only:
 
 ```text
 ok - live Herdr submit confirm: Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3 reports empty and renders the requested reply in isolated session fm-lab-herdr-submit-con-3893118-16076
 ok - live Herdr submit confirm: Claude Code (2.1.293 (Claude Code)) on herdr 0.9.3 submits a U+2063 away-supervisor payload whose read-back drops the mark
 ```
+
+These results establish readiness and submit confirmation, not a pass of the full guard.
+On Claude Code 2.1.293, the final `/exit` scenario is expected to fail until the separate recognizer fix in [PR #6813](https://github.com/kunchenguid/firstmate/pull/6813) lands; the footer-independent readiness change does not alter composer classification.
 
 ### Claude exit behind the slash-command popup
 
