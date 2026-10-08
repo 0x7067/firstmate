@@ -182,7 +182,7 @@ run_interactive() {  # <harness> <command> [arguments...]
 for harness in $HARNESSES; do
   case "$harness" in
     claude) bin=$harness ;;
-    cursor) bin=cursor-agent ;;
+    cursor) bin='cursor-agent' ;;
     *) fail "unknown harness in FM_HOST_MIRROR_LIVE_HARNESSES: $harness" ;;
   esac
   if ! command -v "$bin" >/dev/null 2>&1; then
