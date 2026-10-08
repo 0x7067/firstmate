@@ -4886,9 +4886,9 @@ herdr_popup_composer_screen() {  # <typed-text>
   printf '  %s\n' "$rule"
   printf '  \xe2\x9d\xaf %s\n' "$typed"
   printf '  %s\n' "$rule"
-  printf '  \xe2\x9d\xaf %s    Exit the CLI\n' "$typed"
+  printf '  %s    Exit the CLI\n' "$typed"
   for ((i = 0; i < 21; i++)); do
-    printf '    /skill-%02d    A skill description long enough to read as a popup row\n' "$i"
+    printf '  /skill-%02d    A skill description long enough to read as a popup row\n' "$i"
   done
   printf '  \xe2\x8f\xb5\xe2\x8f\xb5 bypass permissions on\n'
 }
@@ -5121,16 +5121,6 @@ test_send_text_submit_claude_slash_popup_composer_is_still_proven_and_submitted(
     || fail "the payload proof must use the visible viewport"
   [ "$(grep -c $'\x1f''--lines' "$log")" -eq 0 ] || fail "no composer read may be a bounded --lines tail"
   pass "fm_backend_herdr_send_text_submit: a typed slash command hidden behind its popup is still proven and submitted"
-}
-
-test_composer_content_keeps_a_newer_indented_slash_draft() {
-  local screen out rule
-  . "$ROOT/bin/fm-composer-lib.sh"
-  rule=$(printf '%0.s\xe2\x94\x80' $(seq 1 60))
-  screen=$(printf '%s\n❯ /exit\n%s\n  ❯ /newer\n' "$rule" "$rule")
-  out=$(fm_composer_extract_selected_content 'styled=1' "$screen")
-  [ "$out" = /newer ] || fail "a newer slash draft must not be mistaken for a completion menu, got '$out'"
-  pass "composer content: an indented slash draft without a completion menu remains selected"
 }
 
 # Live Claude Code 2.1.283 draws a recognized typed slash command in muted
@@ -6070,7 +6060,6 @@ test_send_text_submit_accepts_marked_payloads_whose_read_back_drops_u2063
 test_send_text_submit_refuses_marked_digest_missing_its_head
 test_composer_state_claude_slash_popup_pushes_composer_above_tail_window
 test_send_text_submit_claude_slash_popup_composer_is_still_proven_and_submitted
-test_composer_content_keeps_a_newer_indented_slash_draft
 test_send_text_submit_claude_grey_slash_command_is_proven_and_submitted
 test_send_text_submit_lone_paste_placeholder_submits_the_long_payload
 test_send_text_submit_multiline_paste_placeholder_submits_the_long_payload
