@@ -1161,7 +1161,7 @@ Set it high when a wrong pick is costly and low when the rule is a safe runner-u
 **Provider identifiers and mappings**
 
 A profile `provider` optionally names the quota-axi provider family whose rows apply to that profile; when present, profile and rule-floor provider IDs must match the strict whole-string pattern `^[a-z0-9]+(-[a-z0-9]+)*\z`.
-Bootstrap validates resolver-only `approval`, `min_confidence`, `floor`, and present `provider` values only while typed resolution is active; without the key those inert fields and the pre-existing verified-harness baseline preserve bootstrap behavior.
+Bootstrap's resolver-only validation gate is described under "Validation and diagnostics" below.
 
 Typed resolution additively recognizes `gemini` because AGENTS.md section 4 verifies it for crewmate and scout dispatch.
 
@@ -1195,7 +1195,9 @@ See [`docs/examples/crew-dispatch.json`](examples/crew-dispatch.json) for a star
 - When the file exists, bootstrap validates it with `jq`.
 - Valid files stay silent by default; with `FM_BOOTSTRAP_VERBOSE_FACTS=1`, bootstrap emits `BOOTSTRAP_INFO: crew dispatch active config/crew-dispatch.json`, one `BOOTSTRAP_INFO:` fact per rule, and one fact for the optional default profile set.
 - Malformed JSON, malformed rules, an empty or malformed profile array, an unverified harness, or an effort value unsupported by that harness is reported as `CREW_DISPATCH: invalid config/crew-dispatch.json - ...`.
-- While typed resolution is active, malformed `approval`, `min_confidence`, `floor`, and present `provider` declarations receive the same diagnostic; without the key those inert declarations preserve the pre-existing bootstrap behavior.
+- Bootstrap enables resolver-only checks for `approval`, `min_confidence`, `floor`, and present `provider` declarations when `TYPESAFE_API_KEY` is non-empty in the environment or the home's `.env`, regardless of `FM_DISPATCH_PROVIDER`.
+  An OpenRouter key alone does not enable these bootstrap checks; the resolver validates those declarations itself before any request.
+  Without a typesafe key, bootstrap retains its pre-existing verified-harness baseline.
 - Missing `jq` is reported through the normal `MISSING: jq` install-consent flow.
 - While the file remains present, no crewmate or scout spawn may proceed without an explicit resolved harness; malformed configuration must be reported and corrected rather than selected around.
 
@@ -1209,7 +1211,7 @@ Secondmate homes inherit this file from the primary, so a secondmate's own crewm
 `FM_DISPATCH_PROVIDER` selects `typesafe` or `openrouter`, and `FM_DISPATCH_MODEL` selects the model.
 Each setting comes from the calling environment or the home's gitignored `.env` through `bin/fm-env-lib.sh`; a non-empty environment value wins.
 OpenRouter requires both `FM_DISPATCH_PROVIDER=openrouter` and a non-empty `FM_DISPATCH_MODEL`; an omitted model is an actionable configuration error, and the presence of an OpenRouter key never selects the provider by itself.
-With no provider setting, the original typesafe.ai behavior is unchanged: `jev-latest` is used when `TYPESAFE_API_KEY` is available, and the resolver is off otherwise.
+With no provider setting, the original typesafe.ai behavior is unchanged: `jev-latest` is used when `TYPESAFE_API_KEY` is available, `FM_DISPATCH_MODEL` is ignored, and the resolver is off otherwise.
 Explicit `FM_DISPATCH_PROVIDER=typesafe` also uses `jev-latest` when no model is set.
 The selected provider's key must be non-empty in the environment or `.env`, with the environment taking precedence.
 
@@ -1322,7 +1324,7 @@ Firstmate passes its profile line unless it states a reason to override, such as
 - The default confidence floor remains 0.6; request timeouts are 5 seconds for typesafe.ai and 10 seconds for OpenRouter.
 
 The recommended OpenRouter model is `typesafe/jev-1.13` because it is built for fast typed choices and supplies native per-option probabilities without generated text.
-As listed on [OpenRouter's model page](https://openrouter.ai/typesafe/jev-1.13), its October 2026 price is $0.042 per million input tokens and $0 per million output tokens.
+The dated model catalog observation is recorded in [dispatch verification](verification/dispatch-resolve.md#the-api-the-tool-depends-on).
 The resolver never chooses this model automatically; use these settings in the calling environment or the home's `.env`:
 
 ```dotenv
