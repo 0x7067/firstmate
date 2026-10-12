@@ -431,7 +431,7 @@ test_sweep_skips_mate_whose_liveness_lock_is_held() {
   pass "sweep: a mate mid-episode under the shared liveness lock is skipped entirely"
 }
 
-test_sweep_waits_for_other_mates_relaunch_lock() {
+test_relaunch_waits_for_other_mates_relaunch_lock() {
   local w fb tmuxfb log out holder i=0 lock
   w=$(new_world sweep-relaunch-lock-held)
   add_sm_home "$w" sm1 firstmate:fm-sm1
@@ -440,7 +440,7 @@ test_sweep_waits_for_other_mates_relaunch_lock() {
   lock="$w/home/state/.secondmate-relaunch.lock"
 
   ( STATE="$w/home/state" bash -c \
-      '. "$1" && fm_lock_try_acquire "$2" && sleep 30' \
+      '. "$1" && fm_lock_try_acquire "$2" && trap '\''fm_lock_release "$2"'\'' EXIT && sleep 5' \
       _ "$ROOT/bin/fm-wake-lib.sh" "$lock" ) &
   holder=$!
   while [ ! -e "$lock" ] && [ "$i" -lt 100 ]; do
@@ -449,17 +449,26 @@ test_sweep_waits_for_other_mates_relaunch_lock() {
   done
   [ -e "$lock" ] || fail "the fixture never acquired the per-home relaunch lock"
 
-  out=$(run_bootstrap "$tmuxfb:$fb" "$w/home" missing "$log" \
-    FM_SECONDMATE_LIVENESS_RELAUNCH_WAIT=1)
+  out=$(PATH="$tmuxfb:$fb:$BASE_PATH" FM_HOME="$w/home" FM_BACKEND=tmux \
+    FM_ROOT="$ROOT" FM_TEST_PANE_CMD=zsh FM_TMUX_CALL_LOG="$log" \
+    STATE="$w/home/state" bash -c '
+      . "$1/bin/fm-secondmate-liveness-lib.sh"
+      fm_secondmate_liveness_probe "$2" sm1 poll
+      rc=0
+      fm_secondmate_liveness_relaunch "$2" sm1 1 || rc=$?
+      printf "rc=%s status=%s reason=%s\n" "$rc" "$FM_SM_LIVE_STATUS" "$FM_SM_LIVE_REASON"
+    ' _ "$ROOT" "$w/home/state/sm1.meta")
+  kill "$holder" 2>/dev/null || true
+  wait "$holder" 2>/dev/null || true
 
+  assert_contains "$out" "rc=1 status=skipped" \
+    "a relaunch blocked on another mate must return a skipped failure"
   assert_contains "$out" "another secondmate relaunch still owns the per-home relaunch lock after 1s" \
-    "a liveness sweep must bound its wait for another mate's relaunch"
+    "a liveness relaunch must bound its lock wait by the spawn timeout"
   [ ! -e "$w/home/state/.secondmate-relaunch-sm1" ] \
     || fail "a relaunch blocked on another mate was counted as an attempt"
   [ ! -s "$log" ] || fail "a blocked relaunch touched the endpoint: $(cat "$log")"
-  kill "$holder" 2>/dev/null || true
-  wait "$holder" 2>/dev/null || true
-  pass "sweep: another mate's relaunch lock bounds the wait before touching the endpoint"
+  pass "relaunch: the spawn timeout bounds the lock wait before touching the endpoint"
 }
 
 test_sweep_refuses_relaunch_on_ledger_errors() {
@@ -776,7 +785,7 @@ test_sweep_converges_no_retouch_once_alive
 test_sweep_skipped_under_detect_only
 test_sweep_noop_with_no_secondmate_meta
 test_sweep_skips_mate_whose_liveness_lock_is_held
-test_sweep_waits_for_other_mates_relaunch_lock
+test_relaunch_waits_for_other_mates_relaunch_lock
 test_sweep_refuses_relaunch_on_ledger_errors
 test_remote_poll_probe_maps_states
 test_remote_poll_probe_unreachable_preserves_route

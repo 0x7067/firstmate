@@ -278,7 +278,7 @@ fm_secondmate_liveness_relaunch() {  # <meta> <id> [timeout-secs]
   fi
   fm_sm_live_require_locks || return 1
   relaunch_lock="$STATE/.secondmate-relaunch.lock"
-  wait_seconds=${FM_SECONDMATE_LIVENESS_RELAUNCH_WAIT:-${timeout:-600}}
+  wait_seconds=${timeout:-600}
   if ! fm_lock_acquire_wait_bounded "$relaunch_lock" "$wait_seconds"; then
     FM_SM_LIVE_STATUS=skipped
     FM_SM_LIVE_REASON="another secondmate relaunch still owns the per-home relaunch lock after ${wait_seconds}s; endpoint left $FM_SM_LIVE_STATE"
