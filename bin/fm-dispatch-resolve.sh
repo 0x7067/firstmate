@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # fm-dispatch-resolve.sh - resolve one concrete crewmate or scout dispatch
-# profile from a task brief with an explicitly selected model provider, opt-in.
+# profile from a task brief with a configurable model provider, opt-in.
 #
 # Usage:
 #   fm-dispatch-resolve.sh <brief-file> [--project <name>]
@@ -57,8 +57,9 @@
 #   error     -> API, network, response, or quota-axi failure; decide as today
 #   Every outcome exits 0 so an intake is never blocked by this tool.
 #   Exit 2 only for a usage or configuration error (unreadable brief, an
-#   existing unreadable rules file, malformed rules, or missing jq), which is
-#   actionable, never selected around.
+#   existing unreadable rules file, malformed rules, missing jq, an unknown
+#   provider, or OpenRouter without a model), which is actionable, never
+#   selected around.
 #
 # Environment:
 #   FM_DISPATCH_PROVIDER, FM_DISPATCH_MODEL, TYPESAFE_API_KEY, and

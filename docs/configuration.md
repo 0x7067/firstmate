@@ -1253,7 +1253,7 @@ Every entry is trimmed of surrounding whitespace, and any run of whitespace, in 
 Example Client Ltd
 ```
 
-Before the request is sent, every string in it is checked: the project name, the task text, each rule's `when`, and the fixed question text.
+Before the request is sent, every string in it is checked, including the selected model, the project name, the task text, each rule's `when`, and the fixed question text.
 A match stops the request: the resolver behaves exactly as when it is off, printing one `dispatch-resolve: off (...; nothing sent)` line on stderr and nothing on stdout, making no network or quota call, and exiting 0, so firstmate dispatches through its existing intake.
 A list that is present but not a readable regular file also stops the request the same way rather than sending unchecked text.
 That one diagnostic names the list line number at most and never prints the listed value or the matching text.
