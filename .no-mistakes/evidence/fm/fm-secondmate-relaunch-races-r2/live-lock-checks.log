@@ -1,0 +1,25 @@
+
+LOCK HOLDER=task-spawn CLI EXIT=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RJ0167AJ3KJSRCWCSBY66K/.live-lab.BLb32j/parent
+error: this home's task set is locked by another spawn; refusing to create task mate rather than racing it
+error: this home's task set is locked by another spawn; refusing to create task mate rather than racing it
+
+LOCK HOLDER=forced-teardown CLI EXIT=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RJ0167AJ3KJSRCWCSBY66K/.live-lab.BLb32j/parent
+error: this home's task set is locked by a forced teardown; refusing to create task mate rather than racing it
+error: this home's task set is locked by a forced teardown; refusing to create task mate rather than racing it
+
+LOCK HOLDER=unknown CLI EXIT=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RJ0167AJ3KJSRCWCSBY66K/.live-lab.BLb32j/parent
+error: this home's task set is locked by another operation; refusing to create task mate rather than racing it
+error: this home's task set is locked by another operation; refusing to create task mate rather than racing it
+
+WORKSPACE HOME ATTEMPT CLI EXIT=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RJ0167AJ3KJSRCWCSBY66K/.live-lab.BLb32j/parent
+error: secondmate home cannot be inside the firstmate repo: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RJ0167AJ3KJSRCWCSBY66K/.live-lab.BLb32j/mate
+error: secondmate home cannot be inside the firstmate repo: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RJ0167AJ3KJSRCWCSBY66K/.live-lab.BLb32j/mate
+
+BOUNDED WAIT: status=skipped rc=1 elapsed=1s reason=another secondmate relaunch still owns the per-home relaunch lock after 1s; endpoint left dead
+No relaunch attempt ledger or metadata change after lock timeout.
+
+Lab removed by cleanup trap.
