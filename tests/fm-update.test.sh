@@ -200,12 +200,13 @@ test_update_routes_pr_migration_to_primary_and_local_mate() {
   pass "update invokes guarded PR migration for the primary and local mate homes"
 }
 
-test_old_updater_rollout_migrates_watches_at_bootstrap() {
+test_old_updater_rollout_migrates_watches_after_one_time_session_start() {
   local w out fake_ssh initial target state home code_root file
   local UPDATE
   w=$(new_world old-updater)
   UPDATE="$w/main/bin/fm-update.sh"
   cp -R "$ROOT/bin/." "$w/seed/bin/"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$w/seed/bin/fm-startup-network.sh"
   printf 'state/\ndata/\nconfig/\n.fm-secondmate-home\n' > "$w/seed/.gitignore"
   for file in fm-remote-secondmate-control.sh fm-update.sh fm-ff-lib.sh fm-bootstrap.sh; do
     git -C "$ROOT" show "20dcbf91520b1816663b81873ad67d0b93b3e4d6:bin/$file" > "$w/seed/bin/$file"
@@ -266,6 +267,22 @@ exec env FM_HOME="$remote_home" FM_ROOT_OVERRIDE="$remote_root" \
   "$remote_root/bin/${rargs[0]}" "${rargs[@]:1}"
 SH
   chmod +x "$fake_ssh"
+  cat > "$w/fakebin/ps" <<'SH'
+#!/usr/bin/env bash
+pid=
+previous=
+for argument in "$@"; do
+  [ "$previous" != -p ] || pid=$argument
+  previous=$argument
+done
+case "$*" in
+  *comm=*|*args=*)
+    if [ "$pid" = "$FM_TEST_ROLLOUT_PID" ]; then printf 'codex\n'; else printf 'bash\n'; fi
+    ;;
+  *) exec /bin/ps "$@" ;;
+esac
+SH
+  chmod +x "$w/fakebin/ps"
   printf -- '- remote - remote domain (host: remote-host; root: %s/coderoot; home: %s/remote; scope: things; projects: p; added 2026-10-12)\n' "$w" "$w" \
     > "$w/home/data/secondmates.md"
   printf -- '- registered - local domain (home: %s/registered; scope: things; projects: p; added 2026-10-12)\n' "$w" \
@@ -291,18 +308,20 @@ SH
       . "$ROOT/bin/fm-pr-lib.sh"
       ! fm_pr_poll_artifacts_valid "$state" task-a "$code_root/bin/fm-pr-poll.sh"
     ) || fail "read-only bootstrap migrated $home"
-    FM_HOME="$home" FM_ROOT_OVERRIDE="$code_root" FM_BOOTSTRAP_NETWORK=skip \
-      PATH="$w/fakebin:$PATH" "$code_root/bin/fm-bootstrap.sh" > "$w/bootstrap.out" 2> "$w/bootstrap.err" \
-      || fail "restart bootstrap failed for $home"
+    env -u CLAUDECODE -u PI_CODING_AGENT -u FM_PI_HARNESS -u GROK_AGENT \
+      FM_HOME="$home" FM_ROOT_OVERRIDE="$code_root" FM_FAKE_DIR="$w/fake" FM_TEST_ROLLOUT_PID=$$ \
+      PATH="$w/fakebin:$PATH" "$code_root/bin/fm-session-start.sh" > "$w/session-start.out" 2> "$w/session-start.err" \
+      || fail "one-time session start failed for $home: $(cat "$w/session-start.err")"
+    assert_contains "$(cat "$w/session-start.out")" 'lock acquired: harness pid' "one-time session start did not acquire $home"
     (
       . "$ROOT/bin/fm-pr-lib.sh"
       fm_pr_poll_artifacts_valid "$state" task-a "$code_root/bin/fm-pr-poll.sh" \
         && ! fm_pr_poll_artifacts_valid "$state" task-invalid "$code_root/bin/fm-pr-poll.sh"
-    ) || fail "restart bootstrap did not preserve the watch authentication boundary in $home"
+    ) || fail "one-time session start did not preserve the watch authentication boundary in $home"
     cmp -s "$state/task-a.meta" "$state/meta-before" || fail "bootstrap changed task metadata in $home"
     cmp -s "$state/task-invalid.check.sh" "$state/invalid-before" || fail "bootstrap rewrote an invalid watch in $home"
   done
-  pass "one old-updater rollout restores valid PR watches at mutable bootstrap in every home"
+  pass "old-updater rollout restores valid PR watches after the documented one-time session start in every home"
 }
 
 # --- T3: README-only change does not trigger a reread ----------------------
@@ -687,7 +706,7 @@ test_primary_update_rebinds_local_watch() {
 
 test_updates_main_and_secondmate
 test_update_routes_pr_migration_to_primary_and_local_mate
-test_old_updater_rollout_migrates_watches_at_bootstrap
+test_old_updater_rollout_migrates_watches_after_one_time_session_start
 test_reread_gate_is_instruction_only
 test_bin_only_advance_restarts
 test_unprovable_runtime_gets_fallback_nudge
