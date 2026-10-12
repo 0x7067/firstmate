@@ -79,6 +79,12 @@ SH
   printf 'echo a\n' > "$w/seed/bin/tool.sh"
   printf '#!/usr/bin/env bash\nexit 0\n' > "$w/seed/bin/fm-remote-secondmate-control.sh"
   chmod +x "$w/seed/bin/fm-remote-secondmate-control.sh"
+  cat > "$w/seed/bin/fm-pr-check.sh" <<'SH'
+#!/usr/bin/env bash
+[ "${1:-}" = migrate-all ] || exit 2
+[ -z "${FM_TEST_PR_MIGRATE_LOG:-}" ] || printf '%s\n' "$FM_HOME" >> "$FM_TEST_PR_MIGRATE_LOG"
+SH
+  chmod +x "$w/seed/bin/fm-pr-check.sh"
   printf 's1\n' > "$w/seed/.agents/skills/note.md"
   git -C "$w/seed" add -A
   git -C "$w/seed" commit -qm c1
@@ -174,6 +180,24 @@ test_updates_main_and_secondmate() {
   [ "$(git -C "$w/sm1" rev-list --parents -n1 HEAD | wc -w | tr -d ' ')" -eq 2 ] \
     || fail "secondmate tip is not a single-parent fast-forward"
   pass "T1 main + secondmate fast-forward (single-parent), reread + restart signalled"
+}
+
+test_update_routes_pr_migration_to_primary_and_local_mate() {
+  local w c1 out
+  w=$(new_world pr-migration)
+  c1=$(git -C "$w/main" rev-parse HEAD)
+  add_sm "$w" sm1
+  git -C "$w/main" worktree add -q --detach "$w/registered" "$c1"
+  printf 'registered\n' > "$w/registered/.fm-secondmate-home"
+  printf -- '- registered - local domain (home: %s/registered; scope: things; projects: p; added 2026-10-12)\n' "$w" \
+    > "$w/home/data/secondmates.md"
+  bump_origin "$w" bin
+  out=$(FM_TEST_PR_MIGRATE_LOG="$w/migrations" run_update "$w")
+  assert_contains "$out" 'secondmate sm1: updated' "local mate did not converge"
+  grep -qxF "$w/home" "$w/migrations" || fail "primary PR watches were not migrated"
+  grep -qxF "$w/sm1" "$w/migrations" || fail "local mate PR watches were not migrated"
+  grep -qxF "$w/registered" "$w/migrations" || fail "registry-only local mate PR watches were not migrated"
+  pass "update invokes guarded PR migration for the primary and local mate homes"
 }
 
 # --- T3: README-only change does not trigger a reread ----------------------
@@ -557,6 +581,7 @@ test_primary_update_rebinds_local_watch() {
 }
 
 test_updates_main_and_secondmate
+test_update_routes_pr_migration_to_primary_and_local_mate
 test_reread_gate_is_instruction_only
 test_bin_only_advance_restarts
 test_unprovable_runtime_gets_fallback_nudge

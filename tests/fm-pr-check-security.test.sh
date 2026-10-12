@@ -2259,6 +2259,46 @@ seed_canonical_poll() {
   fm_pr_poll_publish_prepared || fail "could not publish retirement fixture"
 }
 
+test_update_migrates_only_authenticated_pr_polls() {
+  local dir state historical metadata_before check_before rc
+  dir=$(make_case update-pr-poll)
+  state="$dir/home/state"
+  historical="$dir/previous-fm-pr-poll.sh"
+  cp "$POLL" "$historical"
+  printf '\n# Previous release.\n' >> "$historical"
+  write_poll_meta "$state" task-a https://github.com/o/r/pull/22
+  printf 'pr_head=0123456789abcdef0123456789abcdef01234567\n' >> "$state/task-a.meta"
+  seed_canonical_poll "$dir" task-a https://github.com/o/r/pull/22 "$historical"
+  metadata_before=$(fm_pr_sha256 "$state/task-a.meta")
+  printf 'schema=fm-secondmate-parent.v1\nroute=remote\n' > "$dir/home/.fm-secondmate-parent"
+  FM_TEST_GH_STATE=OPEN run_watcher_bounded "$dir/home" "$dir/fakebin" > "$dir/before.out" 2> "$dir/before.err" \
+    || fail "previous poll watcher failed: $(cat "$dir/before.err")"
+  grep -F "check: rejected unauthenticated state checks: $state/task-a.check.sh" "$dir/before.out" >/dev/null \
+    || fail "changed poll bytes did not produce the watcher rejection"
+  FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$ROOT" "$PR_CHECK" migrate-all > "$dir/migrate.out" \
+    || fail "authenticated poll migration failed"
+  fm_pr_poll_artifacts_valid "$state" task-a "$POLL" || fail "migrated poll was not authenticated"
+  [ "$(fm_pr_sha256 "$state/task-a.meta")" = "$metadata_before" ] || fail "migration changed task, PR, or head metadata"
+  [ ! -e "$state/parent-replies.status" ] || fail "migration published a duplicate parent-channel ready line"
+  grep -F '1 migrated, 0 current, 0 refused' "$dir/migrate.out" >/dev/null || fail "migration did not report one re-arm"
+  FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$ROOT" "$PR_CHECK" migrate-all > "$dir/repeat.out" \
+    || fail "idempotent poll migration failed"
+  grep -F '0 migrated, 1 current, 0 refused' "$dir/repeat.out" >/dev/null || fail "repeat migration re-armed a current poll"
+
+  dir=$(make_case invalid-update-pr-poll)
+  state="$dir/home/state"
+  write_poll_meta "$state" task-a https://github.com/o/r/pull/22
+  seed_canonical_poll "$dir" task-a https://github.com/o/r/pull/22 "$historical"
+  check_before=$(fm_pr_sha256 "$state/task-a.check.sh")
+  printf 'github\nhttps://github.com/o/r/pull/23\ngithub.com\no/r\n23\n' > "$state/task-a.pr-poll"
+  rc=0
+  FM_HOME="$dir/home" FM_ROOT_OVERRIDE="$ROOT" "$PR_CHECK" migrate-all > "$dir/migrate.out" 2> "$dir/migrate.err" || rc=$?
+  [ "$rc" -ne 0 ] || fail "migration accepted a changed PR sidecar"
+  [ "$(fm_pr_sha256 "$state/task-a.check.sh")" = "$check_before" ] || fail "migration blessed an invalid watch"
+  ! fm_pr_poll_artifacts_valid "$state" task-a "$POLL" || fail "invalid watch became authenticated"
+  pass "update re-arms registered old poll bytes but refuses a changed PR sidecar"
+}
+
 add_stop_custom_check() {
   local dir=$1 state
   state="$dir/home/state"
@@ -3636,6 +3676,7 @@ test_direct_pr_unpushed_commit_refuses_registration
 test_valid_recording_and_merge_derivation
 test_rejected_metacharacter_bytes_are_inert
 test_static_poll_contract
+test_update_migrates_only_authenticated_pr_polls
 test_atomic_interruption_leaves_no_partial_artifact
 test_concurrent_watcher_sees_only_complete_publication
 test_poll_publication_refuses_unsafe_destinations
