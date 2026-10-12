@@ -1,0 +1,135 @@
+Scenario: openrouter-key-alone
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (TYPESAFE_API_KEY absent from the environment and /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4REP4HJRYKYJ683YMTXKEA5/.dispatch-live/home/.env)
+Scenario: missing-model
+Exit: 2
+stdout:
+stderr:
+error: FM_DISPATCH_MODEL required when FM_DISPATCH_PROVIDER=openrouter
+Scenario: unknown-provider
+Exit: 2
+stdout:
+stderr:
+error: unknown FM_DISPATCH_PROVIDER: unknown (expected typesafe or openrouter)
+Scenario: missing-key
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (OPENROUTER_API_KEY absent from the environment and /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4REP4HJRYKYJ683YMTXKEA5/.dispatch-live/home/.env)
+Scenario: never-send
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (brief text matches /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4REP4HJRYKYJ683YMTXKEA5/.dispatch-live/home/config/dispatch-never-send line 1; nothing sent)
+Scenario: invalid-key
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 63 ms
+stderr:
+dispatch-resolve: error (http 401 after 63 ms)
+Scenario: openrouter-live
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: clear
+  model: typesafe/jev-1.13-20260917   latency_ms: 446   tokens: 465/44
+  rule: rule_1 (A simple bug fix with a stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=60%  spendPriority=0.8336  runway=through_reset  -> eligible
+  profile: --harness 'claude' --model 'sonnet'
+stderr:
+Scenario: dotenv-invalid-key
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 68 ms
+stderr:
+dispatch-resolve: error (http 401 after 68 ms)
+Scenario: dotenv-env-key-wins
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: clear
+  model: typesafe/jev-1.13-20260917   latency_ms: 475   tokens: 465/44
+  rule: rule_1 (A simple bug fix with a stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=60%  spendPriority=0.8338  runway=through_reset  -> eligible
+  profile: --harness 'claude' --model 'sonnet'
+stderr:
+Scenario: env-provider-wins
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 260 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}}
+stderr:
+dispatch-resolve: error (http 401 after 260 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}})
+Scenario: env-model-wins
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: clear
+  model: typesafe/jev-1.13-20260917   latency_ms: 429   tokens: 465/44
+  rule: rule_1 (A simple bug fix with a stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=60%  spendPriority=0.8443  runway=through_reset  -> eligible
+  profile: --harness 'claude' --model 'sonnet'
+stderr:
+Scenario: captain-approval
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: escalate
+  model: typesafe/jev-1.13-20260917   latency_ms: 513   tokens: 465/44
+  rule: rule_1 (A simple bug fix with a stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  reason: rule requires the captain's explicit approval before dispatch
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=60%  spendPriority=0.8445  runway=through_reset  -> eligible
+stderr:
+Scenario: duplicate-rule-ambiguity
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: ambiguous
+  model: typesafe/jev-1.13-20260917   latency_ms: 428   tokens: 470/44
+  rule: rule_1 (A simple bug fix with a stated root cause.)   confidence: 0.8
+  probabilities: rule_1=0.87 rule_2=0.1 default=0.03
+  reason: rule_1 probability 0.87 below its floor 0.9; no other option clears its own floor
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=60%  spendPriority=0.8496  runway=through_reset  -> eligible
+stderr:
+Scenario: invalid-model
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 400 after 57 ms
+stderr:
+dispatch-resolve: error (http 400 after 57 ms)
+Scenario: vague-brief
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: clear
+  model: typesafe/jev-1.13-20260917   latency_ms: 397   tokens: 431/42
+  rule: default (No listed rule applies to this task.)   confidence: 1
+  probabilities: rule_1=0 rule_2=0 default=1
+  note: no rule matched
+  candidate: claude:opus  provider=claude  scope=all_models  remaining=60%  spendPriority=0.8447  runway=through_reset  -> eligible
+  profile: --harness 'claude' --model 'opus'
+stderr:
+Scenario: legacy-typesafe
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 259 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}}
+stderr:
+dispatch-resolve: error (http 401 after 259 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}})

@@ -1,7 +1,5 @@
 Scenario: unknown-provider
-Provider: invalid
-Model setting: typesafe/jev-1.13
 Exit: 2
 stdout:
 stderr:
-error: unknown FM_DISPATCH_PROVIDER: invalid (expected typesafe or openrouter)
+error: unknown FM_DISPATCH_PROVIDER: unknown (expected typesafe or openrouter)

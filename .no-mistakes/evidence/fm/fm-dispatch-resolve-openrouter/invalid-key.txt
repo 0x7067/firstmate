@@ -1,0 +1,8 @@
+Scenario: invalid-key
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 63 ms
+stderr:
+dispatch-resolve: error (http 401 after 63 ms)

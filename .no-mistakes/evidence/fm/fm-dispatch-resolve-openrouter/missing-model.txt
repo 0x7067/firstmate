@@ -1,0 +1,5 @@
+Scenario: missing-model
+Exit: 2
+stdout:
+stderr:
+error: FM_DISPATCH_MODEL required when FM_DISPATCH_PROVIDER=openrouter

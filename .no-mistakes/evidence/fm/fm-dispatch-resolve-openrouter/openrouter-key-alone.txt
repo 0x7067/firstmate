@@ -1,0 +1,5 @@
+Scenario: openrouter-key-alone
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (TYPESAFE_API_KEY absent from the environment and /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4REP4HJRYKYJ683YMTXKEA5/.dispatch-live/home/.env)

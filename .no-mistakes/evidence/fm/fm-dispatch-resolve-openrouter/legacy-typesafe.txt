@@ -1,0 +1,8 @@
+Scenario: legacy-typesafe
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 259 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}}
+stderr:
+dispatch-resolve: error (http 401 after 259 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}})

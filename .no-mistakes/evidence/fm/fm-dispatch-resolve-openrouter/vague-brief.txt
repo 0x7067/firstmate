@@ -1,0 +1,12 @@
+Scenario: vague-brief
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: clear
+  model: typesafe/jev-1.13-20260917   latency_ms: 397   tokens: 431/42
+  rule: default (No listed rule applies to this task.)   confidence: 1
+  probabilities: rule_1=0 rule_2=0 default=1
+  note: no rule matched
+  candidate: claude:opus  provider=claude  scope=all_models  remaining=60%  spendPriority=0.8447  runway=through_reset  -> eligible
+  profile: --harness 'claude' --model 'opus'
+stderr:

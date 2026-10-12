@@ -1,0 +1,8 @@
+Scenario: invalid-model
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 400 after 57 ms
+stderr:
+dispatch-resolve: error (http 400 after 57 ms)

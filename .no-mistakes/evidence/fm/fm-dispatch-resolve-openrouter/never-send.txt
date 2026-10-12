@@ -1,0 +1,5 @@
+Scenario: never-send
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (brief text matches /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4REP4HJRYKYJ683YMTXKEA5/.dispatch-live/home/config/dispatch-never-send line 1; nothing sent)
