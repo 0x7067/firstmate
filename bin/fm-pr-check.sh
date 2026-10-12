@@ -21,6 +21,10 @@
 # (bin/fm-project-capacity-lib.sh).
 # Usage: fm-pr-check.sh <task-id> <pr-url>
 #        fm-pr-check.sh migrate-all
+# migrate-all re-arms authenticated existing watches against the current poll
+# program without querying the forge, changing task metadata, or publishing
+# PR-ready lines. It prints migrated/current/refused totals, reports each refused
+# registration on stderr, and returns nonzero if any watch is refused.
 set -eu
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -40,7 +44,6 @@ STATE="${FM_STATE_OVERRIDE:-$FM_HOME/state}"
 # An update changes the tracked poll program, but an existing registration still
 # authenticates its old check bytes. Re-arm only a complete generation whose
 # sidecar, check, registration, and metadata agree under their existing locks.
-# This path does not read the forge, rewrite metadata, or publish a PR-ready line.
 migrate_pr_poll_one() (
   local id=$1 control_lock meta_lock publish_lock provider url host path number
   control_lock="$STATE/.control-$id.lock"

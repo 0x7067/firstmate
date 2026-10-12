@@ -59,8 +59,12 @@
 # executable lives in the updated repo; left alone, the watch's next fire
 # would be wrongly refused. After each home's own update (primary and every
 # local secondmate), this script best-effort runs that home's own
-# fm-procevent-when.sh rebind-all and fm-pr-check.sh migrate-all. The latter
-# re-arms only authenticated PR watches without rewriting their task metadata.
+# fm-procevent-when.sh rebind-all. For updated or already-current primary and
+# local homes, it also best-effort runs fm-pr-check.sh migrate-all; remote
+# sync runs that command in its own converged home. The PR migration re-arms
+# only authenticated watches without rewriting task metadata; a failure does
+# not fail the update. The updatefirstmate skill owns the one-time rollout
+# procedure when an older updater installs this migration-aware release.
 #
 # Usage: fm-update.sh [--help]
 set -eu
