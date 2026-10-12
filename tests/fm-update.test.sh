@@ -200,6 +200,88 @@ test_update_routes_pr_migration_to_primary_and_local_mate() {
   pass "update invokes guarded PR migration for the primary and local mate homes"
 }
 
+test_update_migrates_remote_watches_after_old_handler_rollout() {
+  local w out fake_ssh initial target state meta_before
+  w=$(new_world remote-old-handler)
+  cp -R "$ROOT/bin/." "$w/seed/bin/"
+  printf 'state/\ndata/\nconfig/\n.fm-secondmate-home\n' > "$w/seed/.gitignore"
+  git -C "$ROOT" show 20dcbf91520b1816663b81873ad67d0b93b3e4d6:bin/fm-remote-secondmate-control.sh \
+    > "$w/seed/bin/fm-remote-secondmate-control.sh"
+  git -C "$ROOT" show 20dcbf91520b1816663b81873ad67d0b93b3e4d6:bin/fm-update.sh \
+    > "$w/seed/bin/fm-update.sh"
+  printf '\n' >> "$w/seed/bin/fm-pr-poll.sh"
+  git -C "$w/seed" add -A
+  git -C "$w/seed" commit -qm old-remote-release
+  git -C "$w/seed" push -q origin main
+  initial=$(git -C "$w/seed" rev-parse HEAD)
+  git clone -q "$w/origin.git" "$w/coderoot"
+  git clone -q "$w/origin.git" "$w/remote"
+  git -C "$w/remote" checkout -q --detach "$initial"
+  printf 'remote\n' > "$w/remote/.fm-secondmate-home"
+  mkdir -p "$w/remote/state" "$w/coderoot/state"
+  touch "$w/coderoot/state/.last-watcher-beat"
+  state="$w/remote/state"
+  printf 'pr=https://github.com/o/r/pull/1\n' > "$state/task-a.meta"
+  chmod 600 "$state/task-a.meta"
+  (
+    . "$ROOT/bin/fm-pr-lib.sh"
+    fm_pr_poll_prepare "$state" task-a github https://github.com/o/r/pull/1 github.com o/r 1 "$w/remote/bin/fm-pr-poll.sh" \
+      && fm_pr_poll_publish_prepared
+  ) || fail "could not arm the old remote PR watch"
+  meta_before=$(cat "$state/task-a.meta")
+  cp "$ROOT/bin/fm-remote-secondmate-control.sh" "$ROOT/bin/fm-update.sh" "$ROOT/bin/fm-pr-poll.sh" "$w/seed/bin/"
+  git -C "$w/seed" add -A
+  git -C "$w/seed" commit -qm new-remote-release
+  git -C "$w/seed" push -q origin main
+  target=$(git -C "$w/seed" rev-parse HEAD)
+  fake_ssh="$w/fakebin/remote-ssh"
+  cat > "$fake_ssh" <<'SH'
+#!/usr/bin/env bash
+set -eu
+while [ "$#" -gt 0 ]; do
+  case "$1" in -o) shift 2 ;; --) shift; break ;; *) exit 90 ;; esac
+done
+shift 2
+decode() { printf '%s' "$1" | base64 --decode 2>/dev/null || printf '%s' "$1" | base64 -D; }
+remote_root=$(decode "$2")
+remote_home=$(decode "$3")
+rargs=()
+while IFS= read -r -d '' a; do rargs+=("$a"); done < <(decode "$4")
+printf '%s\n' "${rargs[*]}" >> "$remote_home/state/requests"
+exec env FM_HOME="$remote_home" FM_ROOT_OVERRIDE="$remote_root" \
+  "$remote_root/bin/${rargs[0]}" "${rargs[@]:1}"
+SH
+  chmod +x "$fake_ssh"
+  printf -- '- remote - remote domain (host: remote-host; root: %s/coderoot; home: %s/remote; scope: things; projects: p; added 2026-10-12)\n' "$w" "$w" \
+    > "$w/home/data/secondmates.md"
+  out=$(FM_TEST_SSH_BIN="$fake_ssh" run_update "$w")
+  assert_contains "$out" 'remote secondmate remote: updated on remote-host' "old remote handler did not converge"
+  [ "$(git -C "$w/coderoot" rev-parse HEAD)" = "$target" ] || fail "remote code root did not advance"
+  [ "$(git -C "$w/remote" rev-parse HEAD)" = "$target" ] || fail "remote home did not advance"
+  grep -qxF 'fm-pr-check.sh migrate-all' "$state/requests" || fail "parent did not request fresh remote migration"
+  (
+    . "$ROOT/bin/fm-pr-lib.sh"
+    fm_pr_poll_artifacts_valid "$state" task-a "$w/remote/bin/fm-pr-poll.sh"
+  ) || fail "remote PR watch remains refused after old-handler rollout"
+  [ "$(cat "$state/task-a.meta")" = "$meta_before" ] || fail "remote migration changed task metadata"
+  : > "$state/requests"
+  out=$(FM_TEST_SSH_BIN="$fake_ssh" run_update "$w")
+  assert_contains "$out" 'remote secondmate remote: already current' "current remote home did not converge"
+  grep -qxF 'fm-pr-check.sh migrate-all' "$state/requests" || fail "parent did not request migration for current remote home"
+  (
+    . "$ROOT/bin/fm-pr-lib.sh"
+    fm_pr_poll_artifacts_valid "$state" task-a "$w/remote/bin/fm-pr-poll.sh"
+  ) || fail "repeated remote migration invalidated the watch"
+  : > "$state/requests"
+  printf 'local edit\n' >> "$w/remote/bin/tool.sh"
+  out=$(FM_TEST_SSH_BIN="$fake_ssh" run_update "$w")
+  assert_not_contains "$out" 'remote secondmate remote: already current' "dirty remote home was accepted"
+  if grep -qxF 'fm-pr-check.sh migrate-all' "$state/requests"; then
+    fail "parent migrated a remote home whose convergence was refused"
+  fi
+  pass "old-handler rollout migrates remote PR watches through a fresh command, including current homes"
+}
+
 # --- T3: README-only change does not trigger a reread ----------------------
 test_reread_gate_is_instruction_only() {
   local w out
@@ -582,6 +664,7 @@ test_primary_update_rebinds_local_watch() {
 
 test_updates_main_and_secondmate
 test_update_routes_pr_migration_to_primary_and_local_mate
+test_update_migrates_remote_watches_after_old_handler_rollout
 test_reread_gate_is_instruction_only
 test_bin_only_advance_restarts
 test_unprovable_runtime_gets_fallback_nudge
