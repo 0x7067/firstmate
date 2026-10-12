@@ -72,10 +72,11 @@
 #     line, which is actionable here like a wake line; its rewake banner
 #     carries every "supervision-host:" line the host printed, in order, while
 #     its wake lines keep the arm's eight-line cap. A "supervision-host stood
-#     down:" close exits 0 silently, and a host that died without a close is
-#     retried instead of being judged by the healthy-watcher predicate
-#     (docs/supervision-host.md). On a home that opted out nothing below
-#     changes.
+#     down:" close exits 0 silently. A host killed by a signal or returning
+#     success with empty output is retried within the attempt bound. An
+#     ordinary nonzero host exit with no actionable wake enters failure
+#     notification without retry or a healthy-watcher check, even with empty
+#     output. On a home that opted out nothing below changes.
 #   - Translation: while supervision is still needed and AFK remains inactive,
 #     an actionable arm close (signal:/stale:/check:/heartbeat) prints one
 #     rewake banner to stderr and exits 2, which wakes Claude even while idle
@@ -86,8 +87,8 @@
 #     A refused generation exits 0 silently even after printing. A close that
 #     reports no actionable reason is benign when a live identity-matched
 #     watcher still has a fresh beacon.
-#   - Failure handling: a typed failure is rechecked against the same live,
-#     fresh watcher predicate and retried a bounded number of times in this
+#   - Plain watcher failure handling: a typed failure is rechecked against
+#     the same live, fresh watcher predicate and retried a bounded number of times in this
 #     hook. Only an exhausted failure with no verified watcher emits one
 #     last-resort notice per failure episode; later consecutive failures still
 #     exit 2 to guarantee the next Stop-owned retry without repeating notice,
