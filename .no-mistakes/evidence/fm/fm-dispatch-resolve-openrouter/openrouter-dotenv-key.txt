@@ -1,0 +1,10 @@
+Scenario: openrouter-dotenv-key
+Provider: unset
+Model setting: unset
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 58 ms
+stderr:
+dispatch-resolve: error (http 401 after 58 ms)

@@ -1,0 +1,172 @@
+Scenario: openrouter-live
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: clear
+  model: typesafe/jev-1.13-20260917   latency_ms: 454   tokens: 491/44
+  rule: rule_1 (A simple bug fix with an explicitly stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=80%  spendPriority=0.0135  runway=through_reset  -> eligible
+  profile: --harness 'claude' --model 'sonnet'
+stderr:
+
+Scenario: openrouter-dotenv-live
+Provider: unset
+Model setting: unset
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: clear
+  model: typesafe/jev-1.13-20260917   latency_ms: 530   tokens: 491/44
+  rule: rule_1 (A simple bug fix with an explicitly stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=80%  spendPriority=0.014  runway=through_reset  -> eligible
+  profile: --harness 'claude' --model 'sonnet'
+stderr:
+
+Scenario: openrouter-env-precedence
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: clear
+  model: typesafe/jev-1.13-20260917   latency_ms: 458   tokens: 491/44
+  rule: rule_1 (A simple bug fix with an explicitly stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=80%  spendPriority=0.0264  runway=through_reset  -> eligible
+  profile: --harness 'claude' --model 'sonnet'
+stderr:
+
+Scenario: openrouter-dotenv-key
+Provider: unset
+Model setting: unset
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 58 ms
+stderr:
+dispatch-resolve: error (http 401 after 58 ms)
+
+Scenario: openrouter-key-alone-off
+Provider: unset
+Model setting: unset
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (TYPESAFE_API_KEY absent from the environment and /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R9F6GHN3ES4GSNWB9X883T/.dispatch-live-lab/home/.env)
+
+Scenario: openrouter-missing-model
+Provider: openrouter
+Model setting: unset
+Exit: 2
+stdout:
+stderr:
+error: FM_DISPATCH_MODEL required when FM_DISPATCH_PROVIDER=openrouter
+
+Scenario: openrouter-missing-key
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (OPENROUTER_API_KEY absent from the environment and /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R9F6GHN3ES4GSNWB9X883T/.dispatch-live-lab/home/.env)
+
+Scenario: unknown-provider
+Provider: invalid
+Model setting: typesafe/jev-1.13
+Exit: 2
+stdout:
+stderr:
+error: unknown FM_DISPATCH_PROVIDER: invalid (expected typesafe or openrouter)
+
+Scenario: openrouter-never-send
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (brief text matches /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R9F6GHN3ES4GSNWB9X883T/.dispatch-live-lab/home/config/dispatch-never-send line 1; nothing sent)
+
+Scenario: openrouter-auth-error
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 54 ms
+stderr:
+dispatch-resolve: error (http 401 after 54 ms)
+
+Scenario: openrouter-captain-approval
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: escalate
+  model: typesafe/jev-1.13-20260917   latency_ms: 443   tokens: 491/44
+  rule: rule_1 (A simple bug fix with an explicitly stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  reason: rule requires the captain's explicit approval before dispatch
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=80%  spendPriority=0.0143  runway=through_reset  -> eligible
+stderr:
+
+Scenario: openrouter-declared-floor
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: ambiguous
+  model: typesafe/jev-1.13-20260917   latency_ms: 444   tokens: 492/44
+  rule: rule_1 (A simple bug fix with an explicitly stated root cause.)   confidence: 0.85
+  probabilities: rule_1=0.9 rule_2=0.09 default=0.01
+  reason: rule_1 probability 0.9 below its floor 1; no other option clears its own floor
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=80%  spendPriority=0.0202  runway=through_reset  -> eligible
+stderr:
+
+Scenario: openrouter-exhausted-quota
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: escalate
+  model: typesafe/jev-1.13-20260917   latency_ms: 455   tokens: 491/44
+  rule: rule_1 (A simple bug fix with an explicitly stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  reason: no rankable eligible candidate
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=0%  spendPriority=-  runway=exhausted_now  -> not eligible: runway exhausted_now at all_models
+stderr:
+
+Scenario: typesafe-default-live
+Provider: unset
+Model setting: deliberately-ignored-model
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 264 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}}
+stderr:
+dispatch-resolve: error (http 401 after 264 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}})
+
+Scenario: provider-env-overrides-dotenv
+Provider: typesafe
+Model setting: jev-latest
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 247 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}}
+stderr:
+dispatch-resolve: error (http 401 after 247 ms: {"detail":{"error_type":"authentication_error","message":"Cannot authenticate with the server. Please check your API key and try again."}})
+

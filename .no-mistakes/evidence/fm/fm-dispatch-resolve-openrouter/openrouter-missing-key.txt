@@ -1,0 +1,7 @@
+Scenario: openrouter-missing-key
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (OPENROUTER_API_KEY absent from the environment and /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R9F6GHN3ES4GSNWB9X883T/.dispatch-live-lab/home/.env)

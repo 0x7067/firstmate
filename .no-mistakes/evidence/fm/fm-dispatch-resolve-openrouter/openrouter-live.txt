@@ -1,0 +1,14 @@
+Scenario: openrouter-live
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: clear
+  model: typesafe/jev-1.13-20260917   latency_ms: 454   tokens: 491/44
+  rule: rule_1 (A simple bug fix with an explicitly stated root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  scope=all_models  remaining=80%  spendPriority=0.0135  runway=through_reset  -> eligible
+  profile: --harness 'claude' --model 'sonnet'
+stderr:

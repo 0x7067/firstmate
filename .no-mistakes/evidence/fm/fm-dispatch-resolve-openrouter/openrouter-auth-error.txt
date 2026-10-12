@@ -1,0 +1,10 @@
+Scenario: openrouter-auth-error
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 54 ms
+stderr:
+dispatch-resolve: error (http 401 after 54 ms)

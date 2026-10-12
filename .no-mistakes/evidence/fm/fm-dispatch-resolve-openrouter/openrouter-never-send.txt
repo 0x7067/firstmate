@@ -1,0 +1,7 @@
+Scenario: openrouter-never-send
+Provider: openrouter
+Model setting: typesafe/jev-1.13
+Exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (brief text matches /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R9F6GHN3ES4GSNWB9X883T/.dispatch-live-lab/home/config/dispatch-never-send line 1; nothing sent)
