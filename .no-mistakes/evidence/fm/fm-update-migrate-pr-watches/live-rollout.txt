@@ -1,0 +1,132 @@
+
+OLD UPDATER INSTALLS RELEASE
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no live watcher process holds this home lock (last beat: 0s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+firstmate: updated 3da880c..1368392 (instructions changed: bin)
+no watches registered
+reread-firstmate: yes
+restart-secondmates: none
+nudge-secondmates: none
+Watch remains stale before documented one-time session start.
+
+DOCUMENTED ONE-TIME SESSION START
+
+================================================================================
+SESSION START - /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/rollout.YQ6as6/home
+================================================================================
+
+LOCK
+--------------------------------------------------------------------------------
+lock acquired: harness pid 648412
+
+BOOTSTRAP
+--------------------------------------------------------------------------------
+(silent - all good)
+
+WAKE QUEUE
+--------------------------------------------------------------------------------
+WARNING: watcher still down (same stale episode; last beat: 7s ago, grace 300s) - full banner already printed this episode.
+================================================================================
+SUPERVISION OPERATING INSTRUCTIONS - primary harness: unknown
+================================================================================
+Current state:
+- Lock: held by this session; this session owns normal supervision unless away mode says otherwise.
+- Away/quiet mode: inactive.
+- X mode: inactive; use the default watcher cadence.
+- Ordinary wake: follow the continuation in the harness protocol below; do not use shell &.
+
+/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/rollout.YQ6as6/home/bin/fm-supervision-instructions.sh: line 141: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/rollout.YQ6as6/home/docs/supervision-protocols/unknown.md: No such file or directory
+
+================================================================================
+READ-ONCE CONTRACT
+================================================================================
+Everything below is printed in full for this session start: every state/*.meta,
+a compact data/backlog.md listing, a bounded tail of every state/*.status,
+data/projects.md, data/secondmates.md, data/captain.md, data/captain-shared.md,
+and data/learnings.md.
+Do NOT re-read any of them after reading this digest, and do NOT bulk-read
+data/backlog.md or state/*.status: re-reading everything defeats the entire
+point of this command.
+
+Go to a source directly only when:
+  - this digest flagged it ABSENT (then rebuild or create it per AGENTS.md),
+  - its contents looked unparseable or corrupt,
+  - an individual full status log is needed for older wake-event history, or a
+    status line was capped and its tail matters (each task's full log path is
+    printed with its tail),
+  - a full task body is needed (bin/fm-tasks-axi.sh show <id> --full, or data/backlog.md),
+  - the backlog listing disclosed omitted queued items and this turn needs them,
+  - the NETWORK CHECKS section reported its checks still IN PROGRESS and this
+    turn needs their verdict (bin/fm-startup-network.sh report),
+  - or a STARTUP TRUNCATED banner named the stage that would have printed it, in
+    which case that stage's sources were never emitted and must be reconciled.
+
+================================================================================
+FLEET STATE
+================================================================================
+
+data/backlog.md
+--------------------------------------------------------------------------------
+ABSENT
+
+Work under way (state/*.meta)
+--------------------------------------------------------------------------------
+
+--- valid ---
+pr=https://github.com/lab/repo/pull/1
+endpoint: unknown (no window recorded)
+status tail: (no status file yet: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/rollout.YQ6as6/home/state/valid.status)
+
+Orphan status logs (state/*.status without matching .meta)
+--------------------------------------------------------------------------------
+(none)
+
+AFK
+--------------------------------------------------------------------------------
+absent
+
+================================================================================
+NETWORK CHECKS
+================================================================================
+completed off the startup path in 2s: GitHub authentication, dead-secondmate relaunch, secondmate convergence, pending handoff delivery, project clone refresh with its drift reporting, and inactive terminal-outcome reconciliation.
+(silent - no problems found)
+
+================================================================================
+CONTEXT
+================================================================================
+
+data/projects.md
+--------------------------------------------------------------------------------
+ABSENT
+
+data/secondmates.md
+--------------------------------------------------------------------------------
+ABSENT
+
+data/captain.md
+--------------------------------------------------------------------------------
+ABSENT
+
+data/captain-shared.md (shared, main-authoritative, read-only in secondmate homes)
+--------------------------------------------------------------------------------
+ABSENT
+
+data/learnings.md
+--------------------------------------------------------------------------------
+ABSENT
+
+================================================================================
+NEXT STEP
+================================================================================
+Follow the supervision operating instructions block above for harness 'unknown'.
+This script never starts supervision itself.
+
+The digest above is complete for this session start. The READ-ONCE CONTRACT
+section near the top of it governs what may still be read from disk.
+
+Watch authenticated after one-time session start without a second update.

@@ -1,0 +1,44 @@
+
+CURRENT UPDATER: PRIMARY AND REGISTRY-ONLY LOCAL HOME
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  2 task(s) in flight, but no live watcher process holds this home lock (last beat: 2s ago).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+firstmate: updated 2142feb..fe171b3 (instructions changed: bin)
+no watches registered
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 1 migrated, 0 current, 1 refused
+secondmate local: updated 2142feb..fe171b3 (instructions changed: bin)
+no watches registered
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 1 migrated, 0 current, 1 refused
+reread-firstmate: yes
+restart-secondmates: none
+nudge-secondmates: none
+
+REMOTE HOST-LOCAL SYNC
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 1 migrated, 0 current, 1 refused
+synced: fe171b3a5f6ba0a8bd739a0faa43a471d9a1e151 instr=bin
+
+REPEAT REMOTE HOST-LOCAL SYNC
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 1 current, 1 refused
+current: fe171b3a5f6ba0a8bd739a0faa43a471d9a1e151
+home: valid watch authenticated; altered watch refused and untouched; metadata unchanged
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 1 current, 1 refused
+local: valid watch authenticated; altered watch refused and untouched; metadata unchanged
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 1 current, 1 refused
+remote: valid watch authenticated; altered watch refused and untouched; metadata unchanged
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 1 current, 1 refused
+
+HISTORICAL WATCH WITH PREVIOUS DEVICE BINDINGS
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 1 migrated, 1 current, 1 refused
+Historical watch authenticated after migration from previous device bindings.

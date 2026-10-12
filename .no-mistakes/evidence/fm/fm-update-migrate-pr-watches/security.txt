@@ -1,0 +1,102 @@
+ok - update re-arms registered old poll bytes but refuses a changed PR sidecar
+ok - remount migration updates authenticated historical watches under locks and refuses altered artifacts
+
+update-pr-poll/before.out
+check: rejected unauthenticated state checks: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/fm-pr-check-security.ZRqkUy/update-pr-poll/home/state/task-a.check.sh
+
+update-pr-poll/migrate.out
+PR watches: 1 migrated, 0 current, 0 refused
+
+update-pr-poll/repeat.out
+PR watches: 0 migrated, 1 current, 0 refused
+
+invalid-update-pr-poll/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+invalid-update-pr-poll/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-current/migrate.out
+PR watches: 1 migrated, 0 current, 0 refused
+
+migration-device-current/repeat.out
+PR watches: 0 migrated, 1 current, 0 refused
+
+migration-device-current/migrate.err
+
+migration-device-historical/migrate.out
+PR watches: 1 migrated, 0 current, 0 refused
+
+migration-device-historical/repeat.out
+PR watches: 0 migrated, 1 current, 0 refused
+
+migration-device-historical/watch.out
+check: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/fm-pr-check-security.ZRqkUy/migration-device-historical/home/state/task-a.check.sh: merged
+
+migration-device-historical/migrate.err
+
+migration-device-refuses-altered-check/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-altered-check/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-altered-sidecar/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-altered-sidecar/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-altered-template-hash/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-altered-template-hash/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-changed-pr/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-changed-pr/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-check-device/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-check-device/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-data-device/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-data-device/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-hardlinked-check/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-hardlinked-check/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-retirement/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-retirement/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-swapped-check/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-swapped-check/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-swapped-sidecar/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-swapped-sidecar/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
+
+migration-device-refuses-wrong-mode/migrate.out
+PR watches: 0 migrated, 0 current, 1 refused
+
+migration-device-refuses-wrong-mode/migrate.err
+PR watch refused: state/task-a.pr-poll-registration
