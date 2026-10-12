@@ -1,0 +1,10 @@
+Prepared a new registered watch before the trace-disabled relaunch.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD
+WARNING: watcher still down (same stale episode; last beat: 64s ago, grace 300s) - full banner already printed this episode.
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD/data/watch/launch-brief.md records no ship branch; relaunching on the task's recorded branch task-watch
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD/data/watch/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+notice: watch ships branch=task-watch while demo registers the ship-branch prefix 'fm/' (branch fm/watch) - the task's branch and PR will read as firstmate-authored; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched watch harness=codex from=codex model=default effort=default backend=tmux endpoint=primary:fm-watch worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD/projects/worker
+Trace-disabled relaunch: existing PR watch accepted, bytes unchanged, previous trace carrier cleared.

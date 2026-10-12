@@ -1,0 +1,13 @@
+Before relaunch: existing PR watch authenticated.
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD/data/watch/launch-brief.md records no ship branch; relaunching on the task's recorded branch task-watch
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD/data/watch/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+notice: watch ships branch=task-watch while demo registers the ship-branch prefix 'fm/' (branch fm/watch) - the task's branch and PR will read as firstmate-authored; proceed only on a current explicit captain instruction or an intake judgment you can state
+relaunched watch harness=codex from=codex model=default effort=default backend=tmux endpoint=primary:fm-watch worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD/projects/worker
+After real worker relaunch: same PR watch authenticated without re-registration.
+Check bytes, sidecar, and registration are unchanged.
+Unknown trailing metadata rejected by PR-watch authentication.
+check: rejected unauthenticated state checks: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R8N97CBS9N6ZY181H93BN2/.validation-runtime/fm-lab.ivAPzD/state/watch.check.sh
+check: rearm-resurface
