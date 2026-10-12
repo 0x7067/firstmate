@@ -201,18 +201,12 @@ if [ -f "$SECONDMATES_MD" ]; then
     home=$SECONDMATE_REGISTRY_HOME
     if [ "$SECONDMATE_REGISTRY_REMOTE" -eq 1 ]; then
       if remote_out=$("$SCRIPT_DIR/fm-on.sh" "$id" fm-remote-secondmate-control.sh update "$id" < /dev/null 2>&1); then
-        remote_result=$(printf '%s\n' "$remote_out" | tail -1)
-        case "$remote_result" in
-          synced:*|current:*)
-            remote_migration_out=$("$SCRIPT_DIR/fm-on.sh" "$id" fm-pr-check.sh migrate-all < /dev/null 2>&1) || true
-            remote_out="$remote_out"$'\n'"$remote_migration_out"
-            ;;
-        esac
         while IFS= read -r remote_line; do
           case "$remote_line" in
             'PR watch refused:'*) printf 'remote secondmate %s on %s: %s\n' "$id" "$SECONDMATE_REGISTRY_HOST" "$remote_line" >&2 ;;
           esac
         done <<< "$remote_out"
+        remote_result=$(printf '%s\n' "$remote_out" | tail -1)
         case "$remote_result" in
           synced:*)
             remote_detail=${remote_result#synced: }
