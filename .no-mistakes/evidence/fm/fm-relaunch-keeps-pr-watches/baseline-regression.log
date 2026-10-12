@@ -1,0 +1,6 @@
+not ok - relaunch should preserve durable metadata
+warning: /tmp/fm-control-relaunch.HrFZgb/durable-meta-17163/home/data/rl19/launch-brief.md records no ship branch; defaulting to legacy branch fm/rl19
+warning: /tmp/fm-control-relaunch.HrFZgb/durable-meta-17163/home/data/rl19/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+error: could not resolve the task-channel directories for rl19's claude --add-dir grant
+error: the replacement agent for rl19 could not be launched on claude
+error: rl19 was relaunched on claude but no running agent could be confirmed; its work is preserved at /tmp/fm-control-relaunch.HrFZgb/durable-meta-17163/wt: expected exit 0, got 1

@@ -1,0 +1,27 @@
+RECOVERY: relaunching the base-produced broken record with the target implementation
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/home
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/home
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/home/data/prlab-1253634/launch-brief.md records no ship branch; defaulting to legacy branch fm/prlab-1253634
+warning: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/home/data/prlab-1253634/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+relaunched prlab-1253634 harness=codex from=codex model=default effort=default backend=tmux endpoint=primary:fm-prlab-1253634 worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/wt
+RECOVERY: original PR watch accepted without re-registration
+window=primary:fm-prlab-1253634
+endpoint_task_id=prlab-1253634
+worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/wt
+project=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/repo
+harness=codex
+kind=ship
+mode=no-mistakes
+yolo=off
+branch=fm/prlab-1253634
+tasktmp=/tmp/fm-prlab-1253634
+model=default
+effort=default
+spawn_gen=s1791824551.1376841.22471
+control_relaunch_tx=1373905.20261012T170230Z.30715
+x_request=lab-request
+decisions_reviewed=1
+traceparent=00-0e15e48f55d6c10aa7b5d203032fa3c2-4872db5667ecb134-01
+pr=https://github.com/kunchenguid/firstmate/pull/7076
+pr_head=6deb5a18c56b2f2fc935aa84540098dbdf0170d0
+RECOVERY: original check and sidecar bytes unchanged

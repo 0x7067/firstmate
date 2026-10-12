@@ -1,0 +1,13 @@
+ADVERSARIAL: appended unknown key after PR identity
+check: rejected unauthenticated state checks: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/home/state/prlab-1119373.check.sh
+RESTORED: same watch, valid relaunch metadata; querying actual merged GitHub PR
+check: rearm-resurface
+PERSISTED MERGE OUTCOME
+cat: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/home/state/prlab-1119373.status: No such file or directory
+check: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGCA8GH43SMKF0K19QCEBW/.live-pr-lab/home/state/prlab-1119373.check.sh: merged
+fm-pr-poll-merge-notified-v1
+github
+github.com
+kunchenguid/firstmate
+7076
+1791824378	2	check	merged-prlab-1119373-https://github.com/kunchenguid/firstmate/pull/7076	check: merge landed: prlab-1119373 https://github.com/kunchenguid/firstmate/pull/7076 external
