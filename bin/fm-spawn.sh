@@ -5182,6 +5182,11 @@ else
   SPAWN_FRESH_COMMIT_PENDING=1
 fi
 SPAWN_META_PATH=$SPAWN_META_TMP
+# fm_pr_metadata_identity_parse (bin/fm-pr-lib.sh) refuses a task record that
+# carries any key other than pr_head= or x_* after pr=, so a registered merge
+# watch stays accepted only while pr= and pr_head= remain the record's trailing
+# keys: preserve_relaunch_meta excludes them and preserve_relaunch_pr_meta
+# re-emits them last.
 preserve_relaunch_meta() {
   awk -F= '
     BEGIN {
@@ -5540,6 +5545,10 @@ spawn_record_traceparent() {
   fi
   SPAWN_META_TMP="$STATE/.$ID.meta.trace.${BASHPID:-$$}"
   if [ ! -f "$meta" ] || [ ! -w "$meta" ] ||
+    # pr= and pr_head= are re-emitted after the refreshed traceparent because
+    # fm_pr_metadata_identity_parse (bin/fm-pr-lib.sh) refuses any other key
+    # after pr=; appending traceparent below them would silently reject a
+    # registered PR merge watch.
     ! awk -F= -v traceparent="$SPAWN_TRACEPARENT" '
       $1 == "traceparent" { next }
       $1 == "pr" || $1 == "pr_head" { pr = pr $0 "\n"; next }
