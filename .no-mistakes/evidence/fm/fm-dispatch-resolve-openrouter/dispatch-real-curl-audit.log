@@ -1,0 +1,6 @@
+real curl audit: argv_secret_free=true child_environment_secret_free=true bearer_header_present=true
+real curl audit: argv_secret_free=true child_environment_secret_free=true bearer_header_present=true
+real curl audit: argv_secret_free=true child_environment_secret_free=true bearer_header_present=true
+real curl audit: argv_secret_free=true child_environment_secret_free=true bearer_header_present=true
+real curl audit: argv_secret_free=true child_environment_secret_free=true bearer_header_present=true
+real curl audit: argv_secret_free=true child_environment_secret_free=true bearer_header_present=true

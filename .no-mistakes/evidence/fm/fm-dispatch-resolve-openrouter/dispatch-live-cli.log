@@ -1,0 +1,102 @@
+
+SCENARIO: OpenRouter key alone retains default off gate
+exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (TYPESAFE_API_KEY absent from the environment and /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RHZM3WT458H2KSJ9GPHHQ9/.test-dispatch-live/home/.env)
+
+SCENARIO: OpenRouter requires model
+exit: 2
+stdout:
+stderr:
+error: FM_DISPATCH_MODEL required when FM_DISPATCH_PROVIDER=openrouter
+
+SCENARIO: Unknown provider rejected
+exit: 2
+stdout:
+stderr:
+error: unknown FM_DISPATCH_PROVIDER: unknown (expected typesafe or openrouter)
+
+SCENARIO: Explicit OpenRouter without key stays off
+exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (OPENROUTER_API_KEY absent from the environment and /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RHZM3WT458H2KSJ9GPHHQ9/.test-dispatch-live/home/.env)
+
+SCENARIO: Never-send project withholds real configured provider request
+exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (brief text matches /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RHZM3WT458H2KSJ9GPHHQ9/.test-dispatch-live/home/config/dispatch-never-send line 1; nothing sent)
+
+SCENARIO: Real OpenRouter Choice response with isolated unknown quota
+exit: 0
+stdout:
+dispatch-resolve:
+  status: escalate
+  model: typesafe/jev-1.13-20260917   latency_ms: 476   tokens: 470/44
+  rule: rule_1 (Fixing a small bug with a known root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  reason: no rankable eligible candidate
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  -> eligible, unranked: provider claude unmeasured (unknown): disclosed uncertainty
+stderr:
+
+SCENARIO: Provider and model from home .env with process key
+exit: 0
+stdout:
+dispatch-resolve:
+  status: escalate
+  model: typesafe/jev-1.13-20260917   latency_ms: 431   tokens: 470/44
+  rule: rule_1 (Fixing a small bug with a known root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  reason: no rankable eligible candidate
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  -> eligible, unranked: provider claude unmeasured (unknown): disclosed uncertainty
+stderr:
+
+SCENARIO: Real OpenRouter authentication failure stays nonblocking
+exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 64 ms
+stderr:
+dispatch-resolve: error (http 401 after 64 ms)
+
+SCENARIO: Environment provider overrides home .env
+exit: 0
+stdout:
+stderr:
+dispatch-resolve: off (TYPESAFE_API_KEY absent from the environment and /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RHZM3WT458H2KSJ9GPHHQ9/.test-dispatch-live/home/.env)
+
+SCENARIO: Home .env credential is consumed when process key is absent
+exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 401 after 62 ms
+stderr:
+dispatch-resolve: error (http 401 after 62 ms)
+
+SCENARIO: Process credential overrides invalid home .env credential
+exit: 0
+stdout:
+dispatch-resolve:
+  status: escalate
+  model: typesafe/jev-1.13-20260917   latency_ms: 428   tokens: 465/44
+  rule: rule_1 (Fixing a small bug with a known root cause.)   confidence: 1
+  probabilities: rule_1=1 rule_2=0 default=0
+  reason: no rankable eligible candidate
+  note: rule matched
+  candidate: claude:sonnet  provider=claude  -> eligible, unranked: provider claude unmeasured (unknown): disclosed uncertainty
+stderr:
+
+SCENARIO: Process model overrides home .env model and real API rejects it safely
+exit: 0
+stdout:
+dispatch-resolve:
+  status: error
+  reason: http 400 after 76 ms
+stderr:
+dispatch-resolve: error (http 400 after 76 ms)
