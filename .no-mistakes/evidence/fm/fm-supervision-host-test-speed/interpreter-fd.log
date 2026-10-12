@@ -1,0 +1,2 @@
+env fd1: /dev/null
+bash fd1: closed
