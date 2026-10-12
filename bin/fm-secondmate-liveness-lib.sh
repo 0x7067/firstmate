@@ -258,13 +258,15 @@ fm_secondmate_liveness_probe() {  # <meta> <id> <full|poll>
 
 # fm_secondmate_liveness_relaunch <meta> <id> [timeout-secs]
 #
-# Acts on a `relaunchable` probe verdict for <id>: kills a confirmed-dead local
-# endpoint first (FM_SM_LIVE_KILL), records the attempt and its outcome in the
-# per-mate ledger, then runs the guarded secondmate spawn. A positive timeout
+# Acts on a `relaunchable` probe verdict for <id>: takes the per-home relaunch
+# lock, records the attempt, kills a confirmed-dead local endpoint if required
+# (FM_SM_LIVE_KILL), runs the guarded spawn, then records its outcome.
+# The header owns the lock-wait bounds. A positive timeout separately
 # wraps the spawn in fm_run_timed so a watcher poll stays bounded; 124/137 mean
 # the bound fired. Returns the spawn exit status; combined spawn output is in
-# FM_SM_LIVE_OUT and the status in FM_SM_LIVE_RC. When the ledger cannot be
-# read or the attempt row cannot be appended, nothing is killed or spawned: the verdict becomes
+# FM_SM_LIVE_OUT and the status in FM_SM_LIVE_RC. When the lock wait expires,
+# the ledger cannot be read, or the attempt row cannot be appended, nothing is
+# killed or spawned and no attempt is recorded: the verdict becomes
 # FM_SM_LIVE_STATUS=skipped with FM_SM_LIVE_REASON set and this returns 1.
 # Caller holds the liveness lock and owns reporting.
 fm_secondmate_liveness_relaunch() {  # <meta> <id> [timeout-secs]
