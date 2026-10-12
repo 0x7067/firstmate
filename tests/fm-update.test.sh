@@ -201,7 +201,7 @@ test_update_routes_pr_migration_to_primary_and_local_mate() {
 }
 
 test_old_updater_rollout_migrates_watches_after_one_time_session_start() {
-  local w out fake_ssh initial target state home code_root file
+  local w out fake_ssh initial target watch_state home code_root file
   local UPDATE
   w=$(new_world old-updater)
   UPDATE="$w/main/bin/fm-update.sh"
@@ -227,21 +227,21 @@ test_old_updater_rollout_migrates_watches_after_one_time_session_start() {
   mkdir -p "$w/remote/state" "$w/coderoot/state"
   touch "$w/coderoot/state/.last-watcher-beat"
   for home in "$w/home" "$w/sm1" "$w/registered" "$w/remote"; do
-    state="$home/state"
-    mkdir -p "$state" "$home/config"
+    watch_state="$home/state"
+    mkdir -p "$watch_state" "$home/config"
     printf 'manual\n' > "$home/config/backlog-backend"
     for file in task-a task-invalid; do
-      printf 'pr=https://github.com/o/r/pull/1\n' > "$state/$file.meta"
-      chmod 600 "$state/$file.meta"
+      printf 'pr=https://github.com/o/r/pull/1\n' > "$watch_state/$file.meta"
+      chmod 600 "$watch_state/$file.meta"
       (
         . "$ROOT/bin/fm-pr-lib.sh"
-        fm_pr_poll_prepare "$state" "$file" github https://github.com/o/r/pull/1 github.com o/r 1 "$w/main/bin/fm-pr-poll.sh" \
+        fm_pr_poll_prepare "$watch_state" "$file" github https://github.com/o/r/pull/1 github.com o/r 1 "$w/main/bin/fm-pr-poll.sh" \
           && fm_pr_poll_publish_prepared
       ) || fail "could not arm the old PR watch in $home"
     done
-    printf 'github\nhttps://github.com/o/r/pull/2\ngithub.com\no/r\n2\n' > "$state/task-invalid.pr-poll"
-    cp "$state/task-a.meta" "$state/meta-before"
-    cp "$state/task-invalid.check.sh" "$state/invalid-before"
+    printf 'github\nhttps://github.com/o/r/pull/2\ngithub.com\no/r\n2\n' > "$watch_state/task-invalid.pr-poll"
+    cp "$watch_state/task-a.meta" "$watch_state/meta-before"
+    cp "$watch_state/task-invalid.check.sh" "$watch_state/invalid-before"
   done
   for file in fm-remote-secondmate-control.sh fm-update.sh fm-ff-lib.sh fm-bootstrap.sh fm-pr-poll.sh; do
     cp "$ROOT/bin/$file" "$w/seed/bin/$file"
@@ -295,18 +295,18 @@ SH
     code_root=$home
     [ "$home" != "$w/home" ] || code_root="$w/main"
     [ "$(git -C "$code_root" rev-parse HEAD)" = "$target" ] || fail "$home did not advance"
-    state="$home/state"
+    watch_state="$home/state"
     (
       . "$ROOT/bin/fm-pr-lib.sh"
-      fm_pr_poll_artifacts_registered_valid "$state" task-a \
-        && ! fm_pr_poll_artifacts_valid "$state" task-a "$code_root/bin/fm-pr-poll.sh"
+      fm_pr_poll_artifacts_registered_valid "$watch_state" task-a \
+        && ! fm_pr_poll_artifacts_valid "$watch_state" task-a "$code_root/bin/fm-pr-poll.sh"
     ) || fail "old updater did not leave an intact stale watch in $home"
     FM_HOME="$home" FM_ROOT_OVERRIDE="$code_root" FM_BOOTSTRAP_NETWORK=skip FM_BOOTSTRAP_DETECT_ONLY=1 \
       PATH="$w/fakebin:$PATH" "$code_root/bin/fm-bootstrap.sh" > "$w/bootstrap.out" 2> "$w/bootstrap.err" \
       || fail "read-only bootstrap failed for $home"
     (
       . "$ROOT/bin/fm-pr-lib.sh"
-      ! fm_pr_poll_artifacts_valid "$state" task-a "$code_root/bin/fm-pr-poll.sh"
+      ! fm_pr_poll_artifacts_valid "$watch_state" task-a "$code_root/bin/fm-pr-poll.sh"
     ) || fail "read-only bootstrap migrated $home"
     env -u CLAUDECODE -u PI_CODING_AGENT -u FM_PI_HARNESS -u GROK_AGENT \
       FM_HOME="$home" FM_ROOT_OVERRIDE="$code_root" FM_FAKE_DIR="$w/fake" FM_TEST_ROLLOUT_PID=$$ \
@@ -315,11 +315,11 @@ SH
     assert_contains "$(cat "$w/session-start.out")" 'lock acquired: harness pid' "one-time session start did not acquire $home"
     (
       . "$ROOT/bin/fm-pr-lib.sh"
-      fm_pr_poll_artifacts_valid "$state" task-a "$code_root/bin/fm-pr-poll.sh" \
-        && ! fm_pr_poll_artifacts_valid "$state" task-invalid "$code_root/bin/fm-pr-poll.sh"
+      fm_pr_poll_artifacts_valid "$watch_state" task-a "$code_root/bin/fm-pr-poll.sh" \
+        && ! fm_pr_poll_artifacts_valid "$watch_state" task-invalid "$code_root/bin/fm-pr-poll.sh"
     ) || fail "one-time session start did not preserve the watch authentication boundary in $home"
-    cmp -s "$state/task-a.meta" "$state/meta-before" || fail "bootstrap changed task metadata in $home"
-    cmp -s "$state/task-invalid.check.sh" "$state/invalid-before" || fail "bootstrap rewrote an invalid watch in $home"
+    cmp -s "$watch_state/task-a.meta" "$watch_state/meta-before" || fail "bootstrap changed task metadata in $home"
+    cmp -s "$watch_state/task-invalid.check.sh" "$watch_state/invalid-before" || fail "bootstrap rewrote an invalid watch in $home"
   done
   pass "old-updater rollout restores valid PR watches after the documented one-time session start in every home"
 }
