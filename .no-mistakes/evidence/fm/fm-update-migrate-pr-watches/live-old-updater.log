@@ -1,0 +1,34 @@
+
+=== Primary and registry-only local update ===
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  3 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+firstmate: updated 29585fa..ec2f379 (instructions changed: bin)
+no watches registered
+secondmate local: updated 29585fa..ec2f379 (instructions changed: bin)
+reread-firstmate: yes
+restart-secondmates: none
+nudge-secondmates: none
+
+=== Remote host-local update ===
+synced: ec2f37925a8f8fd0ea991228dccdf489f516928f instr=bin
+home: old loaded updater left intact historical bytes, as documented.
+home: current authenticated valid and remounted watches; altered watch refused; metadata preserved
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 2 current, 1 refused
+local: old loaded updater left intact historical bytes, as documented.
+local: current authenticated valid and remounted watches; altered watch refused; metadata preserved
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 2 current, 1 refused
+remote: old loaded updater left intact historical bytes, as documented.
+remote: current authenticated valid and remounted watches; altered watch refused; metadata preserved
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 2 current, 1 refused
+
+=== Startup recovery through real session-start ===
+Detect-only bootstrap leaves historical watch unchanged.
+Real session-start restores authentication for the stale watch.

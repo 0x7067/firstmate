@@ -1,0 +1,30 @@
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+check-inode: refused without rewriting artifacts
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+sidecar-inode: refused without rewriting artifacts
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+check-bytes: refused without rewriting artifacts
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+sidecar-bytes: refused without rewriting artifacts
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+pr-identity: refused without rewriting artifacts
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+hash-record: refused without rewriting artifacts
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+private-mode: refused without rewriting artifacts
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+hardlink: refused without rewriting artifacts
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+partial-device: refused without rewriting artifacts
+PR watch refused: state/task-a.pr-poll-registration
+PR watches: 0 migrated, 0 current, 1 refused
+retirement: refused without rewriting artifacts

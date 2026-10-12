@@ -1,0 +1,38 @@
+
+=== Primary and registry-only local update ===
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  3 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+firstmate: updated 6d8ad2f..bf97fdb (instructions changed: bin)
+no watches registered
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 2 migrated, 0 current, 1 refused
+secondmate local: updated 6d8ad2f..bf97fdb (instructions changed: bin)
+no watches registered
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 2 migrated, 0 current, 1 refused
+reread-firstmate: yes
+restart-secondmates: none
+nudge-secondmates: none
+
+=== Remote host-local update ===
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 2 migrated, 0 current, 1 refused
+synced: bf97fdb29cdef9401f3996882e1f4769b75209de instr=bin
+home: current authenticated valid and remounted watches; altered watch refused; metadata preserved
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 2 current, 1 refused
+local: current authenticated valid and remounted watches; altered watch refused; metadata preserved
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 2 current, 1 refused
+remote: current authenticated valid and remounted watches; altered watch refused; metadata preserved
+PR watch refused: state/invalid.pr-poll-registration
+PR watches: 0 migrated, 2 current, 1 refused
+
+=== Startup recovery through real session-start ===
+Detect-only bootstrap leaves historical watch unchanged.
+Real session-start restores authentication for the stale watch.

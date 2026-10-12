@@ -1,0 +1,7 @@
+Real gh reading the disposable API: MERGED
+check: rejected unauthenticated state checks: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R5YM2H6A7K9P7MAV034931/.test-phase-tmp/watcher.onQYBf/home/state/task-a.check.sh
+PR watches: 1 migrated, 0 current, 0 refused
+check: rearm-resurface
+check: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R5YM2H6A7K9P7MAV034931/.test-phase-tmp/watcher.onQYBf/home/state/task-a.check.sh: merged
+check: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R5YM2H6A7K9P7MAV034931/.test-phase-tmp/watcher.onQYBf/home/state/task-a.check.sh: merged
+Real watcher accepted the migrated program and detected the merged PR through real gh.
