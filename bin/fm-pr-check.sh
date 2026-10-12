@@ -62,8 +62,10 @@ migrate_pr_poll_one() (
   fm_lock_acquire_wait "$publish_lock" || return 1
   publish_held=1
   [ ! -e "$STATE/$id.pr-poll-retirement" ] && [ ! -L "$STATE/$id.pr-poll-retirement" ] || return 1
-  fm_pr_poll_artifacts_registered_valid "$STATE" "$id" || return 1
-  if cmp -s "$SCRIPT_DIR/fm-pr-poll.sh" "$STATE/$id.check.sh"; then
+  fm_pr_poll_artifacts_registered_valid "$STATE" "$id" \
+    || fm_pr_poll_registration_device_shifted "$STATE" "$id" "$STATE/$id.check.sh" \
+    || return 1
+  if fm_pr_poll_artifacts_valid "$STATE" "$id" "$SCRIPT_DIR/fm-pr-poll.sh"; then
     return 2
   fi
   provider=$FM_PR_DATA_PROVIDER url=$FM_PR_DATA_URL host=$FM_PR_DATA_HOST
