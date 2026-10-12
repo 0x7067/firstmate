@@ -1,0 +1,5 @@
+before=dead
+rc=0 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/primary
+spawned sm1 harness=codex kind=secondmate mode=secondmate yolo=off window=firstmate:fm-sm1 worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/sm1
+1791818475	attempt
+1791818477	relaunched

@@ -1,0 +1,84 @@
+=== baseline/relaunch-sm1.log ===
+before=missing
+rc=1 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.xPA77Y/primary
+error: this home's task set is locked by another operation (a forced teardown is enumerating or removing its tasks); refusing to create task sm1 rather than racing it
+1791818423	attempt
+1791818423	failed
+
+=== baseline/relaunch-sm2.log ===
+before=missing
+rc=1 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.xPA77Y/primary
+error: this home's task set is locked by another operation (a forced teardown is enumerating or removing its tasks); refusing to create task sm2 rather than racing it
+1791818423	attempt
+1791818423	failed
+
+=== baseline/relaunch-sm3.log ===
+before=missing
+rc=0 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.xPA77Y/primary
+spawned sm3 harness=codex kind=secondmate mode=secondmate yolo=off window=firstmate:fm-sm3 worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.xPA77Y/sm3
+1791818423	attempt
+1791818425	relaunched
+
+=== baseline/relaunch-sm4.log ===
+before=missing
+rc=1 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.xPA77Y/primary
+error: this home's task set is locked by another operation (a forced teardown is enumerating or removing its tasks); refusing to create task sm4 rather than racing it
+1791818423	attempt
+1791818423	failed
+
+=== relaunch-sm1.log ===
+before=dead
+rc=0 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/primary
+spawned sm1 harness=codex kind=secondmate mode=secondmate yolo=off window=firstmate:fm-sm1 worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/sm1
+1791818475	attempt
+1791818477	relaunched
+
+=== relaunch-sm2.log ===
+before=missing
+rc=0 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/primary
+spawned sm2 harness=codex kind=secondmate mode=secondmate yolo=off window=firstmate:fm-sm2 worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/sm2
+1791818473	attempt
+1791818475	relaunched
+
+=== relaunch-sm3.log ===
+before=missing
+rc=0 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/primary
+spawned sm3 harness=codex kind=secondmate mode=secondmate yolo=off window=firstmate:fm-sm3 worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/sm3
+1791818478	attempt
+1791818480	relaunched
+
+=== relaunch-sm4.log ===
+before=missing
+rc=0 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/primary
+spawned sm4 harness=codex kind=secondmate mode=secondmate yolo=off window=firstmate:fm-sm4 worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.yoXVdY/sm4
+1791818477	attempt
+1791818478	relaunched
+
+=== bounded-wait.log ===
+rc=1 status=skipped reason=another secondmate relaunch still owns the per-home relaunch lock after 1s; endpoint left dead
+tmux: sleep
+fm-sm1: bash
+
+=== lock-diagnostics.log ===
+holder=task-spawn rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-diagnostics.9c0yoL/home
+error: this home's task set is locked by another spawn; refusing to create task blocked rather than racing it
+error: this home's task set is locked by another spawn; refusing to create task blocked rather than racing it
+metadata absent; holder lock preserved
+holder=forced-teardown rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-diagnostics.9c0yoL/home
+error: this home's task set is locked by a forced teardown; refusing to create task blocked rather than racing it
+error: this home's task set is locked by a forced teardown; refusing to create task blocked rather than racing it
+metadata absent; holder lock preserved
+holder=unknown rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-diagnostics.9c0yoL/home
+error: this home's task set is locked by another operation; refusing to create task blocked rather than racing it
+error: this home's task set is locked by another operation; refusing to create task blocked rather than racing it
+metadata absent; holder lock preserved
+
+=== live-endpoints.log ===
+sleep: sleep
+fm-sm1: codex
+fm-sm2: codex
+fm-sm4: codex
+fm-sm3: codex

@@ -1,0 +1,5 @@
+before=missing
+rc=1 output=fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-lab.xPA77Y/primary
+error: this home's task set is locked by another operation (a forced teardown is enumerating or removing its tasks); refusing to create task sm1 rather than racing it
+1791818423	attempt
+1791818423	failed

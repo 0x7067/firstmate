@@ -1,0 +1,15 @@
+holder=task-spawn rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-diagnostics.9c0yoL/home
+error: this home's task set is locked by another spawn; refusing to create task blocked rather than racing it
+error: this home's task set is locked by another spawn; refusing to create task blocked rather than racing it
+metadata absent; holder lock preserved
+holder=forced-teardown rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-diagnostics.9c0yoL/home
+error: this home's task set is locked by a forced teardown; refusing to create task blocked rather than racing it
+error: this home's task set is locked by a forced teardown; refusing to create task blocked rather than racing it
+metadata absent; holder lock preserved
+holder=unknown rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RAVP51BZSKS54TT4H7KV5N/.gate-diagnostics.9c0yoL/home
+error: this home's task set is locked by another operation; refusing to create task blocked rather than racing it
+error: this home's task set is locked by another operation; refusing to create task blocked rather than racing it
+metadata absent; holder lock preserved
