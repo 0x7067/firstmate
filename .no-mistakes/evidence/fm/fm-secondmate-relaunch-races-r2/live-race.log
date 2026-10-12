@@ -1,0 +1,37 @@
+one probe=missing status=relaunchable
+one recovery rc=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/main
+warning: secondmate one sync skipped before launch: primary default-branch commit cannot be resolved
+fm-config-inherit: warning: skipped keep-ai-trailers for /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/one/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned one harness=codex kind=secondmate mode=secondmate yolo=off window=primary:fm-one worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/one
+1791822795	attempt
+1791822797	relaunched
+two probe=missing status=relaunchable
+two recovery rc=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/main
+warning: secondmate two sync skipped before launch: primary default-branch commit cannot be resolved
+fm-config-inherit: warning: skipped keep-ai-trailers for /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/two/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned two harness=codex kind=secondmate mode=secondmate yolo=off window=primary:fm-two worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/two
+1791822800	attempt
+1791822802	relaunched
+three probe=missing status=relaunchable
+three recovery rc=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/main
+warning: secondmate three sync skipped before launch: primary default-branch commit cannot be resolved
+fm-config-inherit: warning: skipped keep-ai-trailers for /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/three/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned three harness=codex kind=secondmate mode=secondmate yolo=off window=primary:fm-three worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/three
+1791822799	attempt
+1791822800	relaunched
+four probe=missing status=relaunchable
+four recovery rc=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/main
+warning: secondmate four sync skipped before launch: primary default-branch commit cannot be resolved
+fm-config-inherit: warning: skipped keep-ai-trailers for /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/four/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned four harness=codex kind=secondmate mode=secondmate yolo=off window=primary:fm-four worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.1qKwnM/four
+1791822797	attempt
+1791822799	relaunched
+codex codex 120x40
+fm-one bash 120x40
+fm-four bash 120x40
+fm-three bash 120x40
+fm-two bash 120x40

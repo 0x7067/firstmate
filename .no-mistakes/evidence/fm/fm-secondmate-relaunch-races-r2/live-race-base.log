@@ -1,0 +1,75 @@
+one probe=missing status=relaunchable
+one recovery rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.IX6rXA/main
+error: this home's task set is locked by another spawn; refusing to create task one rather than racing it
+1791822923	attempt
+1791822923	failed
+two probe=missing status=relaunchable
+two recovery rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.IX6rXA/main
+error: this home's task set is locked by another operation; refusing to create task two rather than racing it
+1791822923	attempt
+1791822923	failed
+three probe=missing status=relaunchable
+three recovery rc=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.IX6rXA/main
+warning: secondmate three sync skipped before launch: primary default-branch commit cannot be resolved
+fm-config-inherit: warning: skipped keep-ai-trailers for /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.IX6rXA/three/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned three harness=codex kind=secondmate mode=secondmate yolo=off window=primary:fm-three worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.IX6rXA/three
+1791822923	attempt
+1791822924	relaunched
+four probe=missing status=relaunchable
+four recovery rc=1
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.IX6rXA/main
+error: this home's task set is locked by another spawn; refusing to create task four rather than racing it
+1791822923	attempt
+1791822923	failed
+codex codex 120x40
+fm-three codex 120x40
+PANE one
+can't find window: fm-one
+PANE two
+can't find window: fm-two
+PANE three
+
+  Folder access
+  /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.IX6rXA/three
+
+  Trust this folder? Codex can read, edit, and run files here, subject to your permission settings. Folder settings
+  can run code automatically, even without a model request. Continue only if you trust these files. Your trust
+  decision will be saved.
+
+› 1. Trust and continue
+  2. Back to Agent Command Center
+
+  enter continue · esc back
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PANE four
+can't find window: fm-four

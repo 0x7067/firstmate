@@ -1,0 +1,205 @@
+one probe=missing status=relaunchable
+one recovery rc=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/main
+warning: secondmate one sync skipped before launch: primary default-branch commit cannot be resolved
+fm-config-inherit: warning: skipped keep-ai-trailers for /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/one/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned one harness=codex kind=secondmate mode=secondmate yolo=off window=primary:fm-one worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/one
+1791822952	attempt
+1791822954	relaunched
+two probe=missing status=relaunchable
+two recovery rc=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/main
+warning: secondmate two sync skipped before launch: primary default-branch commit cannot be resolved
+fm-config-inherit: warning: skipped keep-ai-trailers for /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/two/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned two harness=codex kind=secondmate mode=secondmate yolo=off window=primary:fm-two worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/two
+1791822950	attempt
+1791822952	relaunched
+three probe=missing status=relaunchable
+three recovery rc=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/main
+warning: secondmate three sync skipped before launch: primary default-branch commit cannot be resolved
+fm-config-inherit: warning: skipped keep-ai-trailers for /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/three/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned three harness=codex kind=secondmate mode=secondmate yolo=off window=primary:fm-three worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/three
+1791822947	attempt
+1791822948	relaunched
+four probe=missing status=relaunchable
+four recovery rc=0
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/main
+warning: secondmate four sync skipped before launch: primary default-branch commit cannot be resolved
+fm-config-inherit: warning: skipped keep-ai-trailers for /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/four/config: destination does not allow inherited item (not gitignored or guard failed)
+spawned four harness=codex kind=secondmate mode=secondmate yolo=off window=primary:fm-four worktree=/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/four
+1791822948	attempt
+1791822950	relaunched
+codex codex 120x40
+fm-three codex 120x40
+fm-four codex 120x40
+fm-two codex 120x40
+fm-one codex 120x40
+PANE one
+
+  Folder access
+  /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/one
+
+  Trust this folder? Codex can read, edit, and run files here, subject to your permission settings. Folder settings
+  can run code automatically, even without a model request. Continue only if you trust these files. Your trust
+  decision will be saved.
+
+› 1. Trust and continue
+  2. Back to Agent Command Center
+
+  enter continue · esc back
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PANE two
+
+  Folder access
+  /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/two
+
+  Trust this folder? Codex can read, edit, and run files here, subject to your permission settings. Folder settings
+  can run code automatically, even without a model request. Continue only if you trust these files. Your trust
+  decision will be saved.
+
+› 1. Trust and continue
+  2. Back to Agent Command Center
+
+  enter continue · esc back
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PANE three
+
+  Folder access
+  /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/three
+
+  Trust this folder? Codex can read, edit, and run files here, subject to your permission settings. Folder settings
+  can run code automatically, even without a model request. Continue only if you trust these files. Your trust
+  decision will be saved.
+
+› 1. Trust and continue
+  2. Back to Agent Command Center
+
+  enter continue · esc back
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PANE four
+
+  Folder access
+  /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-race.WTUE16/four
+
+  Trust this folder? Codex can read, edit, and run files here, subject to your permission settings. Folder settings
+  can run code automatically, even without a model request. Continue only if you trust these files. Your trust
+  decision will be saved.
+
+› 1. Trust and continue
+  2. Back to Agent Command Center
+
+  enter continue · esc back
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Post-launch one state=alive status=alive
+Post-launch two state=alive status=alive
+Post-launch three state=alive status=alive
+Post-launch four state=alive status=alive

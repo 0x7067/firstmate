@@ -1,0 +1,20 @@
+SCENARIO: fresh spawn while lock holder role=task-spawn
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-locks.jIAnWO/home
+error: this home's task set is locked by another spawn; refusing to create task race rather than racing it
+error: this home's task set is locked by another spawn; refusing to create task race rather than racing it
+Verified: refusal preserved holder lock and published no task.
+SCENARIO: fresh spawn while lock holder role=forced-teardown
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-locks.jIAnWO/home
+error: this home's task set is locked by a forced teardown; refusing to create task race rather than racing it
+error: this home's task set is locked by a forced teardown; refusing to create task race rather than racing it
+Verified: refusal preserved holder lock and published no task.
+SCENARIO: fresh spawn while lock holder role=unknown
+fm-gate-refuse: gate agent lifecycle permitted only against lab home /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RF1XCBWMY5KDPKASH524ZJ/.nm-locks.jIAnWO/home
+error: this home's task set is locked by another operation; refusing to create task race rather than racing it
+error: this home's task set is locked by another operation; refusing to create task race rather than racing it
+Verified: refusal preserved holder lock and published no task.
+SCENARIO: bounded recovery wait under a live per-home relaunch lock
+Initial endpoint state=dead kill=1
+rc=1 status=skipped reason=another secondmate relaunch still owns the per-home relaunch lock after 1s; endpoint left dead
+Preserved endpoint fm-race, foreground bash, grid 120x40
+Verified: no attempt ledger created, holder lock preserved, recovery skipped before spawn.
