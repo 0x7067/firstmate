@@ -1,0 +1,37 @@
+$ FM_HOME=<primary> bin/fm-update.sh
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  2 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  repair missing watcher supervision with a foreground checkpoint: bin/fm-watch-checkpoint.sh --seconds 180.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+firstmate: updated e01f6b1..79a4af4 (instructions changed: bin)
+no watches registered
+secondmate local: updated e01f6b1..79a4af4 (instructions changed: bin)
+reread-firstmate: yes
+restart-secondmates: none
+nudge-secondmates: none
+$ FM_HOME=<remote> bin/fm-remote-secondmate-control.sh sync remote
+synced: 79a4af4ecc7cd35404feb21e676f31a353fcb3d8 instr=bin
+primary: old updater installed the new release; intact historical watch still awaits the documented one-time step
+primary: detect-only startup left the historical registration unchanged
+$ FM_HOME=<primary> bin/fm-session-start.sh # documented one-time step
+LOCK
+--------------------------------------------------------------------------------
+lock acquired: harness pid 2263325
+local: old updater installed the new release; intact historical watch still awaits the documented one-time step
+local: detect-only startup left the historical registration unchanged
+$ FM_HOME=<local> bin/fm-session-start.sh # documented one-time step
+LOCK
+--------------------------------------------------------------------------------
+lock acquired: harness pid 2263325
+remote: old updater installed the new release; intact historical watch still awaits the documented one-time step
+remote: detect-only startup left the historical registration unchanged
+$ FM_HOME=<remote> bin/fm-session-start.sh # documented one-time step
+LOCK
+--------------------------------------------------------------------------------
+lock acquired: harness pid 2263325
+primary: current watch authenticates; altered watch remains refused; task metadata and refused program unchanged
+local: current watch authenticates; altered watch remains refused; task metadata and refused program unchanged
+remote: current watch authenticates; altered watch remains refused; task metadata and refused program unchanged

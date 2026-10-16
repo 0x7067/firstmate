@@ -1,41 +1,48 @@
 
 ================================================================================
-SESSION START - /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R5YM2H6A7K9P7MAV034931/.test-phase-tmp/live.MChZif/home
+SESSION START - /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/live.NEen7V/primary
 ================================================================================
 
 LOCK
 --------------------------------------------------------------------------------
-lock acquired: harness pid 3293275
+lock acquired: harness pid 2263325
+
+HOME ROLE
+--------------------------------------------------------------------------------
+fm-role: user (default)
 
 BOOTSTRAP
 --------------------------------------------------------------------------------
-PR watch refused: state/invalid.pr-poll-registration
+PR watch refused: state/tampered.pr-poll-registration
 
 WAKE QUEUE
 --------------------------------------------------------------------------------
 WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
 ================================================================================
-SUPERVISION OPERATING INSTRUCTIONS - primary harness: unknown
+SUPERVISION OPERATING INSTRUCTIONS - primary harness: codex
 ================================================================================
 Current state:
 - Lock: held by this session; this session owns normal supervision unless away mode says otherwise.
 - Away/quiet mode: inactive.
 - X mode: inactive; use the default watcher cadence.
-- Ordinary wake: follow the continuation in the harness protocol below; do not use shell &.
+- Ordinary wake: take the next foreground bin/fm-watch-checkpoint.sh checkpoint as directed below.
 
-Mode: Unknown harness fallback.
+Mode: Codex foreground checkpoint.
 
-This primary harness does not have a verified watcher wake adapter.
-Follow the generic supervision contract in `AGENTS.md`.
-First cycle: drain queued wakes, then choose a supervision wait that the harness can actually wake from.
-Ordinary wake: drain, handle all emitted wakes, reconcile open decisions and unread status lines, and run the exact `--ack-through` command printed as `WAKE_ACK_REQUIRED`, then repeat that verified wait while supervision is still required.
-Before that acknowledgement, interruption leaves the work durable for idempotent re-handling.
-Use `bin/fm-watch-arm.sh` only when the harness has a tracked background mechanism that survives the tool call and notifies the model on process exit.
-Use a bounded foreground wait over `bin/fm-watch.sh` when that wake mechanism is not verified.
-Never use shell `&` for watcher supervision.
-Failure or missing cycle only: inspect the failure and restore the same verified wait shape.
+When this session owns supervision and away mode is not active:
+1. Drain first with `bin/fm-wake-drain.sh`.
+   After handling all emitted wakes and reconciling open decisions and unread status lines, run the exact `--ack-through` command printed as `WAKE_ACK_REQUIRED`; until then the work remains durable for idempotent re-handling after interruption.
+2. Source `/home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/live.NEen7V/primary/config/x-mode.env` first when Relay is active.
+3. First cycle: run one foreground watcher checkpoint with `bin/fm-watch-checkpoint.sh --seconds "${FM_CODEX_WATCH_CHECKPOINT:-180}"`.
+4. Ordinary wake: if the command prints `signal:`, `stale:`, `check:`, or `heartbeat`, drain queued wakes, handle that wake, then start the next checkpoint.
+5. If the command prints `checkpoint:` or exits 124 with no wake, drain queued wakes anyway, process any queued user message now visible to Codex, then start the next checkpoint.
+6. Never use shell `&` or Codex background tasks for firstmate watcher supervision.
+7. Do not run `bin/fm-watch-arm.sh` as Codex's normal supervision command.
+   If it is ever shelled anyway, a backgrounded, piped, or bundled anti-pattern is denied automatically by the PreToolUse seatbelt (`bin/fm-arm-pretool-check.sh`) registered in `.codex/hooks.json`.
+8. Failure or missing cycle only: drain queued wakes, inspect the failure, then start a fresh foreground checkpoint.
 
-Record new verification evidence before promoting an unknown harness to a named snippet.
+Codex cannot reason while a foreground tool call is running.
+The bounded checkpoint returns control regularly so user messages and queued wakes can be handled without relying on background-task wake semantics.
 
 
 ================================================================================
@@ -60,7 +67,9 @@ Go to a source directly only when:
   - the NETWORK CHECKS section reported its checks still IN PROGRESS and this
     turn needs their verdict (bin/fm-startup-network.sh report),
   - or a STARTUP TRUNCATED banner named the stage that would have printed it, in
-    which case that stage's sources were never emitted and must be reconciled.
+    which case that stage's sources were never emitted and must be reconciled,
+  - or a context re-emit opened with a read cue because the
+    harness cut the digest short.
 
 ================================================================================
 FLEET STATE
@@ -73,23 +82,15 @@ ABSENT
 Work under way (state/*.meta)
 --------------------------------------------------------------------------------
 
---- invalid ---
-pr=https://github.com/example/disposable/pull/1
-pr_head=0123456789abcdef0123456789abcdef01234567
+--- tampered ---
+pr=https://github.com/o/r/pull/1
 endpoint: unknown (no window recorded)
-status tail: (no status file yet: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R5YM2H6A7K9P7MAV034931/.test-phase-tmp/live.MChZif/home/state/invalid.status)
-
---- remounted ---
-pr=https://github.com/example/disposable/pull/1
-pr_head=0123456789abcdef0123456789abcdef01234567
-endpoint: unknown (no window recorded)
-status tail: (no status file yet: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R5YM2H6A7K9P7MAV034931/.test-phase-tmp/live.MChZif/home/state/remounted.status)
+status tail: (no status file yet: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/live.NEen7V/primary/state/tampered.status)
 
 --- valid ---
-pr=https://github.com/example/disposable/pull/1
-pr_head=0123456789abcdef0123456789abcdef01234567
+pr=https://github.com/o/r/pull/1
 endpoint: unknown (no window recorded)
-status tail: (no status file yet: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R5YM2H6A7K9P7MAV034931/.test-phase-tmp/live.MChZif/home/state/valid.status)
+status tail: (no status file yet: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/live.NEen7V/primary/state/valid.status)
 
 Orphan status logs (state/*.status without matching .meta)
 --------------------------------------------------------------------------------
@@ -102,7 +103,7 @@ absent
 ================================================================================
 NETWORK CHECKS
 ================================================================================
-completed off the startup path in 2s: GitHub authentication, dead-secondmate relaunch, secondmate convergence, pending handoff delivery, project clone refresh with its drift reporting, and inactive terminal-outcome reconciliation.
+completed off the startup path in 1s: GitHub authentication, dead-secondmate relaunch, secondmate convergence, pending handoff delivery, project clone refresh with its drift reporting, and inactive terminal-outcome reconciliation.
 (silent - no problems found)
 
 ================================================================================
@@ -115,7 +116,7 @@ ABSENT
 
 data/secondmates.md
 --------------------------------------------------------------------------------
-- local - test domain (home: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4R5YM2H6A7K9P7MAV034931/.test-phase-tmp/live.MChZif/local; scope: test; projects: test; added 2026-10-12)
+- local - local domain (home: /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/live.NEen7V/local; scope: things; projects: p; added 2026-10-16)
 
 data/captain.md
 --------------------------------------------------------------------------------
@@ -132,7 +133,7 @@ ABSENT
 ================================================================================
 NEXT STEP
 ================================================================================
-Follow the supervision operating instructions block above for harness 'unknown'.
+Follow the supervision operating instructions block above for harness 'codex'.
 This script never starts supervision itself.
 
 The digest above is complete for this session start. The READ-ONCE CONTRACT

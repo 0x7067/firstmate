@@ -1,0 +1,3 @@
+ok - scratchpad2/ does not mark a secondmate home dirty for the sync guard
+# all fm-secondmate-sync tests passed
+ok - remote sync invokes guarded PR migration in its own home after convergence

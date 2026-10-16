@@ -1,38 +1,58 @@
-
-=== Primary and registry-only local update ===
+$ FM_HOME=<primary> bin/fm-update.sh
 ●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ●  WATCHER DOWN - SUPERVISION IS OFF
-●  3 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  2 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
 ●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
 ●  This is a supervision warning only; the guarded operation WILL still run.
-●  repair missing watcher supervision according to the session-start block for this harness; do not use shell &.
+●  repair missing watcher supervision with a foreground checkpoint: bin/fm-watch-checkpoint.sh --seconds 180.
 ●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-firstmate: updated 6d8ad2f..bf97fdb (instructions changed: bin)
+firstmate: updated 28c81f5..aaf95f4 (instructions changed: bin)
 no watches registered
-PR watch refused: state/invalid.pr-poll-registration
-PR watches: 2 migrated, 0 current, 1 refused
-secondmate local: updated 6d8ad2f..bf97fdb (instructions changed: bin)
+PR watch refused: state/tampered.pr-poll-registration
+PR watches: 1 migrated, 0 current, 1 refused
+secondmate local: updated 28c81f5..aaf95f4 (instructions changed: bin)
 no watches registered
-PR watch refused: state/invalid.pr-poll-registration
-PR watches: 2 migrated, 0 current, 1 refused
+PR watch refused: state/tampered.pr-poll-registration
+PR watches: 1 migrated, 0 current, 1 refused
 reread-firstmate: yes
 restart-secondmates: none
 nudge-secondmates: none
+$ FM_HOME=<remote> bin/fm-remote-secondmate-control.sh sync remote
+PR watch refused: state/tampered.pr-poll-registration
+PR watches: 1 migrated, 0 current, 1 refused
+synced: aaf95f4ccdfdca7dd3b4fdd46f58ce4b7cecefb0 instr=bin
+primary: current watch authenticates; altered watch remains refused; task metadata and refused program unchanged
+local: current watch authenticates; altered watch remains refused; task metadata and refused program unchanged
+remote: current watch authenticates; altered watch remains refused; task metadata and refused program unchanged
+$ FM_HOME=<primary> bin/fm-pr-check.sh migrate-all # historical poll plus renumbered device
+PR watch refused: state/tampered.pr-poll-registration
+PR watches: 1 migrated, 0 current, 1 refused
+renumbered device: intact historical watch authenticates against current poll after migration
+$ FM_HOME=<primary> bin/fm-update.sh # repeat
+WARNING: watcher still down (same stale episode; last beat: never, grace 300s) - full banner already printed this episode.
+firstmate: already current
+PR watch refused: state/tampered.pr-poll-registration
+PR watches: 0 migrated, 1 current, 1 refused
+secondmate local: already current
+PR watch refused: state/tampered.pr-poll-registration
+PR watches: 0 migrated, 1 current, 1 refused
+reread-firstmate: no
+restart-secondmates: none
+nudge-secondmates: none
+$ FM_HOME=<remote> bin/fm-remote-secondmate-control.sh sync remote # repeat
+PR watch refused: state/tampered.pr-poll-registration
+PR watches: 0 migrated, 1 current, 1 refused
+current: aaf95f4ccdfdca7dd3b4fdd46f58ce4b7cecefb0
+$ FM_HOME=<primary> bin/fm-session-start.sh
 
-=== Remote host-local update ===
-PR watch refused: state/invalid.pr-poll-registration
-PR watches: 2 migrated, 0 current, 1 refused
-synced: bf97fdb29cdef9401f3996882e1f4769b75209de instr=bin
-home: current authenticated valid and remounted watches; altered watch refused; metadata preserved
-PR watch refused: state/invalid.pr-poll-registration
-PR watches: 0 migrated, 2 current, 1 refused
-local: current authenticated valid and remounted watches; altered watch refused; metadata preserved
-PR watch refused: state/invalid.pr-poll-registration
-PR watches: 0 migrated, 2 current, 1 refused
-remote: current authenticated valid and remounted watches; altered watch refused; metadata preserved
-PR watch refused: state/invalid.pr-poll-registration
-PR watches: 0 migrated, 2 current, 1 refused
+================================================================================
+SESSION START - /home/denguinho/.no-mistakes/worktrees/159e9a668321/01M4RGADZCQ2ZP4DVYY9FKMAEX/.phase-tmp/live.NEen7V/primary
+================================================================================
 
-=== Startup recovery through real session-start ===
-Detect-only bootstrap leaves historical watch unchanged.
-Real session-start restores authentication for the stale watch.
+LOCK
+--------------------------------------------------------------------------------
+lock acquired: harness pid 2263325
+
+HOME ROLE
+--------------------------------------------------------------------------------
+fm-role: user (default)

@@ -1,0 +1,3 @@
+# all fm-update tests passed
+ok - update invokes guarded PR migration for the primary and local mate homes
+ok - old-updater rollout restores valid PR watches after the documented one-time session start in every home
